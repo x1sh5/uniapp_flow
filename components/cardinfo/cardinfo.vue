@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<!-- 任务卡片 -->
-		<view :class="`task{Id%3} columnlayout`" >
+		<view :class="`task${Id%3} columnlayout`" >
 		  <!-- 上部分，包括： 标题，类型，工时，回馈 两行 -->
 		  <view class="task-top rowlayout">
 		    <!-- 左半部分，包括：标题，工时，回馈比 -->
 		    <view class="task-top-left columnlayout">
 		    <!-- 第一层：需求内容 编号 -->
 		      <view class="rowlayout">
-		        <view :class="`fontcolor{Id%3} poster`" >需求内容</view>
+		        <view :class="`fontcolor${Id%3} poster`" >需求内容</view>
 		        <!-- 序列号 -->
 		        <view class="serialNo">k8963245{{Id}}</view>
 		      </view>
@@ -21,7 +21,7 @@
 		      <view class="timeandreward">
 		          <!-- 预计工时 -->
 		          <view class="columnlayout spendtime">
-		            <view :class="`fontcolor{Id%3}`">预计工时</view>
+		            <view :class="`fontcolor${Id%3}`">预计工时</view>
 		            <view class="rowlayout">
 		              <input maxlength="8" :disabled="!editable" type="digit" 
 		              :value="editable? '':spendtime" class="input" />h
@@ -30,7 +30,7 @@
 		          </view>
 		          <!-- 回馈值 -->
 		          <view class="columnlayout reward">
-		            <view :class="`fontcolor{Id%3}`">回馈值</view>
+		            <view :class="`fontcolor${Id%3}`">回馈值</view>
 		            <view class="rowlayout">
 		              <view style="width: 40px;border-bottom: 1px dashed gray;">{{task.reward}}</view>
 		              <view>{{ rewardtype.value }}</view>
@@ -58,15 +58,15 @@
 		   <!-- 部门 -->
 		   <!-- range-key 用于指定显示名称属性值 -->
 		    <picker :disabled="!editable" :range="branchs" :range-key="name" :value="index"
-		     class="`department fontcolor{Id%3}`" @change="branchChange">
+		     :class="`fontcolor${Id%3} department`" @change="branchChange">
 		     {{branch}}</picker>
 		    <!-- 发起人 -->
 		    <view class="organigerpart" wx:if="!editable">
 		      <view>{{userName}}</view>
-		      <view :class="`fontcolor{Id%3}`">发起人</view>
+		      <view :class="`fontcolor${Id%3}`">发起人</view>
 		    </view>
 		    <!-- 状态 -->
-		    <view class="status" hidden="editable">{{status[task.status]}}</view>
+		    <view class="status" :hidden="editable">{{status[task.status]}}</view>
 		  </view>
 		</view>
 	</view>

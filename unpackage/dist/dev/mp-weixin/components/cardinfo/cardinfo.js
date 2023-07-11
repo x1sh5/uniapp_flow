@@ -88,14 +88,14 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.n(`fontcolor{Id%3} poster`),
+    a: common_vendor.n(`fontcolor${$options.Id % 3} poster`),
     b: common_vendor.t($options.Id),
     c: !$props.editable,
     d: $options.title,
-    e: common_vendor.n(`fontcolor{Id%3}`),
+    e: common_vendor.n(`fontcolor${$options.Id % 3}`),
     f: !$props.editable,
     g: $props.editable ? "" : $data.spendtime,
-    h: common_vendor.n(`fontcolor{Id%3}`),
+    h: common_vendor.n(`fontcolor${$options.Id % 3}`),
     i: common_vendor.t($props.task.reward),
     j: common_vendor.t($data.rewardtype.value),
     k: common_vendor.o(($event) => _ctx.value = $event),
@@ -111,11 +111,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     p: $options.branchs,
     q: _ctx.name,
     r: $data.index,
-    s: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    t: common_vendor.t($options.userName),
-    v: common_vendor.n(`fontcolor{Id%3}`),
-    w: common_vendor.t($data.status[$props.task.status]),
-    x: common_vendor.n(`task{Id%3} columnlayout`)
+    s: common_vendor.n(`fontcolor${$options.Id % 3} department`),
+    t: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
+    v: common_vendor.t($options.userName),
+    w: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    x: common_vendor.t($data.status[$props.task.status]),
+    y: $props.editable,
+    z: common_vendor.n(`task${$options.Id % 3} columnlayout`)
   };
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
