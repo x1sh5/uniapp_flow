@@ -24,7 +24,7 @@
 		            <view :class="`fontcolor${Id%3}`">预计工时</view>
 		            <view class="rowlayout">
 		              <input maxlength="8" :disabled="!editable" type="digit" 
-		              :value="editable? '':spendtime" class="input" />h
+		              :value="spendtime" class="input" />h
 		            </view>
 		            
 		          </view>
@@ -35,7 +35,7 @@
 		              <view style="width: 40px;border-bottom: 1px dashed gray;">{{task.reward}}</view>
 		              <view>{{ rewardtype.value }}</view>
 					  <uni-data-select :localdata="rewardtype.options" :clear="false"
-					   v-model="value" placeholder="类型">
+					   v-model="value" placeholder="类型" >
 						  
 					  </uni-data-select>
 <!-- 		              <t-dropdown-menu style="width: 20px;height: 20px;">
@@ -50,14 +50,14 @@
 		    </view>
 		    <!-- 右半部分，只包括：类型 -->
 		    <view class="task-top-right columnlayout" >
-		        <view class="tasktype columnlayout">{{ tasktype }}</view>
+		        <view class="tasktype columnlayout">{{ taskType }}</view>
 		    </view>
 		  </view>
 		  <!-- 部门，发起人，状态 -->
 		  <view class="task-bottom rowlayout">
 		   <!-- 部门 -->
 		   <!-- range-key 用于指定显示名称属性值 -->
-		    <picker :disabled="!editable" :range="branchs" :range-key="name" :value="index"
+		    <picker :disabled="!editable" :range="branchs" :range-key="name" :value="branchIndex"
 		     :class="`fontcolor${Id%3} department`" @change="branchChange">
 		     {{branch}}</picker>
 		    <!-- 发起人 -->
@@ -97,18 +97,44 @@
 					this.task.username = value
 				}
 			},
-			branchs(){
-				return this.$store.state.branchs
-			},
-			taskTypes(){
-				return this.$store.state.taskTypes
+			taskType:{
+				get() {
+					let i = this.taskTypes.find(item => item.id ===this.task.typeid)
+					console.log("taskType is: ",i)
+					if(i===undefined){
+						return "类型"
+					}
+					return i["name"]
+				}
 			},
 			branch:{
 				get(){
-					return this.editable ? this.branchs[index]["name"] : this.branchs[this.task.branchid]["name"]
+					let i = this.branchs.find(item => item.id === this.task.branchid)
+					console.log("branch is: ",i)
+					if(i===undefined){
+						return "部门"
+					}
+					return i["name"]
 				},
 				set(value) {
 					this.task.branchid = value
+				}
+			},
+			nullTask(){
+				if(this.task===null || this.task===undefined){
+					return true
+				}
+				return false
+			},
+			spendtime:{
+				get() {
+					if(!this.nullTask){
+						return (this.task.presumedtime/60).toFixed(2)
+					}
+					return ""
+				},
+				set(value) {
+					this.task.presumedtime = value*60
 				}
 			},
 			title:{
@@ -124,16 +150,22 @@
 			branchChange(e) {
 				console.log('picker发送选择改变，携带值为', e)
 				this.branch = e.detail.value
+				this.branchIndex = e.detail.value
 			},
+		},
+		beforeCreate(){
+			this.taskTypes = this.$store.state.taskTypes
+			this.branchs = this.$store.state.branchs
 		},
 		data() {
 			return {
 				    // 预计时间
-				    spendtime:"",
-				    deparment:"",
-				    index:0,
-				    tasktype:"类型",
+				    //spendtime:"",
+					taskTypes:[],
+					branchs:[],
+				    //tasktype:"类型",
 				    status:["代接","完成","审核中"],
+					branchIndex:0,
 				    rewardtype: {
 				      value: '￥',
 				      options: [

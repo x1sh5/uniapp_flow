@@ -18,10 +18,16 @@ const store = createStore({
 				url:state.apiBaseUrl+"/Information/branchs",
 				method:"GET",
 				success(res) {
+			 // 在nextTick中更新数据
+					this.$nextTick(() => {
+					  // 更新数据
 					console.log("branchs:",res.data)
 					state.branchs = res.data["$values"]
+					});		
+
 				},
 				fail(err) {
+					console.log("get branchs error")
 					uni.showModal({
 						content:err.errMsg
 					})
@@ -34,10 +40,16 @@ const store = createStore({
 				url:state.apiBaseUrl+"/Information/customtypes",
 				method:'GET',
 				success(res){
+			 // 在nextTick中更新数据
+					this.$nextTick(() => {
+					  // 更新数据
 					console.log("tasktypes:",res.data)
 					state.taskTypes = res.data["$values"]
+					});						
+
 				},
 				fail(err) {
+					console.log("get tasktypes error")
 					uni.showModal({
 						content:err.errMsg
 					})
@@ -49,9 +61,13 @@ const store = createStore({
 				url:state.apiBaseUrl+"/Assignment",
 				method:'GET',
 				success(res){
-					console.log("tasks:",res.data)
-					state.tasks.status = true
-					state.tasks.values= res.data["$values"]
+			 // 在nextTick中更新数据
+					this.$nextTick(() => {
+					  // 更新数据
+					  console.log("tasks:",res.data)
+					  state.tasks.status = true
+					  state.tasks.values= res.data["$values"]
+					});	
 				}
 			})
 		}

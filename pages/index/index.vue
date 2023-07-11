@@ -9,7 +9,7 @@
 		</swiper>
 		
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="true" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>
@@ -25,8 +25,8 @@
 		onLoad() {
 			console.log("page index onload")
 		},
-		created() {
-			console.log(this.$store)
+		beforeCreate() {
+			console.log("before Create")
 			this.$store.commit('getBranchs');
 			this.$store.commit('getTaskTypes');
 			try {
@@ -48,7 +48,11 @@
 				}
 			}
 		},
-		methods:{}
+		methods:{
+			search(e){
+				console.log("confirm:",e)
+			}
+		}
 	}
 </script>
 
