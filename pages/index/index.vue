@@ -7,56 +7,48 @@
 			<swiper-item><view class="swiper-item uni-bg-green">B</view></swiper-item>
 			<swiper-item><view class="swiper-item uni-bg-blue">C</view></swiper-item>
 		</swiper>
-		<cardinfo :task="{}" editable="true"></cardinfo>
+		
+		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
+		  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
+		</view>
 	</view>
 </template>
 
 <script>
+	//import stroe from "./../../store/index.js"
 	export default {
 		data() {
 			return {
 				title: 'Hello',
-				tasks:[]
 			}
 		},
 		onLoad() {
-			    try {
-			      const data = await fetchTasks("/Assignment/");
-			      console.log(data.$values);  // 查看返回的数据
-			      this.setData({
-			        //使用data.$values,我使用后端框架的默认数据格式，后面会调整
-			        tasks: data.$values
-			      });
-			    } catch (error) {
-			      console.error("Error getting data from the API:", error);
-			    }
+			console.log("page index onload")
 		},
-		methods: {
-			async function fetchTasks(urlpath) {
-			  return new Promise((resolve, reject) => {
-				uni.request({
-				  //直接使用地址拼接
-				  url: `${app.globalData.apiBaseUrl}`+urlpath,
-				  method: "GET",
-				  // data 模式会转换成url参数，也就是url会转换成 ${app.globalData.apiBaseUrl}/Assignment?userId=
-				  //但真实的请求应该是 ${app.globalData.apiBaseUrl}/Assignment/userId
-				  // data: {
-				  //   userId: userId,
-				  // },
-				  success: (res) => {
-					if (res.statusCode === 200) {
-					  resolve(res.data);
-					} else {
-					  reject(res);
-					}
-				  },
-				  fail: (err) => {
-					reject(err);
-				  },
-				});
-			  });
-			},
-		}
+		created() {
+			console.log(this.$store)
+			this.$store.commit('getBranchs');
+			this.$store.commit('getTaskTypes');
+			try {
+			  if(!this.$store.state.tasks.status){
+				  this.$store.commit('getTasks')
+			  }
+			} catch (error) {
+			  console.error("Error getting data from the API:", error);
+			}
+		},
+		computed:{
+			tasks:{
+				get() {
+					console.log("index tasks:",this.$store.getters.fetchTasks)
+					return this.$store.getters.fetchTasks
+				},
+				set(value){
+					this.$store.commit('getTasks',value)
+				}
+			}
+		},
+		methods:{}
 	}
 </script>
 

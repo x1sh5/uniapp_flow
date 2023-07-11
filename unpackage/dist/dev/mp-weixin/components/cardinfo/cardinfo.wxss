@@ -1,0 +1,184 @@
+.rowlayout {
+  display: flex;
+  flex-direction: row;
+}
+.columnlayout {
+  display: flex;
+  flex-direction: column;
+}
+.bluecolor {
+  color: blue;
+}
+.blackcolor {
+  color: black;
+}
+.italic {
+  font-size: large;
+  font-style: italic;
+}
+.example1 {
+  width: 200px;
+  height: 300px;
+}
+.fontcolor0 {
+  color: #1e1ef5;
+}
+.fontcolor1 {
+  color: #14e2e2;
+}
+.fontcolor2 {
+  color: #2d91ee;
+}
+.task0 {
+  height: 195px;
+  width: 100%;
+  align-self: center;
+  position: relative;
+  border: 2px solid #04882c;
+  margin: 0px 5px;
+  z-index: 0;
+}
+.task0:before {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  -webkit-clip-path: circle(11rem at 100% 2rem);
+          clip-path: circle(11rem at 100% 2rem);
+  z-index: -1;
+  background-color: #1e1ef5;
+}
+.task1 {
+  height: 195px;
+  width: 100%;
+  align-self: center;
+  position: relative;
+  border: 2px solid #04882c;
+  margin: 0px 5px;
+  z-index: 0;
+}
+.task1:before {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  -webkit-clip-path: circle(11rem at 100% 2rem);
+          clip-path: circle(11rem at 100% 2rem);
+  z-index: -1;
+  background-color: #14e2e2;
+}
+.task2 {
+  height: 195px;
+  width: 100%;
+  align-self: center;
+  position: relative;
+  border: 2px solid #04882c;
+  margin: 0px 5px;
+  z-index: 0;
+}
+.task2:before {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  position: absolute;
+  -webkit-clip-path: circle(11rem at 100% 2rem);
+          clip-path: circle(11rem at 100% 2rem);
+  z-index: -1;
+  background-color: #2d91ee;
+}
+.task-top {
+  height: 70%;
+  z-index: 99;
+}
+.task-bottom {
+  display: flex;
+  flex-direction: row;
+  z-index: 99;
+}
+.task-top-left {
+  width: 50%;
+}
+.task-top-right {
+  width: 50%;
+  align-self: flex-end;
+  align-content: flex-end;
+}
+.tasktype {
+  bottom: 0px;
+  right: 0px;
+  font-size: 2cm;
+  font-style: italic;
+  color: white;
+}
+.margin-top5 {
+  margin-top: 5px;
+}
+.spendtime {
+  width: 50%;
+  margin-right: 5px;
+}
+.reward {
+  width: 50%;
+}
+.margin-right10 {
+  margin-right: 10px;
+}
+.serialNo {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  font-size: x-small;
+  margin-left: 2px;
+}
+.poster {
+  margin-right: 2px;
+}
+.department {
+  margin-right: 10px;
+  font-size: 1cm;
+}
+.organigerpart {
+  flex-direction: column;
+  margin-right: 10px;
+  display: flex;
+  padding-bottom: 5px;
+  align-self: flex-end;
+}
+.status {
+  margin-left: 20px;
+  height: 32px;
+  border: 2px solid #f15b04;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.timeandreward {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+.title {
+  color: black;
+  margin-top: 5px;
+  height: 62%;
+}
+.input {
+  width: 60%;
+  text-align: center;
+  border-bottom: 1px dashed gray;
+}
+.brief {
+  color: black;
+  margin-top: 5px;
+  height: 62%;
+  width: 100%;
+  white-space: pre-wrap;
+}

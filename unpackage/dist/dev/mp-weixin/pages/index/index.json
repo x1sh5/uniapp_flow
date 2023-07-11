@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "流沙任务系统",
+  "usingComponents": {
+    "uni-search-bar": "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar",
+    "cardinfo": "../../components/cardinfo/cardinfo"
+  }
+}
