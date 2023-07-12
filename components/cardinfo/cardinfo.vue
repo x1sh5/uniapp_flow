@@ -32,17 +32,13 @@
 			  <view class="columnlayout reward">
 				<view :class="`fontcolor${Id%3}`">回馈值</view>
 				<view class="rowlayout">
-				  <view style="width: 40px;border-bottom: 1px dashed gray;">{{task.reward}}</view>
-				  <view>{{ rewardtype.value }}</view>
+				  <view style="border-bottom: 1px dashed gray;">{{task.reward}}</view>
+				  <!-- <view>{{ rewardtype.value }}</view> -->
 				  <uni-data-select :localdata="rewardtype.options" :clear="false"
-				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange">
+				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
+				   style="z-index: 2;background-color: gray;">
 					  
 				  </uni-data-select>
-<!-- 		              <t-dropdown-menu style="width: 20px;height: 20px;">
-					<t-dropdown-item style="z-index: 99;align-self: center;align-items: center;align-content: center;text-align: right;" 
-					options="rewardtype.options" value="rewardtype.label"
-					 @change="onChange" />
-				  </t-dropdown-menu> -->
 				</view>
 			  </view>
 			  
@@ -165,18 +161,18 @@
 				//tasktype:"类型",
 				status:["代接","完成","审核中"],
 				branchIndex:false,
-				$rewardTypeValue: '￥',
+				$rewardTypeValue: 0,
 				rewardtype: {
-				  value: '￥',
+				  value: 0,
 				  options: [
 					{
-					  text: '元',
-					  value: '￥',
+					  text: '1',
+					  value: "￥",
 					  selected: true
 					},
 					{
-					  text: '百分比',
-					  value: '%',
+					  text: '2',
+					  value: '%’',
 					},]
 				}
 			};
