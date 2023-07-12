@@ -9,13 +9,13 @@ const _sfc_main = {
   onLoad() {
     console.log("page index onload");
   },
-  created() {
-    console.log(this.$store);
-    this.$store.commit("getBranchs");
-    this.$store.commit("getTaskTypes");
+  async beforeCreate() {
+    console.log("before Create");
+    await this.$store.dispatch("fetchBranchs");
+    await this.$store.dispatch("fetchTaskTypes");
     try {
       if (!this.$store.state.tasks.status) {
-        this.$store.commit("getTasks");
+        await this.$store.dispatch("fetchTasks");
       }
     } catch (error) {
       console.error("Error getting data from the API:", error);
@@ -24,15 +24,19 @@ const _sfc_main = {
   computed: {
     tasks: {
       get() {
-        console.log("index tasks:", this.$store.getters.fetchTasks);
-        return this.$store.getters.fetchTasks;
+        console.log("index tasks:", this.$store.getters.getTasks);
+        return this.$store.getters.getTasks;
       },
       set(value) {
         this.$store.commit("getTasks", value);
       }
     }
   },
-  methods: {}
+  methods: {
+    search(e) {
+      console.log("confirm:", e);
+    }
+  }
 };
 if (!Array) {
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
@@ -46,7 +50,7 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.o(_ctx.search),
+    a: common_vendor.o($options.search),
     b: common_vendor.p({
       radius: "5",
       placeholder: "搜索任务",
@@ -58,7 +62,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "4d84c736-1-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: false
+          editable: true
         }),
         c: item.id
       };

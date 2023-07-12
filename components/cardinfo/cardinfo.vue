@@ -1,75 +1,75 @@
 <template>
-	<view>
-		<!-- 任务卡片 -->
-		<view :class="`task${Id%3} columnlayout`" >
-		  <!-- 上部分，包括： 标题，类型，工时，回馈 两行 -->
-		  <view class="task-top rowlayout">
-		    <!-- 左半部分，包括：标题，工时，回馈比 -->
-		    <view class="task-top-left columnlayout">
-		    <!-- 第一层：需求内容 编号 -->
-		      <view class="rowlayout">
-		        <view :class="`fontcolor${Id%3} poster`" >需求内容</view>
-		        <!-- 序列号 -->
-		        <view class="serialNo">k8963245{{Id}}</view>
-		      </view>
-		      <!-- 第二层：标题 -->
-		      <view class="title">
-		        <textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容">
-		        </textarea>
-		      </view>
-		      <!-- 第三层：预计工时，回馈 -->
-		      <view class="timeandreward">
-		          <!-- 预计工时 -->
-		          <view class="columnlayout spendtime">
-		            <view :class="`fontcolor${Id%3}`">预计工时</view>
-		            <view class="rowlayout">
-		              <input maxlength="8" :disabled="!editable" type="digit" 
-		              :value="spendtime" class="input" />h
-		            </view>
-		            
-		          </view>
-		          <!-- 回馈值 -->
-		          <view class="columnlayout reward">
-		            <view :class="`fontcolor${Id%3}`">回馈值</view>
-		            <view class="rowlayout">
-		              <view style="width: 40px;border-bottom: 1px dashed gray;">{{task.reward}}</view>
-		              <view>{{ rewardtype.value }}</view>
-					  <uni-data-select :localdata="rewardtype.options" :clear="false"
-					   v-model="value" placeholder="类型" >
-						  
-					  </uni-data-select>
+<!-- 	<view> -->
+	<!-- 任务卡片 -->
+	<view :class="`task${Id%3} columnlayout`" >
+	  <!-- 上部分，包括： 标题，类型，工时，回馈 两行 -->
+	  <view class="task-top rowlayout">
+		<!-- 左半部分，包括：标题，工时，回馈比 -->
+		<view class="task-top-left columnlayout">
+		<!-- 第一层：需求内容 编号 -->
+		  <view class="rowlayout">
+			<view :class="`fontcolor${Id%3} poster`" >需求内容</view>
+			<!-- 序列号 -->
+			<view class="serialNo">k8963245{{Id}}</view>
+		  </view>
+		  <!-- 第二层：标题 -->
+		  <view class="title">
+			<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容">
+			</textarea>
+		  </view>
+		  <!-- 第三层：预计工时，回馈 -->
+		  <view class="timeandreward">
+			  <!-- 预计工时 -->
+			  <view class="columnlayout spendtime">
+				<view :class="`fontcolor${Id%3}`">预计工时</view>
+				<view class="rowlayout">
+				  <input maxlength="8" :disabled="!editable" type="digit" 
+				  :value="spendtime" class="input" />h
+				</view>
+				
+			  </view>
+			  <!-- 回馈值 -->
+			  <view class="columnlayout reward">
+				<view :class="`fontcolor${Id%3}`">回馈值</view>
+				<view class="rowlayout">
+				  <view style="width: 40px;border-bottom: 1px dashed gray;">{{task.reward}}</view>
+				  <view>{{ rewardtype.value }}</view>
+				  <uni-data-select :localdata="rewardtype.options" :clear="false"
+				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange">
+					  
+				  </uni-data-select>
 <!-- 		              <t-dropdown-menu style="width: 20px;height: 20px;">
-		                <t-dropdown-item style="z-index: 99;align-self: center;align-items: center;align-content: center;text-align: right;" 
-		                options="rewardtype.options" value="rewardtype.label"
-		                 @change="onChange" />
-		              </t-dropdown-menu> -->
-		            </view>
-		          </view>
-		          
-		        </view>
-		    </view>
-		    <!-- 右半部分，只包括：类型 -->
-		    <view class="task-top-right columnlayout" >
-		        <view class="tasktype columnlayout">{{ taskType }}</view>
-		    </view>
-		  </view>
-		  <!-- 部门，发起人，状态 -->
-		  <view class="task-bottom rowlayout">
-		   <!-- 部门 -->
-		   <!-- range-key 用于指定显示名称属性值 -->
-		    <picker :disabled="!editable" :range="branchs" :range-key="name" :value="branchIndex"
-		     :class="`fontcolor${Id%3} department`" @change="branchChange">
-		     {{branch}}</picker>
-		    <!-- 发起人 -->
-		    <view class="organigerpart" wx:if="!editable">
-		      <view>{{userName}}</view>
-		      <view :class="`fontcolor${Id%3}`">发起人</view>
-		    </view>
-		    <!-- 状态 -->
-		    <view class="status" :hidden="editable">{{status[task.status]}}</view>
-		  </view>
+					<t-dropdown-item style="z-index: 99;align-self: center;align-items: center;align-content: center;text-align: right;" 
+					options="rewardtype.options" value="rewardtype.label"
+					 @change="onChange" />
+				  </t-dropdown-menu> -->
+				</view>
+			  </view>
+			  
+			</view>
 		</view>
+		<!-- 右半部分，只包括：类型 -->
+		<view class="task-top-right columnlayout" >
+			<view class="tasktype columnlayout">{{ taskType }}</view>
+		</view>
+	  </view>
+	  <!-- 部门，发起人，状态 -->
+	  <view class="task-bottom rowlayout">
+	   <!-- 部门 -->
+	   <!-- range-key 用于指定显示名称属性值 -->
+		<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
+		:value="branchOrder" :class="`fontcolor${Id%3} department`" @change="branchChange">
+		{{branchs[branchOrder]["name"]}}</picker>
+		<!-- 发起人 -->
+		<view class="organigerpart" wx:if="!editable">
+		  <view>{{userName}}</view>
+		  <view :class="`fontcolor${Id%3}`">发起人</view>
+		</view>
+		<!-- 状态 -->
+		<view class="status" :hidden="editable">{{status[task.status]}}</view>
+	  </view>
 	</view>
+<!-- 	</view> -->
 </template>
 
 <script>
@@ -83,7 +83,7 @@
 		    editable:Boolean
 		},
 		created() {
-			console.log(this.task)
+			console.log("task is:",this.task)
 		},
 		computed:{
 			Id(){
@@ -99,26 +99,28 @@
 			},
 			taskType:{
 				get() {
-					let i = this.taskTypes.find(item => item.id ===this.task.typeid)
-					console.log("taskType is: ",i)
-					if(i===undefined){
-						return "类型"
-					}
-					return i["name"]
+					return this.$store.getters.getTaskType(this.task.typeid)
 				}
 			},
 			branch:{
 				get(){
-					let i = this.branchs.find(item => item.id === this.task.branchid)
-					console.log("branch is: ",i)
-					if(i===undefined){
-						return "部门"
+					return this.$store.getters.getBranch(this.task.branchid)
+				},
+			},
+			branchOrder:{
+				get(){
+					if(!this.branchIndex){
+						return this.$store.getters.getBranchIndex(this.task.branchid)
 					}
-					return i["name"]
+					return this.branchIndex
 				},
 				set(value) {
-					this.task.branchid = value
+					this.branchIndex = value
 				}
+			},
+			branchs(){
+				//console.log(this.$store.state.branchs)
+				return this.$store.state.branchs
 			},
 			nullTask(){
 				if(this.task===null || this.task===undefined){
@@ -149,36 +151,34 @@
 		methods:{
 			branchChange(e) {
 				console.log('picker发送选择改变，携带值为', e)
-				this.branch = e.detail.value
 				this.branchIndex = e.detail.value
 			},
-		},
-		beforeCreate(){
-			this.taskTypes = this.$store.state.taskTypes
-			this.branchs = this.$store.state.branchs
+			rewardTypeChange(e){
+				console.log('rewardType 改变，携带值为', e)
+				this.$rewardTypeValue = e
+			},
 		},
 		data() {
 			return {
-				    // 预计时间
-				    //spendtime:"",
-					taskTypes:[],
-					branchs:[],
-				    //tasktype:"类型",
-				    status:["代接","完成","审核中"],
-					branchIndex:0,
-				    rewardtype: {
-				      value: '￥',
-				      options: [
-				        {
-				          text: '元',
-				          value: '￥',
-						  selected: true
-				        },
-				        {
-				          text: '百分比',
-				          value: '%',
-				        },]
-				      }
+				// 预计时间
+				//spendtime:"",
+				//tasktype:"类型",
+				status:["代接","完成","审核中"],
+				branchIndex:false,
+				$rewardTypeValue: '￥',
+				rewardtype: {
+				  value: '￥',
+				  options: [
+					{
+					  text: '元',
+					  value: '￥',
+					  selected: true
+					},
+					{
+					  text: '百分比',
+					  value: '%',
+					},]
+				}
 			};
 		}
 	}
@@ -211,7 +211,7 @@
 	
 	.task(){
 	  height: 195px;
-	  width: 100%;
+	  width: 96%;
 	  align-self: center;
 	  position: relative;
 	  border: 2px solid #04882c;

@@ -25,13 +25,13 @@
 		onLoad() {
 			console.log("page index onload")
 		},
-		beforeCreate() {
+		async beforeCreate() {
 			console.log("before Create")
-			this.$store.commit('getBranchs');
-			this.$store.commit('getTaskTypes');
+			await this.$store.dispatch('fetchBranchs');
+			await this.$store.dispatch('fetchTaskTypes');
 			try {
 			  if(!this.$store.state.tasks.status){
-				  this.$store.commit('getTasks')
+				 await this.$store.dispatch('fetchTasks')
 			  }
 			} catch (error) {
 			  console.error("Error getting data from the API:", error);
@@ -40,8 +40,8 @@
 		computed:{
 			tasks:{
 				get() {
-					console.log("index tasks:",this.$store.getters.fetchTasks)
-					return this.$store.getters.fetchTasks
+					console.log("index tasks:",this.$store.getters.getTasks)
+					return this.$store.getters.getTasks
 				},
 				set(value){
 					this.$store.commit('getTasks',value)

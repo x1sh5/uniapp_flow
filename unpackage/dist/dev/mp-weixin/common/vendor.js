@@ -7699,6 +7699,20 @@ const pages = [
     style: {
       navigationBarTitleText: "流沙任务系统"
     }
+  },
+  {
+    path: "pages/newTask/newTask",
+    style: {
+      navigationBarTitleText: "创建任务",
+      enablePullDownRefresh: true
+    }
+  },
+  {
+    path: "pages/userCenter/userCenter",
+    style: {
+      navigationBarTitleText: "用户中心",
+      enablePullDownRefresh: false
+    }
   }
 ];
 const globalStyle = {
@@ -7708,10 +7722,37 @@ const globalStyle = {
   backgroundColor: "#F8F8F8"
 };
 const uniIdRouter = {};
+const tabBar = {
+  borderStyle: "black",
+  backgroundColor: "#333",
+  color: "#8F8F94",
+  selectedColor: "#f33e54",
+  list: [
+    {
+      pagePath: "pages/index/index",
+      iconPath: "static/home.png",
+      selectedIconPath: "static/homeactive.png",
+      text: "首页"
+    },
+    {
+      pagePath: "pages/newTask/newTask",
+      iconPath: "static/add.png",
+      selectedIconPath: "static/addactive.png",
+      text: "新任务"
+    },
+    {
+      pagePath: "pages/userCenter/userCenter",
+      iconPath: "static/me.png",
+      selectedIconPath: "static/meactive.png",
+      text: "我的"
+    }
+  ]
+};
 const t = {
   pages,
   globalStyle,
-  uniIdRouter
+  uniIdRouter,
+  tabBar
 };
 function n(e2) {
   return e2 && e2.__esModule && Object.prototype.hasOwnProperty.call(e2, "default") ? e2.default : e2;
@@ -10236,3 +10277,4 @@ exports.o = o$1;
 exports.p = p$1;
 exports.resolveComponent = resolveComponent;
 exports.t = t$1;
+exports.toRaw = toRaw;

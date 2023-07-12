@@ -10,7 +10,7 @@ const _sfc_main = {
     editable: Boolean
   },
   created() {
-    console.log(this.task);
+    console.log("task is:", this.task);
   },
   computed: {
     Id() {
@@ -24,18 +24,45 @@ const _sfc_main = {
         this.task.username = value;
       }
     },
-    branchs() {
-      return this.$store.state.branchs;
-    },
-    taskTypes() {
-      return this.$store.state.taskTypes;
+    taskType: {
+      get() {
+        return this.$store.getters.getTaskType(this.task.typeid);
+      }
     },
     branch: {
       get() {
-        return this.editable ? this.branchs[index]["name"] : this.branchs[this.task.branchid]["name"];
+        return this.$store.getters.getBranch(this.task.branchid);
+      }
+    },
+    branchOrder: {
+      get() {
+        if (!this.branchIndex) {
+          return this.$store.getters.getBranchIndex(this.task.branchid);
+        }
+        return this.branchIndex;
       },
       set(value) {
-        this.task.branchid = value;
+        this.branchIndex = value;
+      }
+    },
+    branchs() {
+      return this.$store.state.branchs;
+    },
+    nullTask() {
+      if (this.task === null || this.task === void 0) {
+        return true;
+      }
+      return false;
+    },
+    spendtime: {
+      get() {
+        if (!this.nullTask) {
+          return (this.task.presumedtime / 60).toFixed(2);
+        }
+        return "";
+      },
+      set(value) {
+        this.task.presumedtime = value * 60;
       }
     },
     title: {
@@ -50,17 +77,21 @@ const _sfc_main = {
   methods: {
     branchChange(e) {
       console.log("picker发送选择改变，携带值为", e);
-      this.branch = e.detail.value;
+      this.branchIndex = e.detail.value;
+    },
+    rewardTypeChange(e) {
+      console.log("rewardType 改变，携带值为", e);
+      this.$rewardTypeValue = e;
     }
   },
   data() {
     return {
       // 预计时间
-      spendtime: "",
-      deparment: "",
-      index: 0,
-      tasktype: "类型",
+      //spendtime:"",
+      //tasktype:"类型",
       status: ["代接", "完成", "审核中"],
+      branchIndex: false,
+      $rewardTypeValue: "￥",
       rewardtype: {
         value: "￥",
         options: [
@@ -94,23 +125,23 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: $options.title,
     e: common_vendor.n(`fontcolor${$options.Id % 3}`),
     f: !$props.editable,
-    g: $props.editable ? "" : $data.spendtime,
+    g: $options.spendtime,
     h: common_vendor.n(`fontcolor${$options.Id % 3}`),
     i: common_vendor.t($props.task.reward),
     j: common_vendor.t($data.rewardtype.value),
-    k: common_vendor.o(($event) => _ctx.value = $event),
-    l: common_vendor.p({
+    k: common_vendor.o($options.rewardTypeChange),
+    l: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
+    m: common_vendor.p({
       localdata: $data.rewardtype.options,
       clear: false,
       placeholder: "类型",
-      modelValue: _ctx.value
+      modelValue: $data.$rewardTypeValue
     }),
-    m: common_vendor.t($data.tasktype),
-    n: common_vendor.t($options.branch),
-    o: !$props.editable,
-    p: $options.branchs,
-    q: _ctx.name,
-    r: $data.index,
+    n: common_vendor.t($options.taskType),
+    o: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
+    p: !$props.editable,
+    q: $options.branchs,
+    r: $options.branchOrder,
     s: common_vendor.n(`fontcolor${$options.Id % 3} department`),
     t: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
     v: common_vendor.t($options.userName),

@@ -1,4 +1,5 @@
 import {createStore} from "vuex"
+import {toRaw} from "vue"
 
 const store = createStore({
 	state:{
@@ -12,76 +13,102 @@ const store = createStore({
 		}
 	},
 	mutations:{
-		//获取部门信息
-		getBranchs(state){
-			uni.request({
-				url:state.apiBaseUrl+"/Information/branchs",
-				method:"GET",
-				success(res) {
-			 // 在nextTick中更新数据
-					this.$nextTick(() => {
-					  // 更新数据
-					console.log("branchs:",res.data)
-					state.branchs = res.data["$values"]
-					});		
-
-				},
-				fail(err) {
-					console.log("get branchs error")
-					uni.showModal({
-						content:err.errMsg
-					})
-				}
-			})
+		updateBranchs(state,payload){
+			console.log("branchs:",payload)
+			state.branchs = toRaw(payload)
 		},
-		//获取任务类型信息
-		getTaskTypes(state){
-			uni.request({
-				url:state.apiBaseUrl+"/Information/customtypes",
-				method:'GET',
-				success(res){
-			 // 在nextTick中更新数据
-					this.$nextTick(() => {
-					  // 更新数据
-					console.log("tasktypes:",res.data)
-					state.taskTypes = res.data["$values"]
-					});						
-
-				},
-				fail(err) {
-					console.log("get tasktypes error")
-					uni.showModal({
-						content:err.errMsg
-					})
-				}
-			})
+		updateTaskTypes(state,payload){
+			console.log("taskTypes:",payload)
+			state.taskTypes = toRaw(payload)
 		},
-		getTasks(state){
-			uni.request({
-				url:state.apiBaseUrl+"/Assignment",
-				method:'GET',
-				success(res){
-			 // 在nextTick中更新数据
-					this.$nextTick(() => {
-					  // 更新数据
-					  console.log("tasks:",res.data)
-					  state.tasks.status = true
-					  state.tasks.values= res.data["$values"]
-					});	
-				}
-			})
-		}
+		updateTasks(state,payload){
+			console.log("tasks:",payload)
+			state.tasks.status = true
+			state.tasks.values= payload
+		},
 	},
 	getters:{
-		fetchTasks(state){
+		getTasks(state){
 			if(state.tasks.status){
 				return state.tasks.values
 			}
-		}
+		},
+		getBranch:(state)=>(branchid)=>{
+			let i = state.branchs.find(item => item.id === branchid)
+			console.log("branch is: ",i)
+			if(i===undefined){
+				return "部门"
+			}
+			return i["name"]
+		},
+		getTaskType:(state)=>(typeid)=>{
+			let i = state.taskTypes.find(item => item.id === typeid)
+			console.log("taskType is: ",i)
+			if(i===undefined){
+				return "类型"
+			}
+			return i["name"]
+		},
+		getBranchIndex:(state)=>(branchid)=>{
+			let i = state.branchs.findIndex(item => item.id === branchid)
+			if(i===undefined){
+				return 0
+			}
+			return i
+		},
 	},
 	actions:{
+		//获取部门信息
+		async fetchBranchs({commit,state}){
+			try {
+			        const response = await uni.request({
+			          url: state.apiBaseUrl+"/Information/branchs",
+			          method: 'GET',
+			        });
+			        const data = response.data;
+			        commit('updateBranchs', data["$values"]);
+			    } catch (error) {
+					// uni.showModal({
+					// 	content:err.errMsg
+					// })
+			        console.error("fetch branchs error:",error);
+			    }
 
-		getTaskById({commit},id){
+		},
+		//获取任务类型信息
+		async fetchTaskTypes({commit,state}){
+			try {
+			        const response = await uni.request({
+			          url: state.apiBaseUrl+"/Information/customtypes",
+			          method: 'GET',
+			        });
+			        const data = response.data;
+			        commit('updateTaskTypes', data["$values"]);
+			    } catch (error) {
+					// uni.showModal({
+					// 	content:err.errMsg
+					// })
+			        console.error("fetch updateTaskTypes error:",error);
+			    }
+				
+		},
+		async fetchTasks({commit,state}){
+			try {
+			        const response = await uni.request({
+			          url: state.apiBaseUrl+"/Assignment",
+			          method: 'GET',
+			        });
+			        const data = response.data;
+			        commit('updateTasks', data["$values"]);
+			    } catch (error) {
+					// uni.showModal({
+					// 	content:err.errMsg
+					// })
+			        console.error("fetch tasks error:",error);
+			    }
+
+		},		
+		fetchTaskById({commit},id){
 			
 		}
 	}
