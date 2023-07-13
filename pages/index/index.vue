@@ -25,18 +25,7 @@
 		onLoad() {
 			console.log("page index onload")
 		},
-		// async beforeCreate() {
-		// 	console.log("before Create")
-		// 	await this.$store.dispatch('fetchBranchs');
-		// 	await this.$store.dispatch('fetchTaskTypes');
-		// 	try {
-		// 	  if(!this.$store.state.tasks.status){
-		// 		 await this.$store.dispatch('fetchTasks')
-		// 	  }
-		// 	} catch (error) {
-		// 	  console.error("Error getting data from the API:", error);
-		// 	}
-		// },
+		
 		computed:{
 			tasks:{
 				get() {

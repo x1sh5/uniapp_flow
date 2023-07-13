@@ -1,19 +1,22 @@
 <template>
 	<view>
 		<view>选择创建类型</view>
-		<button v-for="item in taskTypes" :key="item.id" @click="editTask">qq{{item.name}}</button>
+		<button v-for="item in taskTypes" :key="item.id" @click="editTask">{{item.name}}</button>
 	</view>
 </template>
 
 <script>
+	import {nextTick} from "vue"
 	export default {
-		data:{
-			a:"2",
-			taskTypess: []
+		data(){//必须函数，对象不再支持
+			return {
+				a:"2",
+				$taskTypes: []
+			}
 		},
 		computed:{
 			taskTypes(){
-				return this.$store.getters.taskTypes
+				return this.$store.state.taskTypes
 			},
 		},
 		methods:{
@@ -24,17 +27,21 @@
 				})
 			},
 		},
-		created() {
+		async created() {
 			console.log("addtask create")
-			this.taskTypes = this.$store.getters.taskTypes
-			console.log(this.taskTypes)
+			// this.$data.$taskTypes = this.$store.state.taskTypes
+			// await nextTick();
+			// await this.$nextTick()
+			// console.log(this.$data.$taskTypes)
 		},
 		onLoad() {
+			//level > created
 			console.log("onload")
-			console.log(this.taskTypes)
+			//console.log(this.$data.$taskTypes)
 		},
 		onShow() {
-			console.log(this.taskTypes)
+			console.log("onshow")
+			//console.log(this.$data.$taskTypes)
 		}
 
 	}

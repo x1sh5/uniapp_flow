@@ -52,12 +52,12 @@
 				"selectedIconPath": "static/homeactive.png",
 				"text": "首页"
 			},
-			{
-				"pagePath": "pages/newTask/newTask",
-				"iconPath": "static/add.png",
-				"selectedIconPath": "static/addactive.png",
-				"text": "新任务"
-			},
+			// {
+			// 	"pagePath": "pages/newTask/newTask",
+			// 	"iconPath": "static/add.png",
+			// 	"selectedIconPath": "static/addactive.png",
+			// 	"text": "新任务"
+			// },
 			{
 				"pagePath": "pages/addtask/addtask",
 				"iconPath": "static/icons/section.png",
