@@ -1,16 +1,25 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "流沙任务系统"
+			"path" : "pages/addtask/addtask",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "新建",
+				"enablePullDownRefresh": false
 			}
-		},
-		{
+			
+		}
+		,{
 			"path": "pages/newTask/newTask",
 			"style": {
 				"navigationBarTitleText": "创建任务",
 				"enablePullDownRefresh": true
+			}
+		}	
+		,{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "流沙任务系统"
 			}
 		}
 	    ,{
@@ -22,7 +31,7 @@
             }
             
         }
-        
+
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -48,6 +57,12 @@
 				"iconPath": "static/add.png",
 				"selectedIconPath": "static/addactive.png",
 				"text": "新任务"
+			},
+			{
+				"pagePath": "pages/addtask/addtask",
+				"iconPath": "static/icons/section.png",
+				"selectedIconPath": "static/icons/drawer.png",
+				"text": "添加"
 			},
 			{
 				"pagePath": "pages/userCenter/userCenter",

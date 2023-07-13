@@ -1,69 +1,72 @@
 <template>
 <!-- 	<view> -->
 	<!-- 任务卡片 -->
-	<view :class="`task${Id%3} columnlayout`" >
-	  <!-- 上部分，包括： 标题，类型，工时，回馈 两行 -->
-	  <view class="task-top rowlayout">
-		<!-- 左半部分，包括：标题，工时，回馈比 -->
-		<view class="task-top-left columnlayout">
-		<!-- 第一层：需求内容 编号 -->
-		  <view class="rowlayout">
-			<view :class="`fontcolor${Id%3} poster`" >需求内容</view>
-			<!-- 序列号 -->
-			<view class="serialNo">k8963245{{Id}}</view>
+	<!-- 任务卡片 -->
+	<view :class="`task${Id%3}`" >
+		<!-- 编号 标题 -->
+		<!-- 第一行，第一列起横跨2列 -->
+		<view class="r12c13">
+			<view class="columnlayout">
+				<!-- 第一层：需求内容 编号 -->
+				  <view class="rowlayout">
+					<view :class="`fontcolor${Id%3} poster`" >需求内容</view>
+					<!-- 序列号 -->
+					<view class="serialNo">k8963245{{Id}}</view>
+				  </view>
+				  <!-- 第二层：标题 -->
+				  <view class="title">
+					<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容">
+					</textarea>
+				  </view>
 		  </view>
-		  <!-- 第二层：标题 -->
-		  <view class="title">
-			<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容">
-			</textarea>
-		  </view>
-		  <!-- 第三层：预计工时，回馈 -->
-		  <view class="timeandreward">
-			  <!-- 预计工时 -->
-			  <view class="columnlayout spendtime">
-				<view :class="`fontcolor${Id%3}`">预计工时</view>
-				<view class="rowlayout">
-				  <input maxlength="8" :disabled="!editable" type="digit" 
-				  :value="spendtime" class="input" />h
-				</view>
-				
-			  </view>
-			  <!-- 回馈值 -->
-			  <view class="columnlayout reward">
-				<view :class="`fontcolor${Id%3}`">回馈值</view>
-				<view class="rowlayout">
-				  <view style="border-bottom: 1px dashed gray;">{{task.reward}}</view>
-				  <!-- <view>{{ rewardtype.value }}</view> -->
-				  <uni-data-select :localdata="rewardtype.options" :clear="false"
-				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
-				   style="z-index: 2;background-color: gray;">
-					  
-				  </uni-data-select>
-				</view>
-			  </view>
-			  
-			</view>
 		</view>
+
+	  <!-- 预计工时 第二行第一列 -->
+		  <view class="presumedtime">
+			<view :class="`fontcolor${Id%3}`">预计工时</view>
+			<view class="rowlayout">
+			  <input maxlength="8" :disabled="!editable" type="digit" 
+			  :value="spendtime" class="input" />h
+			</view>
+			
+		  </view>
+		  
+		  <!-- 回馈值 第二行第二列 -->
+		  <view class="rewardbox">
+			<view :class="`fontcolor${Id%3}`">回馈值</view>
+			<view class="rowlayout">
+			  <input maxlength="6" :disabled="!editable" type="digit" class="reward" :value="task.reward" />
+			  <!-- <view>{{ rewardtype.value }}</view> -->
+			  <uni-data-select :localdata="rewardtype.options" :clear="false"
+			   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
+			   style="z-index: 2;width: 20px;margin-left: 5rpx;margin-bottom: 5rpx;" 
+			   :disabled="!editable">
+				  
+			  </uni-data-select>
+			</view>
+		  </view>
+			  
+
 		<!-- 右半部分，只包括：类型 -->
-		<view class="task-top-right columnlayout" >
+		<view class="bigtype" >
 			<view class="tasktype columnlayout">{{ taskType }}</view>
 		</view>
-	  </view>
-	  <!-- 部门，发起人，状态 -->
-	  <view class="task-bottom rowlayout">
+
 	   <!-- 部门 -->
 	   <!-- range-key 用于指定显示名称属性值 -->
 		<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
-		:value="branchOrder" :class="`fontcolor${Id%3} department`" @change="branchChange">
+		:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
 		{{branchs[branchOrder]["name"]}}</picker>
 		<!-- 发起人 -->
-		<view class="organigerpart" wx:if="!editable">
+		<view class="organigerpart" :style="editable?'display:none':'display:flex'">
 		  <view>{{userName}}</view>
-		  <view :class="`fontcolor${Id%3}`">发起人</view>
+		  <view :class="`fontcolor${Id%3}`" >发起人</view>
 		</view>
 		<!-- 状态 -->
-		<view class="status" :hidden="editable">{{status[task.status]}}</view>
-	  </view>
+		<view class="status" :style="editable?'display:none':'display:flex'">
+			<view class="statuscontent" >{{status[task.status]}}</view>
+		</view>
+
 	</view>
 <!-- 	</view> -->
 </template>
@@ -166,13 +169,13 @@
 				  value: 0,
 				  options: [
 					{
-					  text: '1',
+					  text: '￥',
 					  value: "￥",
 					  selected: true
 					},
 					{
-					  text: '2',
-					  value: '%’',
+					  text: '%',
+					  value: '%',
 					},]
 				}
 			};
@@ -206,13 +209,10 @@
 	}
 	
 	.task(){
-	  height: 195px;
-	  width: 96%;
-	  align-self: center;
+	  display: grid;
+	  grid-template-rows: 2fr 1fr 1fr;
+	  grid-template-columns: 3fr 3fr 4fr;
 	  position: relative;
-	  border: 2px solid #04882c;
-	  margin: 0px 5px;
-	  z-index: 0;
 	}
 	.taskbefore(){
 	  top: 0;
@@ -221,8 +221,31 @@
 	  bottom: 0;
 	  content: "";
 	  position: absolute;
-	  clip-path: circle(11rem at 100% 2rem);
+	  height: inherit;
+	  clip-path: circle(65% at 100% 0%);
 	  z-index: -1;
+	}
+	
+	.r12c13{
+		grid-row-start: 1;
+		grid-row-end: 2;
+		grid-column-start: 1;
+		grid-column-end: 3;
+	}
+	
+	.bigtype{
+		grid-row-start: 1;
+		grid-row-end: 3;
+		grid-column-start: 3;
+		grid-column-end: 4;
+	}
+	
+	.presumedtime{
+		grid-row-start: 2;
+		grid-row-end: 3;
+		grid-column-start: 1;
+		grid-column-end: 2;
+		margin-bottom: 15rpx;
 	}
 	
 	.task0{
@@ -253,28 +276,6 @@
 	  background-color: rgb(45, 145, 238);
 	}
 	
-	
-	.task-top{
-	height: 70%;
-	z-index: 99;
-	}
-	
-	.task-bottom{
-	display: flex;
-	flex-direction: row;
-	z-index: 99;
-	}
-	
-	.task-top-left{
-	width: 50%;
-	}
-	
-	.task-top-right{
-	  width: 50%;
-	  align-self: flex-end;
-	  align-content: flex-end;
-	}
-	
 	.tasktype{
 	  bottom: 0px;
 	  right: 0px;
@@ -290,16 +291,25 @@
 	  margin-top: 5px;
 	}
 	
-	//预计用时
+	//预计用时量
 	.spendtime{
 	  width: 50%;
 	  margin-right: 5px;
 	}
 	
 	//回馈
+	.rewardbox{
+		grid-row-start: 2;
+		grid-row-end: 3;
+		grid-column-start: 2;
+		grid-column-end: 3;
+		margin-bottom: 10rpx;
+	}
+	
 	.reward{
-	  width: 50%;
-	  //margin-top: 5px;
+		border-bottom: 1px dashed gray;
+		flex-basis: 60rpx;
+		text-align: center;
 	}
 	
 	.margin-right10{
@@ -321,27 +331,35 @@
 	.department{
 	  .margin-right10();
 	  font-size: 1.0cm;
+	  grid-row: 3 / 4;
+	  grid-column: 1 / 2;
 	}
 	
 	.organigerpart{
-	  .columnlayout();
 	  .margin-right10();
-	  display: flex;
 	  padding-bottom: 5px;
-	  align-self: flex-end;
+	  grid-row: 3 / 4;
+	  grid-column: 2 / 3;
 	}
 	
+	//status 和 statuscontent 都必须使用flex布局才能使align-items: center;生效
 	.status{
-	  //.margin-right10();
-	  margin-left: 20px;
-	  height: 32px;
-	  border: 2px solid rgb(241, 91, 4);
-	  border-radius: 50%;
-	  color: white;
-	  display: flex;
-	  align-items: center;
-	  text-align: center;
+	  grid-row-start: 3;
+	  grid-row-end: 4;
+	  grid-column-start: 3;
+	  grid-column-end: 4;
+
 	}
+	.statuscontent{
+		margin-left: 20px;
+		height: 32px;
+		border: 2px solid rgb(241, 91, 4);
+		border-radius: 50%;
+		color: white;
+		align-items: center;
+		text-align: center;
+	}
+	
 	.timeandreward{
 	  .rowlayout();
 	  .margin-top5();
