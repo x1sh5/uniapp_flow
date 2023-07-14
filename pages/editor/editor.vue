@@ -1,4 +1,8 @@
 <template>
+	<view class="status_bar">
+	            <!-- 这里是状态栏 -->
+	        </view>
+			
 	<view class="container">
 		<view class="page-body">
 			<view class='wrapper'>
@@ -162,6 +166,11 @@
 
 <style>
 	@import "./editor-icon.css";
+	
+	.status_bar {
+		height: var(--status-bar-height);
+		width: 100%;
+	}
 
 	.page-body {
 		height: calc(100vh - var(--window-top) - var(--status-bar-height));
