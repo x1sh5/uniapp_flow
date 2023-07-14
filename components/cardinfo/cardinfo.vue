@@ -129,6 +129,9 @@
 			},
 			spendtime:{
 				get() {
+					if(this.task.presumedtime===false){
+						return ""
+					}
 					if(!this.nullTask){
 						return (this.task.presumedtime/60).toFixed(2)
 					}

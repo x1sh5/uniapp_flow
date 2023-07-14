@@ -31,7 +31,13 @@
             }
             
         }
-
+		,{
+			"path": "pages/editor/editor",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "内容编辑"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -52,12 +58,10 @@
 				"selectedIconPath": "static/homeactive.png",
 				"text": "首页"
 			},
-			// {
-			// 	"pagePath": "pages/newTask/newTask",
-			// 	"iconPath": "static/add.png",
-			// 	"selectedIconPath": "static/addactive.png",
-			// 	"text": "新任务"
-			// },
+			{
+				"pagePath": "pages/editor/editor",
+				"text": "内容编辑"
+			},
 			{
 				"pagePath": "pages/addtask/addtask",
 				"iconPath": "static/icons/section.png",

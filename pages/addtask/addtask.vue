@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view>选择创建类型</view>
-		<button v-for="item in taskTypes" :key="item.id" @click="editTask">{{item.name}}</button>
+		<button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button>
 	</view>
 </template>
 
@@ -23,7 +23,7 @@
 			editTask(e){
 				console.log(e)
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?a=1&b=2",
+				  url:"/pages/newTask/newTask?typeid="+e,
 				})
 			},
 		},

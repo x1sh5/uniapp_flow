@@ -34,7 +34,7 @@ const store = createStore({
 			}
 		},
 		getBranch:(state)=>(branchid)=>{
-			let i = state.branchs.find(item => item.id === branchid)
+			let i = state.branchs.find(item => item.id === parseInt(branchid))
 			console.log("branch is: ",i)
 			if(i===undefined){
 				return "部门"
@@ -42,7 +42,9 @@ const store = createStore({
 			return i["name"]
 		},
 		getTaskType:(state)=>(typeid)=>{
-			let i = state.taskTypes.find(item => item.id === typeid)
+			console.log("typeid is ",typeid)
+			console.log("taskTypes are ",state.taskTypes)
+			let i = state.taskTypes.find(item => item.id === parseInt(typeid))
 			console.log("taskType is: ",i)
 			if(i===undefined){
 				return "类型"
