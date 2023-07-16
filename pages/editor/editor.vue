@@ -1,7 +1,10 @@
 <template>
-	<view class="status_bar">
-	            <!-- 这里是状态栏 -->
-	        </view>
+	<view class="status_bar" style="display: flex;justify-content: space-around;">
+	    <!-- 这里是状态栏 -->
+		<button @click="backEvent">取消</button>
+		<view>内容编辑</view>
+		<button @click="submitEvent">确认</button>
+	</view>
 			
 	<view class="container">
 		<view class="page-body">
@@ -81,6 +84,18 @@
 			// #endif
 		},
 		methods: {
+			backEvent(){
+				uni.navigateBack()
+			},
+			submitEvent(){
+				this.editorCtx.getContents({
+					success(res){
+						console.log(res)
+						uni.setStorageSync("html",res.html)
+					}
+				})
+				uni.navigateBack()
+			},
 			readOnlyChange() {
 				this.readOnly = !this.readOnly
 			},
@@ -168,8 +183,10 @@
 	@import "./editor-icon.css";
 	
 	.status_bar {
-		height: var(--status-bar-height);
+		height: var(--tab-bar-height);
 		width: 100%;
+		align-items: center;
+		background-color: rgb(248,248,248);
 	}
 
 	.page-body {

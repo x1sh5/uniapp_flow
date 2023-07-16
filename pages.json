@@ -1,16 +1,7 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path" : "pages/addtask/addtask",
-			"style" :                                                                                    
-			{
-				"navigationBarTitleText": "新建",
-				"enablePullDownRefresh": false
-			}
-			
-		}
-		,{
-			"path": "pages/newTask/newTask",
+			"path": "pages/addtask/addtask",
 			"style": {
 				"navigationBarTitleText": "创建任务",
 				"enablePullDownRefresh": true
@@ -34,8 +25,15 @@
 		,{
 			"path": "pages/editor/editor",
 			"style": {
-				"navigationStyle": "default",
+				"navigationStyle": "custom",
 				"navigationBarTitleText": "内容编辑"
+			}
+		},
+		{
+			"path": "pages/newTask/newTask",
+			"style": {
+				"navigationStyle": "default",
+				"navigationBarTitleText": "编辑任务"
 			}
 		}
     ],
@@ -57,10 +55,6 @@
 				"iconPath": "static/home.png",
 				"selectedIconPath": "static/homeactive.png",
 				"text": "首页"
-			},
-			{
-				"pagePath": "pages/editor/editor",
-				"text": "内容编辑"
 			},
 			{
 				"pagePath": "pages/addtask/addtask",

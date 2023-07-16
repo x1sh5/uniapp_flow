@@ -2,7 +2,10 @@
 	<view  class="newtaskbox">
 		<view style="width: 90%;">
 			<cardinfo :task="task" :editable="true"></cardinfo>
-			<editor></editor>
+			<view class="ql-container">  
+			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
+			</view>
+			<button class="editbutton" @click="editEvent">编辑内容...</button>
 		</view>
 	</view>
 </template>
@@ -27,12 +30,26 @@
 					  "verify": 0,
 					  },
 				}
+		},
+		computed:{
+			html:{
+				get(){
+					return uni.getStorageSync("html")
+				}
 			},
+		},
 		onLoad(op) {
 		  console.log("options:",op)
 		  this.$data.task.typeid = op.typeid
 		  console.log("typeid is ",this.$data.task.typeid)
 		},
+		methods:{
+			editEvent(e){
+				uni.navigateTo({
+					url:"/pages/editor/editor"
+				})
+			}
+		}
 	}
 </script>
 
@@ -44,5 +61,10 @@
 		//align-content: stretch;
 		//flex-wrap: wrap;
 		
+	}
+	
+	.editbutton{
+		border: 1px solid bisque;
+		color: darkgray;
 	}
 </style>
