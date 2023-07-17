@@ -2,7 +2,7 @@
 <!-- 	<view> -->
 	<!-- 任务卡片 -->
 	<!-- 任务卡片 -->
-	<view :class="`task${Id%3}`" >
+	<view :class="`task${Id%3}`" @click="detail">
 		<!-- 编号 标题 -->
 		<!-- 第一行，第一列起横跨2列 -->
 		<view class="r12c13">
@@ -159,6 +159,16 @@
 				console.log('rewardType 改变，携带值为', e)
 				this.$rewardTypeValue = e
 			},
+			detail(e){
+				if(!this.$store.state.hasLogin){
+					uni.navigateTo({
+						url:"/pages/logintips/logintips"
+					})
+				}
+				uni.navigateTo({
+					url:"/pages/addtask/addtask"
+				})
+			}
 		},
 		data() {
 			return {

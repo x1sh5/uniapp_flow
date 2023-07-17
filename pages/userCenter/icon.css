@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'wr';
+  src: url('./iconfont.woff')
+    format('woff2');
+}
+
+.wr {
+  font-family: 'wr' !important;
+  font-size: 32rpx;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

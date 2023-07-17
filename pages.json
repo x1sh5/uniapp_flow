@@ -36,6 +36,60 @@
 				"navigationBarTitleText": "编辑任务"
 			}
 		}
+        ,{
+            "path" : "pages/message/message",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "聊天",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/userTaskDetail/userTaskDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我发布的",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/draftBox/draftBox",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "草稿箱",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/logintips/logintips",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -63,6 +117,11 @@
 				"text": "添加"
 			},
 			{
+				"pagePath": "pages/message/message",
+				"iconPath": "static/icons/badge.png",
+				"text": "聊天"
+			}
+			,{
 				"pagePath": "pages/userCenter/userCenter",
 				"iconPath": "static/me.png",
 				"selectedIconPath": "static/meactive.png",

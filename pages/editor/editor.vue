@@ -1,10 +1,12 @@
 <template>
-	<view class="status_bar" style="display: flex;justify-content: space-around;">
+ 	<!-- <view class="status_bar" style="display: flex;justify-content: space-around;"> -->
 	    <!-- 这里是状态栏 -->
-		<button @click="backEvent">取消</button>
+<!-- 		<button @click="backEvent">取消</button>
 		<view>内容编辑</view>
-		<button @click="submitEvent">确认</button>
-	</view>
+		<button @click="submitEvent">确认</button> -->
+	<!-- </view> -->
+	<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" title="内容编辑" backgroundColor="#f8f8f8"
+	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 			
 	<view class="container">
 		<view class="page-body">
