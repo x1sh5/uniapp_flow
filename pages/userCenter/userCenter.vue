@@ -2,8 +2,8 @@
 	<view class="wrapper">
 		
 		<view class="userinfo">
-			<!-- avstar -->
-			<view style="border: 1rpx solid white;border-radius: 50%;"><image></image></view>
+			<!-- avatar -->
+			<view class="user-avatar"><image class="user-avatar-img"></image></view>
 			<view>username</view>
 		</view>
 		
@@ -55,6 +55,7 @@
 
 <style lang="less">
 	@import url('icon.css');
+	@import url('../../common/commen.css');
 	
 	.wrapper{
 		display: flex;

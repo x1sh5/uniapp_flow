@@ -164,10 +164,12 @@
 					uni.navigateTo({
 						url:"/pages/logintips/logintips"
 					})
+				}else{
+					uni.navigateTo({
+						url:"/pages/newTask/newTask"
+					})
 				}
-				uni.navigateTo({
-					url:"/pages/addtask/addtask"
-				})
+
 			}
 		},
 		data() {
