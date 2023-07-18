@@ -1,6 +1,6 @@
 @font-face {
     font-family: uniicons;
-    src: url(/assets/uniicons-89ed7d6d.ttf) format("truetype")
+    src: url('./uniicons-89ed7d6d.ttf') format("truetype")
 }
 
 .uni-icons{
