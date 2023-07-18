@@ -20,10 +20,10 @@
 		
 		<view class="driver" @click="holds"></view>
 		<view class="taskinfobox">
-			<view style="border: 1px solid grey;width: 100px;height: 40px;">已经接取任务</view>
+			<view style="position: relative;margin-left: 10rpx;">已经接取任务</view>
 			<view class="taskinfo">
-				<view class="uni-icons icon-incomplete" @click="userTaskDetail"><view class="item_title">待完成</view></view>
-				<view class="wr icon2" @click="userTaskDetail"><view class="item_title">完成项目</view></view>
+				<view class="uni-icons icon-incomplete" @click="holds"><view class="item_title">待完成</view></view>
+				<view class="wr icon2" @click="holds"><view class="item_title">完成项目</view></view>
 			</view>
 		</view>
 		
@@ -76,7 +76,7 @@
 			},
 			signin(e){
 				uni.navigateTo({
-					url:"/pages/login/login"
+					url:"/pages/login/login?refer=usercenter"
 				})
 			},
 			signout(e){

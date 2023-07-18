@@ -1,6 +1,6 @@
 @font-face {
     font-family: uniicons;
-    src: url('./uniicons-89ed7d6d.ttf') format("truetype")
+    src: url('./uni-173d2b94.ttf') format("truetype")
 }
 
 .uni-icons{
@@ -10,5 +10,5 @@
 }
 
 .icon-incomplete::before{
-	content: '\e67f';
+	content: '\e400';
 }

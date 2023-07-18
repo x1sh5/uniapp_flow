@@ -36,6 +36,13 @@ const store = createStore({
 				return state.tasks.values
 			}
 		},
+		getTaskById:(state)=>(id)=>{
+			if(state.tasks.status){
+				let i = state.tasks.values.find(item=>item.id === parseInt(id))
+				return i
+			}
+			
+		},
 		getBranch:(state)=>(branchid)=>{
 			let i = state.branchs.find(item => item.id === parseInt(branchid))
 			console.log("branch is: ",i)

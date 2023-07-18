@@ -75,6 +75,7 @@
 	export default {
 		name:"cardinfo",
 		props:{
+			taskIndex:Number, //task 在数组中的索引
 		    task:Object,
 		    //颜色代码
 		    colorid:Number,
@@ -148,7 +149,7 @@
 				set(value) {
 					this.task.title = value
 				}
-			}
+			},
 		},
 		methods:{
 			branchChange(e) {
@@ -166,7 +167,8 @@
 					})
 				}else{
 					uni.navigateTo({
-						url:"/pages/newTask/newTask"
+						url:"/pages/taskDetail/taskDetail?id="+this.task.id,
+						
 					})
 				}
 

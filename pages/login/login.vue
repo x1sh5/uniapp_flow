@@ -12,7 +12,7 @@
 	export default {
 		data() {
 			return {
-				
+				depth:1
 			};
 		},
 		methods:{
@@ -27,7 +27,9 @@
 						console.log(res);
 						//console.log(that.$store);
 						that.$store.commit("changeLoginState");
-						uni.navigateBack()
+						uni.navigateBack({
+							delta:that.depth
+						})
 					},
 					fail(err) {
 						console.log(err)
@@ -38,6 +40,17 @@
 				})
 			}
 		},
+		onLoad(op) {
+			const refer = op.refer
+			console.log(refer)
+			if(refer==='usercenter'){
+				console.log("equal")
+				this.depth = 1
+			}else{
+				this.depth = 3
+			}
+		},
+		
 	}
 </script>
 

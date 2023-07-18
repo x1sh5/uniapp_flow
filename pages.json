@@ -109,6 +109,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/taskDetail/taskDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "任务详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
