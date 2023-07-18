@@ -4,17 +4,17 @@
 			active-color="#4cd964" @clickItem="onClickItem" ></uni-segmented-control>
 		<view style="width: 90%;">
 			<view v-if="current === 0">
-				<view v-for="item in $publishs" :key="item.id" style="margin-top:5px;">
+				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
 				</view>
 			</view>
 			
 			<view v-if="current === 1">
-				<view v-for="item in $historys" :key="item.id" style="margin-top:5px;">
+				<view v-for="item in $completes" :key="item.id" style="margin-top:5px;">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
 				</view>
 			</view>
-			
+
 		</view>
 	</view>
 </template>
@@ -24,11 +24,10 @@
 	export default {
 		data() {
 			return {
-				items:["历史发布","浏览记录","草稿箱"],
+				items:["待完成","完成项目"],
 				current: 0,
-				$publishs:false,//数组，false表示为初始化
-				$historys:false,//数组，false表示为初始化
-				//$complete:false,//数组，false表示为初始化
+				$incompletes:false,//数组，false表示为初始化
+				$completes:false,//数组，false表示为初始化
 			};
 		},
 		methods:{
@@ -40,19 +39,19 @@
 		},
 		computed:{
 			publishs(){
-				if(!this.$publishs){
+				if(!this.$publish){
 					uni.request({
 						url:this.$store.state.apiBaseUrl+"/Assignment/user",
 						success(res) {
 							this.$nextTick(
 								function(e){
-									this.$publishs = res.data["$values"]
+									this.$publish = res.data["$values"]
 								}
 							)
 						}
 					})
 				}
-				return this.$publishs;
+				return this.$publish;
 			}
 		}
 	}

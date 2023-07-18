@@ -1,0 +1,14 @@
+@font-face {
+    font-family: uniicons;
+    src: url(/assets/uniicons-89ed7d6d.ttf) format("truetype")
+}
+
+.uni-icons{
+    font-family: uniicons;
+    text-decoration: none;
+    text-align: center
+}
+
+.icon-incomplete::before{
+	content: '\e67f';
+}

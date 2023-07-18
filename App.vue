@@ -1,4 +1,5 @@
 <script>
+	import 'weapp-cookie';
 	export default {
 		async beforeCreate() {
 			console.log("before Create")

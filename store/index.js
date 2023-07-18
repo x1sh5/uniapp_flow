@@ -26,6 +26,9 @@ const store = createStore({
 			state.tasks.status = true
 			state.tasks.values= payload
 		},
+		changeLoginState(state){
+			state.hasLogin = !state.hasLogin
+		},
 	},
 	getters:{
 		getTasks(state){
