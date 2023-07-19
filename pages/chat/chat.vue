@@ -2,10 +2,11 @@
 	<view>
 		<uni-nav-bar left-icon="left" @clickLeft="back" title="用户A"></uni-nav-bar>
 		
-		<view v-for="m in messages" :key="m.id">{{m.message}}</view>
+		<!-- <view v-for="m in messages" :key="m.id">{{m.message}}</view> -->
+		<yd-chatitem v-for="m in messages" :key="m.id" :message="m"></yd-chatitem>
 		
 		<view class="transmit">
-				<input class="input" type="text"/>
+				<input class="input" type="text" @blur="change"/>
 				<button class="sendbutton" @click="send">发送</button>
 		</view>
 	</view>
@@ -15,12 +16,18 @@
 	export default {
 		data() {
 			return {
+				text1:"",
 				messages:[]
 			}
 		},
 		methods: {
 			send(e){
-				this.messages.push(e)
+				console.log(this.text1)
+				this.messages.push(this.text1)
+			},
+			change(e){
+				
+				this.text1 = e.detail.value
 			},
 			back(e){
 				uni.navigateBack()
