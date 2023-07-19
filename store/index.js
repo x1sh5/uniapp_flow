@@ -6,7 +6,7 @@ const store = createStore({
 		hasLogin:false,
 		branchs:[],
 		taskTypes:[],
-		apiBaseUrl:"https://localhost:7221/api",
+		apiBaseUrl: "https://www.wangyan.net/api", // "https://localhost:7221/api",
 		tasks:{
 			status:false,
 			values:[]
@@ -76,9 +76,9 @@ const store = createStore({
 			        const response = await uni.request({
 			          url: state.apiBaseUrl+"/Information/branchs",
 			          method: 'GET',
-					  header:{
-						'Access-Control-Allow-Origin': '*'
-					  }
+					 //  header:{
+						// 'Access-Control-Allow-Origin': '*'
+					 //  }
 			        });
 			        const data = response.data;
 			        commit('updateBranchs', data["$values"]);
@@ -96,9 +96,9 @@ const store = createStore({
 			        const response = await uni.request({
 			          url: state.apiBaseUrl+"/Information/customtypes",
 			          method: 'GET',
-					  header:{
-						'Access-Control-Allow-Origin': '*'
-					  }
+					 //  header:{
+						// 'Access-Control-Allow-Origin': '*'
+					 //  }
 			        });
 			        const data = response.data;
 			        commit('updateTaskTypes', data["$values"]);
@@ -115,9 +115,9 @@ const store = createStore({
 			        const response = await uni.request({
 			          url: state.apiBaseUrl+"/Assignment",
 			          method: 'GET',
-					  header:{
-						'Access-Control-Allow-Origin': '*'
-					  }
+					 //  header:{
+						// 'Access-Control-Allow-Origin': '*'
+					 //  }
 			        });
 			        const data = response.data;
 			        commit('updateTasks', data["$values"]);
