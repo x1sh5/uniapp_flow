@@ -17,13 +17,18 @@
 		data() {
 			return {
 				text1:"",
-				messages:[]
+				//messages:[]
+			}
+		},
+		computed:{
+			messages(){
+				return this.$store.getters.getMessages
 			}
 		},
 		methods: {
 			send(e){
 				console.log(this.text1)
-				this.messages.push(this.text1)
+				this.$store.dispatch("sendMessage",{user:4,message:this.text1})
 			},
 			change(e){
 				
@@ -31,7 +36,11 @@
 			},
 			back(e){
 				uni.navigateBack()
-			}
+			},
+			
+		},
+		onLoad() {
+			this.$store.dispatch("connect")
 		}
 	}
 </script>

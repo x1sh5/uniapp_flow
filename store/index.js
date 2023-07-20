@@ -1,16 +1,22 @@
 import {createStore} from "vuex"
 import {toRaw} from "vue"
+import {HubConnectionBuilder,LogLevel} from "@microsoft/signalr"
 
 const store = createStore({
 	state:{
 		hasLogin:false,
 		branchs:[],
 		taskTypes:[],
-		apiBaseUrl: "https://www.wangyan.net/api", // "https://localhost:7221/api",
+		apiBaseUrl: "https://localhost:7221/api", //"https://www.wangyan.net/api",
 		tasks:{
 			status:false,
 			values:[]
-		}
+		},
+		workSocket : new HubConnectionBuilder()
+        .withUrl("/chathub") //, { accessTokenFactory: () => this.loginToken }
+        .configureLogging(LogLevel.Information)
+        .build(),
+		messages:[]
 	},
 	mutations:{
 		updateBranchs(state,payload){
@@ -28,6 +34,9 @@ const store = createStore({
 		},
 		changeLoginState(state){
 			state.hasLogin = !state.hasLogin
+		},
+		updateMessage(state,payload){
+			state.messages.push(payload)
 		},
 	},
 	getters:{
@@ -68,6 +77,9 @@ const store = createStore({
 			}
 			return i
 		},
+		getMessages:(state)=>{
+			return state.messages
+		}
 	},
 	actions:{
 		//获取部门信息
@@ -131,7 +143,20 @@ const store = createStore({
 		},		
 		fetchTaskById({commit},id){
 			
-		}
+		},
+		async sendMessage({commit,state},{user,message}){
+			await state.workSocket.invoke("SendMessage", user, message);
+			state.messages.push(message)
+		},
+	    async connect({state,actions}) {
+	        try {
+	            await state.workSocket.start();
+	            console.log("SignalR Connected.");
+	        } catch (err) {
+	            console.log(err);
+	            setTimeout(actions.connect, 5000);
+	        }
+	    },	
 	}
 })
 
