@@ -9,18 +9,6 @@ const _sfc_main = {
   onLoad() {
     console.log("page index onload");
   },
-  async beforeCreate() {
-    console.log("before Create");
-    await this.$store.dispatch("fetchBranchs");
-    await this.$store.dispatch("fetchTaskTypes");
-    try {
-      if (!this.$store.state.tasks.status) {
-        await this.$store.dispatch("fetchTasks");
-      }
-    } catch (error) {
-      console.error("Error getting data from the API:", error);
-    }
-  },
   computed: {
     tasks: {
       get() {
@@ -62,7 +50,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "4d84c736-1-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: true
+          editable: false
         }),
         c: item.id
       };

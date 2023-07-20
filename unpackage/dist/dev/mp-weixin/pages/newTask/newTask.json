@@ -1,5 +1,7 @@
 {
-  "navigationBarTitleText": "创建任务",
-  "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "navigationStyle": "default",
+  "navigationBarTitleText": "编辑任务",
+  "usingComponents": {
+    "cardinfo": "../../components/cardinfo/cardinfo"
+  }
 }

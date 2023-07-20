@@ -1,0 +1,1 @@
+<view class="ch-wrapper" bindtap="{{e}}"><view style="box-sizing:border-box"><view class="user-avatar"><image class="user-avatar-img"></image></view></view><view><view>{{a}}</view><view>{{b}}</view></view><view><view>{{c}}</view><view>{{d}}</view></view></view>

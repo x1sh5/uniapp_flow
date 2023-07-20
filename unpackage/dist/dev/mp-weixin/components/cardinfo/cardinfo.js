@@ -3,6 +3,8 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   name: "cardinfo",
   props: {
+    taskIndex: Number,
+    //task 在数组中的索引
     task: Object,
     //颜色代码
     colorid: Number,
@@ -56,6 +58,9 @@ const _sfc_main = {
     },
     spendtime: {
       get() {
+        if (this.task.presumedtime === false) {
+          return "";
+        }
         if (!this.nullTask) {
           return (this.task.presumedtime / 60).toFixed(2);
         }
@@ -82,6 +87,17 @@ const _sfc_main = {
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
       this.$rewardTypeValue = e;
+    },
+    detail(e) {
+      if (!this.$store.state.hasLogin) {
+        common_vendor.index.navigateTo({
+          url: "/pages/logintips/logintips"
+        });
+      } else {
+        common_vendor.index.navigateTo({
+          url: "/pages/taskDetail/taskDetail?id=" + this.task.id
+        });
+      }
     }
   },
   data() {
@@ -91,17 +107,17 @@ const _sfc_main = {
       //tasktype:"类型",
       status: ["代接", "完成", "审核中"],
       branchIndex: false,
-      $rewardTypeValue: "￥",
+      $rewardTypeValue: 0,
       rewardtype: {
-        value: "￥",
+        value: 0,
         options: [
           {
-            text: "元",
+            text: "￥",
             value: "￥",
             selected: true
           },
           {
-            text: "百分比",
+            text: "%",
             value: "%"
           }
         ]
@@ -127,14 +143,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: !$props.editable,
     g: $options.spendtime,
     h: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    i: common_vendor.t($props.task.reward),
-    j: common_vendor.t($data.rewardtype.value),
+    i: !$props.editable,
+    j: $props.task.reward,
     k: common_vendor.o($options.rewardTypeChange),
     l: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
     m: common_vendor.p({
       localdata: $data.rewardtype.options,
       clear: false,
       placeholder: "类型",
+      disabled: !$props.editable,
       modelValue: $data.$rewardTypeValue
     }),
     n: common_vendor.t($options.taskType),
@@ -142,13 +159,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     p: !$props.editable,
     q: $options.branchs,
     r: $options.branchOrder,
-    s: common_vendor.n(`fontcolor${$options.Id % 3} department`),
+    s: common_vendor.n(`fontcolor${$options.Id % 3}`),
     t: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
     v: common_vendor.t($options.userName),
     w: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    x: common_vendor.t($data.status[$props.task.status]),
-    y: $props.editable,
-    z: common_vendor.n(`task${$options.Id % 3} columnlayout`)
+    x: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    y: common_vendor.t($data.status[$props.task.status]),
+    z: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    A: common_vendor.n(`task${$options.Id % 3}`),
+    B: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   };
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);

@@ -1,0 +1,1 @@
+<view><view>选择创建类型</view><button wx:for="{{a}}" wx:for-item="item" wx:key="b" bindtap="{{item.c}}">{{item.a}}</button></view>

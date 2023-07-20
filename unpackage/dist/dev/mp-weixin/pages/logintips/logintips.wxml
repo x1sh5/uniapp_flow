@@ -1,0 +1,1 @@
+<view class="lgtip-wrapper"><text>未登录！</text><view bindtap="{{a}}" class="lgtip-button">登录</view><view bindtap="{{b}}" class="lgtip-button">注册</view></view>

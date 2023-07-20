@@ -1,0 +1,79 @@
+.chatitem.data-v-e72a33f9 {
+  background-color: #ededed;
+}
+.chatitem .leftitem.data-v-e72a33f9 {
+  display: flex;
+}
+.chatitem .leftitem .icon.data-v-e72a33f9 {
+  display: inline-block;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+}
+.chatitem .leftitem .info.data-v-e72a33f9 {
+  margin: 6rpx 20rpx;
+}
+.chatitem .leftitem .info .nickname.data-v-e72a33f9 {
+  font-size: 9px;
+  color: #9b9b9b;
+  display: block;
+}
+.chatitem .leftitem .info .message.data-v-e72a33f9 {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  font-size: 16px;
+  margin-top: 6rpx;
+  padding: 20rpx 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+.chatitem .leftitem .info .message .angle.data-v-e72a33f9 {
+  position: absolute;
+  left: -23rpx;
+  top: 28rpx;
+  width: 0;
+  height: 0;
+  border: 10rpx solid transparent;
+  border-right: 15rpx solid #fff;
+}
+.chatitem .rightitem.data-v-e72a33f9 {
+  display: flex;
+  justify-content: flex-end;
+}
+.chatitem .rightitem .icon.data-v-e72a33f9 {
+  display: inline-block;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+}
+.chatitem .rightitem .info.data-v-e72a33f9 {
+  margin: 6rpx 20rpx;
+  text-align: right;
+}
+.chatitem .rightitem .info .nickname.data-v-e72a33f9 {
+  font-size: 9px;
+  color: #9b9b9b;
+  display: block;
+}
+.chatitem .rightitem .info .message.data-v-e72a33f9 {
+  display: block;
+  position: relative;
+  top: 0;
+  right: 0;
+  font-size: 16px;
+  margin-top: 6rpx;
+  padding: 20rpx 20rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+.chatitem .rightitem .info .message .angle.data-v-e72a33f9 {
+  position: absolute;
+  right: -23rpx;
+  top: 28rpx;
+  width: 0;
+  height: 0;
+  border: 10rpx solid transparent;
+  border-left: 15rpx solid #fff;
+}

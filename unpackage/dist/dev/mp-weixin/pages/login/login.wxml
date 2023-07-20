@@ -1,0 +1,1 @@
+<view><form bindsubmit="{{a}}" style="margin:20px 10px"><text>用户名：</text><input name="userName" class="lg-input" type="text"/><text>密码：</text><input name="password" class="lg-input" type="safe-password"/><button form-type="submit">登录</button></form></view>

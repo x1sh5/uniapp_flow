@@ -1,0 +1,22 @@
+
+.input{
+		width: 80%;
+		height: 32rpx;
+		border: 2px solid #4ade00;
+}
+.transmit{
+		display: flex;
+		padding: 8rpx 5rpx;
+		width: 100%;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		height: 40px;
+		box-sizing: border-box;
+		position: absolute;
+		left: 0;
+		bottom: 40rpx;
+}
+.sendbutton{
+		height: 40px;
+}

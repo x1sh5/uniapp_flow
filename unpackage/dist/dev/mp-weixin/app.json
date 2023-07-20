@@ -1,8 +1,19 @@
 {
   "pages": [
+    "pages/addtask/addtask",
     "pages/index/index",
+    "pages/userCenter/userCenter",
+    "pages/editor/editor",
     "pages/newTask/newTask",
-    "pages/userCenter/userCenter"
+    "pages/message/message",
+    "pages/userTaskDetail/userTaskDetail",
+    "pages/draftBox/draftBox",
+    "pages/logintips/logintips",
+    "pages/register/register",
+    "pages/login/login",
+    "pages/chat/chat",
+    "pages/holdTask/holdTask",
+    "pages/taskDetail/taskDetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -23,10 +34,15 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/newTask/newTask",
-        "iconPath": "static/add.png",
-        "selectedIconPath": "static/addactive.png",
-        "text": "新任务"
+        "pagePath": "pages/addtask/addtask",
+        "iconPath": "static/icons/section.png",
+        "selectedIconPath": "static/icons/drawer.png",
+        "text": "添加"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/icons/badge.png",
+        "text": "聊天"
       },
       {
         "pagePath": "pages/userCenter/userCenter",
