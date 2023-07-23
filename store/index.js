@@ -1,5 +1,5 @@
 import {createStore} from "vuex"
-import {toRaw} from "vue"
+import {toRaw,nextTick} from "vue"
 import {HubConnectionBuilder,LogLevel} from "@microsoft/signalr"
 
 const store = createStore({
@@ -90,15 +90,20 @@ const store = createStore({
 			          method: 'GET',
 					  complete(){
 						  
-					  }
+					  },
+					  success:function(res){
+						  console.log(res)
+						  let data = res.data
+						  nextTick(()=>{
+							  commit('updateBranchs', data["$values"]);
+						  })
+					  						  
+					  },
 					 //  header:{
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-					console.log(response._xhr)
-					console.log(response._xhr["response"])
-			        const data = JSON.parse(response._xhr["response"]);
-			        commit('updateBranchs', data["$values"]);
+
 			    } catch (error) {
 					// uni.showModal({
 					// 	content:err.errMsg
@@ -115,14 +120,20 @@ const store = createStore({
 			          method: 'GET',
 					  complete(){
 					  						  
-					  }
+					  },
+					  success:function(res){
+						  console.log(res)
+						  let data = res.data
+						  nextTick(()=>{
+							  commit('updateTaskTypes', data["$values"]);
+						  })
+					  						  
+					  },
 					 //  header:{
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-					console.log(response)
-			        const data = JSON.parse(response._xhr.response);
-			        commit('updateTaskTypes', data["$values"]);
+
 			    } catch (error) {
 					// uni.showModal({
 					// 	content:err.errMsg
@@ -136,6 +147,14 @@ const store = createStore({
 			        const response = await uni.requestWithCookie({
 			          url: state.apiBaseUrl+"/Assignment",
 			          method: 'GET',
+					  success:function(res){
+						  console.log(res)
+						  let data = res.data
+						  nextTick(()=>{
+							  commit('updateTasks', data["$values"]);
+						  })
+						  
+					  },
 					  complete(){
 					  						  
 					  }
@@ -143,9 +162,6 @@ const store = createStore({
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-					console.log(response)
-			        const data = JSON.parse(response._xhr.response);
-			        commit('updateTasks', data["$values"]);
 			    } catch (error) {
 					// uni.showModal({
 					// 	content:err.errMsg

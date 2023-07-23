@@ -60,6 +60,10 @@
 			console.log("get user task")
 			uni.requestWithCookie({
 				url:this.$store.state.apiBaseUrl+"/Assignment/user",
+				method: 'GET',
+				header:{
+					'Access-Control-Allow-Origin': '*'
+				},
 				success(res) {
 					this.$publishs = res.data["$values"]
 				}
