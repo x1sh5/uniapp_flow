@@ -1,5 +1,6 @@
 <script>
-	import 'weapp-cookie';
+	//import 'weapp-cookie';
+	import cookies from "weapp-cookie/dist/weapp-cookie.umd"
 	export default {
 		async beforeCreate() {
 			console.log("before Create")

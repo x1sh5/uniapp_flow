@@ -19,13 +19,20 @@
 			login(e){
 				console.log(e)
 				const that = this;
-				uni.request({
-					url:this.$store.state.apiBaseUrl+"/Account/login",
+				const url = this.$store.state.apiBaseUrl+"/Account/login"
+				uni.requestWithCookie({
+					url:url,
 					method:"POST",
 					data:JSON.stringify(e.detail.value),
 					success(res) {
 						console.log(res);
 						//console.log(that.$store);
+						let domain = url.split("/")[2].split(":")[0];
+						// uni.setStorage({
+						// 	key:""
+						// })
+						uni.setResponseCookies(res.data.accessToken,domain);
+						uni.setResponseCookies(res.data.refreshToken,domain);
 						that.$store.commit("changeLoginState");
 						uni.navigateBack({
 							delta:that.depth

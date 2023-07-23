@@ -7,7 +7,7 @@ const store = createStore({
 		hasLogin:false,
 		branchs:[],
 		taskTypes:[],
-		apiBaseUrl: "https://localhost:7221/api", //"https://www.wangyan.net/api",
+		apiBaseUrl: "https://www.wangyan.net/api", //"https://testsite:7221/api", 
 		tasks:{
 			status:false,
 			values:[]
@@ -85,14 +85,19 @@ const store = createStore({
 		//获取部门信息
 		async fetchBranchs({commit,state}){
 			try {
-			        const response = await uni.request({
+			        const response = await uni.requestWithCookie({
 			          url: state.apiBaseUrl+"/Information/branchs",
 			          method: 'GET',
+					  complete(){
+						  
+					  }
 					 //  header:{
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-			        const data = response.data;
+					console.log(response._xhr)
+					console.log(response._xhr["response"])
+			        const data = JSON.parse(response._xhr["response"]);
 			        commit('updateBranchs', data["$values"]);
 			    } catch (error) {
 					// uni.showModal({
@@ -105,14 +110,18 @@ const store = createStore({
 		//获取任务类型信息
 		async fetchTaskTypes({commit,state}){
 			try {
-			        const response = await uni.request({
+			        const response = await uni.requestWithCookie({
 			          url: state.apiBaseUrl+"/Information/customtypes",
 			          method: 'GET',
+					  complete(){
+					  						  
+					  }
 					 //  header:{
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-			        const data = response.data;
+					console.log(response)
+			        const data = JSON.parse(response._xhr.response);
 			        commit('updateTaskTypes', data["$values"]);
 			    } catch (error) {
 					// uni.showModal({
@@ -124,14 +133,18 @@ const store = createStore({
 		},
 		async fetchTasks({commit,state}){
 			try {
-			        const response = await uni.request({
+			        const response = await uni.requestWithCookie({
 			          url: state.apiBaseUrl+"/Assignment",
 			          method: 'GET',
+					  complete(){
+					  						  
+					  }
 					 //  header:{
 						// 'Access-Control-Allow-Origin': '*'
 					 //  }
 			        });
-			        const data = response.data;
+					console.log(response)
+			        const data = JSON.parse(response._xhr.response);
 			        commit('updateTasks', data["$values"]);
 			    } catch (error) {
 					// uni.showModal({

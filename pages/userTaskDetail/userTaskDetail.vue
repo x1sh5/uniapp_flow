@@ -41,7 +41,8 @@
 		computed:{
 			publishs(){
 				if(!this.$publishs){
-					uni.request({
+					console.log("get user task")
+					uni.requestWithCookie({
 						url:this.$store.state.apiBaseUrl+"/Assignment/user",
 						success(res) {
 							this.$nextTick(
@@ -54,6 +55,15 @@
 				}
 				return this.$publishs;
 			}
+		},
+		onLoad(options) {
+			console.log("get user task")
+			uni.requestWithCookie({
+				url:this.$store.state.apiBaseUrl+"/Assignment/user",
+				success(res) {
+					this.$publishs = res.data["$values"]
+				}
+			})
 		}
 	}
 </script>

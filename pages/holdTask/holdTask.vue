@@ -40,7 +40,7 @@
 		computed:{
 			publishs(){
 				if(!this.$publish){
-					uni.request({
+					uni.requestWithCookie({
 						url:this.$store.state.apiBaseUrl+"/Assignment/user",
 						success(res) {
 							this.$nextTick(
