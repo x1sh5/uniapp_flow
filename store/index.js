@@ -2,18 +2,20 @@ import {createStore} from "vuex"
 import {toRaw,nextTick} from "vue"
 import {HubConnectionBuilder,LogLevel} from "@microsoft/signalr"
 
+const baseUrl = "https://www.wangyan.net";
+
 const store = createStore({
 	state:{
 		hasLogin:false,
 		branchs:[],
 		taskTypes:[],
-		apiBaseUrl: "https://www.wangyan.net/api", //"https://testsite:7221/api", 
+		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
 		tasks:{
 			status:false,
 			values:[]
 		},
 		workSocket : new HubConnectionBuilder()
-        .withUrl("/chathub") //, { accessTokenFactory: () => this.loginToken }
+        .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
         .configureLogging(LogLevel.Information)
         .build(),
 		messages:[]
@@ -86,7 +88,7 @@ const store = createStore({
 		async fetchBranchs({commit,state}){
 			try {
 			        const response = await uni.requestWithCookie({
-			          url: state.apiBaseUrl+"/Information/branchs",
+			          url: state.apiBaseUrl+"/api/Information/branchs",
 			          method: 'GET',
 					  complete(){
 						  
@@ -116,7 +118,7 @@ const store = createStore({
 		async fetchTaskTypes({commit,state}){
 			try {
 			        const response = await uni.requestWithCookie({
-			          url: state.apiBaseUrl+"/Information/customtypes",
+			          url: state.apiBaseUrl+"/api/Information/customtypes",
 			          method: 'GET',
 					  complete(){
 					  						  
@@ -145,7 +147,7 @@ const store = createStore({
 		async fetchTasks({commit,state}){
 			try {
 			        const response = await uni.requestWithCookie({
-			          url: state.apiBaseUrl+"/Assignment",
+			          url: state.apiBaseUrl+"/api/Assignment",
 			          method: 'GET',
 					  success:function(res){
 						  console.log(res)

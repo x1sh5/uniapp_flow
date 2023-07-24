@@ -41,7 +41,7 @@
 			publishs(){
 				if(!this.$publish){
 					uni.requestWithCookie({
-						url:this.$store.state.apiBaseUrl+"/Assignment/user",
+						url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 						success(res) {
 							this.$nextTick(
 								function(e){

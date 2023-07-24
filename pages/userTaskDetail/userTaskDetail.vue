@@ -4,7 +4,7 @@
 			active-color="#4cd964" @clickItem="onClickItem" ></uni-segmented-control>
 		<view style="width: 90%;">
 			<view v-if="current === 0">
-				<view v-for="item in $publishs" :key="item.id" style="margin-top:5px;">
+				<view v-for="item in publishs" :key="item.id" style="margin-top:5px;">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
 				</view>
 			</view>
@@ -26,8 +26,10 @@
 			return {
 				items:["历史发布","浏览记录","草稿箱"],
 				current: 0,
-				$publishs:false,//数组，false表示为初始化
-				$historys:false,//数组，false表示为初始化
+				hasPushlishs:false,
+				$publishs:[],
+				hasHistorys:false,
+				$historys:[],
 				//$complete:false,//数组，false表示为初始化
 			};
 		},
@@ -40,34 +42,30 @@
 		},
 		computed:{
 			publishs(){
-				if(!this.$publishs){
+				if(this.hasPushlishs){
 					console.log("get user task")
 					uni.requestWithCookie({
-						url:this.$store.state.apiBaseUrl+"/Assignment/user",
-						success(res) {
-							this.$nextTick(
-								function(e){
-									this.$publishs = res.data["$values"]
-								}
-							)
+						url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
+						success: (res) => {
+							this.$data.$publishs = res.data["$values"];
+							this.hasPushlishs = true;
 						}
 					})
 				}
-				return this.$publishs;
+				//必须使用this.$data.$publishs;而不能使用this.$publishs;
+				//because it starts with a reserved character ("$" or "_") and is not proxied on the render context
+				return this.$data.$publishs;
 			}
 		},
 		onLoad(options) {
 			console.log("get user task")
-			uni.requestWithCookie({
-				url:this.$store.state.apiBaseUrl+"/Assignment/user",
-				method: 'GET',
-				header:{
-					'Access-Control-Allow-Origin': '*'
-				},
-				success(res) {
-					this.$publishs = res.data["$values"]
-				}
-			})
+			// uni.requestWithCookie({
+			// 	url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
+			// 	method: 'GET',
+			// 	success(res) {
+			// 		this.$publishs = res.data["$values"]
+			// 	}
+			// })
 		}
 	}
 </script>
