@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dcloudio/types": "^3.3.3",
     "@microsoft/signalr": "^7.0.9",
+    "signalr-for-wx": "^1.1.6",
     "weapp-cookie": "^1.4.8"
   }
 }

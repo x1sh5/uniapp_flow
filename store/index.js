@@ -1,6 +1,6 @@
 import {createStore} from "vuex"
 import {toRaw,nextTick} from "vue"
-import {HubConnectionBuilder,LogLevel} from "@microsoft/signalr"
+import * as signalr from "signalr-for-wx/dist/index"
 
 const baseUrl = "https://www.wangyan.net";
 
@@ -14,9 +14,9 @@ const store = createStore({
 			status:false,
 			values:[]
 		},
-		workSocket : new HubConnectionBuilder()
+		workSocket : new signalr.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
-        .configureLogging(LogLevel.Information)
+        .configureLogging(signalr.LogLevel.Information)
         .build(),
 		messages:[]
 	},
