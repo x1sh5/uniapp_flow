@@ -21,8 +21,8 @@ const _sfc_main = {
   computed: {
     publishs() {
       if (!this.$publish) {
-        common_vendor.index.request({
-          url: this.$store.state.apiBaseUrl + "/Assignment/user",
+        common_vendor.index.requestWithCookie({
+          url: this.$store.state.apiBaseUrl + "/api/Assignment/user",
           success(res) {
             this.$nextTick(
               function(e) {

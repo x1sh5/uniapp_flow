@@ -1,0 +1,38 @@
+.lgtip-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+    text-align: center; /* 新增：使文字居中 */
+}
+
+.lgtip-wrapper text {
+    font-size: 20px; /* 新增：设置文字大小为80 */
+	 margin-top: 200rpx;
+	
+}
+
+.lgtip-button{
+    border: 1px solid  #07c160;
+    border-radius: 5px; /* 新增：设置按钮边框为圆角 */
+    width: 210px;
+    height: 35px;
+    color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
+    background-color: #07c160; /* 新增：设置按钮背景颜色为绿色 */
+	text-align: center;
+	top: calc(100vh - 300rpx);
+	   margin-top:0;
+	 display: flex;  /* 使用Flex布局 */ 
+	   justify-content: center;  /* 水平居中 */
+	   align-items: center; /* 垂直居中 */
+	
+}
+
+.lgtip-button:nth-child(3) {
+    color: #07c160; /* 新增：设置注册按钮文字颜色为绿色 */
+    background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
+	
+	
+}

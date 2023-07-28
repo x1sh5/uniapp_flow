@@ -59,9 +59,5 @@
 </script>
 
 <style lang="less">
-	.lg-input{
-		border: 1px solid #aaff7f;
-		width: 70%;
-		height: 32px;
-	}
+	@import url('./login.css');
 </style>

@@ -1,0 +1,90 @@
+	@import url('icon.css');
+	@import url('../../common/commen.css');
+	@import url('../../common/unicon.css');
+	
+	.uc-button{
+		height: 32px;
+	}
+	.wrapper{
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.userinfo{
+		display: flex;
+		flex-direction: row;
+		height: 150rpx;
+	}
+	
+	.taskinfobox{
+		display: flex;
+		flex-direction: column;
+		height: 300rpx;
+	}
+	
+	.taskinfo{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		align-content: center;
+		overflow: hidden;
+		width: 100%;
+		height: 300rpx;
+		border-radius: 0 0 16rpx 16rpx;
+	}
+	
+	.driver{
+		display: block;
+		height: 3rpx;
+		background-color: #a8a8a8;
+		margin: 10rpx 0;
+	}
+	
+	.item_title{
+		font-size: 24rpx;
+		color: #666;
+		line-height: 32rpx;
+	}
+	
+	//历史发布
+	.icon1{
+		font-size: 23px;
+		background-image: -webkit-linear-gradient(90deg, #6a6a6a 0%,#929292 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		text-align: center;
+		display: block;
+	}
+	
+	.icon1::before{
+		content: '\e046';
+	}
+	
+	.icon2, //完成项目
+	.icon3, //浏览记录
+	.icon4, //草稿箱
+	.icon5  //待完成
+	{
+		.icon1()
+	}
+	
+	.icon2::before{
+		content: '\e00b';
+	}
+	
+	.icon3::before{
+		content: '\e00e';
+	}
+	
+	.icon4::before{
+		content: '\e044';
+	}
+	
+	.icon5::before{
+		content: '\e67f';
+	}
+	
+	.misc{
+		margin: 10rpx 5rpx;
+	}

@@ -1,0 +1,27 @@
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 水平方向居中对齐 */
+  align-items: center;
+ 
+}
+
+form > * {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  
+}
+
+form > * > text {
+  margin-right: 10px;
+}
+
+.rg-input {
+width: 100%;
+		height: 70rpx;
+		border: 1px solid #8c8c8c;
+		border-radius: 50px; /* 将输入框的圆角设置为50 */
+		margin-top: 200rpx !important; /* 将表单距离顶部的距离设置为200rpx，并设置 !important 规则 */
+  
+}

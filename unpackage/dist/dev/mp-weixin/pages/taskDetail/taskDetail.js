@@ -63,7 +63,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.p({
       task: $data.task,
-      editable: true
+      editable: false
     }),
     b: $options.html,
     c: common_vendor.o((...args) => $options.contact && $options.contact(...args)),

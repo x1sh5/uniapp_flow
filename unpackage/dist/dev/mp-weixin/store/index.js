@@ -1,16 +1,19 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
+const baseUrl = "https://www.wangyan.net";
 const store = common_vendor.createStore({
   state: {
     hasLogin: false,
     branchs: [],
     taskTypes: [],
-    apiBaseUrl: "https://www.wangyan.net/api",
-    // "https://localhost:7221/api",
+    apiBaseUrl: baseUrl,
+    //"https://testsite:7221/api", 
     tasks: {
       status: false,
       values: []
-    }
+    },
+    workSocket: new common_vendor.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(common_vendor.LogLevel.Information).build(),
+    messages: []
   },
   mutations: {
     updateBranchs(state, payload) {
@@ -28,6 +31,9 @@ const store = common_vendor.createStore({
     },
     changeLoginState(state) {
       state.hasLogin = !state.hasLogin;
+    },
+    updateMessage(state, payload) {
+      state.messages.push(payload);
     }
   },
   getters: {
@@ -66,21 +72,31 @@ const store = common_vendor.createStore({
         return 0;
       }
       return i;
+    },
+    getMessages: (state) => {
+      return state.messages;
     }
   },
   actions: {
     //获取部门信息
     async fetchBranchs({ commit, state }) {
       try {
-        const response = await common_vendor.index.request({
-          url: state.apiBaseUrl + "/Information/branchs",
-          method: "GET"
+        const response = await common_vendor.index.requestWithCookie({
+          url: state.apiBaseUrl + "/api/Information/branchs",
+          method: "GET",
+          complete() {
+          },
+          success: function(res) {
+            console.log(res);
+            let data = res.data;
+            common_vendor.nextTick$1(() => {
+              commit("updateBranchs", data["$values"]);
+            });
+          }
           //  header:{
           // 'Access-Control-Allow-Origin': '*'
           //  }
         });
-        const data = response.data;
-        commit("updateBranchs", data["$values"]);
       } catch (error) {
         console.error("fetch branchs error:", error);
       }
@@ -88,35 +104,62 @@ const store = common_vendor.createStore({
     //获取任务类型信息
     async fetchTaskTypes({ commit, state }) {
       try {
-        const response = await common_vendor.index.request({
-          url: state.apiBaseUrl + "/Information/customtypes",
-          method: "GET"
+        const response = await common_vendor.index.requestWithCookie({
+          url: state.apiBaseUrl + "/api/Information/customtypes",
+          method: "GET",
+          complete() {
+          },
+          success: function(res) {
+            console.log(res);
+            let data = res.data;
+            common_vendor.nextTick$1(() => {
+              commit("updateTaskTypes", data["$values"]);
+            });
+          }
           //  header:{
           // 'Access-Control-Allow-Origin': '*'
           //  }
         });
-        const data = response.data;
-        commit("updateTaskTypes", data["$values"]);
       } catch (error) {
         console.error("fetch updateTaskTypes error:", error);
       }
     },
     async fetchTasks({ commit, state }) {
       try {
-        const response = await common_vendor.index.request({
-          url: state.apiBaseUrl + "/Assignment",
-          method: "GET"
+        const response = await common_vendor.index.requestWithCookie({
+          url: state.apiBaseUrl + "/api/Assignment",
+          method: "GET",
+          success: function(res) {
+            console.log(res);
+            let data = res.data;
+            common_vendor.nextTick$1(() => {
+              commit("updateTasks", data["$values"]);
+            });
+          },
+          complete() {
+          }
           //  header:{
           // 'Access-Control-Allow-Origin': '*'
           //  }
         });
-        const data = response.data;
-        commit("updateTasks", data["$values"]);
       } catch (error) {
         console.error("fetch tasks error:", error);
       }
     },
     fetchTaskById({ commit }, id) {
+    },
+    async sendMessage({ commit, state }, { user, message }) {
+      await state.workSocket.invoke("SendMessage", user, message);
+      state.messages.push(message);
+    },
+    async connect({ state, actions }) {
+      try {
+        await state.workSocket.start();
+        console.log("SignalR Connected.");
+      } catch (err) {
+        console.log(err);
+        setTimeout(actions.connect, 5e3);
+      }
     }
   }
 });

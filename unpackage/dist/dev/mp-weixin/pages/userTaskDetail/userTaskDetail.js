@@ -5,10 +5,10 @@ const _sfc_main = {
     return {
       items: ["历史发布", "浏览记录", "草稿箱"],
       current: 0,
-      $publishs: false,
-      //数组，false表示为初始化
-      $historys: false
-      //数组，false表示为初始化
+      hasPushlishs: false,
+      $publishs: [],
+      hasHistorys: false,
+      $historys: []
       //$complete:false,//数组，false表示为初始化
     };
   },
@@ -21,20 +21,21 @@ const _sfc_main = {
   },
   computed: {
     publishs() {
-      if (!this.$publishs) {
-        common_vendor.index.request({
-          url: this.$store.state.apiBaseUrl + "/Assignment/user",
-          success(res) {
-            this.$nextTick(
-              function(e) {
-                this.$publishs = res.data["$values"];
-              }
-            );
+      if (this.hasPushlishs) {
+        console.log("get user task");
+        common_vendor.index.requestWithCookie({
+          url: this.$store.state.apiBaseUrl + "/api/Assignment/user",
+          success: (res) => {
+            this.$data.$publishs = res.data["$values"];
+            this.hasPushlishs = true;
           }
         });
       }
-      return this.$publishs;
+      return this.$data.$publishs;
     }
+  },
+  onLoad(options) {
+    console.log("get user task");
   }
 };
 if (!Array) {
@@ -58,7 +59,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     c: $data.current === 0
   }, $data.current === 0 ? {
-    d: common_vendor.f($data.$publishs, (item, k0, i0) => {
+    d: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
         a: "564b4720-1-" + i0,
         b: common_vendor.p({

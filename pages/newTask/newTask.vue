@@ -54,17 +54,5 @@
 </script>
 
 <style lang="less">
-	.newtaskbox{
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		//align-content: stretch;
-		//flex-wrap: wrap;
-		
-	}
-	
-	.editbutton{
-		border: 1px solid bisque;
-		color: darkgray;
-	}
+	@import url('./newTask.css');
 </style>

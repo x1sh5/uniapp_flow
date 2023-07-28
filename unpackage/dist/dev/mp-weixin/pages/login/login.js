@@ -10,12 +10,16 @@ const _sfc_main = {
     login(e) {
       console.log(e);
       const that = this;
-      common_vendor.index.request({
-        url: this.$store.state.apiBaseUrl + "/Account/login",
+      const url = this.$store.state.apiBaseUrl + "/api/Account/login";
+      common_vendor.index.requestWithCookie({
+        url,
         method: "POST",
         data: JSON.stringify(e.detail.value),
         success(res) {
           console.log(res);
+          let domain = url.split("/")[2].split(":")[0];
+          common_vendor.index.setResponseCookies(res.data.accessToken, domain);
+          common_vendor.index.setResponseCookies(res.data.refreshToken, domain);
           that.$store.commit("changeLoginState");
           common_vendor.index.navigateBack({
             delta: that.depth

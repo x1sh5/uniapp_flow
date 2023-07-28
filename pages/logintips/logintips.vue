@@ -29,18 +29,5 @@
 </script>
 
 <style lang="less">
-	.lgtip-wrapper{
-		display: flex;
-	    flex-direction: column;
-	    justify-content: center;
-	    align-items: center;
-	    flex-wrap: wrap;
-	    align-content: center;
-	}
-	
-	.lgtip-button{
-		border: 1px solid greenyellow;
-		width: 80px;
-		height: 30px;
-	}
+	@import url('./logintips.css');
 </style>

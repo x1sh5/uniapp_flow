@@ -14,5 +14,8 @@
     "@microsoft/signalr": "^7.0.9",
     "signalr-for-wx": "^1.1.6",
     "weapp-cookie": "^1.4.8"
+  },
+  "devDependencies": {
+    "@types/uni-app": "^1.4.4"
   }
 }

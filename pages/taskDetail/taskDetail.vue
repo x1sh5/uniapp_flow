@@ -1,7 +1,7 @@
 <template>
 	<view  class="newtaskbox">
 		<view style="width: 90%;">
-			<cardinfo :task="task" :editable="true"></cardinfo>
+			<cardinfo :task="task" :editable="false"></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
@@ -69,17 +69,5 @@
 </script>
 
 <style lang="less">
-	.newtaskbox{
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		//align-content: stretch;
-		//flex-wrap: wrap;
-		
-	}
-	
-	.editbutton{
-		border: 1px solid bisque;
-		color: darkgray;
-	}
+	@import url('./taskDetail.css');
 </style>

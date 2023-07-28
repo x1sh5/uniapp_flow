@@ -23,16 +23,5 @@
 </script>
 
 <style lang="less">
-	.transmit{
-		display: flex;
-		padding: 8rpx 5rpx;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		height: 32rpx;
-		box-sizing: border-box;
-		position: absolute;
-		left: 0;
-		bottom: 0;
-	}
+	@import url('./message.css');
 </style>

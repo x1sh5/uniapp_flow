@@ -1,8 +1,9 @@
 
 .input{
-		width: 80%;
-		height: 32rpx;
-		border: 2px solid #4ade00;
+		width: 75%;
+		height: 70rpx;
+		border: 1px solid #8c8c8c;
+		border-radius: 50px; /* 将输入框的圆角设置为50 */
 }
 .transmit{
 		display: flex;
@@ -17,6 +18,16 @@
 		left: 0;
 		bottom: 40rpx;
 }
-.sendbutton{
-		height: 40px;
+.sendbutton {
+	height: 40px;
+	
+	background-color: #007AFF; /* 设置背景色为蓝色 */
+	border: none; /* 去掉边框 */
+	color: #fff; /* 设置文字颜色为白色 */
+	font-size: 16px; /* 设置文字大小 */
+	width: 60px; /* 设置宽度为 40px */
+	border-radius: 20px; /* 将按钮的圆角设置为 20px，即宽度的一半 */
+	display: flex; /* 将按钮设置为 flex 布局 */
+	justify-content: center; /* 水平居中 */
+	align-items: center; /* 垂直居中 */
 }

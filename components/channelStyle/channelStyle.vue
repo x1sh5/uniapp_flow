@@ -40,10 +40,5 @@
 <style lang="less">
 	@import url('../../common/commen.css');
 	
-	.ch-wrapper{
-		display: flex;
-		flex-direction: row;
-		padding: 10rpx 8rpx;
-		height: 100rpx;
-	}
+	@import url('./channelStyle.css');
 </style>

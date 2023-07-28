@@ -3,14 +3,19 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      text1: "",
-      messages: []
+      text1: ""
+      //messages:[]
     };
+  },
+  computed: {
+    messages() {
+      return this.$store.getters.getMessages;
+    }
   },
   methods: {
     send(e) {
       console.log(this.text1);
-      this.messages.push(this.text1);
+      this.$store.dispatch("sendMessage", { user: 4, message: this.text1 });
     },
     change(e) {
       this.text1 = e.detail.value;
@@ -18,6 +23,9 @@ const _sfc_main = {
     back(e) {
       common_vendor.index.navigateBack();
     }
+  },
+  onLoad() {
+    this.$store.dispatch("connect");
   }
 };
 if (!Array) {
@@ -37,7 +45,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["left-icon"]: "left",
       title: "用户A"
     }),
-    c: common_vendor.f($data.messages, (m, k0, i0) => {
+    c: common_vendor.f($options.messages, (m, k0, i0) => {
       return {
         a: m.id,
         b: "ae524260-1-" + i0,

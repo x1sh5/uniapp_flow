@@ -1,6 +1,7 @@
 import {createStore} from "vuex"
 import {toRaw,nextTick} from "vue"
-import * as signalr from "signalr-for-wx/dist/index"
+//import * as signalr from "signalr-for-wx/dist/index"
+import * as signalr from "../signalr_for_uniapp/index.js"
 
 const baseUrl = "https://www.wangyan.net";
 
