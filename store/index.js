@@ -4,7 +4,7 @@ import {toRaw,nextTick} from "vue";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://www.wangyan.net";
+const baseUrl = "https://localhost:7221";//"https://www.wangyan.net";
 
 const store = createStore({
 	state:{
@@ -16,9 +16,9 @@ const store = createStore({
 			status:false,
 			values:[]
 		},
-		workSocket : new signalr.HubConnectionBuilder()
+		workSocket : new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
-        .configureLogging(signalr.LogLevel.Trace)
+        .configureLogging(signalR.LogLevel.Trace)
         .build(),
 		messages:[]
 	},
@@ -178,7 +178,7 @@ const store = createStore({
 			
 		},
 		async sendMessage({commit,state},{user,message}){
-			await state.workSocket.invoke("SendMessage", user, message);
+			await state.workSocket.invoke("SendMessage", [user, message]);
 			state.messages.push(message)
 		},
 	    async connect({state,actions}) {

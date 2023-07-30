@@ -28,7 +28,7 @@
 		methods: {
 			send(e){
 				console.log(this.text1)
-				this.$store.dispatch("sendMessage",{user:4,message:this.text1})
+				this.$store.dispatch("sendMessage",{user:2,message:this.text1})
 			},
 			change(e){
 				
@@ -40,6 +40,9 @@
 			
 		},
 		onLoad() {
+			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
+				console.log("receiveMessage",user,message);
+			}); 
 			this.$store.dispatch("connect")
 		}
 	}

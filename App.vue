@@ -1,7 +1,7 @@
 <script>
 	//import 'weapp-cookie';
 	import cookies from "weapp-cookie/dist/weapp-cookie.umd";
-	import * as signalr from "D:/signalr_for_uniapp/dist/signalr.js";
+	import  "D:/signalr_for_uniapp/dist/signalr.js";
 	export default {
 		async beforeCreate() {
 			console.log("before Create")
