@@ -1,0 +1,11 @@
+"use strict";
+require("../common/vendor.js");
+require("./FetchHttpClient.js");
+require("./Utils.js");
+require("./ILogger.js");
+require("./HubConnection.js");
+require("./HubConnectionBuilder.js");
+require("./IHubProtocol.js");
+require("./ITransport.js");
+require("./Loggers.js");
+require("./TextMessageFormat.js");

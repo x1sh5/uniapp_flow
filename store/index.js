@@ -1,7 +1,8 @@
-import {createStore} from "vuex"
-import {toRaw,nextTick} from "vue"
+import {createStore} from "vuex";
+import {toRaw,nextTick} from "vue";
 //import * as signalr from "signalr-for-wx/dist/index"
-import * as signalr from "../signalr_for_uniapp/index.js"
+//import * as signalr from "../signalr_for_uniapp/index.js"
+
 
 const baseUrl = "https://www.wangyan.net";
 
@@ -17,7 +18,7 @@ const store = createStore({
 		},
 		workSocket : new signalr.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
-        .configureLogging(signalr.LogLevel.Information)
+        .configureLogging(signalr.LogLevel.Trace)
         .build(),
 		messages:[]
 	},
@@ -181,13 +182,24 @@ const store = createStore({
 			state.messages.push(message)
 		},
 	    async connect({state,actions}) {
-	        try {
-	            await state.workSocket.start();
-	            console.log("SignalR Connected.");
-	        } catch (err) {
-	            console.log(err);
-	            setTimeout(actions.connect, 5000);
-	        }
+	        // try {
+	        //     await state.workSocket.start();
+	        //     console.log("SignalR Connected.");
+	        // } catch (err) {
+	        //     console.log(err);
+	        //     setTimeout(()=>{dispatch("connect");}, 5000);
+	        // }
+			async function reconnect() {
+			      try {
+			        await state.workSocket.start();
+			        console.log("SignalR Connected.");
+			      } catch (err) {
+			        console.log(err);
+			        setTimeout(reconnect, 5000);
+			      }
+			    }
+			
+			    await reconnect();
 	    },	
 	}
 })

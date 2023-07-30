@@ -1,5 +1,14 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
+require("../signalr_for_uniapp/FetchHttpClient.js");
+require("../signalr_for_uniapp/Utils.js");
+const signalr_for_uniapp_ILogger = require("../signalr_for_uniapp/ILogger.js");
+require("../signalr_for_uniapp/HubConnection.js");
+const signalr_for_uniapp_HubConnectionBuilder = require("../signalr_for_uniapp/HubConnectionBuilder.js");
+require("../signalr_for_uniapp/IHubProtocol.js");
+require("../signalr_for_uniapp/ITransport.js");
+require("../signalr_for_uniapp/Loggers.js");
+require("../signalr_for_uniapp/TextMessageFormat.js");
 const baseUrl = "https://www.wangyan.net";
 const store = common_vendor.createStore({
   state: {
@@ -12,7 +21,7 @@ const store = common_vendor.createStore({
       status: false,
       values: []
     },
-    workSocket: new common_vendor.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(common_vendor.LogLevel.Information).build(),
+    workSocket: new signalr_for_uniapp_HubConnectionBuilder.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalr_for_uniapp_ILogger.LogLevel.Information).build(),
     messages: []
   },
   mutations: {
