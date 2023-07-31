@@ -4,12 +4,12 @@ form {
   justify-content: center; /* 水平方向居中对齐 */
   align-items: center;
 }
-form > * {
+form > view {
   display: flex;
   align-items: center;
   margin: 10px;
 }
-form > * > text {
+form > view > text {
   margin-right: 10px;
 }
 .rg-input {

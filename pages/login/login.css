@@ -4,13 +4,13 @@ form {
   align-items: center;
 }
 
-form > * {
+form > input,button,text,view {
   display: flex;
   align-items: center;
   margin: 10px;
 }
 
-form > * > text {
+form > view > text {
   margin-right: 10px;
 }
 

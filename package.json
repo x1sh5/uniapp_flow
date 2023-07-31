@@ -13,9 +13,18 @@
     "@dcloudio/types": "^3.3.3",
     "@microsoft/signalr": "^7.0.9",
     "signalr-for-wx": "^1.1.6",
-    "weapp-cookie": "^1.4.8"
+	"@types/tough-cookie": "^4.0.0",
+    "weapp-cookie": "^1.4.8",
+	"fetch-cookie": "^2.0.3",
+	"@types/eventsource": "^1.1.8",
+	"@types/node": "^20.4.5"
   },
   "devDependencies": {
-    "@types/uni-app": "^1.4.4"
+    "@types/uni-app": "^1.4.4",
+	"fetch-cookie": "^2.0.3",
+	"weapp-cookie": "^1.4.8",
+	"@types/tough-cookie": "^4.0.0",
+	"@types/eventsource": "^1.1.8",
+	"@types/node": "^20.4.5"
   }
 }

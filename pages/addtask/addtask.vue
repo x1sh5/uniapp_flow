@@ -1,7 +1,10 @@
 <template>
 	<view>
 		<view>选择创建类型</view>
-		<button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button>
+		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype"></uni-data-checkbox>
+		<uni-data-select v-model="a" :localdata="taskTypes" ></uni-data-select>
+		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
+		<button @click="createTask">创建</button>
 	</view>
 </template>
 
@@ -11,7 +14,11 @@
 		data(){//必须函数，对象不再支持
 			return {
 				a:"2",
-				$taskTypes: []
+				$taskTypes: [],
+				ctype: [
+					{text: '单卡', value: 0}, {text: '多卡', value: 1}
+				],
+				defaultT:0
 			}
 		},
 		computed:{
@@ -26,6 +33,12 @@
 				  url:"/pages/newTask/newTask?typeid="+e,
 				})
 			},
+			createTask(e){
+				console.log("createTask");
+				uni.navigateTo({
+				  url:"/pages/newTask/newTask?typeid="+e,
+				})
+			}
 		},
 		async created() {
 			console.log("addtask create")

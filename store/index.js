@@ -181,6 +181,9 @@ const store = createStore({
 			await state.workSocket.invoke("SendMessage", [user, message]);
 			state.messages.push(message)
 		},
+		receiveMessage({commit,state},{user,message}){
+			state.messages.push(message)
+		},
 	    async connect({state,actions}) {
 	        // try {
 	        //     await state.workSocket.start();

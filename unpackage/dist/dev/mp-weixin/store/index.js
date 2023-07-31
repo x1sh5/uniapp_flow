@@ -1,15 +1,6 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-require("../signalr_for_uniapp/FetchHttpClient.js");
-require("../signalr_for_uniapp/Utils.js");
-const signalr_for_uniapp_ILogger = require("../signalr_for_uniapp/ILogger.js");
-require("../signalr_for_uniapp/HubConnection.js");
-const signalr_for_uniapp_HubConnectionBuilder = require("../signalr_for_uniapp/HubConnectionBuilder.js");
-require("../signalr_for_uniapp/IHubProtocol.js");
-require("../signalr_for_uniapp/ITransport.js");
-require("../signalr_for_uniapp/Loggers.js");
-require("../signalr_for_uniapp/TextMessageFormat.js");
-const baseUrl = "https://www.wangyan.net";
+const baseUrl = "https://localhost:7221";
 const store = common_vendor.createStore({
   state: {
     hasLogin: false,
@@ -21,7 +12,7 @@ const store = common_vendor.createStore({
       status: false,
       values: []
     },
-    workSocket: new signalr_for_uniapp_HubConnectionBuilder.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalr_for_uniapp_ILogger.LogLevel.Information).build(),
+    workSocket: new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build(),
     messages: []
   },
   mutations: {
@@ -158,17 +149,23 @@ const store = common_vendor.createStore({
     fetchTaskById({ commit }, id) {
     },
     async sendMessage({ commit, state }, { user, message }) {
-      await state.workSocket.invoke("SendMessage", user, message);
+      await state.workSocket.invoke("SendMessage", [user, message]);
+      state.messages.push(message);
+    },
+    receiveMessage({ commit, state }, { user, message }) {
       state.messages.push(message);
     },
     async connect({ state, actions }) {
-      try {
-        await state.workSocket.start();
-        console.log("SignalR Connected.");
-      } catch (err) {
-        console.log(err);
-        setTimeout(actions.connect, 5e3);
+      async function reconnect() {
+        try {
+          await state.workSocket.start();
+          console.log("SignalR Connected.");
+        } catch (err) {
+          console.log(err);
+          setTimeout(reconnect, 5e3);
+        }
       }
+      await reconnect();
     }
   }
 });
