@@ -12,7 +12,7 @@ const store = common_vendor.createStore({
       status: false,
       values: []
     },
-    workSocket: new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build(),
+    workSocket: new common_vendor.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(common_vendor.LogLevel.Trace).build(),
     messages: []
   },
   mutations: {

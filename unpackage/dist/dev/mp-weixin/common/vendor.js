@@ -7391,8 +7391,8 @@ var weappCookie_umd = {
   );
 })(weappCookie_umd);
 (function(global2, factory) {
-  typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("uni-app/lib/uni")) : typeof define === "function" && define.amd ? define(["exports", "uni-app/lib/uni"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.signalR = {}, global2.uni));
-})(globalThis, function(exports2, uni) {
+  typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.signalR = {}));
+})(globalThis, function(exports2) {
   class HttpError extends Error {
     /** Constructs a new instance of {@link @microsoft/signalr.HttpError}.
      *
@@ -7574,20 +7574,20 @@ var weappCookie_umd = {
   class Platform {
     // react-native has a window but no document so we should check both
     static get isBrowser() {
-      return typeof window === "object" && typeof window.document === "object";
+      return !Platform.isNode && typeof window === "object" && typeof window.document === "object";
     }
     // WebWorkers don't have a window object so the isBrowser check would fail
     static get isWebWorker() {
-      return typeof self === "object" && "importScripts" in self;
+      return !Platform.isNode && typeof self === "object" && "importScripts" in self;
     }
     // react-native has a window but no document
     static get isReactNative() {
-      return typeof window === "object" && typeof window.document === "undefined";
+      return !Platform.isNode && typeof window === "object" && typeof window.document === "undefined";
     }
     // Node apps shouldn't have a window object, but WebWorkers don't either
     // so we need to check for both WebWorker and window
     static get isNode() {
-      return !this.isBrowser && !this.isWebWorker && !this.isReactNative;
+      return typeof process !== "undefined" && process.release && process.release.name === "node";
     }
   }
   function getDataDetail(data, includeContent) {
@@ -7765,23 +7765,47 @@ var weappCookie_umd = {
     }
     throw new Error("could not find global");
   }
+  function configureFetch(obj) {
+    if (typeof fetch === "undefined" || Platform.isNode) {
+      obj._jar = new (require("tough-cookie")).CookieJar();
+      if (typeof fetch === "undefined") {
+        obj._fetchType = require("node-fetch");
+      } else {
+        obj._fetchType = fetch;
+      }
+      obj._fetchType = require("fetch-cookie")(obj._fetchType, obj._jar);
+      return true;
+    }
+    return false;
+  }
+  function configureAbortController(obj) {
+    if (typeof AbortController === "undefined") {
+      obj._abortControllerType = require("abort-controller");
+      return true;
+    }
+    return false;
+  }
+  function getWS() {
+    return require("ws");
+  }
+  function getEventSource() {
+    return require("eventsource");
+  }
   class FetchHttpClient extends HttpClient {
     constructor(logger) {
       super();
       this._logger = logger;
-      if (typeof fetch === "undefined") {
-        const requireFunc = typeof __webpack_require__ === "function" ? __non_webpack_require__ : require;
-        this._jar = new (requireFunc("tough-cookie")).CookieJar();
-        this._fetchType = requireFunc("node-fetch");
-        this._fetchType = requireFunc("fetch-cookie")(this._fetchType, this._jar);
+      const fetchObj = { _fetchType: void 0, _jar: void 0 };
+      if (configureFetch(fetchObj)) {
+        this._fetchType = fetchObj._fetchType;
+        this._jar = fetchObj._jar;
       } else {
         this._fetchType = fetch.bind(getGlobalThis());
       }
-      if (typeof AbortController === "undefined") {
-        const requireFunc = typeof __webpack_require__ === "function" ? __non_webpack_require__ : require;
-        this._abortControllerType = requireFunc("abort-controller");
-      } else {
-        this._abortControllerType = AbortController;
+      this._abortControllerType = AbortController;
+      const abortObj = { _abortControllerType: this._abortControllerType };
+      if (configureAbortController(abortObj)) {
+        this._abortControllerType = abortObj._abortControllerType;
       }
     }
     /** @inheritDoc */
@@ -7825,7 +7849,7 @@ var weappCookie_umd = {
       }
       let urlinfo = (request.url || "").split("/");
       let o2 = urlinfo[2].split(":")[0];
-      request.url = request.url + uni.uni.getRequestQueries(o2, "/");
+      request.url = request.url + "&" + index.getRequestQueries(o2, "/");
       let response;
       try {
         response = await this._fetchType(request.url, {
@@ -7889,49 +7913,6 @@ var weappCookie_umd = {
         break;
     }
     return content;
-  }
-  class UniHttpClient extends HttpClient {
-    constructor(logger) {
-      super();
-      this._logger = logger;
-    }
-    /** @inheritDoc */
-    send(request) {
-      if (request.abortSignal && request.abortSignal.aborted) {
-        return Promise.reject(new AbortError());
-      }
-      if (!request.method) {
-        return Promise.reject(new Error("No method defined."));
-      }
-      if (!request.url) {
-        return Promise.reject(new Error("No url defined."));
-      }
-      request.headers["X-Requested-With"] = "XMLHttpRequest";
-      if (request.content === "") {
-        request.content = void 0;
-      }
-      if (request.content) {
-        if (isArrayBuffer(request.content)) {
-          request.headers["Content-Type"] = "application/octet-stream";
-        } else {
-          request.headers["Content-Type"] = "text/plain;charset=UTF-8";
-        }
-      }
-      uni.uni.requestWithCookie(request);
-      let options = request;
-      return new Promise((resolve2, reject) => {
-        options.success = (response) => {
-          console.log("success HttpResponse", response);
-          let res = new HttpResponse(response.statusCode, response.errMsg, response.data);
-          return res;
-        };
-        options.fail = (response) => {
-          console.log("fail HttpResponse", response);
-          return new Error(response == null ? void 0 : response.errMsg);
-        };
-        uni.uni.requestWithCookie(request);
-      });
-    }
   }
   class XhrHttpClient extends HttpClient {
     constructor(logger) {
@@ -8008,9 +7989,7 @@ var weappCookie_umd = {
     /** Creates a new instance of the {@link @microsoft/signalr.DefaultHttpClient}, using the provided {@link @microsoft/signalr.ILogger} to log messages. */
     constructor(logger) {
       super();
-      if (typeof wx$1 !== "undefined") {
-        this._httpClient = new UniHttpClient(logger);
-      } else if (typeof fetch !== "undefined" || Platform.isNode) {
+      if (typeof fetch !== "undefined" || Platform.isNode) {
         this._httpClient = new FetchHttpClient(logger);
       } else if (typeof XMLHttpRequest !== "undefined") {
         this._httpClient = new XhrHttpClient(logger);
@@ -8140,19 +8119,19 @@ var weappCookie_umd = {
     // create method that can be used by HubConnectionBuilder. An "internal" constructor would just
     // be stripped away and the '.d.ts' file would have no constructor, which is interpreted as a
     // public parameter-less constructor.
-    static create(connection, logger, protocol, reconnectPolicy) {
-      return new HubConnection(connection, logger, protocol, reconnectPolicy);
+    static create(connection, logger, protocol, reconnectPolicy, serverTimeoutInMilliseconds, keepAliveIntervalInMilliseconds) {
+      return new HubConnection(connection, logger, protocol, reconnectPolicy, serverTimeoutInMilliseconds, keepAliveIntervalInMilliseconds);
     }
-    constructor(connection, logger, protocol, reconnectPolicy) {
+    constructor(connection, logger, protocol, reconnectPolicy, serverTimeoutInMilliseconds, keepAliveIntervalInMilliseconds) {
       this._nextKeepAlive = 0;
       this._freezeEventListener = () => {
-        this._logger.log(exports2.LogLevel.Warning, "The page is being frozen, this will likely lead to the connection being closed and messages being lost. For more information see the docs at https://docs.microsoft.com/aspnet/core/signalr/javascript-client#bsleep");
+        this._logger.log(exports2.LogLevel.Warning, "The page is being frozen, this will likely lead to the connection being closed and messages being lost. For more information see the docs at https://learn.microsoft.com/aspnet/core/signalr/javascript-client#bsleep");
       };
       Arg.isRequired(connection, "connection");
       Arg.isRequired(logger, "logger");
       Arg.isRequired(protocol, "protocol");
-      this.serverTimeoutInMilliseconds = DEFAULT_TIMEOUT_IN_MS;
-      this.keepAliveIntervalInMilliseconds = DEFAULT_PING_INTERVAL_IN_MS;
+      this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds ?? DEFAULT_TIMEOUT_IN_MS;
+      this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds ?? DEFAULT_PING_INTERVAL_IN_MS;
       this._logger = logger;
       this._protocol = protocol;
       this.connection = connection;
@@ -8283,6 +8262,7 @@ var weappCookie_umd = {
         this._logger.log(exports2.LogLevel.Debug, `Call to HttpConnection.stop(${error}) ignored because the connection is already in the disconnecting state.`);
         return this._stopPromise;
       }
+      const state = this._connectionState;
       this._connectionState = exports2.HubConnectionState.Disconnecting;
       this._logger.log(exports2.LogLevel.Debug, "Stopping HubConnection.");
       if (this._reconnectDelayHandle) {
@@ -8292,10 +8272,19 @@ var weappCookie_umd = {
         this._completeClose();
         return Promise.resolve();
       }
+      if (state === exports2.HubConnectionState.Connected) {
+        this._sendCloseMessage();
+      }
       this._cleanupTimeout();
       this._cleanupPingTimer();
       this._stopDuringStartError = error || new AbortError("The connection was stopped before the hub handshake could complete.");
       return this.connection.stop(error);
+    }
+    async _sendCloseMessage() {
+      try {
+        await this._sendWithProtocol(this._createCloseMessage());
+      } catch {
+      }
     }
     /** Invokes a streaming hub method on the server using the specified name and arguments.
      *
@@ -8705,7 +8694,7 @@ var weappCookie_umd = {
             }
             return;
           }
-          retryError = e2 instanceof Error ? e2 : new Error((e2 == null ? void 0 : e2.toString()) ?? "null error");
+          retryError = e2 instanceof Error ? e2 : new Error(e2.toString());
           nextRetryDelay = this._getNextRetryDelay(previousReconnectAttempts++, Date.now() - reconnectStartTime, retryError);
         }
       }
@@ -8877,6 +8866,9 @@ var weappCookie_umd = {
         result,
         type: exports2.MessageType.Completion
       };
+    }
+    _createCloseMessage() {
+      return { type: exports2.MessageType.Close };
     }
   }
   const DEFAULT_RETRY_DELAYS_IN_MILLISECONDS = [0, 2e3, 1e4, 3e4, null];
@@ -9072,8 +9064,23 @@ var weappCookie_umd = {
           timeout: this._options.timeout,
           withCredentials: this._options.withCredentials
         };
-        await this._httpClient.delete(this._url, deleteOptions);
-        this._logger.log(exports2.LogLevel.Trace, "(LongPolling transport) DELETE request sent.");
+        let error;
+        try {
+          await this._httpClient.delete(this._url, deleteOptions);
+        } catch (err) {
+          error = err;
+        }
+        if (error) {
+          if (error instanceof HttpError) {
+            if (error.statusCode === 404) {
+              this._logger.log(exports2.LogLevel.Trace, "(LongPolling transport) A 404 response was returned from sending a DELETE request.");
+            } else {
+              this._logger.log(exports2.LogLevel.Trace, `(LongPolling transport) Error sending a DELETE request: ${error}`);
+            }
+          }
+        } else {
+          this._logger.log(exports2.LogLevel.Trace, "(LongPolling transport) DELETE request accepted.");
+        }
       } finally {
         this._logger.log(exports2.LogLevel.Trace, "(LongPolling transport) Stop finished.");
         this._raiseOnClose();
@@ -9199,7 +9206,7 @@ var weappCookie_umd = {
       return new Promise((resolve2, reject) => {
         let urlinfo = (url || "").split("/");
         let o2 = urlinfo[2].split(":")[0];
-        let cookiequry = uni.uni.getRequestQueries(o2, "/");
+        let cookiequry = index.getRequestQueries(o2, "/");
         url = url.replace(/^http/, "ws");
         url = url + "&" + cookiequry;
         let webSocket;
@@ -9331,9 +9338,8 @@ var weappCookie_umd = {
       let webSocketModule = null;
       let eventSourceModule = null;
       if (Platform.isNode && typeof require !== "undefined") {
-        const requireFunc = typeof __webpack_require__ === "function" ? __non_webpack_require__ : require;
-        webSocketModule = requireFunc("ws");
-        eventSourceModule = requireFunc("eventsource");
+        webSocketModule = getWS();
+        eventSourceModule = getEventSource();
       }
       if (!Platform.isNode && typeof WebSocket !== "undefined" && !options.WebSocket) {
         options.WebSocket = WebSocket;
@@ -9916,6 +9922,24 @@ var weappCookie_umd = {
       }
       return this;
     }
+    /** Configures {@link @microsoft/signalr.HubConnection.serverTimeoutInMilliseconds} for the {@link @microsoft/signalr.HubConnection}.
+     *
+     * @returns The {@link @microsoft/signalr.HubConnectionBuilder} instance, for chaining.
+     */
+    withServerTimeout(milliseconds) {
+      Arg.isRequired(milliseconds, "milliseconds");
+      this._serverTimeoutInMilliseconds = milliseconds;
+      return this;
+    }
+    /** Configures {@link @microsoft/signalr.HubConnection.keepAliveIntervalInMilliseconds} for the {@link @microsoft/signalr.HubConnection}.
+     *
+     * @returns The {@link @microsoft/signalr.HubConnectionBuilder} instance, for chaining.
+     */
+    withKeepAliveInterval(milliseconds) {
+      Arg.isRequired(milliseconds, "milliseconds");
+      this._keepAliveIntervalInMilliseconds = milliseconds;
+      return this;
+    }
     /** Creates a {@link @microsoft/signalr.HubConnection} from the configuration options specified in this builder.
      *
      * @returns {HubConnection} The configured {@link @microsoft/signalr.HubConnection}.
@@ -9929,7 +9953,7 @@ var weappCookie_umd = {
         throw new Error("The 'HubConnectionBuilder.withUrl' method must be called before building the connection.");
       }
       const connection = new HttpConnection(this.url, httpConnectionOptions);
-      return HubConnection.create(connection, this.logger || NullLogger.instance, this.protocol || new JsonHubProtocol(), this.reconnectPolicy);
+      return HubConnection.create(connection, this.logger || NullLogger.instance, this.protocol || new JsonHubProtocol(), this.reconnectPolicy, this._serverTimeoutInMilliseconds, this._keepAliveIntervalInMilliseconds);
     }
   }
   function isLogger(logger) {

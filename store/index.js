@@ -4,7 +4,7 @@ import {toRaw,nextTick} from "vue";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://www.wangyan.net";//"https://localhost:7221";
+const baseUrl = "https://localhost:7221"; //"https://www.wangyan.net";
 
 const store = createStore({
 	state:{

@@ -42,13 +42,14 @@ const _sfc_main = {
   }
 };
 if (!Array) {
-  const _component_uni_data_checkbox = common_vendor.resolveComponent("uni-data-checkbox");
+  const _easycom_uni_data_checkbox2 = common_vendor.resolveComponent("uni-data-checkbox");
   const _easycom_uni_data_select2 = common_vendor.resolveComponent("uni-data-select");
-  (_component_uni_data_checkbox + _easycom_uni_data_select2)();
+  (_easycom_uni_data_checkbox2 + _easycom_uni_data_select2)();
 }
+const _easycom_uni_data_checkbox = () => "../../uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.js";
 const _easycom_uni_data_select = () => "../../uni_modules/uni-data-select/components/uni-data-select/uni-data-select.js";
 if (!Math) {
-  _easycom_uni_data_select();
+  (_easycom_uni_data_checkbox + _easycom_uni_data_select)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
