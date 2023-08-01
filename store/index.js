@@ -4,7 +4,7 @@ import {toRaw,nextTick} from "vue";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://localhost:7221"; //"https://www.wangyan.net";
+const baseUrl = "https://www.wangyan.net"; //"https://localhost:7221"; 
 
 const store = createStore({
 	state:{
@@ -179,9 +179,11 @@ const store = createStore({
 		},
 		async sendMessage({commit,state},{user,message}){
 			await state.workSocket.invoke("SendMessage", [user, message]);
+			console.log("sendMessage")
 			state.messages.push(message)
 		},
 		receiveMessage({commit,state},{user,message}){
+			console.log("receiveMessage")
 			state.messages.push(message)
 		},
 	    async connect({state,actions}) {

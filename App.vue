@@ -1,7 +1,7 @@
 <script>
 	//import 'weapp-cookie';
 	import cookies from "weapp-cookie/dist/weapp-cookie.umd";
-	import * as signalR from "D:/signalr_for_uniapp/dist/signalr.js";
+	import * as signalR from "./common/signalr.js";
 	export default {
 		async beforeCreate() {
 			console.log("before Create")
@@ -16,21 +16,21 @@
 			}
 		},
 		onLaunch: function() {
-			console.log('App Launch')
-			uni.onSocketMessage(function (res) {
-			  console.log('收到服务器内容：' + res.data);
-			  this.$store.commit("updateMessage",res.data)
-			});
+			// console.log('App Launch')
+			// uni.onSocketMessage(function (res) {
+			//   console.log('收到服务器内容：' + res.data);
+			//   this.$store.commit("updateMessage",res.data)
+			// });
 			
-			uni.onSocketError(function (res) {
-			  console.log('WebSocket连接打开失败，请检查！');
-			  this.$store.dispatch("connect")
-			});
+			// uni.onSocketError(function (res) {
+			//   console.log('WebSocket连接打开失败，请检查！');
+			//   this.$store.dispatch("connect")
+			// });
 			
-			uni.onSocketClose(function (res) {
-			  console.log('WebSocket 已关闭！');
-			  this.$store.dispatch("connect")
-			});
+			// uni.onSocketClose(function (res) {
+			//   console.log('WebSocket 已关闭！');
+			//   this.$store.dispatch("connect")
+			// });
 		},
 		onShow: function() {
 			console.log('App Show')
