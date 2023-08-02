@@ -2,7 +2,7 @@
 	<view>
 		<view>选择创建类型</view>
 		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype"></uni-data-checkbox>
-		<uni-data-select v-model="a" :localdata="taskTypes" ></uni-data-select>
+		<uni-data-select v-model="a" :localdata="taskTypes" :showProp="'name'"></uni-data-select>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
 		<button @click="createTask">创建</button>
 	</view>

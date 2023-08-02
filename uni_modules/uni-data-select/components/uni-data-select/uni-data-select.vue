@@ -38,6 +38,7 @@
 	 * @tutorial https://uniapp.dcloud.io/component/uniui/uni-data-select
 	 * @property {String} value 默认值
 	 * @property {Array} localdata 本地数据 ，格式 [{text:'',value:''}]
+	 * property  {String} localdata 显示的属性名
 	 * @property {Boolean} clear 是否可以清空已选项
 	 * @property {Boolean} emptyText 没有数据时显示的文字 ，本地数据无效
 	 * @property {String} label 左侧标题
@@ -54,6 +55,12 @@
 				type: Array,
 				default () {
 					return []
+				}
+			},
+			showProp:{
+				type:String,
+				default(){
+					return "name"
 				}
 			},
 			value: {
@@ -246,16 +253,17 @@
 				this.showSelector = !this.showSelector
 			},
 			formatItemName(item) {
-				let {
-					text,
-					value,
-					channel_code
-				} = item
-				channel_code = channel_code ? `(${channel_code})` : ''
+				// let {
+				// 	text,
+				// 	value,
+				// 	channel_code
+				// } = item
+				//channel_code = channel_code ? `(${channel_code})` : ''
+				let text = undefined,channel_code = "",value="";
 
 				if (this.format) {
 					// 格式化输出
-					let str = "";
+					let str = item[this.showProp];
 					str = this.format;
 					for (let key in item) {
 						str = str.replace(new RegExp(`{${key}}`,"g"),item[key]);
@@ -267,7 +275,8 @@
 						(
 							text ?
 							text :
-							`未命名${channel_code}`
+							item[this.showProp]
+							//`未命名${channel_code}`
 						)
 				}
 			},
