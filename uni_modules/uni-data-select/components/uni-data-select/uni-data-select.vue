@@ -246,7 +246,7 @@
 					this.showSelector = false
 					this.current = this.formatItemName(item)
 					this.emit(item.value)
-					this.emit("data-to-parent",item)
+					this.$emit("data-to-parent",item)
 				}
 			},
 			emit(val) {

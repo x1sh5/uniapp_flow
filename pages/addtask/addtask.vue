@@ -36,7 +36,7 @@
 			createTask(e){
 				console.log("createTask",e);
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeid="+selected+"&createType="+this.defaultT,
+				  url:"/pages/newTask/newTask?typeid="+this.selected.id+"&createType="+this.defaultT,
 				})
 			},
 			typeChange(e){
@@ -50,7 +50,9 @@
 			},
 			receiveDataFromChild(data) {
 			      // This method will be called when the custom event 'data-to-parent' is emitted from the child component
+				  console.log("data",data)
 			      this.selected = data;
+				  console.log("this.selected",this.selected)
 			}
 		},
 		async created() {
