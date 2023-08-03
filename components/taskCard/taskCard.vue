@@ -1,0 +1,73 @@
+<template>
+	<view  class="newtaskbox">
+		<view style="width: 90%;">
+			<cardinfo :task="task" :editable="editable"></cardinfo>
+			<view class="ql-container">  
+			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
+			</view>
+			<button class="editbutton" @click="editEvent">编辑内容...</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		name:"taskCard",
+		props:{
+			task:{
+				type:Object,
+				default(){
+					return {
+					  "id": false,
+					  "username": false,
+					  "branchid": 1,
+					  "description": "",
+					  "finishtime": "0001-01-01T00:00:00",
+					  "presumedtime": false,
+					  "publishtime": "0001-01-01T00:00:00",
+					  "reward": '',
+					  "rewardtype": 1,
+					  "status": 1,
+					  "title": "",
+					  "typeid": false,
+					  "verify": 0,
+					  }
+				}
+			},
+			editable:{
+				type:Boolean,
+				default(){
+					return false
+				}
+			},
+		},
+		data() {
+			return {
+				
+			}
+		},
+		computed:{
+			html:{
+				get(){
+					return uni.getStorageSync("html")
+				}
+			},
+		},
+		onLoad(op) {
+		  console.log("options:",op)
+		  this.$data.task.typeid = op.typeid
+		  console.log("typeid is ",this.$data.task.typeid)
+		},
+		methods:{
+			editEvent(e){
+				uni.navigateTo({
+					url:"/pages/editor/editor"
+				})
+			}
+		}
+	}
+</script>
+
+<style lang="less">
+	@import url('./newTask.css');
+</style>

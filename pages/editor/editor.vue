@@ -81,7 +81,7 @@
 			// #ifndef MP-BAIDU 
 			uni.loadFontFace({
 				family: 'Pacifico',
-				source: 'url("https://sungd.github.io/Pacifico.ttf")'
+				source: 'url("./static/Pacifico.ttf")'
 			})
 			// #endif
 		},
@@ -167,6 +167,7 @@
 				uni.chooseImage({
 					count: 1,
 					success: (res) => {
+						console.log(res)
 						this.editorCtx.insertImage({
 							src: res.tempFilePaths[0],
 							alt: '图像',

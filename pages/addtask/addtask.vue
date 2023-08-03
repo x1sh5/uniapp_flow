@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view>选择创建类型</view>
-		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype"></uni-data-checkbox>
-		<uni-data-select v-model="a" :localdata="taskTypes" :showProp="'name'"></uni-data-select>
+		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
+		<uni-data-select :localdata="taskTypes" :showProp="'name'" ref="dataSelect" @data-to-parent="receiveDataFromChild"></uni-data-select>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
 		<button @click="createTask">创建</button>
 	</view>
@@ -13,7 +13,7 @@
 	export default {
 		data(){//必须函数，对象不再支持
 			return {
-				a:"2",
+				selected:undefined,
 				$taskTypes: [],
 				ctype: [
 					{text: '单卡', value: 0}, {text: '多卡', value: 1}
@@ -34,10 +34,23 @@
 				})
 			},
 			createTask(e){
-				console.log("createTask");
+				console.log("createTask",e);
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeid="+e,
+				  url:"/pages/newTask/newTask?typeid="+selected+"&createType="+this.defaultT,
 				})
+			},
+			typeChange(e){
+				console.log("typechange",e)
+				if(e.detail.value === 1){
+					this.$refs.dataSelect.statusDisable(true)
+				}
+				if(e.detail.value === 0){
+					this.$refs.dataSelect.statusDisable(false)
+				}
+			},
+			receiveDataFromChild(data) {
+			      // This method will be called when the custom event 'data-to-parent' is emitted from the child component
+			      this.selected = data;
 			}
 		},
 		async created() {

@@ -40,11 +40,7 @@
 			
 		},
 		onLoad() {
-			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
-				console.log("receiveMessage",user,message);
-				this.$store.dispatch("receiveMessage",{user:user,message:message})
-			}); 
-			this.$store.dispatch("connect")
+
 		}
 	}
 </script>

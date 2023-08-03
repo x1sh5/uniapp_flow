@@ -223,7 +223,17 @@
 
 				return isDisabled;
 			},
-
+			statusDisable(e){
+				if(e === true){
+					this.current = '';
+				}
+				this.current
+				for(let x of this.localdata){
+					if(x.name !== "审核"){
+						x.disable = e;
+					}
+				}
+			},
 			clearVal() {
 				this.emit('')
 				if (this.collection) {
@@ -231,10 +241,12 @@
 				}
 			},
 			change(item) {
+				console.log(item)
 				if (!item.disable) {
 					this.showSelector = false
 					this.current = this.formatItemName(item)
 					this.emit(item.value)
+					this.emit("data-to-parent",item)
 				}
 			},
 			emit(val) {
