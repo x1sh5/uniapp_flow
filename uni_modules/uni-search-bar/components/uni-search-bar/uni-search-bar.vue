@@ -8,7 +8,7 @@
 				</slot>
 			</view>
 			<input v-if="show || searchVal" :focus="showSync" :disabled="readonly" :placeholder="placeholderText" :maxlength="maxlength"
-				class="uni-searchbar__box-search-input" confirm-type="search" type="text" v-model="searchVal"
+				class="uni-searchbar__box-search-input" confirm-type="search" type="text" v-model="searchVal" autofocus="true"
 				@confirm="confirm" @blur="blur" @focus="emitFocus" />
 			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='') &&!readonly"

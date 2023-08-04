@@ -11,6 +11,7 @@
 </template>
 
 <script>
+	import { StorageKeys } from "../../common/storageKeys.js";
 	export default {
 		name:"taskCard",
 		props:{
@@ -49,7 +50,7 @@
 		computed:{
 			html:{
 				get(){
-					return uni.getStorageSync("html")
+					return uni.getStorageSync(StorageKeys.taskContent)
 				}
 			},
 		},

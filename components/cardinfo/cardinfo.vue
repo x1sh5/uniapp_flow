@@ -161,7 +161,7 @@
 				this.$rewardTypeValue = e
 			},
 			detail(e){
-				if(!this.$store.state.hasLogin){
+				if(!this.$store.state.$hasLogin){
 					uni.navigateTo({
 						url:"/pages/logintips/logintips"
 					})
@@ -397,5 +397,8 @@
 	  .title();
 	  width: 100%;
 	  white-space: pre-wrap;
+	}
+	.uni-textarea-compute{
+		visibility: visible;
 	}
 </style>

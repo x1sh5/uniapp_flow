@@ -1,10 +1,11 @@
 <template>
-	<view>
+	<view class="usercenter">
 		<form @submit="login" style="margin: 20px 10px;">
-			<text>用户名：</text><input name="userName" class="lg-input" type="text" />
-			<text>密码：</text><input name="password" class="lg-input" type="safe-password"/>
+			<text>用户名：</text><input name="userName" class="lg-input" type="text" value="lisi" />
+			<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
 			<button form-type="submit">登录</button>
 		</form>
+		<button @click="register">注册</button>
 	</view>
 </template>
 
@@ -26,11 +27,12 @@
 					data:JSON.stringify(e.detail.value),
 					success(res) {
 						console.log(res);
-						//console.log(that.$store);
+						console.log(that.$store);
 						let domain = url.split("/")[2].split(":")[0];
 						uni.setResponseCookies(res.data.accessToken,domain);
 						uni.setResponseCookies(res.data.refreshToken,domain);
 						that.$store.commit("changeLoginState");
+						that.$store.commit("setUserName", res.data.userName);
 						uni.navigateBack({
 							delta:that.depth
 						})
@@ -41,6 +43,11 @@
 					complete() {
 						
 					}
+				})
+			},
+			register(){
+				uni.navigateTo({
+					url:"/pages/register/register"
 				})
 			}
 		},

@@ -70,6 +70,7 @@
 </template>
 
 <script>
+	import { StorageKeys } from "../../common/storageKeys.js";
 	export default {
 		data() {
 			return {
@@ -93,7 +94,7 @@
 				this.editorCtx.getContents({
 					success(res){
 						console.log(res)
-						uni.setStorageSync("html",res.html)
+						uni.setStorageSync(StorageKeys.taskContent,res.html)
 					}
 				})
 				uni.navigateBack()

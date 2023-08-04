@@ -4,7 +4,7 @@
 		<view class="userinfo">
 			<!-- avatar -->
 			<view class="user-avatar"><image class="user-avatar-img"></image></view>
-			<view>username</view>
+			<view>{{ userName }}</view>
 		</view>
 		
 		<view class="driver"></view>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+	import { StorageKeys } from "../../common/storageKeys.js";
 	export default {
 		data() {
 			return {
@@ -52,7 +53,10 @@
 		},
 		computed:{
 			hasLogin(){
-				return this.$store.state.hasLogin
+				return this.$store.state.$hasLogin
+			},
+			userName(){
+				return this.$store.state.$userName;
 			}
 		},
 		methods:{
@@ -81,9 +85,22 @@
 			},
 			signout(e){
 				console.log("signout")
+				uni.removeStorage({
+					key:StorageKeys.cookies
+				});
+				uni.removeStorage({
+					key:StorageKeys.taskContent
+				});
+				uni.removeStorage({
+					key:StorageKeys.userName
+				});
 				this.$store.commit("changeLoginState")
 			}
 		},
+		onLoad() {
+			this.$store.commit("initHasLogin");
+			this.$store.commit("initUserName");
+		}
 	}
 </script>
 

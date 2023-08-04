@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
 import {toRaw,nextTick} from "vue";
+import { StorageKeys } from "../common/storageKeys.js"
 //import * as signalr from "signalr-for-wx/dist/index"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
@@ -8,7 +9,8 @@ const baseUrl = "https://localhost:7221"; //"https://www.wangyan.net";
 
 const store = createStore({
 	state:{
-		hasLogin:false,
+		$hasLogin:false,
+		$userName: "未登录",
 		branchs:[],
 		taskTypes:[],
 		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
@@ -37,10 +39,34 @@ const store = createStore({
 			state.tasks.values= payload
 		},
 		changeLoginState(state){
-			state.hasLogin = !state.hasLogin
+			state.$hasLogin = !state.$hasLogin
+			uni.setStorageSync(StorageKeys.hasLogin,state.$hasLogin);
 		},
 		updateMessage(state,payload){
 			state.messages.push(payload)
+		},
+		setUserName(state,payload){
+			state.$userName = payload;
+			uni.setStorageSync(StorageKeys.userName,payload);
+		},
+		initUserName:(state)=>{
+			try{
+				const userName = uni.getStorageSync(StorageKeys.userName);
+				state.$userName = userName;
+			}catch(e){
+				console.error(e)
+			}
+		},
+		//获取本地登录标记
+		initHasLogin:(state)=>{
+			let hasLogin = false;
+			try{
+				hasLogin = uni.getStorageSync(StorageKeys.hasLogin);
+			}catch(e){
+				hasLogin = false;
+				console.error(e);
+			}
+			state.$hasLogin = hasLogin;
 		},
 	},
 	getters:{
@@ -83,7 +109,20 @@ const store = createStore({
 		},
 		getMessages:(state)=>{
 			return state.messages
-		}
+		},
+		//判断是否登录
+		loginTest:(state)=>{
+			let login = false;
+			uni.requestWithCookie({url:state.apiBaseUrl+"/api/Account/loginTest",
+			method:"HEAD" }).then((res)=>{
+				if(res.statusCode === 200)login = true
+			}).catch((error) => {
+				console.error(error);
+			});
+			uni.setStorageSync(StorageKeys.hasLogin,login);
+			return login;
+		},
+
 	},
 	actions:{
 		//获取部门信息

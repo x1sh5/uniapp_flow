@@ -127,6 +127,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/searchResult/searchResult",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

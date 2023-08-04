@@ -4,7 +4,7 @@
 		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
 		<uni-data-select :localdata="taskTypes" :showProp="'name'" ref="dataSelect" @data-to-parent="receiveDataFromChild"></uni-data-select>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
-		<button @click="createTask">创建</button>
+		<button @click="createTask" :disabled="!Boolean(selected)">创建</button>
 	</view>
 </template>
 
