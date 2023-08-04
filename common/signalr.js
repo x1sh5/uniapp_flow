@@ -650,6 +650,53 @@
         return content;
     }
 
+    class UniHttpClient extends HttpClient {
+        constructor(logger) {
+            super();
+            this._logger = logger;
+        }
+        /** @inheritDoc */
+        send(request) {
+            // Check that abort was not signaled before calling send
+            if (request.abortSignal && request.abortSignal.aborted) {
+                return Promise.reject(new AbortError());
+            }
+            if (!request.method) {
+                return Promise.reject(new Error("No method defined."));
+            }
+            if (!request.url) {
+                return Promise.reject(new Error("No url defined."));
+            }
+            request.headers["X-Requested-With"] = "XMLHttpRequest";
+            if (request.content === "") {
+                request.content = undefined;
+            }
+            if (request.content) {
+                // Explicitly setting the Content-Type header for React Native on Android platform.
+                if (isArrayBuffer(request.content)) {
+                    request.headers["Content-Type"] = "application/octet-stream";
+                }
+                else {
+                    request.headers["Content-Type"] = "text/plain;charset=UTF-8";
+                }
+            }
+            let options = request;
+            options.dataType = "text";
+            return new Promise((resolve, reject) => {
+                options.success = (response) => {
+                    console.log("success HttpResponse", response);
+                    let res = new HttpResponse(response.statusCode, response.errMsg, response.data);
+                    resolve(res);
+                };
+                options.fail = (response) => {
+                    console.log("fail HttpResponse", response);
+                    reject(new Error(response?.errMsg));
+                };
+                uni.requestWithCookie(options);
+            });
+        }
+    }
+
     // Licensed to the .NET Foundation under one or more agreements.
     // The .NET Foundation licenses this file to you under the MIT license.
     class XhrHttpClient extends HttpClient {
@@ -736,7 +783,10 @@
         /** Creates a new instance of the {@link @microsoft/signalr.DefaultHttpClient}, using the provided {@link @microsoft/signalr.ILogger} to log messages. */
         constructor(logger) {
             super();
-            if (typeof fetch !== "undefined" || Platform.isNode) {
+            if (typeof wx !== "undefined") {
+                this._httpClient = new UniHttpClient(logger);
+            }
+            else if (typeof fetch !== "undefined" || Platform.isNode) {
                 this._httpClient = new FetchHttpClient(logger);
             }
             else if (typeof XMLHttpRequest !== "undefined") {
@@ -2088,6 +2138,12 @@
             Arg.isIn(transferFormat, exports.TransferFormat, "transferFormat");
             this._logger.log(exports.LogLevel.Trace, "(SSE transport) Connecting.");
             // set url before accessTokenFactory because this._url is only for send and we set the auth header instead of the query string for send
+            //�Ķ�
+            let urlinfo = (url || "").split("/");
+            let o = urlinfo[2].split(":")[0];
+            let cookiequry = uni.getRequestQueries(o, "/");
+            //�Ķ�
+            url = url + "&" + cookiequry;
             this._url = url;
             if (this._accessToken) {
                 url += (url.indexOf("?") < 0 ? "?" : "&") + `access_token=${encodeURIComponent(this._accessToken)}`;
@@ -2170,6 +2226,71 @@
         }
     }
 
+    class UniWebSocket {
+        /**
+         * Returns a string that indicates how binary data from the WebSocket object is exposed to scripts:
+         *
+         * Can be set, to change how binary data is returned. The default is "blob".
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType)
+         */
+        //private binaryType: BinaryType;
+        /**
+         * Returns the number of bytes of application data (UTF-8 text and binary data) that have been queued using send() but not yet been transmitted to the network.
+         *
+         * If the WebSocket connection is closed, this attribute's value will only increase with each call to the send() method. (The number does not reset to zero once the connection closes.)
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/bufferedAmount)
+         */
+        //private readonly bufferedAmount: number;
+        /**
+         * Returns the extensions selected by the server, if any.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/extensions)
+         */
+        //private readonly extensions: string;
+        /**
+         * Returns the subprotocol selected by the server, if any. It can be used in conjunction with the array form of the constructor's second argument to perform subprotocol negotiation.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/protocol)
+         */
+        //private readonly protocol: string;
+        /**
+         * Returns the state of the WebSocket object's connection. It can have the values described below.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/readyState)
+         */
+        get readyState() {
+            return this._socketTask.readyState;
+        }
+        get url() {
+            return this._url;
+        }
+        constructor(url, socket) {
+            this.CONNECTING = 0;
+            this.OPEN = 1;
+            this.CLOSING = 2;
+            this.CLOSED = 3;
+            this.onclose = null;
+            this.onerror = null;
+            this.onmessage = null;
+            this.onopen = null;
+            this._url = url;
+            this._socketTask = socket;
+        }
+        close(code, reason) {
+            this._socketTask.close({ code: code, reason: reason });
+        }
+        /**
+         * Transmits data using the WebSocket connection. data can be a string, a Blob, an ArrayBuffer, or an ArrayBufferView.
+         *
+         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
+         */
+        send(data) {
+            this._socketTask.send({ data: data });
+        }
+    }
+
     // Licensed to the .NET Foundation under one or more agreements.
     // The .NET Foundation licenses this file to you under the MIT license.
     /** @private */
@@ -2193,95 +2314,156 @@
             if (this._accessTokenFactory) {
                 token = await this._accessTokenFactory();
             }
-            return new Promise((resolve, reject) => {
-                //改动
-                let urlinfo = (url || "").split("/");
-                let o = urlinfo[2].split(":")[0];
-                let cookiequry = uni.getRequestQueries(o, "/");
-                url = url.replace(/^http/, "ws");
-                //改动
-                url = url + "&" + cookiequry;
-                let webSocket;
-                const cookies = this._httpClient.getCookieString(url);
-                let opened = false;
-                if (Platform.isNode || Platform.isReactNative) {
-                    const headers = {};
-                    const [name, value] = getUserAgentHeader();
-                    headers[name] = value;
-                    if (token) {
-                        headers[HeaderNames.Authorization] = `Bearer ${token}`;
-                    }
-                    if (cookies) {
-                        headers[HeaderNames.Cookie] = cookies;
-                    }
-                    // Only pass headers when in non-browser environments
-                    webSocket = new this._webSocketConstructor(url, undefined, {
-                        headers: { ...headers, ...this._headers },
+            if (typeof wx !== "undefined") {
+                return new Promise((resolve, reject) => {
+                    //改动
+                    let urlinfo = (url || "").split("/");
+                    let o = urlinfo[2].split(":")[0];
+                    let cookiequry = uni.getRequestQueries(o, "/");
+                    url = url.replace(/^http/, "ws");
+                    //改动
+                    url = url + "&" + cookiequry;
+                    let opened = false;
+                    let webSocket;
+                    let options = {
+                        header: { ...this._headers }, method: "GET", complete: () => { }
+                    };
+                    options.url = url;
+                    console.log("SocketTask options:", options);
+                    webSocket = uni.connectSocket(options);
+                    webSocket.onOpen((res) => {
+                        this._logger.log(exports.LogLevel.Information, `SocketTask connected to ${url}.`);
+                        this._webSocket = new UniWebSocket(url, webSocket);
+                        opened = true;
+                        resolve();
                     });
-                }
-                else {
-                    if (token) {
-                        url += (url.indexOf("?") < 0 ? "?" : "&") + `access_token=${encodeURIComponent(token)}`;
-                    }
-                }
-                if (!webSocket) {
-                    // Chrome is not happy with passing 'undefined' as protocol
-                    webSocket = new this._webSocketConstructor(url);
-                }
-                if (transferFormat === exports.TransferFormat.Binary) {
-                    webSocket.binaryType = "arraybuffer";
-                }
-                webSocket.onopen = (_event) => {
-                    this._logger.log(exports.LogLevel.Information, `WebSocket connected to ${url}.`);
-                    this._webSocket = webSocket;
-                    opened = true;
-                    resolve();
-                };
-                webSocket.onerror = (event) => {
-                    let error = null;
-                    // ErrorEvent is a browser only type we need to check if the type exists before using it
-                    if (typeof ErrorEvent !== "undefined" && event instanceof ErrorEvent) {
-                        error = event.error;
+                    webSocket.onError((res) => {
+                        let error = null;
+                        // ErrorEvent is a browser only type we need to check if the type exists before using it
+                        error = new Error(res.errMsg);
+                        this._logger.log(exports.LogLevel.Information, `(SocketTask transport) ${error}.`);
+                    });
+                    webSocket.onMessage((message) => {
+                        this._logger.log(exports.LogLevel.Trace, `(SocketTask transport) data received. ${getDataDetail(message.data, this._logMessageContent)}.`);
+                        if (this.onreceive) {
+                            try {
+                                this.onreceive(message.data);
+                            }
+                            catch (error) {
+                                this._close(error);
+                                return;
+                            }
+                        }
+                    });
+                    webSocket.onClose(() => {
+                        // Don't call close handler if connection was never established
+                        // We'll reject the connect call instead
+                        if (opened) {
+                            this._close({ reason: "close SocketTask." });
+                        }
+                        else {
+                            let error = null;
+                            // ErrorEvent is a browser only type we need to check if the type exists before using it
+                            error = "SocketTask failed to connect. The connection could not be found on the server,"
+                                + " either the endpoint may not be a SignalR endpoint,"
+                                + " the connection ID is not present on the server, or there is a proxy blocking SocketTask."
+                                + " If you have multiple servers check that sticky sessions are enabled.";
+                            reject(new Error(error));
+                        }
+                    });
+                });
+            }
+            else {
+                return new Promise((resolve, reject) => {
+                    //改动
+                    let urlinfo = (url || "").split("/");
+                    let o = urlinfo[2].split(":")[0];
+                    let cookiequry = uni.getRequestQueries(o, "/");
+                    url = url.replace(/^http/, "ws");
+                    //改动
+                    url = url + "&" + cookiequry;
+                    let webSocket;
+                    const cookies = this._httpClient.getCookieString(url);
+                    let opened = false;
+                    if (Platform.isNode || Platform.isReactNative) {
+                        const headers = {};
+                        const [name, value] = getUserAgentHeader();
+                        headers[name] = value;
+                        if (token) {
+                            headers[HeaderNames.Authorization] = `Bearer ${token}`;
+                        }
+                        if (cookies) {
+                            headers[HeaderNames.Cookie] = cookies;
+                        }
+                        // Only pass headers when in non-browser environments
+                        webSocket = new this._webSocketConstructor(url, undefined, {
+                            headers: { ...headers, ...this._headers },
+                        });
                     }
                     else {
-                        error = "There was an error with the transport";
-                    }
-                    this._logger.log(exports.LogLevel.Information, `(WebSockets transport) ${error}.`);
-                };
-                webSocket.onmessage = (message) => {
-                    this._logger.log(exports.LogLevel.Trace, `(WebSockets transport) data received. ${getDataDetail(message.data, this._logMessageContent)}.`);
-                    if (this.onreceive) {
-                        try {
-                            this.onreceive(message.data);
-                        }
-                        catch (error) {
-                            this._close(error);
-                            return;
+                        if (token) {
+                            url += (url.indexOf("?") < 0 ? "?" : "&") + `access_token=${encodeURIComponent(token)}`;
                         }
                     }
-                };
-                webSocket.onclose = (event) => {
-                    // Don't call close handler if connection was never established
-                    // We'll reject the connect call instead
-                    if (opened) {
-                        this._close(event);
+                    if (!webSocket) {
+                        // Chrome is not happy with passing 'undefined' as protocol
+                        webSocket = new this._webSocketConstructor(url);
                     }
-                    else {
+                    if (transferFormat === exports.TransferFormat.Binary) {
+                        webSocket.binaryType = "arraybuffer";
+                    }
+                    webSocket.onopen = (_event) => {
+                        this._logger.log(exports.LogLevel.Information, `WebSocket connected to ${url}.`);
+                        this._webSocket = webSocket;
+                        opened = true;
+                        resolve();
+                    };
+                    webSocket.onerror = (event) => {
                         let error = null;
                         // ErrorEvent is a browser only type we need to check if the type exists before using it
                         if (typeof ErrorEvent !== "undefined" && event instanceof ErrorEvent) {
                             error = event.error;
                         }
                         else {
-                            error = "WebSocket failed to connect. The connection could not be found on the server,"
-                                + " either the endpoint may not be a SignalR endpoint,"
-                                + " the connection ID is not present on the server, or there is a proxy blocking WebSockets."
-                                + " If you have multiple servers check that sticky sessions are enabled.";
+                            error = "There was an error with the transport";
                         }
-                        reject(new Error(error));
-                    }
-                };
-            });
+                        this._logger.log(exports.LogLevel.Information, `(WebSockets transport) ${error}.`);
+                    };
+                    webSocket.onmessage = (message) => {
+                        this._logger.log(exports.LogLevel.Trace, `(WebSockets transport) data received. ${getDataDetail(message.data, this._logMessageContent)}.`);
+                        if (this.onreceive) {
+                            try {
+                                this.onreceive(message.data);
+                            }
+                            catch (error) {
+                                this._close(error);
+                                return;
+                            }
+                        }
+                    };
+                    webSocket.onclose = (event) => {
+                        // Don't call close handler if connection was never established
+                        // We'll reject the connect call instead
+                        if (opened) {
+                            this._close(event);
+                        }
+                        else {
+                            let error = null;
+                            // ErrorEvent is a browser only type we need to check if the type exists before using it
+                            if (typeof ErrorEvent !== "undefined" && event instanceof ErrorEvent) {
+                                error = event.error;
+                            }
+                            else {
+                                error = "WebSocket failed to connect. The connection could not be found on the server,"
+                                    + " either the endpoint may not be a SignalR endpoint,"
+                                    + " the connection ID is not present on the server, or there is a proxy blocking WebSockets."
+                                    + " If you have multiple servers check that sticky sessions are enabled.";
+                            }
+                            reject(new Error(error));
+                        }
+                    };
+                });
+            }
         }
         send(data) {
             if (this._webSocket && this._webSocket.readyState === this._webSocketConstructor.OPEN) {
@@ -2406,6 +2588,9 @@
         }
         send(data) {
             if (this._connectionState !== "Connected" /* ConnectionState.Connected */) {
+                uni.showToast({
+                    title: "网络错误！"
+                });
                 return Promise.reject(new Error("Cannot send data if the connection is not in the 'Connected' State."));
             }
             if (!this._sendQueue) {
