@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_storageKeys = require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
@@ -10,7 +11,7 @@ const _sfc_main = {
   onLoad() {
     common_vendor.index.loadFontFace({
       family: "Pacifico",
-      source: 'url("https://sungd.github.io/Pacifico.ttf")'
+      source: 'url("./static/Pacifico.ttf")'
     });
   },
   methods: {
@@ -21,7 +22,7 @@ const _sfc_main = {
       this.editorCtx.getContents({
         success(res) {
           console.log(res);
-          common_vendor.index.setStorageSync("html", res.html);
+          common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.taskContent, res.html);
         }
       });
       common_vendor.index.navigateBack();
@@ -89,6 +90,7 @@ const _sfc_main = {
       common_vendor.index.chooseImage({
         count: 1,
         success: (res) => {
+          console.log(res);
           this.editorCtx.insertImage({
             src: res.tempFilePaths[0],
             alt: "图像",
@@ -155,5 +157,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.o((...args) => $options.onEditorReady && $options.onEditorReady(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/editor/editor.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/editor/editor.vue"]]);
 wx.createPage(MiniProgramPage);

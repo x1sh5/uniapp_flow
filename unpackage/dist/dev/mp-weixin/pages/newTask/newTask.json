@@ -2,6 +2,6 @@
   "navigationStyle": "default",
   "navigationBarTitleText": "编辑任务",
   "usingComponents": {
-    "cardinfo": "../../components/cardinfo/cardinfo"
+    "task-card": "../../components/taskCard/taskCard"
   }
 }

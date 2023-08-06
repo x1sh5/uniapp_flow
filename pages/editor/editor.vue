@@ -94,7 +94,12 @@
 				this.editorCtx.getContents({
 					success(res){
 						console.log(res)
-						uni.setStorageSync(StorageKeys.taskContent,res.html)
+						//uni.setStorageSync(StorageKeys.taskContent,res.html)
+						const pages = getCurrentPages();
+						if (pages.length >= 2) {
+							const newTask = pages[pages.length - 2]; // 获取页面A的实例
+							newTask.task.description = res.html; // 修改页面A的属性a1的值
+						}
 					}
 				})
 				uni.navigateBack()
@@ -178,6 +183,13 @@
 						})
 					}
 				})
+			},
+			setTaskContent() {
+			  const pages = getCurrentPages();
+			  if (pages.length >= 2) {
+				const newTask = pages[pages.length - 2]; // 获取页面A的实例
+				newTask.task.description = 'new value'; // 修改页面A的属性a1的值
+			  }
 			}
 		}
 	}

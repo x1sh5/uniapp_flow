@@ -193,3 +193,6 @@
   width: 100%;
   white-space: pre-wrap;
 }
+.uni-textarea-compute {
+  visibility: visible;
+}

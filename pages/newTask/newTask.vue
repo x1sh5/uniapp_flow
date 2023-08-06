@@ -1,6 +1,11 @@
 <template>
+	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
+	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 	<view data-denpend="">
 		<taskCard :task="task" :editable="true"></taskCard>
+	</view>
+	<view>
+		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'"></uni-fab>
 	</view>
 	
 </template>
@@ -29,7 +34,9 @@
 			}
 		},
 		computed:{
-
+			taskTypes(){
+				return this.$store.state.taskTypes
+			}
 		},
 		created(op) {
 			console.log("created");
@@ -45,7 +52,12 @@
 
 		},
 		methods:{
-
+			backEvent(){
+				uni.navigateBack()
+			},
+			submitEvent(){
+				uni.navigateBack()
+			},
 		}
 	}
 </script>

@@ -10,6 +10,12 @@ const _sfc_main = {
         return [];
       }
     },
+    showProp: {
+      type: String,
+      default() {
+        return "name";
+      }
+    },
     value: {
       type: [String, Number],
       default: ""
@@ -161,6 +167,17 @@ const _sfc_main = {
       });
       return isDisabled;
     },
+    statusDisable(e) {
+      if (e === true) {
+        this.current = "";
+      }
+      this.current;
+      for (let x of this.localdata) {
+        if (x.name !== "审核") {
+          x.disable = e;
+        }
+      }
+    },
     clearVal() {
       this.emit("");
       if (this.collection) {
@@ -168,10 +185,12 @@ const _sfc_main = {
       }
     },
     change(item) {
+      console.log(item);
       if (!item.disable) {
         this.showSelector = false;
         this.current = this.formatItemName(item);
         this.emit(item.value);
+        this.$emit("data-to-parent", item);
       }
     },
     emit(val) {
@@ -189,21 +208,16 @@ const _sfc_main = {
       this.showSelector = !this.showSelector;
     },
     formatItemName(item) {
-      let {
-        text,
-        value,
-        channel_code
-      } = item;
-      channel_code = channel_code ? `(${channel_code})` : "";
+      let text = void 0, value = "";
       if (this.format) {
-        let str = "";
+        let str = item[this.showProp];
         str = this.format;
         for (let key in item) {
           str = str.replace(new RegExp(`{${key}}`, "g"), item[key]);
         }
         return str;
       } else {
-        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : text ? text : `未命名${channel_code}`;
+        return this.collection.indexOf("app-list") > 0 ? `${text}(${value})` : item[this.showProp];
       }
     },
     // 获取当前加载的数据
@@ -292,5 +306,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     r: $data.current ? 1 : ""
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
 wx.createComponent(Component);

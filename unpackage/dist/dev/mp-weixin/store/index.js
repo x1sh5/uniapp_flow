@@ -1,9 +1,12 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
+const common_storageKeys = require("../common/storageKeys.js");
+const signalR = require("../common/signalr.js");
 const baseUrl = "https://localhost:7221";
 const store = common_vendor.createStore({
   state: {
-    hasLogin: false,
+    $hasLogin: false,
+    $userName: "未登录",
     branchs: [],
     taskTypes: [],
     apiBaseUrl: baseUrl,
@@ -12,7 +15,7 @@ const store = common_vendor.createStore({
       status: false,
       values: []
     },
-    workSocket: new common_vendor.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(common_vendor.LogLevel.Trace).build(),
+    workSocket: new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build(),
     messages: []
   },
   mutations: {
@@ -30,10 +33,34 @@ const store = common_vendor.createStore({
       state.tasks.values = payload;
     },
     changeLoginState(state) {
-      state.hasLogin = !state.hasLogin;
+      state.$hasLogin = !state.$hasLogin;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, state.$hasLogin);
     },
     updateMessage(state, payload) {
       state.messages.push(payload);
+    },
+    setUserName(state, payload) {
+      state.$userName = payload;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userName, payload);
+    },
+    initUserName: (state) => {
+      try {
+        const userName = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userName);
+        state.$userName = userName;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    //获取本地登录标记
+    initHasLogin: (state) => {
+      let hasLogin = false;
+      try {
+        hasLogin = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.hasLogin);
+      } catch (e) {
+        hasLogin = false;
+        console.error(e);
+      }
+      state.$hasLogin = hasLogin;
     }
   },
   getters: {
@@ -75,6 +102,21 @@ const store = common_vendor.createStore({
     },
     getMessages: (state) => {
       return state.messages;
+    },
+    //判断是否登录
+    loginTest: (state) => {
+      let login = false;
+      common_vendor.index.requestWithCookie({
+        url: state.apiBaseUrl + "/api/Account/loginTest",
+        method: "HEAD"
+      }).then((res) => {
+        if (res.statusCode === 200)
+          login = true;
+      }).catch((error) => {
+        console.error(error);
+      });
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, login);
+      return login;
     }
   },
   actions: {
@@ -150,9 +192,11 @@ const store = common_vendor.createStore({
     },
     async sendMessage({ commit, state }, { user, message }) {
       await state.workSocket.invoke("SendMessage", [user, message]);
+      console.log("sendMessage");
       state.messages.push(message);
     },
     receiveMessage({ commit, state }, { user, message }) {
+      console.log("receiveMessage");
       state.messages.push(message);
     },
     async connect({ state, actions }) {

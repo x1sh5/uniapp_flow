@@ -16,13 +16,38 @@ const _sfc_main = {
         return this.$store.getters.getTasks;
       },
       set(value) {
-        this.$store.commit("getTasks", value);
+        this.$store.commit("updateTasks", value);
       }
+    },
+    taskTypes() {
+      let ts = this.$store.state.taskTypes;
+      return [{ id: "", name: "全部" }, ...ts];
     }
   },
   methods: {
     search(e) {
       console.log("confirm:", e);
+      e.value;
+      common_vendor.index.navigateTo({
+        url: "/pages/searchResult/searchResult"
+      });
+    },
+    //requestWithCookie
+    searchByTpe(id) {
+      let url = this.$store.state.apiBaseUrl + "/api/Assignment/type/" + id;
+      common_vendor.index.requestWithCookie({
+        url,
+        success: (res) => {
+          console.log(res);
+          if (res.statusCode === 200) {
+            this.tasks = res.data.$values;
+          } else {
+            common_vendor.index.showToast({
+              title: "网络出错了！"
+            });
+          }
+        }
+      });
     }
   }
 };
@@ -45,9 +70,16 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       clearButton: "auto",
       cancelButton: "none"
     }),
-    c: common_vendor.f($options.tasks, (item, k0, i0) => {
+    c: common_vendor.f($options.taskTypes, (item, k0, i0) => {
       return {
-        a: "4d84c736-1-" + i0,
+        a: common_vendor.t(item.name),
+        b: item.id,
+        c: common_vendor.o(($event) => $options.searchByTpe(item.id), item.id)
+      };
+    }),
+    d: common_vendor.f($options.tasks, (item, k0, i0) => {
+      return {
+        a: "0c9de768-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -57,5 +89,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

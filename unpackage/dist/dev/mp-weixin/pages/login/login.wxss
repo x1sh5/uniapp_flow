@@ -1,3 +1,9 @@
+.usercenter{
+	display: flex;
+	align-items: center;
+	margin: 10px;
+	flex-direction: column;
+}
 form {
   display: flex;
   flex-direction: column;
@@ -17,7 +23,7 @@ width: 75%;
 		border: 1px solid #8c8c8c;
 		border-radius: 50px; /* 将输入框的圆角设置为50 */
 }
-button {
+form > view > button {
     border: 1px solid  #07c160;
     border-radius: 50px; /* 新增：设置按钮边框为圆角 */
     width: 80px;
@@ -25,10 +31,10 @@ button {
     color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
     background-color: #07c160; /* 新增：设置按钮背景颜色为绿色 */
 	text-align: center;
-	 display: flex;  /* 使用Flex布局 */ 
-	   justify-content: center;  /* 水平居中 */
-	   align-items: center; /* 垂直居中 */
-	   position: absolute;
-	   top: calc(25vh - 30rpx);
-	   margin-top: 0;
+	display: flex;  /* 使用Flex布局 */ 
+	justify-content: center;  /* 水平居中 */
+	align-items: center; /* 垂直居中 */
+	position: absolute;
+	top: calc(25vh - 30rpx);
+	margin-top: 0;
 }

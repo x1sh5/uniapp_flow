@@ -68,6 +68,19 @@ const store = createStore({
 			}
 			state.$hasLogin = hasLogin;
 		},
+		//判断是否登录
+		loginTest:(state)=>{
+			let login = false;
+			uni.requestWithCookie({
+				url:state.apiBaseUrl+"/api/Account/loginTest",
+				method:"HEAD",
+				success:(res)=>{
+					if(res.statusCode === 200)login = true
+				}
+			 });
+			uni.setStorageSync(StorageKeys.hasLogin,login);
+			return login;
+		},
 	},
 	getters:{
 		getTasks(state){
@@ -109,18 +122,6 @@ const store = createStore({
 		},
 		getMessages:(state)=>{
 			return state.messages
-		},
-		//判断是否登录
-		loginTest:(state)=>{
-			let login = false;
-			uni.requestWithCookie({url:state.apiBaseUrl+"/api/Account/loginTest",
-			method:"HEAD" }).then((res)=>{
-				if(res.statusCode === 200)login = true
-			}).catch((error) => {
-				console.error(error);
-			});
-			uni.setStorageSync(StorageKeys.hasLogin,login);
-			return login;
 		},
 
 	},

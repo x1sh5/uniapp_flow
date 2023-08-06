@@ -3,7 +3,7 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      a: "2",
+      selected: void 0,
       $taskTypes: [],
       ctype: [
         { text: "单卡", value: 0 },
@@ -25,10 +25,24 @@ const _sfc_main = {
       });
     },
     createTask(e) {
-      console.log("createTask");
+      console.log("createTask", e);
       common_vendor.index.navigateTo({
-        url: "/pages/newTask/newTask?typeid=" + e
+        url: "/pages/newTask/newTask?typeid=" + this.selected.id + "&createType=" + this.defaultT
       });
+    },
+    typeChange(e) {
+      console.log("typechange", e);
+      if (e.detail.value === 1) {
+        this.$refs.dataSelect.statusDisable(true);
+      }
+      if (e.detail.value === 0) {
+        this.$refs.dataSelect.statusDisable(false);
+      }
+    },
+    receiveDataFromChild(data) {
+      console.log("data", data);
+      this.selected = data;
+      console.log("this.selected", this.selected);
     }
   },
   async created() {
@@ -53,19 +67,22 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.o(($event) => $data.defaultT = $event),
-    b: common_vendor.p({
+    a: common_vendor.o($options.typeChange),
+    b: common_vendor.o(($event) => $data.defaultT = $event),
+    c: common_vendor.p({
       mode: "button",
       localdata: $data.ctype,
       modelValue: $data.defaultT
     }),
-    c: common_vendor.o(($event) => $data.a = $event),
-    d: common_vendor.p({
+    d: common_vendor.sr("dataSelect", "2ce241b4-1"),
+    e: common_vendor.o($options.receiveDataFromChild),
+    f: common_vendor.p({
       localdata: $options.taskTypes,
-      modelValue: $data.a
+      showProp: "name"
     }),
-    e: common_vendor.o((...args) => $options.createTask && $options.createTask(...args))
+    g: common_vendor.o((...args) => $options.createTask && $options.createTask(...args)),
+    h: !Boolean($data.selected)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/addtask/addtask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/addtask/addtask.vue"]]);
 wx.createPage(MiniProgramPage);

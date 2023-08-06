@@ -1,0 +1,1 @@
+<view><view>子组件-count的值是：{{a}}</view><button type="default" bindtap="{{b}}">+1</button></view>

@@ -1,0 +1,1 @@
+<view class="content"><uni-search-bar wx:if="{{b}}" class="uni-mt-10" bindconfirm="{{a}}" u-i="42edecf4-0" bind:__l="__l" u-p="{{b}}"/><view wx:for="{{c}}" wx:for-item="item" wx:key="c" style="margin-top:5px"><cardinfo wx:if="{{item.b}}" style="margin-top:5px" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"/></view></view>

@@ -161,18 +161,19 @@
 				this.$rewardTypeValue = e
 			},
 			detail(e){
-				if(!this.$store.state.$hasLogin){
-					uni.navigateTo({
-						url:"/pages/logintips/logintips"
-					})
-				}else{
-					uni.navigateTo({
-						url:"/pages/taskDetail/taskDetail?id="+this.task.id,
-						
-					})
+				if(!this.editable){
+					if(!this.$store.state.$hasLogin){
+						uni.navigateTo({
+							url:"/pages/logintips/logintips"
+						})
+					}else{
+						uni.navigateTo({
+							url:"/pages/taskDetail/taskDetail?id="+this.task.id,
+							
+						})
+					}
 				}
-
-			}
+			},
 		},
 		data() {
 			return {

@@ -1,1 +1,1 @@
-<view class="newtaskbox"><view style="width:90%"><cardinfo wx:if="{{a}}" u-i="329834dc-0" bind:__l="__l" u-p="{{a}}"></cardinfo><view class="ql-container"><rich-text class="ql-editor" nodes="{{b}}"></rich-text></view><button class="editbutton" bindtap="{{c}}">编辑内容...</button></view></view>
+<view data-denpend=""><task-card wx:if="{{a}}" u-i="9360021c-0" bind:__l="__l" u-p="{{a}}"></task-card></view>

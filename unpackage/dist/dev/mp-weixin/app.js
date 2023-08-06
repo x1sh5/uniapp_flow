@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
+require("./common/signalr.js");
 const store_index = require("./store/index.js");
+require("./common/storageKeys.js");
 if (!Math) {
   "./pages/addtask/addtask.js";
   "./pages/index/index.js";
@@ -17,6 +19,8 @@ if (!Math) {
   "./pages/chat/chat.js";
   "./pages/holdTask/holdTask.js";
   "./pages/taskDetail/taskDetail.js";
+  "./pages/test/test.js";
+  "./pages/searchResult/searchResult.js";
 }
 const _sfc_main = {
   async beforeCreate() {
@@ -32,19 +36,6 @@ const _sfc_main = {
     }
   },
   onLaunch: function() {
-    console.log("App Launch");
-    common_vendor.index.onSocketMessage(function(res) {
-      console.log("收到服务器内容：" + res.data);
-      this.$store.commit("updateMessage", res.data);
-    });
-    common_vendor.index.onSocketError(function(res) {
-      console.log("WebSocket连接打开失败，请检查！");
-      this.$store.dispatch("connect");
-    });
-    common_vendor.index.onSocketClose(function(res) {
-      console.log("WebSocket 已关闭！");
-      this.$store.dispatch("connect");
-    });
   },
   onShow: function() {
     console.log("App Show");
@@ -53,7 +44,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/流沙任务系统uniapp/uniapp_flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/x/Documents/HBuilderProjects/flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);
