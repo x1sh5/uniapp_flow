@@ -33,8 +33,11 @@
 						uni.setResponseCookies(res.data.refreshToken,domain);
 						that.$store.commit("changeLoginState");
 						that.$store.commit("setUserName", res.data.userName);
-						uni.navigateBack({
-							delta:that.depth
+						// uni.navigateBack({
+						// 	delta:that.depth
+						// })
+						uni.reLaunch({
+							url: '/pages/userCenter/userCenter'
 						})
 					},
 					fail(err) {

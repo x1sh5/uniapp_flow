@@ -38,7 +38,11 @@
 		<view class="driver"></view>
 		
 		<button v-if="hasLogin" @click="signout">注销</button>
-		<button v-else @click="signin">登录</button>
+		<view v-else>
+			<button  @click="signin">登录</button>
+			<button  @click="signup">注册</button>
+		</view>
+		
 		
 	</view>
 </template>
@@ -81,6 +85,11 @@
 			signin(e){
 				uni.navigateTo({
 					url:"/pages/login/login?refer=usercenter"
+				})
+			},
+			signup(e){
+				uni.navigateTo({
+					url:"/pages/register/register"
 				})
 			},
 			signout(e){
