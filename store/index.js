@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import {toRaw,nextTick} from "vue";
 import { StorageKeys } from "../common/storageKeys.js"
+import { get } from "http";
 //import * as signalr from "signalr-for-wx/dist/index"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
@@ -22,7 +23,8 @@ const store = createStore({
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
         .configureLogging(signalR.LogLevel.Trace)
         .build(),
-		messages:[]
+		messages:[],
+		$currentContent:{}//当前正在编辑的task.description
 	},
 	mutations:{
 		updateBranchs(state,payload){
@@ -123,7 +125,9 @@ const store = createStore({
 		getMessages:(state)=>{
 			return state.messages
 		},
-
+		currentEditContent(state){
+			return state.$currentContent
+		}
 	},
 	actions:{
 		//获取部门信息
@@ -214,8 +218,24 @@ const store = createStore({
 			    }
 
 		},		
-		fetchTaskById({commit},id){
-			
+		async fetchTaskById({commit},id){
+			let qurl = state.apiBaseUrl+"/api/Assignment/"+id;
+			try {
+			        const response = await uni.requestWithCookie({
+			          url: qurl,
+			          method: 'GET',
+					  success:function(res){
+						  console.log(res)
+						  let data = res.data
+						  nextTick(()=>{
+							  commit('updateTasks', data["$values"]);
+						  })
+						  
+					  },
+			        });
+			    } catch (error) {
+			        console.error("fetch tasks error:",error);
+			    }
 		},
 		async sendMessage({commit,state},{user,message}){
 			await state.workSocket.invoke("SendMessage", [user, message]);
@@ -246,6 +266,9 @@ const store = createStore({
 			
 			    await reconnect();
 	    },	
+		setEditContent({state},payload){
+			state.$currentContent = payload;
+		}
 	}
 })
 

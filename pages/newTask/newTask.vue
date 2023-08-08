@@ -94,11 +94,14 @@
 				let index = this.tasks.indexOf((item)=>item.id === id);
 				if(index!== -1){
 					this.tasks[index].description = payload;
-					this.$refs['id'+id].updateT(payload);
+					this.$refs['id'+id][0].updateT(payload);
 				}
 			}
 		},
 		mounted() {
+			console.log(this.$refs)
+		},
+		onShow() {
 			console.log(this.$refs)
 		}
 	}
