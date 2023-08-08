@@ -74,11 +74,13 @@
 	export default {
 		data() {
 			return {
+				id:'',
 				readOnly: false,
 				formats: {}
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			this.id = options.id;
 			// #ifndef MP-BAIDU 
 			uni.loadFontFace({
 				family: 'Pacifico',
@@ -98,7 +100,7 @@
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							const newTask = pages[pages.length - 2]; // 获取页面A的实例
-							newTask.task.description = res.html; // 修改页面A的属性a1的值
+							newTask.updateTask(this.id, res.html); // 修改页面A的属性a1的值
 						}
 					}
 				})
@@ -188,7 +190,7 @@
 			  const pages = getCurrentPages();
 			  if (pages.length >= 2) {
 				const newTask = pages[pages.length - 2]; // 获取页面A的实例
-				newTask.task.description = 'new value'; // 修改页面A的属性a1的值
+				newTask.tasks[this.id].description = 'new value'; // 修改页面A的属性a1的值
 			  }
 			}
 		}

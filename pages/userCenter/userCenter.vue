@@ -40,7 +40,7 @@
 		<button v-if="hasLogin" @click="signout">注销</button>
 		<view v-else>
 			<button  @click="signin">登录</button>
-			<button  @click="signup">注册</button>
+			<button v-if="!hasLogin"  @click="signup">注册</button>
 		</view>
 		
 		

@@ -5,7 +5,7 @@
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
-			<button class="editbutton" @click="editEvent">编辑内容...</button>
+			<button v-if="editable" class="editbutton" @click="editEvent">编辑内容...</button>
 		</view>
 	</view>
 </template>
@@ -62,9 +62,14 @@
 		methods:{
 			editEvent(e){
 				uni.navigateTo({
-					url:"/pages/editor/editor"
+					url:"/pages/editor/editor?id="+this.task.id
 				})
+			},
+			updateT(payload){
+				console.log("updateT trigger")
+				this.task.description = payload;
 			}
+			
 		}
 	}
 </script>
