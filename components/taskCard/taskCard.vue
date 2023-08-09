@@ -44,13 +44,17 @@
 		},
 		data() {
 			return {
-				
+				content:{}
 			}
 		},
 		computed:{
 			html:{
 				get(){
-					return uni.getStorageSync(StorageKeys.taskContent)
+					return this.content.html;
+				},
+				set(value){
+					this.content = value;
+					this.task.description = value.html
 				}
 			},
 		},
@@ -61,15 +65,32 @@
 		},
 		methods:{
 			editEvent(e){
+				this.$store.commit("setEditContent",this.content);
 				uni.navigateTo({
 					url:"/pages/editor/editor?id="+this.task.id
 				})
 			},
 			updateT(payload){
 				console.log("updateT trigger")
-				this.task.description = payload;
+				this.content = payload;
+			},
+			publish(){
+				let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
+				uni.request({
+					url:posturl,
+					method:"POST",
+					data:this.task,
+				}).then((res)=>{
+					if(res.statusCode === 200){
+						return {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}
+					}else{
+						return {success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"}
+					}
+				}).catch((err) => {
+					console.error(err);
+					return {success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"}
+				})
 			}
-			
 		}
 	}
 </script>

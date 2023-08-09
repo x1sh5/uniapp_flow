@@ -69,6 +69,9 @@
 				
 			},
 			submitEvent(){
+				for(let item of this.tasks){
+					this.$refs['id'+id][0].publish()
+				}
 				uni.navigateBack()
 			},
 			createTask(e){
@@ -90,8 +93,10 @@
 				})
 			},
 			updateTask(id,payload){
-				console.log("updateTask triggered")
-				let index = this.tasks.indexOf((item)=>item.id === id);
+				console.log("updateTask triggered",id,payload)
+				console.log(this.tasks)
+				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));
+				console.log(index)
 				if(index!== -1){
 					this.tasks[index].description = payload;
 					this.$refs['id'+id][0].updateT(payload);

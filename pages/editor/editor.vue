@@ -60,7 +60,7 @@
 				
 				<view class="editor-wrapper">
 					<editor id="editor" class="ql-container" placeholder="开始输入..." show-img-size show-img-toolbar
-						show-img-resize @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady">
+						show-img-resize @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady" >
 					</editor>
 				</view>
 
@@ -81,6 +81,10 @@
 		},
 		onLoad(options) {
 			this.id = options.id;
+			// console.log(this.editorCtx);
+			// if(this.editorCtx){
+			// 	this.editorCtx.content = this.$store.state.$currentContent;
+			// }
 			// #ifndef MP-BAIDU 
 			uni.loadFontFace({
 				family: 'Pacifico',
@@ -88,19 +92,25 @@
 			})
 			// #endif
 		},
+		mounted() {
+			console.log(this.editorCtx);
+			if(this.editorCtx){
+				this.editorCtx.setContents(this.$store.state.$currentContent);
+			}
+		},
 		methods: {
 			backEvent(){
 				uni.navigateBack()
 			},
 			submitEvent(){
 				this.editorCtx.getContents({
-					success(res){
+					success:(res)=>{
 						console.log(res)
 						//uni.setStorageSync(StorageKeys.taskContent,res.html)
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							const newTask = pages[pages.length - 2]; // 获取页面A的实例
-							newTask.updateTask(this.id, res.html); // 修改页面A的属性a1的值
+							newTask.updateTask(this.id, res); // 修改页面A的属性a1的值
 						}
 					}
 				})

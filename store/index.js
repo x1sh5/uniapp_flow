@@ -1,7 +1,6 @@
 import {createStore} from "vuex";
 import {toRaw,nextTick} from "vue";
 import { StorageKeys } from "../common/storageKeys.js"
-import { get } from "http";
 //import * as signalr from "signalr-for-wx/dist/index"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
@@ -83,6 +82,9 @@ const store = createStore({
 			uni.setStorageSync(StorageKeys.hasLogin,login);
 			return login;
 		},
+		setEditContent(state,payload){
+			state.$currentContent = payload;
+		}
 	},
 	getters:{
 		getTasks(state){
@@ -127,7 +129,8 @@ const store = createStore({
 		},
 		currentEditContent(state){
 			return state.$currentContent
-		}
+		},
+
 	},
 	actions:{
 		//获取部门信息
@@ -266,9 +269,7 @@ const store = createStore({
 			
 			    await reconnect();
 	    },	
-		setEditContent({state},payload){
-			state.$currentContent = payload;
-		}
+
 	}
 })
 
