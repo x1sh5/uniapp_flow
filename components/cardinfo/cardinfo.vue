@@ -15,7 +15,7 @@
 				  </view>
 				  <!-- 第二层：标题 -->
 				  <view class="title">
-					<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容">
+					<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容" @blur="updateBrief">
 					</textarea>
 				  </view>
 		  </view>
@@ -26,7 +26,7 @@
 			<view :class="`fontcolor${Id%3}`">预计工时</view>
 			<view class="rowlayout">
 			  <input maxlength="8" :disabled="!editable" type="digit" 
-			  :value="spendtime" class="input" />h
+			  :value="spendtime" class="input" @blur="updatePt"/>h
 			</view>
 			
 		  </view>
@@ -35,7 +35,7 @@
 		  <view class="rewardbox">
 			<view :class="`fontcolor${Id%3}`">回馈值</view>
 			<view class="rowlayout">
-			  <input maxlength="6" :disabled="!editable" type="digit" class="reward" :value="task.reward" />
+			  <input maxlength="6" :disabled="!editable" type="digit" class="reward" :value="task.reward" @blur="updateReward"/>
 			  <!-- <view>{{ rewardtype.value }}</view> -->
 			  <uni-data-select :localdata="rewardtype.options" :clear="false"
 			   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
@@ -174,6 +174,15 @@
 					}
 				}
 			},
+			updateReward(event){
+				this.task.reward = event.detail.value;
+			},
+			updateBrief(event){
+				this.task.title = event.detail.value;
+			},
+			updatePt(event){
+				this.task.presumedtime = event.detail.value;
+			}
 		},
 		data() {
 			return {

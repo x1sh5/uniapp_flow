@@ -136,6 +136,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/publishResult/publishResult",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "发布结果",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

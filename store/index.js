@@ -23,7 +23,8 @@ const store = createStore({
         .configureLogging(signalR.LogLevel.Trace)
         .build(),
 		messages:[],
-		$currentContent:{}//当前正在编辑的task.description
+		$currentContent:{}, //当前正在编辑的task.description
+		$publishResults:[]
 	},
 	mutations:{
 		updateBranchs(state,payload){
@@ -82,8 +83,12 @@ const store = createStore({
 			uni.setStorageSync(StorageKeys.hasLogin,login);
 			return login;
 		},
+		//设置正在编辑的任务中的description
 		setEditContent(state,payload){
 			state.$currentContent = payload;
+		},
+		setPublishResults(state,payload){
+			state.$publishResults = payload;
 		}
 	},
 	getters:{
@@ -130,7 +135,9 @@ const store = createStore({
 		currentEditContent(state){
 			return state.$currentContent
 		},
-
+		publishResults(state){
+			return state.$publishResults
+		}
 	},
 	actions:{
 		//获取部门信息

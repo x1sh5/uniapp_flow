@@ -20,7 +20,6 @@
 				counter:1,
 				tasks:[{
 					  "id": 0,
-					  "username": false,
 					  "branchid": 1,
 					  "description": "",
 					  "finishtime": "0001-01-01T00:00:00",
@@ -69,10 +68,15 @@
 				
 			},
 			submitEvent(){
+				let publishResults = [];
 				for(let item of this.tasks){
-					this.$refs['id'+id][0].publish()
+					let res = this.$refs['id'+item.id][0].publish();
+					publishResults.push(res)
 				}
-				uni.navigateBack()
+				this.$store.commit("setPublishResults",publishResults);
+				uni.navigateTo({
+					url:"/pages/publishResult/publishResult"
+				})
 			},
 			createTask(e){
 				console.log(e);
