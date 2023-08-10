@@ -1,7 +1,7 @@
 <template>
 	<view  class="newtaskbox">
 		<view style="width: 90%;">
-			<cardinfo :task="task" :editable="editable"></cardinfo>
+			<cardinfo :task="task" :editable="editable" ref="cardinfo"></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
@@ -73,25 +73,10 @@
 			updateT(payload){
 				console.log("updateT trigger")
 				this.content = payload;
+				this.$refs.cardinfo.updateDes(payload.html)
 			},
 			publish(){
-				let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
-				uni.requestWithCookie({
-					url:posturl,
-					method:"POST",
-					data:this.task,
-					success:(res)=> {
-						if(res.statusCode === 200){
-							return {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}
-						}else{
-							return {success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"}
-						}
-					},
-					fail:(err)=>{
-						console.error(err);
-						return {success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"}
-					}
-				});
+				this.$refs.cardinfo.publish();
 			}
 		}
 	}

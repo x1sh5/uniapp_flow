@@ -2,7 +2,7 @@
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 	<view data-denpend="">
-		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id"></taskCard>
+		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" style="margin: 2px 3px;"></taskCard>
 	</view>
 	<view>
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>

@@ -154,7 +154,9 @@
 		methods:{
 			branchChange(e) {
 				console.log('picker发送选择改变，携带值为', e)
-				this.branchIndex = e.detail.value
+				let branchIndex = e.detail.value;
+				this.branchIndex = branchIndex;
+				this.task.branchid = branchIndex;
 			},
 			rewardTypeChange(e){
 				console.log('rewardType 改变，携带值为', e)
@@ -180,9 +182,36 @@
 			updateBrief(event){
 				this.task.title = event.detail.value;
 			},
+			//更新预计时间
 			updatePt(event){
 				this.task.presumedtime = event.detail.value;
+			},
+			//更新描述
+			updateDes(data){
+				this.task.description = data;
+			},
+			publish(){
+				console.log(this.task);
+				//发布任务
+				// let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
+				// uni.requestWithCookie({
+				// 	url:posturl,
+				// 	method:"POST",
+				// 	data:this.task,
+				// 	success:(res)=> {
+				// 		if(res.statusCode === 200){
+				// 			this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}) 
+				// 		}else{
+				// 			this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"})
+				// 		}
+				// 	},
+				// 	fail:(err)=>{
+				// 		console.error(err);
+				// 		this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"})
+				// 	}
+				// });
 			}
+			
 		},
 		data() {
 			return {
