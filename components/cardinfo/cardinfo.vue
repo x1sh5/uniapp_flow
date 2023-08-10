@@ -6,7 +6,7 @@
 		<!-- 编号 标题 -->
 		<!-- 第一行，第一列起横跨2列 -->
 		<view class="r12c13">
-			<view class="columnlayout">
+			<view class="columnlayout" style="width: 100%;height: 100%;">
 				<!-- 第一层：需求内容 编号 -->
 				  <view class="rowlayout">
 					<view :class="`fontcolor${Id%3} poster`" >需求内容</view>
@@ -396,6 +396,7 @@
 	  .blackcolor();
 	  .margin-top5();
 	  height: 62%;
+	  width: 80%;
 	}
 	.input{
 	  width: 60%;
@@ -405,7 +406,6 @@
 	}
 	.brief{
 	  .title();
-	  width: 100%;
 	  white-space: pre-wrap;
 	}
 	.uni-textarea-compute{

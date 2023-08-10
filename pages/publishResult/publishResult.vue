@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-for="item in publishResults" :key="item" style="height: 40px;">{{ item.message }}</view>
+		<view v-for="item in results" :key="item" style="height: 40px;">{{ item }}</view>
 	</view>
 </template>
 
@@ -16,6 +16,7 @@
 		},
 		computed:{
 			results(){
+				console.log(this.$store.getters.publishResults);
 				return this.$store.getters.publishResults
 			}
 		}

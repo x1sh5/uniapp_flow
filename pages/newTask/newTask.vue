@@ -71,6 +71,7 @@
 				let publishResults = [];
 				for(let item of this.tasks){
 					let res = this.$refs['id'+item.id][0].publish();
+					console.log(res);
 					publishResults.push(res)
 				}
 				this.$store.commit("setPublishResults",publishResults);
@@ -102,7 +103,7 @@
 				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));
 				console.log(index)
 				if(index!== -1){
-					this.tasks[index].description = payload;
+					this.tasks[index].description = payload.html;
 					this.$refs['id'+id][0].updateT(payload);
 				}
 			}
