@@ -68,13 +68,10 @@
 				
 			},
 			submitEvent(){
-				let publishResults = [];
 				for(let item of this.tasks){
-					let res = this.$refs['id'+item.id][0].publish();
-					console.log(res);
-					publishResults.push(res)
+					this.$refs['id'+item.id][0].publish();
 				}
-				this.$store.commit("setPublishResults",publishResults);
+
 				uni.navigateTo({
 					url:"/pages/publishResult/publishResult"
 				})

@@ -89,6 +89,15 @@ const store = createStore({
 		},
 		setPublishResults(state,payload){
 			state.$publishResults = payload;
+		},
+		updatePublishResults(state, payload){
+			console.log("call")
+		  if (typeof payload.func === 'function') {
+			payload.func.call(state.$publishResults, payload.data);
+		  } else {
+			console.error('Invalid input');
+		  }
+		  
 		}
 	},
 	getters:{
@@ -200,10 +209,10 @@ const store = createStore({
 			    }
 				
 		},
-		async fetchTasks({commit,state}){
+		async fetchTasks({commit,state},{count,offset}){
 			try {
 			        const response = await uni.requestWithCookie({
-			          url: state.apiBaseUrl+"/api/Assignment",
+			          url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset ,
 			          method: 'GET',
 					  success:function(res){
 						  console.log(res)

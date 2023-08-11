@@ -15,6 +15,9 @@
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
 		</view>
+		
+		<uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
+			@update:modelValue="modelChange"></uni-pagination>
 	</view>
 </template>
 
@@ -24,10 +27,26 @@
 		data() {
 			return {
 				title: 'Hello',
+				$total: 0,
 			}
 		},
+		created() {
+			let url = this.$store.state.apiBaseUrl+"/api/Assignment/total";
+			uni.request({
+				url:url,
+				dataType: 'text',
+				success:(res) =>{
+					if(res.statusCode === 200){
+						console.log(res.data)
+						this.$data.$total = res.data;
+						console.log(this.$data.$total);
+					}
+				}
+			});
+		},
 		onLoad() {
-			console.log("page index onload")
+			console.log("page index onload");
+
 		},
 		
 		computed:{
@@ -44,6 +63,9 @@
 				let ts = this.$store.state.taskTypes;
 				
 				return [{id:"",name:"全部"}, ...ts];
+			},
+			total(){
+				return this.$data.$total;
 			}
 		},
 		methods:{
@@ -71,6 +93,15 @@
 					}
 				});
 				
+			},
+			inputEvent(e){
+				console.log(e)
+			},
+			changeEvent(e){
+				console.log(e)
+			},
+			modelChange(e){
+				console.log(e)
 			}
 		}
 	}

@@ -61,7 +61,7 @@
 			await this.$store.dispatch('fetchTaskTypes');
 			try {
 			  if(!this.$store.state.tasks.status){
-				 await this.$store.dispatch('fetchTasks')
+				 await this.$store.dispatch('fetchTasks',{count:10,offset:0})
 			  }
 			} catch (error) {
 			  console.error("Error getting data from the API:", error);

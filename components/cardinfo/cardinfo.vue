@@ -192,6 +192,8 @@
 			},
 			publish(){
 				console.log(this.task);
+				this.$store.commit("updatePublishResults", 
+					{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
 				//发布任务
 				// let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
 				// uni.requestWithCookie({
