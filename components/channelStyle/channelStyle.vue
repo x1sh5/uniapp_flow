@@ -17,11 +17,19 @@
 </template>
 
 <script>
+import { type } from 'os'
 	export default {
 		name:"channelStyle",
+		props:{
+			title:{
+				type:String,
+				default(){
+					return "测试任务标题";
+				}
+			}
+		},
 		data() {
 			return {
-				title:"测试任务标题",
 				lastmessage:"你好",
 				time:"22:41",
 				unreadcount:2

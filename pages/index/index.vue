@@ -16,8 +16,8 @@
 		  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
 		</view>
 		
-		<uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
-			@update:modelValue="modelChange"></uni-pagination>
+		<!-- <uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
+			@update:modelValue="modelChange"></uni-pagination> -->
 	</view>
 </template>
 
@@ -27,22 +27,7 @@
 		data() {
 			return {
 				title: 'Hello',
-				$total: 0,
 			}
-		},
-		created() {
-			let url = this.$store.state.apiBaseUrl+"/api/Assignment/total";
-			uni.request({
-				url:url,
-				dataType: 'text',
-				success:(res) =>{
-					if(res.statusCode === 200){
-						console.log(res.data)
-						this.$data.$total = res.data;
-						console.log(this.$data.$total);
-					}
-				}
-			});
 		},
 		onLoad() {
 			console.log("page index onload");
@@ -56,7 +41,7 @@
 					return this.$store.getters.getTasks
 				},
 				set(value){
-					this.$store.commit('updateTasks',value)
+					this.$store.commit('setTasks',value)
 				}
 			},
 			taskTypes(){
@@ -66,6 +51,12 @@
 			},
 			total(){
 				return this.$data.$total;
+			},
+			maxIndex(){
+				if(this.tasks.length>0){
+					return this.tasks[this.tasks.length-1].id
+				}
+				return 0;
 			}
 		},
 		methods:{
@@ -102,6 +93,33 @@
 			},
 			modelChange(e){
 				console.log(e)
+			}
+		},
+		//上拉更新数据
+		onReachBottom() {
+			let maxIndex = this.maxIndex;
+			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex})
+			.then(data => {
+				 this.$store.commit('updateTasks', data["$values"]);
+				 // 在这里处理获取到的数据
+			  })
+			  .catch(error => {
+				 console.error('获取数据失败：', error);
+				 // 在这里处理错误情况
+			  });
+		},
+		//下拉刷新页面
+		onPullDownRefresh() {
+			if(!this.$store.state.tasks.status){
+				 this.$store.dispatch('fetchTasks',{count:10,offset:0})
+				 .then(data => {
+					 this.$store.commit('setTasks', data["$values"]);
+					 // 在这里处理获取到的数据
+				   })
+				   .catch(error => {
+					 console.error('获取数据失败：', error);
+					 // 在这里处理错误情况
+				   });
 			}
 		}
 	}

@@ -63,6 +63,34 @@
 			},
 			gain(e){
 				console.log("接取任务")
+				let url = this.$store.state.apiBaseUrl+"/api/Assignment/take/"+this.task.id;
+				uni.requestWithCookie({
+					url:url,
+					success: (res) => {
+						if(res.statusCode === 200){
+							if(res.data.data.success){
+								uni.showModal({
+									content: res.data.message
+								})
+							}else{
+								uni.showModal({
+									content: res.data.data.reason
+								})
+							}
+						}else{
+							uni.showModal({
+								content: "网络出错"
+							})
+						}
+
+					},
+					fail:(err)=>{
+						console.log("failed")
+						uni.showModal({
+							content: err
+						})
+					}
+				});
 			}
 		}
 	}

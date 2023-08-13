@@ -12,8 +12,8 @@
 		<view class="taskinfobox">
 			<view style="position: relative;margin-left: 10rpx;">我发布的</view>
 			<view class="taskinfo">
-				<view class="wr icon1" @click="userTaskDetail"><view class="item_title">历史发布</view></view>
-				<view class="wr icon3" @click="userTaskDetail"><view class="item_title">浏览记录</view></view>
+				<view class="wr icon1" @click="myPublishs"><view class="item_title">历史发布</view></view>
+				<view class="wr icon3" @click="history"><view class="item_title">浏览记录</view></view>
 				<view class="wr icon4" @click="draftBox"><view class="item_title">草稿箱</view></view>
 			</view>
 		</view>
@@ -64,10 +64,15 @@
 			}
 		},
 		methods:{
-			userTaskDetail(e){
+			myPublishs(e){
+				uni.navigateTo({
+					url:"/pages/myPublishs/myPublishs"
+				})
+			},
+			history(e){
 				console.log(e)
 				uni.navigateTo({
-					url:"/pages/userTaskDetail/userTaskDetail"
+					url:"/pages/history/history"
 				})
 			},
 			holds(){

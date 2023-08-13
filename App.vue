@@ -59,13 +59,19 @@
 			console.log("before Create")
 			await this.$store.dispatch('fetchBranchs');
 			await this.$store.dispatch('fetchTaskTypes');
-			try {
-			  if(!this.$store.state.tasks.status){
-				 await this.$store.dispatch('fetchTasks',{count:10,offset:0})
-			  }
-			} catch (error) {
-			  console.error("Error getting data from the API:", error);
-			}
+
+		    if(!this.$store.state.tasks.status){
+				 this.$store.dispatch('fetchTasks',{count:10,offset:0})
+				 .then(data => {
+					 this.$store.commit('setTasks', data["$values"]);
+					 // 在这里处理获取到的数据
+				   })
+				   .catch(error => {
+					 console.error('获取数据失败：', error);
+					 // 在这里处理错误情况
+				   });
+		    }
+
 		},
 		onShow: function() {
 			console.log('App Show')

@@ -36,23 +36,45 @@
 					this.current = e.currentIndex
 				}
 			},
+			// 1 incomplete 2 completed
+			getByStatus(status){
+				return new Promise((resolve,reject)=>{
+					let qurl = this.$store.state.apiBaseUrl+"/api/AssignmentUser/status/"+status;
+					uni.requestWithCookie({
+						url:qurl,
+						success: (res) => {
+							if(res.statusCode === 200){
+								if(res.data["$values"]){
+									resolve(res.data["$values"])
+								}
+								
+							}else{
+								reject()
+							}
+						},
+						fail:(err)=>{
+							reject(err)
+						}
+					});
+				});
+			}
 		},
 		computed:{
-			publishs(){
-				if(!this.$publish){
-					uni.requestWithCookie({
-						url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
-						success(res) {
-							this.$nextTick(
-								function(e){
-									this.$publish = res.data["$values"]
-								}
-							)
-						}
-					})
-				}
-				return this.$publish;
+			incompletes(){
+				return this.$data.$incompletes;
+			},
+			completes(){
+				return this.$data.$completes;
 			}
+		},
+		onLoad() {
+			this.getByStatus(1)
+				.then((res)=>this.$data.$incompletes = res)
+				.catch((err)=>console.log(err));
+				
+			this.getByStatus(2)
+				.then((res)=>this.$data.$completes = res)
+				.catch((err)=>console.log(err));
 		}
 	}
 </script>

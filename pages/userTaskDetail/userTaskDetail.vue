@@ -1,3 +1,4 @@
+// 以弃用！
 <template>
 	<view>
 		<uni-segmented-control :current="current" :values="items" style-type="text"
@@ -55,6 +56,9 @@
 				//必须使用this.$data.$publishs;而不能使用this.$publishs;
 				//because it starts with a reserved character ("$" or "_") and is not proxied on the render context
 				return this.$data.$publishs;
+			},
+			history(){
+				return 'a'
 			}
 		},
 		onLoad(options) {

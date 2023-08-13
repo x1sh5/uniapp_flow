@@ -13,13 +13,15 @@
 			"path": "pages/addtask/addtask",
 			"style": {
 				"navigationBarTitleText": "创建任务",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		}	
 		,{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "流沙任务系统"
+				"navigationBarTitleText": "流沙任务系统",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
 			}
 		}
 		,{
@@ -63,6 +65,19 @@
             }
             
         }
+		,{
+			"path": "pages/history/history",
+			"style": {
+				"navigationBarTitleText": "浏览历史",
+				"onReachBottomDistance": 50
+			}
+		}
+		,{
+			"path": "pages/myPublishs/myPublishs",
+			"style": {
+				"navigationBarTitleText": "我发布的"
+			}
+		}
         ,{
             "path" : "pages/logintips/logintips",
             "style" :                                                                                    

@@ -35,10 +35,15 @@ const store = createStore({
 			console.log("taskTypes:",payload)
 			state.taskTypes = toRaw(payload)
 		},
-		updateTasks(state,payload){
+		setTasks(state,payload){
 			console.log("tasks:",payload)
 			state.tasks.status = true
 			state.tasks.values= payload
+		},
+		updateTasks(state,payload){
+			console.log("tasks:",payload)
+			state.tasks.status = true;
+			state.tasks.values = state.tasks.values.concat(payload);
 		},
 		changeLoginState(state){
 			state.$hasLogin = !state.$hasLogin
@@ -209,33 +214,22 @@ const store = createStore({
 			    }
 				
 		},
-		async fetchTasks({commit,state},{count,offset}){
-			try {
-			        const response = await uni.requestWithCookie({
-			          url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset ,
-			          method: 'GET',
-					  success:function(res){
-						  console.log(res)
-						  let data = res.data
-						  nextTick(()=>{
-							  commit('updateTasks', data["$values"]);
-						  })
-						  
-					  },
-					  complete(){
-					  						  
-					  }
-					 //  header:{
-						// 'Access-Control-Allow-Origin': '*'
-					 //  }
-			        });
-			    } catch (error) {
-					// uni.showModal({
-					// 	content:err.errMsg
-					// })
-			        console.error("fetch tasks error:",error);
-			    }
-
+		fetchTasks({commit,state},{count,offset}){
+			return new Promise((resolve,reject)=> {
+				uni.requestWithCookie({
+				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset ,
+				  method: 'GET',
+				  success:(res)=>{
+					  console.log(res)
+					  let data = res.data
+					  resolve(data);
+					  
+				  },
+				  fail:(err)=>{
+					  reject(err);
+				  }
+				});
+			});
 		},		
 		async fetchTaskById({commit},id){
 			let qurl = state.apiBaseUrl+"/api/Assignment/"+id;
@@ -247,7 +241,7 @@ const store = createStore({
 						  console.log(res)
 						  let data = res.data
 						  nextTick(()=>{
-							  commit('updateTasks', data["$values"]);
+							  commit('setTasks', data["$values"]);
 						  })
 						  
 					  },
