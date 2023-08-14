@@ -72,7 +72,8 @@
 			},
 			updateT(payload){
 				//{ctx:res, files: lastFiles}
-				console.log("updateT trigger")
+				console.log("updateT trigger",payload)
+				let newHtml
 				for(let file of payload.files){
 					let index = payload.ctx.delta.ops.indexOf(x=>x.attributes&&x.attributes["data-local"] === file.path)
 					uni.uploadFileWithCookie({
@@ -80,17 +81,19 @@
 					            filePath: file.path,
 					            name: file.name,
 								success: (res) => {
-									if(res.statusCode === 200){
-										payload.ctx.html.replace("<img src=\""+file.path+" data-local=\""+file.path+" alt=\"图像\">",
-										"<img src=\""+this.$store.state.apiBaseUrl+"/flow/static/"+res.data["$values"].url
-										+">")
+									let data = JSON.parse(res.data)
+									if((''+res.statusCode).startsWith('2')){
+										let search = "<img src=\""+file.path+"\" data-local=\""+file.path+"\" alt=\"图像\">";
+										let replace = "<img src=\""+this.$store.state.apiBaseUrl+"/flow/static/"+data.$values[0].url+"\">"
+										console.log(search,replace)
+										newHtml = payload.ctx.html.replace(search,replace)
 										 
 									}
 								}
 						});
 				}
 				this.content = payload.ctx;
-				this.$refs.cardinfo.updateDes(payload.ctx.html)
+				this.$refs.cardinfo.updateDes(newHtml)
 			},
 			publish(){
 				this.$refs.cardinfo.publish();
