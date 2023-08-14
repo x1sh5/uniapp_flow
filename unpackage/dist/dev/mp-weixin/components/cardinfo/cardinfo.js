@@ -82,22 +82,47 @@ const _sfc_main = {
   methods: {
     branchChange(e) {
       console.log("picker发送选择改变，携带值为", e);
-      this.branchIndex = e.detail.value;
+      let branchIndex = e.detail.value;
+      this.branchIndex = branchIndex;
+      this.task.branchid = branchIndex;
     },
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
       this.$rewardTypeValue = e;
     },
     detail(e) {
-      if (!this.$store.state.$hasLogin) {
-        common_vendor.index.navigateTo({
-          url: "/pages/logintips/logintips"
-        });
-      } else {
-        common_vendor.index.navigateTo({
-          url: "/pages/taskDetail/taskDetail?id=" + this.task.id
-        });
+      if (!this.editable) {
+        if (!this.$store.state.$hasLogin) {
+          common_vendor.index.navigateTo({
+            url: "/pages/logintips/logintips"
+          });
+        } else {
+          common_vendor.index.navigateTo({
+            url: "/pages/taskDetail/taskDetail?id=" + this.task.id
+          });
+        }
       }
+    },
+    updateReward(event) {
+      this.task.reward = event.detail.value;
+    },
+    updateBrief(event) {
+      this.task.title = event.detail.value;
+    },
+    //更新预计时间
+    updatePt(event) {
+      this.task.presumedtime = event.detail.value;
+    },
+    //更新描述
+    updateDes(data) {
+      this.task.description = data;
+    },
+    publish() {
+      console.log(this.task);
+      this.$store.commit(
+        "updatePublishResults",
+        { data: { success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" }, func: Array.prototype.push }
+      );
     }
   },
   data() {
@@ -105,7 +130,7 @@ const _sfc_main = {
       // 预计时间
       //spendtime:"",
       //tasktype:"类型",
-      status: ["代接", "完成", "审核中"],
+      status: ["代接", "未完成", "完成"],
       branchIndex: false,
       $rewardTypeValue: 0,
       rewardtype: {
@@ -139,36 +164,39 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.t($options.Id),
     c: !$props.editable,
     d: $options.title,
-    e: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    f: !$props.editable,
-    g: $options.spendtime,
-    h: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    i: !$props.editable,
-    j: $props.task.reward,
-    k: common_vendor.o($options.rewardTypeChange),
-    l: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
-    m: common_vendor.p({
+    e: common_vendor.o((...args) => $options.updateBrief && $options.updateBrief(...args)),
+    f: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    g: !$props.editable,
+    h: $options.spendtime,
+    i: common_vendor.o((...args) => $options.updatePt && $options.updatePt(...args)),
+    j: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    k: !$props.editable,
+    l: $props.task.reward,
+    m: common_vendor.o((...args) => $options.updateReward && $options.updateReward(...args)),
+    n: common_vendor.o($options.rewardTypeChange),
+    o: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
+    p: common_vendor.p({
       localdata: $data.rewardtype.options,
       clear: false,
       placeholder: "类型",
       disabled: !$props.editable,
       modelValue: $data.$rewardTypeValue
     }),
-    n: common_vendor.t($options.taskType),
-    o: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
-    p: !$props.editable,
-    q: $options.branchs,
-    r: $options.branchOrder,
-    s: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    t: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    v: common_vendor.t($options.userName),
+    q: common_vendor.t($options.taskType),
+    r: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
+    s: !$props.editable,
+    t: $options.branchs,
+    v: $options.branchOrder,
     w: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    x: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    y: common_vendor.t($data.status[$props.task.status]),
-    z: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    A: common_vendor.n(`task${$options.Id % 3}`),
-    B: common_vendor.o((...args) => $options.detail && $options.detail(...args))
+    x: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
+    y: common_vendor.t($options.userName),
+    z: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    A: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    B: common_vendor.t($data.status[$props.task.status]),
+    C: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    D: common_vendor.n(`task${$options.Id % 3}`),
+    E: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

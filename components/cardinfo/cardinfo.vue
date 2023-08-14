@@ -220,7 +220,7 @@
 				// 预计时间
 				//spendtime:"",
 				//tasktype:"类型",
-				status:["代接","完成","审核中"],
+				status:["代接","未完成","完成"],
 				branchIndex:false,
 				$rewardTypeValue: 0,
 				rewardtype: {

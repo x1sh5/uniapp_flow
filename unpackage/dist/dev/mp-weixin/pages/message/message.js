@@ -38,10 +38,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.f($data.chatChannels, (c, k0, i0) => {
       return {
         a: c,
-        b: "62afb476-0-" + i0
+        b: "42102b40-0-" + i0
       };
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/message/message.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/message/message.vue"]]);
 wx.createPage(MiniProgramPage);

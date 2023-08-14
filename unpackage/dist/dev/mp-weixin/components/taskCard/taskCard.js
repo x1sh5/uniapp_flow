@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_storageKeys = require("../../common/storageKeys.js");
+require("../../common/storageKeys.js");
 const _sfc_main = {
   name: "taskCard",
   props: {
@@ -32,12 +32,18 @@ const _sfc_main = {
     }
   },
   data() {
-    return {};
+    return {
+      content: {}
+    };
   },
   computed: {
     html: {
       get() {
-        return common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.taskContent);
+        return this.content.html;
+      },
+      set(value) {
+        this.content = value;
+        this.task.description = value.html;
       }
     }
   },
@@ -48,9 +54,18 @@ const _sfc_main = {
   },
   methods: {
     editEvent(e) {
+      this.$store.commit("setEditContent", this.content);
       common_vendor.index.navigateTo({
-        url: "/pages/editor/editor"
+        url: "/pages/editor/editor?id=" + this.task.id
       });
+    },
+    updateT(payload) {
+      console.log("updateT trigger");
+      this.content = payload;
+      this.$refs.cardinfo.updateDes(payload.html);
+    },
+    publish() {
+      this.$refs.cardinfo.publish();
     }
   }
 };
@@ -63,14 +78,17 @@ if (!Math) {
   _easycom_cardinfo();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_vendor.p({
+  return common_vendor.e({
+    a: common_vendor.sr("cardinfo", "445dab1a-0"),
+    b: common_vendor.p({
       task: $props.task,
       editable: $props.editable
     }),
-    b: $options.html,
-    c: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
-  };
+    c: $options.html,
+    d: $props.editable
+  }, $props.editable ? {
+    e: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
+  } : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/taskCard/taskCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/taskCard/taskCard.vue"]]);
 wx.createComponent(Component);

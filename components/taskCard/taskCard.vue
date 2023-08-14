@@ -71,9 +71,26 @@
 				})
 			},
 			updateT(payload){
+				//{ctx:res, files: lastFiles}
 				console.log("updateT trigger")
-				this.content = payload;
-				this.$refs.cardinfo.updateDes(payload.html)
+				for(let file of payload.files){
+					let index = payload.ctx.delta.ops.indexOf(x=>x.attributes&&x.attributes["data-local"] === file.path)
+					uni.uploadFileWithCookie({
+					            url: this.$store.state.apiBaseUrl+"/api/Image/upload",
+					            filePath: file.path,
+					            name: file.name,
+								success: (res) => {
+									if(res.statusCode === 200){
+										payload.ctx.html.replace("<img src=\""+file.path+" data-local=\""+file.path+" alt=\"图像\">",
+										"<img src=\""+this.$store.state.apiBaseUrl+"/flow/static/"+res.data["$values"].url
+										+">")
+										 
+									}
+								}
+						});
+				}
+				this.content = payload.ctx;
+				this.$refs.cardinfo.updateDes(payload.ctx.html)
 			},
 			publish(){
 				this.$refs.cardinfo.publish();

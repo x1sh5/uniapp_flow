@@ -1,1 +1,1 @@
-<view data-denpend=""><task-card wx:if="{{a}}" u-i="9360021c-0" bind:__l="__l" u-p="{{a}}"></task-card></view>
+<uni-nav-bar wx:if="{{c}}" bindclickLeft="{{a}}" bindclickRight="{{b}}" u-i="329834dc-0" bind:__l="__l" u-p="{{c}}"></uni-nav-bar><view data-denpend=""><task-card wx:for="{{d}}" wx:for-item="item" wx:key="b" class="r-i-f" u-r="{{item.c}}" style="margin:2px 3px" u-i="{{item.d}}" bind:__l="__l" u-p="{{item.e}}"></task-card></view><view><uni-fab wx:if="{{f}}" bindtrigger="{{e}}" u-i="329834dc-2" bind:__l="__l" u-p="{{f}}"></uni-fab></view>

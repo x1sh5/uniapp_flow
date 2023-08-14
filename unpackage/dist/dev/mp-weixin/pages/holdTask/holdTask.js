@@ -16,24 +16,40 @@ const _sfc_main = {
       if (this.current !== e.currentIndex) {
         this.current = e.currentIndex;
       }
+    },
+    // 1 incomplete 2 completed
+    getByStatus(status) {
+      return new Promise((resolve, reject) => {
+        let qurl = this.$store.state.apiBaseUrl + "/api/AssignmentUser/status/" + status;
+        common_vendor.index.requestWithCookie({
+          url: qurl,
+          success: (res) => {
+            if (res.statusCode === 200) {
+              if (res.data["$values"]) {
+                resolve(res.data["$values"]);
+              }
+            } else {
+              reject();
+            }
+          },
+          fail: (err) => {
+            reject(err);
+          }
+        });
+      });
     }
   },
   computed: {
-    publishs() {
-      if (!this.$publish) {
-        common_vendor.index.requestWithCookie({
-          url: this.$store.state.apiBaseUrl + "/api/Assignment/user",
-          success(res) {
-            this.$nextTick(
-              function(e) {
-                this.$publish = res.data["$values"];
-              }
-            );
-          }
-        });
-      }
-      return this.$publish;
+    incompletes() {
+      return this.$data.$incompletes;
+    },
+    completes() {
+      return this.$data.$completes;
     }
+  },
+  onLoad() {
+    this.getByStatus(1).then((res) => this.$data.$incompletes = res).catch((err) => console.log(err));
+    this.getByStatus(2).then((res) => this.$data.$completes = res).catch((err) => console.log(err));
   }
 };
 if (!Array) {
@@ -59,7 +75,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 0 ? {
     d: common_vendor.f($data.$incompletes, (item, k0, i0) => {
       return {
-        a: "de2ac734-1-" + i0,
+        a: "1bfcffd0-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -72,7 +88,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 1 ? {
     f: common_vendor.f($data.$completes, (item, k0, i0) => {
       return {
-        a: "de2ac734-2-" + i0,
+        a: "1bfcffd0-2-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -82,5 +98,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/holdTask/holdTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/holdTask/holdTask.vue"]]);
 wx.createPage(MiniProgramPage);

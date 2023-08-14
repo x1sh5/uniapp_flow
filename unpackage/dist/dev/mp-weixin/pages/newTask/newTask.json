@@ -1,7 +1,9 @@
 {
-  "navigationStyle": "default",
+  "navigationStyle": "custom",
   "navigationBarTitleText": "编辑任务",
   "usingComponents": {
-    "task-card": "../../components/taskCard/taskCard"
+    "uni-nav-bar": "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "task-card": "../../components/taskCard/taskCard",
+    "uni-fab": "../../uni_modules/uni-fab/components/uni-fab/uni-fab"
   }
 }

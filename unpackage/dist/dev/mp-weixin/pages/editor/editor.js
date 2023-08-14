@@ -1,18 +1,26 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_storageKeys = require("../../common/storageKeys.js");
+require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
+      id: "",
       readOnly: false,
       formats: {}
     };
   },
-  onLoad() {
-    common_vendor.index.loadFontFace({
-      family: "Pacifico",
-      source: 'url("./static/Pacifico.ttf")'
-    });
+  onLoad(options) {
+    this.id = options.id;
+    // common_vendor.index.loadFontFace({
+    //   family: "Pacifico",
+    //   source: 'url("../../static/Pacifico.ttf")'
+    // });
+  },
+  mounted() {
+    console.log(this.editorCtx);
+    if (this.editorCtx) {
+      this.editorCtx.setContents(this.$store.state.$currentContent);
+    }
   },
   methods: {
     backEvent() {
@@ -20,9 +28,13 @@ const _sfc_main = {
     },
     submitEvent() {
       this.editorCtx.getContents({
-        success(res) {
+        success: (res) => {
           console.log(res);
-          common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.taskContent, res.html);
+          const pages = getCurrentPages();
+          if (pages.length >= 2) {
+            const newTask = pages[pages.length - 1];
+            newTask.$vm.updateTask(this.id, res);
+          }
         }
       });
       common_vendor.index.navigateBack();
@@ -100,6 +112,13 @@ const _sfc_main = {
           });
         }
       });
+    },
+    setTaskContent() {
+      const pages = getCurrentPages();
+      if (pages.length >= 2) {
+        const newTask = pages[pages.length - 2];
+        newTask.tasks[this.id].description = "new value";
+      }
     }
   }
 };
@@ -157,5 +176,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.o((...args) => $options.onEditorReady && $options.onEditorReady(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/editor/editor.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/editor/editor.vue"]]);
 wx.createPage(MiniProgramPage);

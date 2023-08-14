@@ -16,12 +16,21 @@ const _sfc_main = {
         return this.$store.getters.getTasks;
       },
       set(value) {
-        this.$store.commit("updateTasks", value);
+        this.$store.commit("setTasks", value);
       }
     },
     taskTypes() {
       let ts = this.$store.state.taskTypes;
       return [{ id: "", name: "全部" }, ...ts];
+    },
+    total() {
+      return this.$data.$total;
+    },
+    maxIndex() {
+      if (this.tasks.length > 0) {
+        return this.tasks[this.tasks.length - 1].id;
+      }
+      return 0;
     }
   },
   methods: {
@@ -47,6 +56,34 @@ const _sfc_main = {
             });
           }
         }
+      });
+    },
+    inputEvent(e) {
+      console.log(e);
+    },
+    changeEvent(e) {
+      console.log(e);
+    },
+    modelChange(e) {
+      console.log(e);
+    }
+  },
+  //上拉更新数据
+  onReachBottom() {
+    let maxIndex = this.maxIndex;
+    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex }).then((data) => {
+      this.$store.commit("updateTasks", data["$values"]);
+    }).catch((error) => {
+      console.error("获取数据失败：", error);
+    });
+  },
+  //下拉刷新页面
+  onPullDownRefresh() {
+    if (!this.$store.state.tasks.status) {
+      this.$store.dispatch("fetchTasks", { count: 10, offset: 0 }).then((data) => {
+        this.$store.commit("setTasks", data["$values"]);
+      }).catch((error) => {
+        console.error("获取数据失败：", error);
       });
     }
   }
@@ -79,7 +116,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
       return {
-        a: "0c9de768-1-" + i0,
+        a: "4d84c736-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -89,5 +126,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

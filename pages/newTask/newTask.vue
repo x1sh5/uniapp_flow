@@ -95,6 +95,7 @@
 				})
 			},
 			updateTask(id,payload){
+				//{ctx:res, files: lastFiles}
 				console.log("updateTask triggered",id,payload)
 				console.log(this.tasks)
 				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));

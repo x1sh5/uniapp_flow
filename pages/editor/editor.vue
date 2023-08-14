@@ -76,7 +76,8 @@
 			return {
 				id:'',
 				readOnly: false,
-				formats: {}
+				formats: {},
+				files:[],
 			}
 		},
 		onLoad(options) {
@@ -107,10 +108,16 @@
 					success:(res)=>{
 						console.log(res)
 						//uni.setStorageSync(StorageKeys.taskContent,res.html)
+						//res.dalta.ops[x].attributes.alt === "图像"
+						let images = res.delta.ops.filter(item=>item.attributes&&item.attributes.alt === "图像")
+						const lastFiles = this.files.filter(itemB => {
+						  return images.some(itemA => itemA.attributes["data-local"] === itemB.path);
+						});
+						//if(file.path = res.dalta.ops[x].attributes.data-local)
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							const newTask = pages[pages.length - 2]; // 获取页面A的实例
-							newTask.updateTask(this.id, res); // 修改页面A的属性a1的值
+							newTask.updateTask(this.id, {ctx:res, files: lastFiles}); // 修改页面A的属性a1的值
 						}
 					}
 				})
@@ -184,15 +191,26 @@
 			insertImage() {
 				uni.chooseImage({
 					count: 1,
+					
+					sizeType:['compressed'],
 					success: (res) => {
 						console.log(res)
-						this.editorCtx.insertImage({
-							src: res.tempFilePaths[0],
-							alt: '图像',
-							success: function() {
-								console.log('insert image success')
-							}
-						})
+						let file = res.tempFiles[0];//文件
+						this.files.push(file)
+						if(file.size>2097152){
+							uni.showModal({
+								content:"文件大于2Mb"
+							})
+						}else{
+							this.editorCtx.insertImage({
+								src: res.tempFilePaths[0],
+								alt: '图像',
+								success: function() {
+									console.log('insert image success')
+								}
+							})
+						}
+
 					}
 				})
 			},

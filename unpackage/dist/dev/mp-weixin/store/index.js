@@ -16,43 +16,51 @@ const store = common_vendor.createStore({
       values: []
     },
     workSocket: new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build(),
-    messages: []
+    messages: [],
+    $currentContent: {},
+    //当前正在编辑的task.description
+    $publishResults: []
   },
   mutations: {
-    updateBranchs(state, payload) {
+    updateBranchs(state2, payload) {
       console.log("branchs:", payload);
-      state.branchs = common_vendor.toRaw(payload);
+      state2.branchs = common_vendor.toRaw(payload);
     },
-    updateTaskTypes(state, payload) {
+    updateTaskTypes(state2, payload) {
       console.log("taskTypes:", payload);
-      state.taskTypes = common_vendor.toRaw(payload);
+      state2.taskTypes = common_vendor.toRaw(payload);
     },
-    updateTasks(state, payload) {
+    setTasks(state2, payload) {
       console.log("tasks:", payload);
-      state.tasks.status = true;
-      state.tasks.values = payload;
+      state2.tasks.status = true;
+      state2.tasks.values = payload;
     },
-    changeLoginState(state) {
-      state.$hasLogin = !state.$hasLogin;
-      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, state.$hasLogin);
+    updateTasks(state2, payload) {
+      console.log("tasks:", payload);
+      state2.tasks.status = true;
+      state2.tasks.values = state2.tasks.values.concat(payload);
     },
-    updateMessage(state, payload) {
-      state.messages.push(payload);
+    changeLoginState(state2) {
+      state2.$hasLogin = !state2.$hasLogin;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, state2.$hasLogin);
     },
-    setUserName(state, payload) {
-      state.$userName = payload;
+    updateMessage(state2, payload) {
+      state2.messages.push(payload);
+    },
+    setUserName(state2, payload) {
+      state2.$userName = payload;
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userName, payload);
     },
-    initUserName: (state) => {
+    initUserName: (state2) => {
       try {
         const userName = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userName);
-        state.$userName = userName;
+        state2.$userName = userName;
       } catch (e) {
         console.error(e);
       }
     },
     //获取本地登录标记
-    initHasLogin: (state) => {
+    initHasLogin: (state2) => {
       let hasLogin = false;
       try {
         hasLogin = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.hasLogin);
@@ -60,71 +68,91 @@ const store = common_vendor.createStore({
         hasLogin = false;
         console.error(e);
       }
-      state.$hasLogin = hasLogin;
+      state2.$hasLogin = hasLogin;
+    },
+    //判断是否登录
+    loginTest: (state2) => {
+      let login = false;
+      common_vendor.index.requestWithCookie({
+        url: state2.apiBaseUrl + "/api/Account/loginTest",
+        method: "HEAD",
+        success: (res) => {
+          if (res.statusCode === 200)
+            login = true;
+        }
+      });
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, login);
+      return login;
+    },
+    //设置正在编辑的任务中的description
+    setEditContent(state2, payload) {
+      state2.$currentContent = payload;
+    },
+    setPublishResults(state2, payload) {
+      state2.$publishResults = payload;
+    },
+    updatePublishResults(state2, payload) {
+      console.log("call");
+      if (typeof payload.func === "function") {
+        payload.func.call(state2.$publishResults, payload.data);
+      } else {
+        console.error("Invalid input");
+      }
     }
   },
   getters: {
-    getTasks(state) {
-      if (state.tasks.status) {
-        return state.tasks.values;
+    getTasks(state2) {
+      if (state2.tasks.status) {
+        return state2.tasks.values;
       }
     },
-    getTaskById: (state) => (id) => {
-      if (state.tasks.status) {
-        let i = state.tasks.values.find((item) => item.id === parseInt(id));
+    getTaskById: (state2) => (id) => {
+      if (state2.tasks.status) {
+        let i = state2.tasks.values.find((item) => item.id === parseInt(id));
         return i;
       }
     },
-    getBranch: (state) => (branchid) => {
-      let i = state.branchs.find((item) => item.id === parseInt(branchid));
+    getBranch: (state2) => (branchid) => {
+      let i = state2.branchs.find((item) => item.id === parseInt(branchid));
       console.log("branch is: ", i);
       if (i === void 0) {
         return "部门";
       }
       return i["name"];
     },
-    getTaskType: (state) => (typeid) => {
+    getTaskType: (state2) => (typeid) => {
       console.log("typeid is ", typeid);
-      console.log("taskTypes are ", state.taskTypes);
-      let i = state.taskTypes.find((item) => item.id === parseInt(typeid));
+      console.log("taskTypes are ", state2.taskTypes);
+      let i = state2.taskTypes.find((item) => item.id === parseInt(typeid));
       console.log("taskType is: ", i);
       if (i === void 0) {
         return "类型";
       }
       return i["name"];
     },
-    getBranchIndex: (state) => (branchid) => {
-      let i = state.branchs.findIndex((item) => item.id === branchid);
+    getBranchIndex: (state2) => (branchid) => {
+      let i = state2.branchs.findIndex((item) => item.id === branchid);
       if (i === void 0) {
         return 0;
       }
       return i;
     },
-    getMessages: (state) => {
-      return state.messages;
+    getMessages: (state2) => {
+      return state2.messages;
     },
-    //判断是否登录
-    loginTest: (state) => {
-      let login = false;
-      common_vendor.index.requestWithCookie({
-        url: state.apiBaseUrl + "/api/Account/loginTest",
-        method: "HEAD"
-      }).then((res) => {
-        if (res.statusCode === 200)
-          login = true;
-      }).catch((error) => {
-        console.error(error);
-      });
-      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, login);
-      return login;
+    currentEditContent(state2) {
+      return state2.$currentContent;
+    },
+    publishResults(state2) {
+      return state2.$publishResults;
     }
   },
   actions: {
     //获取部门信息
-    async fetchBranchs({ commit, state }) {
+    async fetchBranchs({ commit, state: state2 }) {
       try {
         const response = await common_vendor.index.requestWithCookie({
-          url: state.apiBaseUrl + "/api/Information/branchs",
+          url: state2.apiBaseUrl + "/api/Information/branchs",
           method: "GET",
           complete() {
           },
@@ -144,10 +172,10 @@ const store = common_vendor.createStore({
       }
     },
     //获取任务类型信息
-    async fetchTaskTypes({ commit, state }) {
+    async fetchTaskTypes({ commit, state: state2 }) {
       try {
         const response = await common_vendor.index.requestWithCookie({
-          url: state.apiBaseUrl + "/api/Information/customtypes",
+          url: state2.apiBaseUrl + "/api/Information/customtypes",
           method: "GET",
           complete() {
           },
@@ -166,43 +194,53 @@ const store = common_vendor.createStore({
         console.error("fetch updateTaskTypes error:", error);
       }
     },
-    async fetchTasks({ commit, state }) {
+    fetchTasks({ commit, state: state2 }, { count, offset }) {
+      return new Promise((resolve, reject) => {
+        common_vendor.index.requestWithCookie({
+          url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset,
+          method: "GET",
+          success: (res) => {
+            console.log(res);
+            let data = res.data;
+            resolve(data);
+          },
+          fail: (err) => {
+            reject(err);
+          }
+        });
+      });
+    },
+    async fetchTaskById({ commit }, id) {
+      let qurl = state.apiBaseUrl + "/api/Assignment/" + id;
       try {
         const response = await common_vendor.index.requestWithCookie({
-          url: state.apiBaseUrl + "/api/Assignment",
+          url: qurl,
           method: "GET",
           success: function(res) {
             console.log(res);
             let data = res.data;
             common_vendor.nextTick$1(() => {
-              commit("updateTasks", data["$values"]);
+              commit("setTasks", data["$values"]);
             });
-          },
-          complete() {
           }
-          //  header:{
-          // 'Access-Control-Allow-Origin': '*'
-          //  }
         });
       } catch (error) {
         console.error("fetch tasks error:", error);
       }
     },
-    fetchTaskById({ commit }, id) {
-    },
-    async sendMessage({ commit, state }, { user, message }) {
-      await state.workSocket.invoke("SendMessage", [user, message]);
+    async sendMessage({ commit, state: state2 }, { user, message }) {
+      await state2.workSocket.invoke("SendMessage", [user, message]);
       console.log("sendMessage");
-      state.messages.push(message);
+      state2.messages.push(message);
     },
-    receiveMessage({ commit, state }, { user, message }) {
+    receiveMessage({ commit, state: state2 }, { user, message }) {
       console.log("receiveMessage");
-      state.messages.push(message);
+      state2.messages.push(message);
     },
-    async connect({ state, actions }) {
+    async connect({ state: state2, actions }) {
       async function reconnect() {
         try {
-          await state.workSocket.start();
+          await state2.workSocket.start();
           console.log("SignalR Connected.");
         } catch (err) {
           console.log(err);

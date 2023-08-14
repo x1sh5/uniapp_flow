@@ -1,13 +1,15 @@
 {
   "pages": [
+    "pages/userCenter/userCenter",
     "pages/addtask/addtask",
     "pages/index/index",
-    "pages/userCenter/userCenter",
     "pages/editor/editor",
     "pages/newTask/newTask",
     "pages/message/message",
     "pages/userTaskDetail/userTaskDetail",
     "pages/draftBox/draftBox",
+    "pages/history/history",
+    "pages/myPublishs/myPublishs",
     "pages/logintips/logintips",
     "pages/register/register",
     "pages/login/login",
@@ -15,7 +17,8 @@
     "pages/holdTask/holdTask",
     "pages/taskDetail/taskDetail",
     "pages/test/test",
-    "pages/searchResult/searchResult"
+    "pages/searchResult/searchResult",
+    "pages/publishResult/publishResult"
   ],
   "window": {
     "navigationBarTextStyle": "black",

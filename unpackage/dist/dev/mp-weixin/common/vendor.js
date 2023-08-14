@@ -7334,12 +7334,12 @@ var weappCookie_umd = {
             let urlinfo = (i2.url || "").split("/");
             let [parameters] = urlinfo.slice(-1);
             let o2 = urlinfo[2].split(":")[0], h2 = a2.getRequestQueries(o2, "/");
-            let index2 = parameters.indexOf("?");
-            if (index2 === -1) {
+            let index$1 = parameters.indexOf("?");
+            if (index$1 === -1) {
               i2.url = i2.url + "?" + h2;
             } else {
               let reqUrlWithoutPara = i2.url.slice(0, i2.url.indexOf("?"));
-              let parmstr = parameters.slice(index2 + 1, parameters.length);
+              let parmstr = parameters.slice(index$1 + 1, parameters.length);
               let parms = parmstr.split("&");
               let pf = "";
               for (let x3 of parms) {
@@ -7349,8 +7349,40 @@ var weappCookie_umd = {
               }
               i2.url = reqUrlWithoutPara + "?" + pf + h2;
             }
+            let hasRefresh = false;
             let c2 = i2.success;
             i2.success = function(u2) {
+              if (!hasRefresh) {
+                if (u2.statusCode === 401) {
+                  index.request({
+                    url: "https://localhost:7221/api/Account/refresh-token?" + index.getRequestQueries(o2, "/"),
+                    success(res) {
+                      hasRefresh = true;
+                      if (res.statusCode !== 200) {
+                        index.showToast({
+                          title: "登录过期！",
+                          duration: 1e3
+                        });
+                        index.reLaunch({
+                          url: "/pages/login/login"
+                        });
+                      } else {
+                        index.requestWithCookie(i2);
+                      }
+                    },
+                    fail() {
+                      hasRefresh = true;
+                      index.showToast({
+                        title: "登录过期！",
+                        duration: 1e3
+                      });
+                      index.reLaunch({
+                        url: "/pages/login/login"
+                      });
+                    }
+                  });
+                }
+              }
               u2.header = u2.header || u2.headers;
               let p2 = u2.header ? u2.header["Set-Cookie"] || u2.header["set-cookie"] : "";
               p2 && (p2 = p2.replace(/\;([^\s\;]*?(?=\=))/gi, ",$1"), a2.setResponseCookies(p2, o2)), c2 && c2(u2);
@@ -7374,10 +7406,6 @@ var weappCookie_umd = {
             downloadFileWithCookie: { value: s2 },
             setResponseCookies: { value: src },
             getRequestQueries: { value: grqp }
-          }), Object.defineProperties(n2, {
-            request: { value: t2 },
-            uploadFile: { value: r2 },
-            downloadFile: { value: s2 }
           });
         } catch (i2) {
           console.error("weapp-cookie: ", i2);
@@ -8069,23 +8097,25 @@ Store.prototype._withCommit = function _withCommit(fn) {
 Object.defineProperties(Store.prototype, prototypeAccessors);
 const pages = [
   {
+    path: "pages/userCenter/userCenter",
+    style: {
+      navigationBarTitleText: "用户中心",
+      enablePullDownRefresh: false
+    }
+  },
+  {
     path: "pages/addtask/addtask",
     style: {
       navigationBarTitleText: "创建任务",
-      enablePullDownRefresh: true
+      enablePullDownRefresh: false
     }
   },
   {
     path: "pages/index/index",
     style: {
-      navigationBarTitleText: "流沙任务系统"
-    }
-  },
-  {
-    path: "pages/userCenter/userCenter",
-    style: {
-      navigationBarTitleText: "用户中心",
-      enablePullDownRefresh: false
+      navigationBarTitleText: "流沙任务系统",
+      enablePullDownRefresh: true,
+      onReachBottomDistance: 50
     }
   },
   {
@@ -8098,7 +8128,7 @@ const pages = [
   {
     path: "pages/newTask/newTask",
     style: {
-      navigationStyle: "default",
+      navigationStyle: "custom",
       navigationBarTitleText: "编辑任务"
     }
   },
@@ -8121,6 +8151,19 @@ const pages = [
     style: {
       navigationBarTitleText: "草稿箱",
       enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/history/history",
+    style: {
+      navigationBarTitleText: "浏览历史",
+      onReachBottomDistance: 50
+    }
+  },
+  {
+    path: "pages/myPublishs/myPublishs",
+    style: {
+      navigationBarTitleText: "我发布的"
     }
   },
   {
@@ -8177,6 +8220,13 @@ const pages = [
     path: "pages/searchResult/searchResult",
     style: {
       navigationBarTitleText: "",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/publishResult/publishResult",
+    style: {
+      navigationBarTitleText: "发布结果",
       enablePullDownRefresh: false
     }
   }

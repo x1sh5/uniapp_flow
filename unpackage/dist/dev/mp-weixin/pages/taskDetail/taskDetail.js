@@ -48,6 +48,33 @@ const _sfc_main = {
     },
     gain(e) {
       console.log("接取任务");
+      let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.task.id;
+      common_vendor.index.requestWithCookie({
+        url,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            if (res.data.data.success) {
+              common_vendor.index.showModal({
+                content: res.data.message
+              });
+            } else {
+              common_vendor.index.showModal({
+                content: res.data.data.reason
+              });
+            }
+          } else {
+            common_vendor.index.showModal({
+              content: "网络出错"
+            });
+          }
+        },
+        fail: (err) => {
+          console.log("failed");
+          common_vendor.index.showModal({
+            content: err
+          });
+        }
+      });
     }
   }
 };
@@ -70,5 +97,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o((...args) => $options.gain && $options.gain(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/taskDetail/taskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/taskDetail/taskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

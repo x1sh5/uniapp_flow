@@ -180,6 +180,7 @@
   color: black;
   margin-top: 5px;
   height: 62%;
+  width: 80%;
 }
 .input {
   width: 60%;
@@ -190,7 +191,7 @@
   color: black;
   margin-top: 5px;
   height: 62%;
-  width: 100%;
+  width: 80%;
   white-space: pre-wrap;
 }
 .uni-textarea-compute {
