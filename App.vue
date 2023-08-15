@@ -61,7 +61,7 @@
 			await this.$store.dispatch('fetchTaskTypes');
 
 		    if(!this.$store.state.tasks.status){
-				 this.$store.dispatch('fetchTasks',{count:10,offset:0})
+				 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeid:""})
 				 .then(data => {
 					 this.$store.commit('setTasks', data["$values"]);
 					 // 在这里处理获取到的数据

@@ -27,6 +27,7 @@
 		data() {
 			return {
 				title: 'Hello',
+				currentTypeid:""
 			}
 		},
 		onLoad() {
@@ -69,6 +70,7 @@
 				})
 			},//requestWithCookie
 			searchByTpe(id){
+				this.currentTypeid = id;
 				let url = this.$store.state.apiBaseUrl+"/api/Assignment/type/"+id;
 				uni.requestWithCookie({
 					url:url,
@@ -98,7 +100,7 @@
 		//上拉更新数据
 		onReachBottom() {
 			let maxIndex = this.maxIndex;
-			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex})
+			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, typeid:this.currentTypeid})
 			.then(data => {
 				 this.$store.commit('updateTasks', data["$values"]);
 				 // 在这里处理获取到的数据
@@ -111,7 +113,7 @@
 		//下拉刷新页面
 		onPullDownRefresh() {
 			if(!this.$store.state.tasks.status){
-				 this.$store.dispatch('fetchTasks',{count:10,offset:0})
+				 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeid:this.currentTypeid})
 				 .then(data => {
 					 this.$store.commit('setTasks', data["$values"]);
 					 // 在这里处理获取到的数据

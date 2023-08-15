@@ -214,10 +214,10 @@ const store = createStore({
 			    }
 				
 		},
-		fetchTasks({commit,state},{count,offset}){
+		fetchTasks({commit,state},{count,offset,typeid}){
 			return new Promise((resolve,reject)=> {
 				uni.requestWithCookie({
-				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset ,
+				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeid="+typeid ,
 				  method: 'GET',
 				  success:(res)=>{
 					  console.log(res)
