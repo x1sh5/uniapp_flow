@@ -1,7 +1,7 @@
 <template>
 	<view  class="newtaskbox">
 		<view style="width: 90%;">
-			<cardinfo :task="task" :editable="editable" ref="cardinfo"></cardinfo>
+			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode"></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
@@ -41,6 +41,12 @@
 					return false
 				}
 			},
+			mode:{
+				type:String,
+				default(){
+					return 'done'
+				}
+			}
 		},
 		data() {
 			return {

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view v-for="item in publishs" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'show'" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>

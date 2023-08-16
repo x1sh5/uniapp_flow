@@ -6,10 +6,19 @@
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
 			
-			<view>
+			<view v-if="mode=='show'">
 				<button @click="contact">联系发布人</button>
 				<button @click="gain">接取任务</button>
 			</view>
+			
+			<view v-if="mode=='todo'">
+				<button @click="contact">联系发布人</button>
+				<button @click="abandon">放弃任务</button>
+			</view>
+			
+			<view v-if="mode=='done'">
+			</view>
+			
 		</view>
 	</view>
 </template>
@@ -33,6 +42,12 @@
 					  "typeid": false,
 					  "verify": 0,
 					  },
+				mode:{
+					type:String,
+					default(){
+						return "done"
+					}
+				}
 				}
 		},
 		computed:{
@@ -45,6 +60,7 @@
 		onLoad(op) {
 		  console.log("options:",op)
 		  const id = op.id
+		  this.mode = op.mode
 		  let t  = this.$store.getters.getTaskById(id)
 		  if(t!==undefined && t!==null){
 			  this.task  = t
@@ -91,7 +107,20 @@
 						})
 					}
 				});
-			}
+			},
+			abandon(e){
+				let url = this.$store.state.apiBaseUrl+"/api/AssignmentUser/abandon/"+this.task.id;
+				uni.requestWithCookie({
+					url:url,
+					success: (res) => {
+						if(res.statusCode !== 204){
+							uni.showModal({
+								content: "网络出错"
+							})
+						}
+				},
+				});
+			},
 		}
 	}
 </script>

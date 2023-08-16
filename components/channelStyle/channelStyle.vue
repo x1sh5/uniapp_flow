@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { type } from 'os'
 	export default {
 		name:"channelStyle",
 		props:{

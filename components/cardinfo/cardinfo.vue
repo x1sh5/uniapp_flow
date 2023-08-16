@@ -80,7 +80,8 @@
 		    //颜色代码
 		    colorid:Number,
 		    //可编辑组件（input,textarea等）是否能编辑，默认不能编辑
-		    editable:Boolean
+		    editable:Boolean,
+			mode:String
 		},
 		created() {
 			console.log("task is:",this.task)
@@ -170,7 +171,7 @@
 						})
 					}else{
 						uni.navigateTo({
-							url:"/pages/taskDetail/taskDetail?id="+this.task.id,
+							url:"/pages/taskDetail/taskDetail?id="+this.task.id+"&mode="+this.mode,
 							
 						})
 					}

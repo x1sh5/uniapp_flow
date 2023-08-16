@@ -5,13 +5,13 @@
 		<view style="width: 90%;">
 			<view v-if="current === 0">
 				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;">
-				  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
+				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'todo'" style="margin-top:5px;"/>
 				</view>
 			</view>
 			
 			<view v-if="current === 1">
 				<view v-for="item in $completes" :key="item.id" style="margin-top:5px;">
-				  <cardinfo v-bind:task="item" v-bind:editable="false" style="margin-top:5px;"/>
+				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'done'" style="margin-top:5px;"/>
 				</view>
 			</view>
 
