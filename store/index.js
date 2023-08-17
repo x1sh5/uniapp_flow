@@ -282,7 +282,8 @@ const store = createStore({
 			    }
 			
 			    await reconnect();
-	    },	
+	    },
+		genHistory
 
 	}
 })
