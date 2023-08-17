@@ -12,6 +12,7 @@ const store = createStore({
 		$hasLogin:false,
 		$userName: "未登录",
 		branchs:[],
+		currentTask:{},
 		taskTypes:[],
 		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
 		tasks:{
@@ -27,6 +28,9 @@ const store = createStore({
 		$publishResults:[]
 	},
 	mutations:{
+		setCurrentTask(state,payload){
+			state.currentTask = payload;
+		},
 		updateBranchs(state,payload){
 			console.log("branchs:",payload)
 			state.branchs = toRaw(payload)

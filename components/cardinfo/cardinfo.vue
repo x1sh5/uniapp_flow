@@ -170,6 +170,7 @@
 							url:"/pages/logintips/logintips"
 						})
 					}else{
+						this.$store.commit('setCurrentTask',this.task);
 						uni.navigateTo({
 							url:"/pages/taskDetail/taskDetail?id="+this.task.id+"&mode="+this.mode,
 							

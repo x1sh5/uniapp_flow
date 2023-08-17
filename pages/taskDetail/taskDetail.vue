@@ -13,7 +13,7 @@
 			
 			<view v-if="mode=='todo'">
 				<button @click="contact">联系发布人</button>
-				<button @click="abandon">放弃任务</button>
+				<button @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 			
 			<view v-if="mode=='done'">
@@ -27,6 +27,7 @@
 	export default {
 		data() {
 			return {
+				$enable:false,
 				task:{
 					  "id": false,
 					  "username": false,
@@ -50,7 +51,13 @@
 				}
 				}
 		},
+		created() {
+			this.task = this.$store.state.currentTask;
+		},
 		computed:{
+			enable(){
+				return this.$data.$enable;
+			},
 			html:{
 				get(){
 					return this.task.description
@@ -61,10 +68,10 @@
 		  console.log("options:",op)
 		  const id = op.id
 		  this.mode = op.mode
-		  let t  = this.$store.getters.getTaskById(id)
-		  if(t!==undefined && t!==null){
-			  this.task  = t
-		  }
+		  // let t  = this.$store.getters.getTaskById(id)
+		  // if(t!==undefined && t!==null){
+			 //  this.task  = t
+		  // }
 		},
 		methods:{
 			editEvent(e){
@@ -112,11 +119,18 @@
 				let url = this.$store.state.apiBaseUrl+"/api/AssignmentUser/abandon/"+this.task.id;
 				uni.requestWithCookie({
 					url:url,
+					method:"DELETE",
 					success: (res) => {
 						if(res.statusCode !== 204){
 							uni.showModal({
 								content: "网络出错"
 							})
+						}
+						this.$data.$enable = true;
+						const pages = getCurrentPages();
+						if (pages.length >= 2) {
+							const holdTask = pages[pages.length - 2]; // 获取页面A的实例
+							holdTask.removeItem(this.task.id); // 修改页面A的属性a1的值
 						}
 				},
 				});

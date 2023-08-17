@@ -57,6 +57,12 @@
 						}
 					});
 				});
+			},
+			removeItem(id){
+				let index = this.$data.$incompletes.findIndex(item=>item.id==id);
+				if(index!==-1){
+					this.$data.$incompletes.splice(index,1);
+				}
 			}
 		},
 		computed:{
