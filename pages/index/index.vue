@@ -13,7 +13,7 @@
 		</view>
 		
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'show'" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
 		
 		<!-- <uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 

@@ -6,12 +6,12 @@
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
 			
-			<view v-if="mode=='show'">
+			<view v-if="mode=='waitfor'">
 				<button @click="contact">联系发布人</button>
 				<button @click="gain">接取任务</button>
 			</view>
 			
-			<view v-if="mode=='todo'">
+			<view v-if="mode=='undone'">
 				<button @click="contact">联系发布人</button>
 				<button @click="abandon" :disabled="enable">放弃任务</button>
 			</view>

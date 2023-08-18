@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view v-for="item in $historys" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'show'" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>

@@ -2,7 +2,8 @@
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 	<view data-denpend="">
-		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" style="margin: 2px 3px;"></taskCard>
+		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
+		@after-pulish="afterPulish" @remove-task="removeTask" style="margin: 2px 3px;"></taskCard>
 	</view>
 	<view>
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>
@@ -68,16 +69,21 @@
 				
 			},
 			submitEvent(){
+				let results = [];
 				for(let item of this.tasks){
-					this.$refs['id'+item.id][0].publish();
+					let res = this.$refs['id'+item.id][0].publish();
+					results.push(res)
+				}
+				if(results.every(ele=>Boolean(ele)) ){
+					uni.navigateTo({
+						url:"/pages/publishResult/publishResult"
+					})
 				}
 
-				uni.navigateTo({
-					url:"/pages/publishResult/publishResult"
-				})
 			},
 			createTask(e){
 				console.log(e);
+				//this.$store.commit('publish/createTask',{})
 				this.tasks.push({
 					"id": this.counter++,
 					"username": false,
@@ -104,6 +110,15 @@
 					this.tasks[index].description = payload.html;
 					this.$refs['id'+id][0].updateT(payload);
 				}
+			},
+			//发布成功后，移除task
+			afterPublish(id){
+				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));
+				this.tasks.splice(index,1);
+			},
+			removeTask(id){
+				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));
+				this.tasks.splice(index,1);
 			}
 		},
 		mounted() {

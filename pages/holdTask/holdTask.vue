@@ -5,7 +5,7 @@
 		<view style="width: 90%;">
 			<view v-if="current === 0">
 				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;">
-				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'todo'" style="margin-top:5px;"/>
+				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'undone'" style="margin-top:5px;"/>
 				</view>
 			</view>
 			

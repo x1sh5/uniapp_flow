@@ -1,12 +1,13 @@
 <template>
 	<view>
 		<view v-for="item in publishs" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'show'" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { TaskStatus } from '../../common/Task';
 	export default {
 		data() {
 			return {
@@ -22,7 +23,11 @@
 			}
 		},
 		methods: {
-			
+			mode(item){
+				if(item.status===TaskStatus.WaitForAccept)return 'waitfor';//待接状态
+				if(item.status===TaskStatus.Unfinished)return 'undone';//待完成
+				return 'done';
+			}
 		},
 		onLoad() {
 			if(!this.hasPushlishs){

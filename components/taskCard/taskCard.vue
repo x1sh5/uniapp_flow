@@ -1,7 +1,8 @@
 <template>
 	<view  class="newtaskbox">
 		<view style="width: 90%;">
-			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode"></cardinfo>
+			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode" 
+			@remove-task="removeTask" @after-publish="afterPublish"></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
@@ -102,7 +103,14 @@
 				
 			},
 			publish(){
-				this.$refs.cardinfo.publish();
+				return this.$refs.cardinfo.publish();
+			},
+			//task发布成功成功后
+			afterPublish(e){
+				this.$emit('after-publish',e)
+			},
+			removeTask(e){
+				this.$emit('remove-task',e)
 			}
 		}
 	}

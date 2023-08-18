@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import {toRaw,nextTick} from "vue";
-import { StorageKeys } from "../common/storageKeys.js"
+import { StorageKeys } from "../common/storageKeys.js";
+//import { Publish } from "./publish.js"
 //import * as signalr from "signalr-for-wx/dist/index"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
@@ -283,9 +284,24 @@ const store = createStore({
 			
 			    await reconnect();
 	    },
-		genHistory
+		genHistory({state},id){
+			let qurl = state.apiBaseUrl + "/api/History";
+			uni.uploadFileWithCookie({  
+			    url: qurl,  
+			    filePath: '123', // 随便填，不为空即可  
+			    name: '123', // 随便填，不为空即可  
+			    //header: header, // 可以加access_token等  
+			    formData:{asgid:id}, // 接口参数，json格式，底层自动转为FormData的格式数据  
+			    complete: (res)=>{  
+			            console.error(res);  
+			        }  
+			    });
+		}
 
-	}
+	},
+	// modules:{
+	// 	publish:Publish
+	// }
 })
 
 export default store
