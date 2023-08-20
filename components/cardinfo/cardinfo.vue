@@ -50,6 +50,7 @@
 		
 			<!-- 右半部分，只包括：类型 -->
 			<view class="bigtype" >
+				<view class="popupbutton" @click="showPopup">...</view>
 				<view class="tasktype columnlayout">{{ taskType }}</view>
 			</view>
 		
@@ -67,11 +68,14 @@
 			<view class="status" :style="editable?'display:none':'display:flex'">
 				<view class="statuscontent" >{{status[task.status]}}</view>
 			</view>
+			
+			
+			<view :disabled="showdelete" :style="{visibility:vis}" class="popup" @click="exitDel">
+				<button class="delbtn" @click="removeTask">删除</button>
+			</view>
 		
 		</view>
-		<view v-show="showdelete">
-			<button style="">删除</button>
-		</view>
+
 
 	</view>
 
@@ -81,7 +85,6 @@
 <script>
 	export default {
 		name:"cardinfo",
-		showdelete:false,
 		props:{
 			taskIndex:Number, //task 在数组中的索引
 		    task:Object,
@@ -246,7 +249,18 @@
 				});
 			},
 			removeTask(e){
+				console.log(e);
 				this.$emit('remove-task',this.task.id)
+			},
+			showPopup(e){
+				console.log("click show");
+				this.showdelete = false;
+				this.vis = 'visible';
+			},
+			exitDel(e){
+				console.log("exit");
+				this.showdelete = true;
+				this.vis = 'hidden';
 			}
 			
 		},
@@ -255,6 +269,8 @@
 				// 预计时间
 				//spendtime:"",
 				//tasktype:"类型",
+				showdelete:true,
+				vis: 'visible',
 				status:["代接","未完成","完成"],
 				branchIndex:false,
 				$rewardTypeValue: 0,
@@ -281,6 +297,55 @@
 	.size(@width,@height){
 	  width: @width;
 	  height: @height;
+	}
+	
+	.popupbutton{
+		display: block;
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		line-height: 24px;
+		right: 5px;
+		top: 10px;
+		margin: 0px auto;
+		font-size: 20px;
+		word-wrap: break-word;
+		writing-mode: vertical-lr;
+	}
+	
+	.popup {
+		// display: block;
+		// position: absolute;
+		// width: 100%;
+		// height: 100%;
+		// top: 0;
+		// left: 0;
+		// background-color: #4b4444;
+		// opacity: 70%;
+		// border: 1px solid #ccc;
+		// padding: 10px;
+		// box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		  position:absolute; 
+		  z-index: 9;
+		  top:0; 
+		  left:0; 
+		  padding:10px; 
+		  width:100%; 
+		  height:100%; 
+		  background:rgba(0,0,0,0.8); 
+		  color:#fff; 
+		  opacity:1; 
+		  //visibility:visible; 
+		   -webkit-transition:all 0.5s ease;
+		  -ms-transition:all 0.5s ease;
+		  -o-transition:all 0.5s ease;
+		  transition:all 0.5s ease;
+	}
+	
+	.delbtn{
+		position: absolute;
+		left: 40%;
+		top: 40%;
 	}
 	
 	.example1{

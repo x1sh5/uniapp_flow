@@ -56,16 +56,20 @@
 		},
 		methods:{
 			backEvent(){
-				uni.showModal({
-					content:"返回后以编辑的内容将会消失，是否放弃修改。",
-					success: function (res) {
-						if (res.confirm) {
-							uni.navigateBack();
-						} else if (res.cancel) {
-							console.log('用户点击取消');
+				if(this.tasks.length>0){
+					uni.showModal({
+						content:"返回后以编辑的内容将会消失，是否放弃修改。",
+						success: function (res) {
+							if (res.confirm) {
+								uni.navigateBack();
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
 						}
-					}
-				})
+					});
+				}else{
+					uni.navigateBack();
+				}
 				
 			},
 			submitEvent(){
