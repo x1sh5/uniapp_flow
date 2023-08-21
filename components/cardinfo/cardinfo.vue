@@ -70,7 +70,7 @@
 			</view>
 			
 			
-			<view :disabled="showdelete" :style="{visibility:vis}" class="popup" @click="exitDel">
+			<view  :style="{visibility:vis}" class="popup" @click="exitDel">
 				<button class="delbtn" @click="removeTask">删除</button>
 			</view>
 		
@@ -254,12 +254,10 @@
 			},
 			showPopup(e){
 				console.log("click show");
-				this.showdelete = false;
 				this.vis = 'visible';
 			},
 			exitDel(e){
 				console.log("exit");
-				this.showdelete = true;
 				this.vis = 'hidden';
 			}
 			
@@ -269,8 +267,7 @@
 				// 预计时间
 				//spendtime:"",
 				//tasktype:"类型",
-				showdelete:true,
-				vis: 'visible',
+				vis: 'hidden',
 				status:["代接","未完成","完成"],
 				branchIndex:false,
 				$rewardTypeValue: 0,
@@ -311,6 +308,7 @@
 		font-size: 20px;
 		word-wrap: break-word;
 		writing-mode: vertical-lr;
+		color: red;
 	}
 	
 	.popup {
