@@ -256,13 +256,14 @@ const store = createStore({
 			        console.error("fetch tasks error:",error);
 			    }
 		},
-		async sendMessage({commit,state},{user,message}){
+		async sendMsg({commit,state},{user,message}){
+			//SendMessage为signalr的函数
 			await state.workSocket.invoke("SendMessage", [user, message]);
-			console.log("sendMessage")
+			console.log("sendMsg")
 			state.messages.push(message)
 		},
-		receiveMessage({commit,state},{user,message}){
-			console.log("receiveMessage")
+		receiveMsg({commit,state},{user,message}){
+			console.log("receiveMsg")
 			state.messages.push(message)
 		},
 	    async connect({state,actions}) {

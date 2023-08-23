@@ -1,25 +1,11 @@
-export class ChatChannel{
-	cid;
-	unread;
-	title;
-	lasttime;
-	message;
-	mtype=1;//default 1
-	constructor(cid,unread,title,lasttime,message,mtype=1){
-		this.cid = cid;
-		this.unread = unread;
-		this.title = title;
-		this.lasttime = lasttime;
-		this.message = message;
-		this.mtype = mtype;
-	}
-}
+import { ChatChannel } from "../common/customTypes.js";
 
 export const Messages = {
 	namespaced: true,
 	state:{
 		//objs obj like {cid:int,unread:int,title:string,lasttime:datatime,message:string,mtype:default 1}
-		chatChannels:[]
+		chatChannels:[1,2,3,4],
+		
 	},
 	mutations:{
 		add({state}, payload){
@@ -68,17 +54,17 @@ export const Messages = {
 		
 	},
 	actions:{
-		add({commit, state},payload){
+		addAsync({commit, state},payload){
 			commit("add",payload);
 		},
-		delete({commit, state},payload){
+		deleteAsync({commit, state},payload){
 			commit("delete",payload);
 		},
-		update({commit, state},payload){
+		updateAsync({commit, state},payload){
 			commit("update",payload);
 		},
 		getById({commit, state},payload){},
-		exists({commit, state},payload){
+		existsAsync({commit, state},payload){
 			return new Promise((resolve,reject)=>{
 				setTimeout(
 					()=>{

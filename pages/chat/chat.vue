@@ -28,7 +28,7 @@
 		methods: {
 			send(e){
 				console.log(this.text1)
-				this.$store.dispatch("sendMessage",{user:2,message:this.text1})
+				this.$store.dispatch("sendMsg",{user:this.$store.state.$userName,message:this.text1})
 			},
 			change(e){
 				

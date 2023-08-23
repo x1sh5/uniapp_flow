@@ -1,5 +1,5 @@
 <template>
-	<view class="ch-wrapper" @click="jump">
+	<view class="ch-wrapper" @click="jump" @longpress="showDelete">
 		<view style="box-sizing: border-box;">
 			<view class="user-avatar"><image class="user-avatar-img"></image></view>
 		</view>
@@ -39,6 +39,12 @@
 				uni.navigateTo({
 					url:"/pages/chat/chat"
 				})
+			},
+			showDelete(e){
+				
+			},
+			delete(e){
+				this.$emit("delete-Cc",e)
 			}
 		}
 	}
