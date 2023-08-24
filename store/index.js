@@ -109,6 +109,12 @@ const store = createStore({
 			console.error('Invalid input');
 		  }
 		  
+		},
+		clearStorageInfo(state){
+			uni.removeStorageSync(StorageKeys._hasLogin);
+			uni.removeStorageSync(StorageKeys._userName);
+			uni.removeStorageSync(StorageKeys.__cookie_store__);
+			uni.removeStorageSync(StorageKeys._task_content);
 		}
 	},
 	getters:{
@@ -132,10 +138,10 @@ const store = createStore({
 			}
 			return i["name"]
 		},
-		getTaskType:(state)=>(typeid)=>{
-			console.log("typeid is ",typeid)
+		getTaskType:(state)=>(typeId)=>{
+			console.log("typeId is ",typeId)
 			console.log("taskTypes are ",state.taskTypes)
-			let i = state.taskTypes.find(item => item.id === parseInt(typeid))
+			let i = state.taskTypes.find(item => item.id === parseInt(typeId))
 			console.log("taskType is: ",i)
 			if(i===undefined){
 				return "类型"
@@ -220,10 +226,10 @@ const store = createStore({
 			    }
 				
 		},
-		fetchTasks({commit,state},{count,offset,typeid}){
+		fetchTasks({commit,state},{count,offset,typeId}){
 			return new Promise((resolve,reject)=> {
 				uni.requestWithCookie({
-				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeid="+typeid ,
+				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeId="+typeId ,
 				  method: 'GET',
 				  success:(res)=>{
 					  console.log(res)
@@ -257,8 +263,9 @@ const store = createStore({
 			    }
 		},
 		async sendMsg({commit,state},{user,message}){
-			//SendMessage为signalr的函数
-			await state.workSocket.invoke("SendMessage", [user, message]);
+			//SendToUser为后端api处理消息的函数，位于ChatHub中
+			//state.workSocket.invoke("SendMessage", [user, message]);
+			await state.workSocket.invoke("SendToUser", user, message);
 			console.log("sendMsg")
 			state.messages.push(message)
 		},

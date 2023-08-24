@@ -24,7 +24,7 @@
 </template>
 
 <script>
-	import { ChatChannel } from "../common/customTypes.js";
+	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
 		data() {
 			return {
@@ -41,7 +41,7 @@
 					  "rewardtype": 1,
 					  "status": 1,
 					  "title": "",
-					  "typeid": false,
+					  "typeId": false,
 					  "verify": 0,
 					  },
 				mode:{
@@ -82,7 +82,7 @@
 			},
 			contact(e){
 				uni.navigateTo({
-					url:"/pages/chat/chat",
+					url:"/pages/chat/chat?cid="+this.task.id+"&userName="+this.task.username+"&userId="+this.task.userId,
 					success:()=> {
 						let cc = new ChatChannel(this.task.id,0,this.task.username,new Date(),"");
 						this.$store.dispatch("Msgs/addAsync",cc);

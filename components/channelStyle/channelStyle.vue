@@ -5,33 +5,37 @@
 		</view>
 		
 		<view>
-			<view >{{title}}</view>
-			<view >{{lastmessage}}</view>
+			<view >{{cc.title}}</view>
+			<view >{{cc.message}}</view>
 		</view>
 			
 		<view>
-			<view>{{time}}</view>
-			<view>{{unreadcount}}</view>
+			<view>{{cc.lasttime}}</view>
+			<view>{{cc.unread}}</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
 		name:"channelStyle",
 		props:{
-			title:{
-				type:String,
-				default(){
-					return "测试任务标题";
-				}
-			}
+			cc:{
+				type:ChatChannel
+			},
+			// title:{
+			// 	type:String,
+			// 	default(){
+			// 		return "测试任务标题";
+			// 	}
+			// }
 		},
 		data() {
 			return {
-				lastmessage:"你好",
-				time:"22:41",
-				unreadcount:2
+				// lastmessage:"你好",
+				// time:"22:41",
+				// unreadcount:2
 			}
 		},
 		methods:{

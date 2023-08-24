@@ -30,13 +30,13 @@
 			editTask(e){
 				console.log(e)
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeid="+e,
+				  url:"/pages/newTask/newTask?typeId="+e,
 				})
 			},
 			createTask(e){
 				console.log("createTask",e);
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeid="+this.selected.id+"&createType="+this.defaultT,
+				  url:"/pages/newTask/newTask?typeId="+this.selected.id+"&createType="+this.defaultT,
 				})
 			},
 			typeChange(e){

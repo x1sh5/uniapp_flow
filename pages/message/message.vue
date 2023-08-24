@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<channelStyle v-for="c in chatChannels" :key="c" @delete-Cc="deleteCc"></channelStyle>
+		<channelStyle v-for="channel in chatChannels" :cc="channel" :key="channel.cid" @delete-Cc="deleteCc"></channelStyle>
 		
 	</view>
 </template>

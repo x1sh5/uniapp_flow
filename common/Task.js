@@ -1,7 +1,7 @@
 ///发布任务时的任务模型
 
 export class Task {
-    constructor(branchid, presumedtime, /*finishtime, publishtime, */title, typeid, id, description, reward, rewardtype, status) {
+    constructor(branchid, presumedtime, /*finishtime, publishtime, */title, typeId, id, description, reward, rewardtype, status) {
         this.reward = '';
         this.rewardtype = RewardType.Fiexd;
         this.status = TaskStatus.WaitForAccept;
@@ -12,7 +12,7 @@ export class Task {
         this.presumedtime = presumedtime;
         //this.publishtime = publishtime;
         this.title = title;
-        this.typeid = typeid;
+        this.typeId = typeId;
         if (id) {
             this.id = id;
         }

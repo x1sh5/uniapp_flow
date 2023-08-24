@@ -111,7 +111,7 @@
 			},
 			taskType:{
 				get() {
-					return this.$store.getters.getTaskType(this.task.typeid)
+					return this.$store.getters.getTaskType(this.task.typeId)
 				}
 			},
 			branch:{

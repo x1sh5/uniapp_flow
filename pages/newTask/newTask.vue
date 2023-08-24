@@ -30,7 +30,7 @@
 					  "rewardtype": RewardType.Fixed,
 					  "status": TaskStatus.WaitForAccept,
 					  "title": "",
-					  "typeid": false,
+					  "typeId": false,
 					  "verify": 0,
 					  }],
 				reffer:"",
@@ -48,10 +48,10 @@
 		onLoad(op) {
 			console.log("onload")
 			let reffer = op.createType;
-			let taskType = op.typeid;
+			let taskType = op.typeId;
 			console.log("reffer",reffer);
 			console.log("taskType",taskType);
-			this.tasks[0].typeid= taskType;
+			this.tasks[0].typeId= taskType;
 
 		},
 		methods:{
@@ -100,7 +100,7 @@
 					"rewardtype": RewardType.Fixed,
 					"status": TaskStatus.WaitForAccept,
 					"title": "",
-					"typeid": e.item.id,
+					"typeId": e.item.id,
 					"verify": 0,
 				})
 			},

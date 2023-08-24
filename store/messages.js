@@ -4,13 +4,17 @@ export const Messages = {
 	namespaced: true,
 	state:{
 		//objs obj like {cid:int,unread:int,title:string,lasttime:datatime,message:string,mtype:default 1}
-		chatChannels:[1,2,3,4],
+		$chatChannels:[1,2,3,4],
 		
 	},
 	mutations:{
 		add({state}, payload){
 			if(payload instanceof ChatChannel){
 				state.ChatChannel.push(payload);
+				uni.setStorage({
+					key:'cc'+payload.cid,
+					data:payload
+				});
 			}
 		},
 		delete({state}, payload){
@@ -49,9 +53,18 @@ export const Messages = {
 			}
 			return false;
 		},
+		initChatChannels({state}){
+			const res = uni.getStorageInfoSync();
+			let ccs = res.keys.filter(item=>item.startsWith('cc'));
+			for(let name of ccs){
+				state.$chatChannels.push(uni.getStorageSync(name));
+			}
+		}
 	},
 	getters:{
-		
+		getCcById:(state)=>(id)=>{
+			
+		}
 	},
 	actions:{
 		addAsync({commit, state},payload){
@@ -63,7 +76,16 @@ export const Messages = {
 		updateAsync({commit, state},payload){
 			commit("update",payload);
 		},
-		getById({commit, state},payload){},
+		getByIdAsync({commit, state},payload){
+			return new Promise((resolve,reject)=>{
+				setTimeout(
+					()=>{
+						resolve(commit('getById',payload));
+					},
+				2000);
+				
+			}) 
+		},
 		existsAsync({commit, state},payload){
 			return new Promise((resolve,reject)=>{
 				setTimeout(

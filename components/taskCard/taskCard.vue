@@ -31,7 +31,7 @@
 					  "rewardtype": 1,
 					  "status": 1,
 					  "title": "",
-					  "typeid": false,
+					  "typeId": false,
 					  "verify": 0,
 					  }
 				}
@@ -67,8 +67,8 @@
 		},
 		onLoad(op) {
 		  console.log("options:",op)
-		  this.$data.task.typeid = op.typeid
-		  console.log("typeid is ",this.$data.task.typeid)
+		  this.$data.task.typeId = op.typeId
+		  console.log("typeId is ",this.$data.task.typeId)
 		},
 		methods:{
 			editEvent(e){
