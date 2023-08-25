@@ -15,3 +15,21 @@ export class ChatChannel{
 		this.mtype = mtype;
 	}
 }
+
+export class FixedLengthQueue {
+    constructor(maxLength) {
+        this.maxLength = maxLength;
+        this.queue = [];
+    }
+
+    push(element) {
+        if (this.queue.length >= this.maxLength) {
+            this.queue.shift(); // 移除首元素
+        }
+        this.queue.push(element);
+    }
+
+    toArray() {
+        return this.queue.slice(); // 返回存储结构的一个副本
+    }
+}

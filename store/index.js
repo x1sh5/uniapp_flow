@@ -25,7 +25,7 @@ const store = createStore({
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
         .configureLogging(signalR.LogLevel.Trace)
         .build(),
-		messages:[],
+		messages:new Map(),
 		$currentContent:{}, //当前正在编辑的task.description
 		$publishResults:[]
 	},
@@ -155,15 +155,15 @@ const store = createStore({
 			}
 			return i
 		},
-		getMessages:(state)=>{
-			return state.messages
+		getMessages:(state)=>(toUserId)=>{
+			return state.messages.get(toUserId)
 		},
 		currentEditContent(state){
 			return state.$currentContent
 		},
 		publishResults(state){
 			return state.$publishResults
-		}
+		},
 	},
 	actions:{
 		//获取部门信息
@@ -267,11 +267,21 @@ const store = createStore({
 			//state.workSocket.invoke("SendMessage", [user, message]);
 			await state.workSocket.invoke("SendToUser", user, message);
 			console.log("sendMsg")
-			state.messages.push(message)
+			let chat = state.messages.get(user)
+			if(typeof(chat) === 'undefined'){
+				state.messages.set(user,new Array())
+			}
+			state.messages.push(message);
+			
 		},
 		receiveMsg({commit,state},{user,message}){
 			console.log("receiveMsg")
-			state.messages.push(message)
+			let chat = state.messages.get(user)
+			if(typeof(chat) === 'undefined'){
+				state.messages.set(user,new Array())
+			}
+			state.messages.push(message);
+
 		},
 	    async connect({state,actions}) {
 	        // try {

@@ -13,28 +13,36 @@
 </template>
 
 <script>
+	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
 		data() {
 			return {
 				text1:"",
 				chatId:NaN,
 				userName:"",
-				userId:NaN,
-				inputValue:""
+				userId:NaN,//发卡人id
+				inputValue:"",
 				//messages:[]
 			}
 		},
 		computed:{
 			messages(){
-				return this.$store.getters.getMessages
+				return this.$store.getters.getMessages(this.chatId)
 			},
 
 		},
 		methods: {
-			send(e){
+			async send(e){
 				console.log(this.text1)
-				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1})
 				this.inputValue = "";
+				let cc = this.$store.commit("getById",this.chatId)
+				if(!cc){
+					let ncc = new ChatChannel(this.task.id,0,this.task.username,new Date().toLocaleString(),"");
+					await this.$store.dispatch("Msgs/addAsync",ncc);
+				}
+				
+				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1})
+				
 			},
 			change(e){
 				
@@ -49,6 +57,25 @@
 			this.chatId = op.cid;
 			this.userName = op.userName;
 			this.userId = op.userId;
+			
+			let [lastid] = this.messages.slice(-1);
+			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?reciverId="+this.userId
+			+"count=10";
+			uni.request({
+				url:qurl,
+				success: (res) => {
+					if(res.statusCode===200){
+						for(let m of res.data){
+							this.$store.dispatch("receiveMsg",{user:m.from,message:m.content})
+						}
+						this.messages.push(...res.data)
+					}else{
+						uni.showToast({
+							title:"网络异常，请稍后再试!"
+						})
+					}
+				}
+			});
 		}
 	}
 </script>

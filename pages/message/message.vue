@@ -22,15 +22,11 @@
 		},
 		computed:{
 			chatChannels(){
-				return this.$store.state.Msgs.chatChannels;
+				return this.$store.state.Msgs.$chatChannels;
 			}
 		},
 		onLoad(e) {
-			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
-				console.log("receiveMessage",user,message);
-				this.$store.dispatch("receiveMsg",{user:user,message:message})
-			}); 
-			this.$store.dispatch("connect");
+
 		}
 	}
 </script>

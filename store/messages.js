@@ -4,26 +4,26 @@ export const Messages = {
 	namespaced: true,
 	state:{
 		//objs obj like {cid:int,unread:int,title:string,lasttime:datatime,message:string,mtype:default 1}
-		$chatChannels:[1,2,3,4],
+		$chatChannels:[],
 		
 	},
 	mutations:{
-		add({state}, payload){
+		addChat(state, payload){
 			if(payload instanceof ChatChannel){
-				state.ChatChannel.push(payload);
+				state.$chatChannels.push(payload);
 				uni.setStorage({
 					key:'cc'+payload.cid,
 					data:payload
 				});
 			}
 		},
-		delete({state}, payload){
-			let index = state.chatChannels.findIndex(item=>item.cid == payload.cid );
+		delete(state, payload){
+			let index = state.$chatChannels.findIndex(item=>item.cid == payload.cid );
 			if(index!== -1){
-				state.chatChannels.splice(index,1);
+				state.$chatChannels.splice(index,1);
 			}
 		},
-		update({state,commit}, payload){
+		update(state, payload){
 			let cco = commit("getById",payload.cid);
 			if(!cco){
 				return;
@@ -39,27 +39,28 @@ export const Messages = {
 			}
 			cco.unread +=1;
 		},
-		getById({state}, payload){
-			let cc = state.chatChannels.findIndex(item=>item.cid == parseInt(payload));
+		getById(state, payload){
+			let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(payload));
 			if(cc!== -1){
-				return state.chatChannels[cc];
+				return state.$chatChannels[cc];
 			}
 			return null;
 		},
-		exists({state}, payload){
-			let index = state.chatChannels.findIndex(item=>item.cid==parseInt(payload));
+		exists(state, payload){
+			let index = state.$chatChannels.findIndex(item=>item.cid==parseInt(payload));
 			if(index!==-1){
 				return true;
 			}
 			return false;
 		},
-		initChatChannels({state}){
+		initChatChannels(state){
 			const res = uni.getStorageInfoSync();
 			let ccs = res.keys.filter(item=>item.startsWith('cc'));
 			for(let name of ccs){
 				state.$chatChannels.push(uni.getStorageSync(name));
 			}
 		}
+		
 	},
 	getters:{
 		getCcById:(state)=>(id)=>{
@@ -67,8 +68,8 @@ export const Messages = {
 		}
 	},
 	actions:{
-		addAsync({commit, state},payload){
-			commit("add",payload);
+		addChatAsync({commit, state},payload){
+			commit("addChat",payload);
 		},
 		deleteAsync({commit, state},payload){
 			commit("delete",payload);

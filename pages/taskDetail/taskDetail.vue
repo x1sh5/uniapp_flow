@@ -83,10 +83,6 @@
 			contact(e){
 				uni.navigateTo({
 					url:"/pages/chat/chat?cid="+this.task.id+"&userName="+this.task.username+"&userId="+this.task.userId,
-					success:()=> {
-						let cc = new ChatChannel(this.task.id,0,this.task.username,new Date(),"");
-						this.$store.dispatch("Msgs/addAsync",cc);
-					}
 				})
 			},
 			gain(e){

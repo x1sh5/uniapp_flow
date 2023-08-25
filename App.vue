@@ -10,6 +10,14 @@
 			if(!hasLogin){
 				this.$store.commit("clearStorageInfo");
 			}
+			
+			//连接socket服务器
+			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
+				console.log("receiveMessage",user,message);
+				this.$store.dispatch("receiveMsg",{user:user,message:message})
+			}); 
+			this.$store.dispatch("connect");
+			
 			this.$store.commit("Msgs/initChatChannels");
 			let originQuest = {};
 			let hasRefresh = false;
