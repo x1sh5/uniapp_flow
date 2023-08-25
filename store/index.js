@@ -271,7 +271,7 @@ const store = createStore({
 			if(typeof(chat) === 'undefined'){
 				state.messages.set(user,new Array())
 			}
-			state.messages.push(message);
+			state.messages.get(user).push(message);
 			
 		},
 		receiveMsg({commit,state},{user,message}){
@@ -280,7 +280,7 @@ const store = createStore({
 			if(typeof(chat) === 'undefined'){
 				state.messages.set(user,new Array())
 			}
-			state.messages.push(message);
+			state.messages.get(user).push(message);
 
 		},
 	    async connect({state,actions}) {

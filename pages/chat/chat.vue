@@ -37,8 +37,8 @@
 				this.inputValue = "";
 				let cc = this.$store.commit("getById",this.chatId)
 				if(!cc){
-					let ncc = new ChatChannel(this.task.id,0,this.task.username,new Date().toLocaleString(),"");
-					await this.$store.dispatch("Msgs/addAsync",ncc);
+					let ncc = new ChatChannel(this.userId,0,this.userName,new Date().toLocaleString(),"");
+					await this.$store.dispatch("Msgs/addChatAsync",ncc);
 				}
 				
 				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1})
@@ -58,7 +58,7 @@
 			this.userName = op.userName;
 			this.userId = op.userId;
 			
-			let [lastid] = this.messages.slice(-1);
+			//let [lastid] = this.messages.slice(-1);
 			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?reciverId="+this.userId
 			+"count=10";
 			uni.request({
