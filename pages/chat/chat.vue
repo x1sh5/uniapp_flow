@@ -3,12 +3,22 @@
 		<uni-nav-bar left-icon="left" @clickLeft="back" :title="userName"></uni-nav-bar>
 		
 		<!-- <view v-for="m in messages" :key="m.id">{{m.message}}</view> -->
-		<yd-chatitem v-for="m in messages" :key="m.id" :message="m"></yd-chatitem>
-		
-		<view class="transmit">
-				<input class="input" v-model="inputValue" type="text" @blur="change" ref="input"/>
-				<button class="sendbutton" @click="send">发送</button>
+		<view class="chat-container">
+			<view class="chat-messages">
+				<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content" :isLeft="m.isLeft"></yd-chatitem>
+			</view>
+			
+			<view class="chat-input-container">
+			      <input type="text" class="chat-input" v-model="inputValue" @blur="change" ref="input">
+			      <button class="send-button" @click="send">发送</button>
+			</view>
+			
+<!-- 			<view class="transmit">
+					<input class="input" v-model="inputValue" type="text" @blur="change" ref="input"/>
+					<button class="sendbutton" @click="send">发送</button>
+			</view> -->
 		</view>
+
 	</view>
 </template>
 
@@ -18,7 +28,6 @@
 		data() {
 			return {
 				text1:"",
-				chatId:NaN,
 				userName:"",
 				userId:NaN,//发卡人id
 				inputValue:"",
@@ -27,7 +36,7 @@
 		},
 		computed:{
 			messages(){
-				return this.$store.getters.getMessages(this.chatId)
+				return this.$store.getters.getMessages(this.userId)
 			},
 
 		},
@@ -35,7 +44,8 @@
 			async send(e){
 				console.log(this.text1)
 				this.inputValue = "";
-				let cc = this.$store.commit("getById",this.chatId)
+				//
+				let cc = this.$store.commit("Msgs/getById",this.userId)
 				if(!cc){
 					let ncc = new ChatChannel(this.userId,0,this.userName,new Date().toLocaleString(),"");
 					await this.$store.dispatch("Msgs/addChatAsync",ncc);
@@ -54,22 +64,21 @@
 			
 		},
 		onLoad(op) {
-			this.chatId = op.cid;
 			this.userName = op.userName;
 			this.userId = op.userId;
 			
 			//let [lastid] = this.messages.slice(-1);
-			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?reciverId="+this.userId
-			+"count=10";
-			uni.request({
+			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId
+			+"&count=10";
+			uni.requestWithCookie({
 				url:qurl,
 				success: (res) => {
 					if(res.statusCode===200){
 						for(let m of res.data){
-							this.$store.dispatch("receiveMsg",{user:m.from,message:m.content})
+							this.$store.dispatch("receiveMsg",{user:m.from,message:m})
 						}
-						this.messages.push(...res.data)
-					}else{
+					}
+					if(res.statusCode>=400){
 						uni.showToast({
 							title:"网络异常，请稍后再试!"
 						})

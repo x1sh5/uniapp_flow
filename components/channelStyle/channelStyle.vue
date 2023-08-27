@@ -17,12 +17,11 @@
 </template>
 
 <script>
-	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
 		name:"channelStyle",
 		props:{
 			cc:{
-				type:ChatChannel
+				type:Object
 			},
 			// title:{
 			// 	type:String,
@@ -40,8 +39,10 @@
 		},
 		methods:{
 			jump(){
+				let userId = this.cc.cid;
+				let userName = this.cc.title;
 				uni.navigateTo({
-					url:"/pages/chat/chat"
+					url:"/pages/chat/chat?userId="+userId+"&userName="+userName,
 				})
 			},
 			showDelete(e){

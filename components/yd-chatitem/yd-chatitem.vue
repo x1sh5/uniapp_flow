@@ -32,11 +32,11 @@
 			},
 			nickname: {
 				type: String,
-				default: "默认"
+				default: ""
 			},
 			message: {
 				type: String,
-				default: "你好呀"
+				default: ""
 			},
 			icon: {
 				type: String,

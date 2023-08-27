@@ -55,9 +55,6 @@ const store = createStore({
 			state.$hasLogin = !state.$hasLogin
 			uni.setStorageSync(StorageKeys.hasLogin,state.$hasLogin);
 		},
-		updateMessage(state,payload){
-			state.messages.push(payload)
-		},
 		setUserName(state,payload){
 			state.$userName = payload;
 			uni.setStorageSync(StorageKeys.userName,payload);
@@ -156,7 +153,7 @@ const store = createStore({
 			return i
 		},
 		getMessages:(state)=>(toUserId)=>{
-			return state.messages.get(toUserId)
+			return state.messages.get(parseInt(toUserId))
 		},
 		currentEditContent(state){
 			return state.$currentContent
@@ -267,21 +264,26 @@ const store = createStore({
 			//state.workSocket.invoke("SendMessage", [user, message]);
 			await state.workSocket.invoke("SendToUser", user, message);
 			console.log("sendMsg")
-			let chat = state.messages.get(user)
+			let userId = parseInt(user);
+			let chat = state.messages.get(userId)
 			if(typeof(chat) === 'undefined'){
-				state.messages.set(user,new Array())
+				state.messages.set(userId,new Array())
 			}
-			state.messages.get(user).push(message);
+			state.messages.get(userId).push({isLeft: false,content: message});
 			
 		},
-		receiveMsg({commit,state},{user,message}){
+		receiveMsg({commit,state,dispatch},{user,message}){
 			console.log("receiveMsg")
-			let chat = state.messages.get(user)
+			let userId = parseInt(user);
+			message.cid = userId;
+			let chat = state.messages.get(userId)
 			if(typeof(chat) === 'undefined'){
-				state.messages.set(user,new Array())
+				state.messages.set(userId,new Array())
 			}
-			state.messages.get(user).push(message);
-
+			message.isLeft = true;
+			state.messages.get(userId).push(message);
+			dispatch('Msgs/updateAsync', message)
+			
 		},
 	    async connect({state,actions}) {
 	        // try {
@@ -311,8 +313,8 @@ const store = createStore({
 			    name: '123', // 随便填，不为空即可  
 			    //header: header, // 可以加access_token等  
 			    formData:{asgid:id}, // 接口参数，json格式，底层自动转为FormData的格式数据  
-			    complete: (res)=>{  
-			            console.error(res);  
+			    success: (res)=>{  
+			            console.log(res);  
 			        }  
 			    });
 		}
