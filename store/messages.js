@@ -50,15 +50,21 @@ export const Messages = {
 				cco.unread = 1
 			}
 		},
-		getById(state, payload){
-			let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(payload));
+		getById(state, cid){
+			let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(cid));
 			if(cc!== -1){
 				return state.$chatChannels[cc];
 			}
 			return null;
 		},
-		exists(state, payload){
-			let index = state.$chatChannels.findIndex(item=>item.cid==parseInt(payload));
+		clearUnread(state, cid){
+			let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(cid));
+			if(cc!== -1){
+				return state.$chatChannels[cc].unread = '';
+			}
+		},
+		exists(state, cid){
+			let index = state.$chatChannels.findIndex(item=>item.cid==parseInt(cid));
 			if(index!==-1){
 				return true;
 			}

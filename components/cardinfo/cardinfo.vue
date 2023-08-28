@@ -50,7 +50,7 @@
 		
 			<!-- 右半部分，只包括：类型 -->
 			<view class="bigtype" >
-				<view class="popupbutton" @click="showPopup">...</view>
+				<view v-if="editable" class="popupbutton" @click="showPopup">...</view>
 				<view class="tasktype columnlayout">{{ taskType }}</view>
 			</view>
 		

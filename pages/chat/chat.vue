@@ -65,7 +65,7 @@
 		},
 		onLoad(op) {
 			this.userName = op.userName;
-			this.userId = op.userId;
+			this.userId = parseInt(op.userId);
 			
 			//let [lastid] = this.messages.slice(-1);
 			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId
@@ -87,7 +87,8 @@
 			});
 		},
 		onUnload() {
-			this.$store.state.Msgs.state.$chatChannels[this.userId].unread = '';
+			let chatChannel = this.$store.commit("Msgs/getById",this.userId);
+			chatChannel.unread = '';
 		}
 	}
 </script>
