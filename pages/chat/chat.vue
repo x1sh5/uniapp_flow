@@ -85,6 +85,9 @@
 					}
 				}
 			});
+		},
+		onUnload() {
+			this.$store.state.Msgs.state.$chatChannels[this.userId].unread = '';
 		}
 	}
 </script>

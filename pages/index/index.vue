@@ -9,7 +9,7 @@
 		</swiper>
 		
 		<view style="display: flex;flex-direction: row;height: 80px;">
-			<button v-for="item in taskTypes" :key="item.id" @click="searchByTpe(item.id)">{{ item.name }}</button>
+			<button v-for="item in taskTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
 		</view>
 		
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
@@ -27,7 +27,8 @@
 		data() {
 			return {
 				title: 'Hello',
-				currentTypeId:""
+				currentTypeId:"",
+				taskTypeName:"全部"
 			}
 		},
 		onLoad() {
@@ -38,11 +39,11 @@
 		computed:{
 			tasks:{
 				get() {
-					console.log("index tasks:",this.$store.getters.getTasks)
-					return this.$store.getters.getTasks
+					//console.log("index tasks:",this.$store.getters.getTasks(this.taskTypeName))
+					return this.$store.getters.getTasks(this.taskTypeName)
 				},
 				set(value){
-					this.$store.commit('setTasks',value)
+					this.$store.commit('setTasks',{taskTypeName: this.taskTypeName, data: value})
 				}
 			},
 			taskTypes(){
@@ -69,22 +70,25 @@
 
 				})
 			},//requestWithCookie
-			searchByTpe(id){
+			searchByTpe(id, name){
 				this.currentTypeId = id;
+				this.taskTypeName = name;
 				let url = this.$store.state.apiBaseUrl+"/api/Assignment/type/"+id;
-				uni.requestWithCookie({
-					url:url,
-					success:(res)=>{
-						console.log(res)
-						if(res.statusCode === 200){
-							this.tasks = res.data.$values
-						}else{
-							uni.showToast({
-								title:"网络出错了！"
-							})
+				if(this.$store.state.tasks.get(this.taskTypeName).length === 0){
+					uni.requestWithCookie({
+						url:url,
+						success:(res)=>{
+							console.log(res)
+							if(res.statusCode === 200){
+								this.tasks = res.data.$values
+							}else{
+								uni.showToast({
+									title:"网络出错了！"
+								})
+							}
 						}
-					}
-				});
+					});
+				}
 				
 			},
 			inputEvent(e){
@@ -102,7 +106,7 @@
 			let maxIndex = this.maxIndex;
 			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, typeId:this.currentTypeId})
 			.then(data => {
-				 this.$store.commit('updateTasks', data["$values"]);
+				 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data["$values"]});
 				 // 在这里处理获取到的数据
 			  })
 			  .catch(error => {
@@ -112,17 +116,16 @@
 		},
 		//下拉刷新页面
 		onPullDownRefresh() {
-			if(!this.$store.state.tasks.status){
-				 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:this.currentTypeId})
-				 .then(data => {
-					 this.$store.commit('setTasks', data["$values"]);
-					 // 在这里处理获取到的数据
-				   })
-				   .catch(error => {
-					 console.error('获取数据失败：', error);
-					 // 在这里处理错误情况
-				   });
-			}
+			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:this.currentTypeId})
+			 .then(data => {
+				 this.$store.commit('setTasks', {taskTypeName: this.taskTypeName, data: data["$values"]});
+				 // 在这里处理获取到的数据
+			   })
+			   .catch(error => {
+				 console.error('获取数据失败：', error);
+				 // 在这里处理错误情况
+			   });
+
 		}
 	}
 </script>

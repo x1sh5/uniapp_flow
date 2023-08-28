@@ -69,18 +69,16 @@
 			await this.$store.dispatch('fetchBranchs');
 			await this.$store.dispatch('fetchTaskTypes');
 
-		    if(!this.$store.state.tasks.status){
-				 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
-				 .then(data => {
-					 this.$store.commit('setTasks', data["$values"]);
-					 // 在这里处理获取到的数据
-				   })
-				   .catch(error => {
-					 console.error('获取数据失败：', error);
-					 // 在这里处理错误情况
-				   });
-		    }
-
+			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
+			 .then(data => {
+				 this.$store.commit('setTasks', {taskTypeName: "全部", data: data["$values"]});
+				 // 在这里处理获取到的数据
+			   })
+			   .catch(error => {
+				 console.error('获取数据失败：', error);
+				 // 在这里处理错误情况
+			   });
+		    
 		},
 		onShow: function() {
 			console.log('App Show')

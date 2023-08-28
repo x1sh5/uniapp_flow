@@ -45,7 +45,7 @@ export const Messages = {
 				cco.content = payload.content;
 			}
 			if(cco.unread){
-				cco.unread+=1
+				cco.unread += 1
 			}else{
 				cco.unread = 1
 			}

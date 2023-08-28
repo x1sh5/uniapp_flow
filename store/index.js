@@ -17,17 +17,14 @@ const store = createStore({
 		currentTask:{},
 		taskTypes:[],
 		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
-		tasks:{
-			status:false,
-			values:[]
-		},
+		tasks:new Map(),
 		workSocket : new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
         .configureLogging(signalR.LogLevel.Trace)
         .build(),
-		messages:new Map(),
+		messages:new Map(), //对话消息
 		$currentContent:{}, //当前正在编辑的task.description
-		$publishResults:[]
+		$publishResults:[] //发布结果
 	},
 	mutations:{
 		setCurrentTask(state,payload){
@@ -40,16 +37,20 @@ const store = createStore({
 		updateTaskTypes(state,payload){
 			console.log("taskTypes:",payload)
 			state.taskTypes = toRaw(payload)
+			state.tasks.set("全部",[]);
+			for(let t of state.taskTypes){
+				state.tasks.set(t.name,[]);
+			}
 		},
 		setTasks(state,payload){
 			console.log("tasks:",payload)
-			state.tasks.status = true
-			state.tasks.values= payload
+			let t = payload.taskTypeName;
+			state.tasks.set(t, payload.data);
 		},
 		updateTasks(state,payload){
 			console.log("tasks:",payload)
-			state.tasks.status = true;
-			state.tasks.values = state.tasks.values.concat(payload);
+			let t = payload.taskTypeName;
+			state.tasks.get(t).push(...payload.data);
 		},
 		changeLoginState(state){
 			state.$hasLogin = !state.$hasLogin
@@ -115,16 +116,13 @@ const store = createStore({
 		}
 	},
 	getters:{
-		getTasks(state){
-			if(state.tasks.status){
-				return state.tasks.values
-			}
+		getTasks:(state)=>(taskTypeName)=>{
+			return state.tasks.get(taskTypeName)
+
 		},
 		getTaskById:(state)=>(id)=>{
-			if(state.tasks.status){
-				let i = state.tasks.values.find(item=>item.id === parseInt(id))
-				return i
-			}
+			let i = state.tasks.get("全部").find(item=>item.id === parseInt(id))
+			return i
 			
 		},
 		getBranch:(state)=>(branchid)=>{
