@@ -4,10 +4,15 @@
 		
 		<!-- <view v-for="m in messages" :key="m.id">{{m.message}}</view> -->
 		<view class="chat-container">
-			<view class="chat-messages">
-				<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content" :isLeft="m.isLeft"></yd-chatitem>
-			</view>
 			
+			<!-- <view style="height: 96%;"> -->
+				<scroll-view :style="`height:${calcHeight}px`" class="chat-messages" scroll-y="true" :scroll-top="0"
+				 @scrolltoupper="receiveOld" @scrolltolower="scrollDown">
+					<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content"
+					 :isLeft="m.isLeft" :bgColor="'#f7f7f7'"></yd-chatitem>
+				</scroll-view>
+			<!-- </view> -->
+
 			<view class="chat-input-container">
 			      <input type="text" class="chat-input" v-model="inputValue" @blur="change" ref="input">
 			      <button class="send-button" @click="send">发送</button>
@@ -31,6 +36,7 @@
 				userName:"",
 				userId:NaN,//发卡人id
 				inputValue:"",
+				calcHeight:NaN, //
 				//messages:[]
 			}
 		},
@@ -61,11 +67,37 @@
 			back(e){
 				uni.navigateBack()
 			},
-			
+			receiveOld(){
+				console.log("scroll up");
+				let lastid = this.messages[0].cid;
+				let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId+"&lastid="+lastid
+				+"&count=10";
+				uni.requestWithCookie({
+					url:qurl,
+					success: (res) => {
+						if(res.statusCode===200){
+							for(let m of res.data){
+								this.$store.dispatch("receiveMsg",{user:m.from,message:m})
+							}
+						}
+						if(res.statusCode>=400){
+							uni.showToast({
+								title:"网络异常，请稍后再试!"
+							})
+						}
+					}
+				});
+			},
+			scrollDown(){
+				console.log("scroll down");
+			}
 		},
 		onLoad(op) {
 			this.userName = op.userName;
 			this.userId = parseInt(op.userId);
+			
+			let info = uni.getWindowInfo();
+			this.calcHeight = info.windowHeight*96/100 -66;
 			
 			//let [lastid] = this.messages.slice(-1);
 			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId
@@ -87,9 +119,8 @@
 			});
 		},
 		onUnload() {
-			let chatChannel = this.$store.commit("Msgs/getById",this.userId);
-			chatChannel.unread = '';
-		}
+			this.$store.commit("Msgs/clearUnread",this.userId);
+		},
 	}
 </script>
 

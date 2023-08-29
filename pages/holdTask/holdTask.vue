@@ -73,7 +73,9 @@
 				return this.$data.$completes;
 			}
 		},
-		onLoad() {
+		onLoad(op) {
+			this.current = parseInt(op.current) ;
+			
 			this.getByStatus(1)
 				.then((res)=>this.$data.$incompletes = res)
 				.catch((err)=>console.log(err));

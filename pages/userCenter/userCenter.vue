@@ -3,7 +3,7 @@
 		
 		<view class="userinfo">
 			<!-- avatar -->
-			<view class="user-avatar"><image class="user-avatar-img"></image></view>
+			<view class="user-avatar"><image src="https://wx.qlogo.cn/mmhead/PiajxSqBRaEI2Vb5Lp2pyzDTF41qKU7ibeBXArLoXdJVpDhMGfib2VWEQ/0" class="user-avatar-img"></image></view>
 			<view>{{ userName }}</view>
 		</view>
 		
@@ -22,8 +22,8 @@
 		<view class="taskinfobox">
 			<view style="position: relative;margin-left: 10rpx;">已经接取任务</view>
 			<view class="taskinfo">
-				<view class="uni-icons icon-incomplete" @click="holds"><view class="item_title">待完成</view></view>
-				<view class="wr icon2" @click="holds"><view class="item_title">完成项目</view></view>
+				<view class="uni-icons icon-incomplete" @click="holds(0)"><view class="item_title">待完成</view></view>
+				<view class="wr icon2" @click="holds(1)"><view class="item_title">完成项目</view></view>
 			</view>
 		</view>
 		
@@ -33,6 +33,7 @@
 			<view>帮助中心</view>
 			<view>技能互助文档</view>
 			<view>收益来源</view>
+			<view @click="toSetting">用户设置</view>
 		</view>
 		
 		<view class="driver"></view>
@@ -52,7 +53,7 @@
 	export default {
 		data() {
 			return {
-				
+				imgsrc:"",
 			};
 		},
 		computed:{
@@ -75,10 +76,11 @@
 					url:"/pages/history/history"
 				})
 			},
-			holds(){
+			holds(t){
 				//任务接取情况
+				let turl = "/pages/holdTask/holdTask?current="+t;
 				uni.navigateTo({
-					url:"/pages/holdTask/holdTask"
+					url:turl
 				})
 			},
 			draftBox(e){
@@ -109,12 +111,32 @@
 					key:StorageKeys.userName
 				});
 				this.$store.commit("changeLoginState")
+			},
+			toSetting(e){
+				uni.navigateTo({
+					url:"pages/settings/settings"
+				});
 			}
 		},
 		onLoad() {
 			this.$store.commit("initHasLogin");
 			this.$store.commit("initUserName");
+		},
+		// #ifdef MP-WEIXIN
+		created() {
+			uni.showModal({
+				content:"小程序将使用用户微信头像作为默认头像",
+				success:()=>{
+					uni.getUserInfo({
+						success:(res)=>{
+							this.imgsrc = res.userInfo.avatarUrl;
+						}
+					});
+				}
+			});
+
 		}
+		// #endif
 	}
 </script>
 

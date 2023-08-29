@@ -110,7 +110,7 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": true,
+                "enablePullDownRefresh": false,
 				"navigationStyle": "custom"
             }
             
@@ -156,6 +156,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "发布结果",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/settings/settings",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "账户设置",
                 "enablePullDownRefresh": false
             }
             
