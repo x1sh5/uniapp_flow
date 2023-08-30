@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view v-for="item in publishs" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click="toDetails" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>
@@ -27,6 +27,11 @@
 				if(item.status===TaskStatus.WaitForAccept)return 'waitfor';//待接状态
 				if(item.status===TaskStatus.Unfinished)return 'undone';//待完成
 				return 'done';
+			},
+			toDetails(e){
+				uni.navigateTo({
+					url:"/pages/myTaskDetail/myTaskDetail"
+				})
 			}
 		},
 		onLoad() {

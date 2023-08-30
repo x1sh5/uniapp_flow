@@ -169,6 +169,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/myTaskDetail/myTaskDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "以发布任务详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/editTask/editTask",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "编辑任务",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

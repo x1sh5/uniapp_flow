@@ -2,7 +2,7 @@
 <!-- 	<view> -->
 	<!-- 任务卡片 -->
 	<!-- 任务卡片 -->
-	<view @click="detail" @longpress="removeTask">
+	<view @click.stop="detail" @longpress="removeTask">
 		<view :class="`task${Id%3}`">
 			<!-- 编号 标题 -->
 			<!-- 第一行，第一列起横跨2列 -->
@@ -60,7 +60,7 @@
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
 			{{branchs[branchOrder]["name"]}}</picker>
 			<!-- 发起人 -->
-			<view class="organigerpart" :style="editable?'display:none':'display:flex'">
+			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
 			  <view :class="`fontcolor${Id%3}`" >发起人</view>
 			</view>
@@ -268,7 +268,7 @@
 				//spendtime:"",
 				//tasktype:"类型",
 				vis: 'hidden',
-				status:["代接","未完成","完成"],
+				status:["代接","待完成","完成"],
 				branchIndex:false,
 				$rewardTypeValue: 0,
 				rewardtype: {

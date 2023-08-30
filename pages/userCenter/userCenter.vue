@@ -114,7 +114,7 @@
 			},
 			toSetting(e){
 				uni.navigateTo({
-					url:"pages/settings/settings"
+					url:"/pages/settings/settings"
 				});
 			}
 		},

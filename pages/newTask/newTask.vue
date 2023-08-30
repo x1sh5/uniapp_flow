@@ -1,5 +1,6 @@
 <template>
-	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
+	<!-- left-icon的值为uni组件中uniicons下uniicons.css中的类名去掉前缀uniui-后得到的值 -->
+	<uni-nav-bar left-icon="right" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 	<view data-denpend="">
 		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 

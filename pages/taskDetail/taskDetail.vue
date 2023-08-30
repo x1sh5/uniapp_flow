@@ -49,8 +49,9 @@
 					default(){
 						return "done"
 					}
-				}
-				}
+				},
+				status:["waitfor","undone","done"]
+			}
 		},
 		created() {
 			this.task = this.$store.state.currentTask;
@@ -68,7 +69,8 @@
 		onLoad(op) {
 		  console.log("options:",op)
 		  const id = op.id
-		  this.mode = op.mode
+		  //this.mode = op.mode
+		  this.mode = this.status[this.task.status]
 		  // let t  = this.$store.getters.getTaskById(id)
 		  // if(t!==undefined && t!==null){
 			 //  this.task  = t
