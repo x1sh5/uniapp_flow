@@ -226,9 +226,11 @@
 				if(!this.task.presumedtime){
 					this.task.presumedtime = 0;
 				}
-				this.$store.commit("updatePublishResults", 
-					{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
-				发布任务
+				
+				// this.$store.commit("updatePublishResults", 
+				// 	{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
+				//发布任务
+				
 				let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
 				uni.requestWithCookie({
 					url:posturl,
@@ -236,6 +238,47 @@
 					data:this.task,
 					success:(res)=> {
 						if(res.statusCode === 200){
+							this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"});
+							this.$emit('after-publish',this.task.id)
+						}else{
+							this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"})
+						}
+					},
+					fail:(err)=>{
+						console.error(err);
+						this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"})
+					}
+				});
+			},
+			put(){
+				console.log(this.task);
+				if(!this.task.title){
+					uni.showModal({
+						content:"标题不能为空！"
+					});
+					return false;
+				}
+				if(!this.task.reward){
+					uni.showModal({
+						content:"回馈值不能为空！"
+					});
+					return false;
+				}
+				if(!this.task.presumedtime){
+					this.task.presumedtime = 0;
+				}
+				
+				// this.$store.commit("updatePublishResults", 
+				// 	{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
+				// 发布任务
+				
+				let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/"+this.task.id
+				uni.requestWithCookie({
+					url:posturl,
+					method:"PUT",
+					data:this.task,
+					success:(res)=> {
+						if(res.statusCode === 204){
 							this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"});
 							this.$emit('after-publish',this.task.id)
 						}else{

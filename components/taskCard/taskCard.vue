@@ -105,6 +105,9 @@
 			publish(){
 				return this.$refs.cardinfo.publish();
 			},
+			put(){
+				return this.$refs.cardinfo.put();
+			},
 			//task发布成功成功后
 			afterPublish(e){
 				this.$emit('after-publish',e)

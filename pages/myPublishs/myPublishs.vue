@@ -32,6 +32,12 @@
 				uni.navigateTo({
 					url:"/pages/myTaskDetail/myTaskDetail"
 				})
+			},
+			removeById(id){
+				let index = this.publishs.findIndex(item=>item.id==id);
+				if(index!=-1){
+					this.publishs.splice(index,1);
+				}
 			}
 		},
 		onLoad() {

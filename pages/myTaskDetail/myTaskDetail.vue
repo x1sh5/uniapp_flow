@@ -83,7 +83,7 @@
 			},
 			del(e){
 				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/delete/"+this.task.id;
-				uni.request({
+				uni.requestWithCookie({
 					url:qurl,
 					method:"DELETE",
 					success: (res) => {

@@ -15,9 +15,35 @@
 			}
 		},
 		methods: {
+			backEvent(){
+				uni.showModal({
+					content:"返回后以编辑的内容将会消失，是否放弃修改。",
+					success: function (res) {
+						if (res.confirm) {
+							uni.navigateBack();
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+				
+			},
+			submitEvent(){
+				let results = [];
+				let res = this.$refs['id'+this.item.id].put();
+				results.push(res)
+				
+				if(results.every(ele=>Boolean(ele)) ){
+					uni.navigateTo({
+						url:"/pages/publishResult/publishResult"
+					})
+				}
 			
+			},
 		},
-		
+		created() {
+			this.item = this.$store.state.currentTask;
+		},
 	}
 </script>
 
