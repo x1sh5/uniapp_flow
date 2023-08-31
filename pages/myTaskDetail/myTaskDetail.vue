@@ -82,8 +82,32 @@
 				})
 			},
 			del(e){
+				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/delete/"+this.task.id;
 				uni.request({
-					url:
+					url:qurl,
+					method:"DELETE",
+					success: (res) => {
+						if(res.statusCode===204){
+							uni.showToast({
+								title:"删除成功。"
+							});
+							const pages = getCurrentPages();
+							let prep = pages[pages.length-2];
+							prep.removeById(this.task.id);
+							uni.navigateBack();
+						}
+						if(res.statusCode===404){
+							uni.showModal({
+								content:"无效的任务。"
+							})
+						}
+						
+						if(res.statusCode===409){
+							uni.showModal({
+								content:"任务已被他人接取,请等待任务完成或被放弃。"
+							})
+						}
+					}
 				})
 			}
 			
