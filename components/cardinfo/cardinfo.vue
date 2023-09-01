@@ -24,10 +24,15 @@
 		
 		  <!-- 预计工时 第二行第一列 -->
 			  <view class="presumedtime">
-				<view :class="`fontcolor${Id%3}`">预计工时</view>
-				<view class="rowlayout">
-				  <input maxlength="8" :disabled="!editable" type="digit" 
-				  :value="spendtime" class="input" @blur="updatePt"/>h
+				<view :class="`fontcolor${Id%3}`">截止日期</view>
+				<view class="rowlayout input">
+<!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
+				  :value="deadline" class="input" @blur="updatePt"/>h -->
+				   
+							<picker mode="date" style="width: 60px;height: 20px;" :value="deadline" @change="biupdatePt">
+								<view class="uni-input">{{deadline}}</view>
+							</picker>
+				  		
 				</view>
 				
 			  </view>
@@ -83,6 +88,7 @@
 </template>
 
 <script>
+import { RewardType } from '../../common/Task'
 	export default {
 		name:"cardinfo",
 		props:{
@@ -140,18 +146,16 @@
 				}
 				return false
 			},
-			spendtime:{
+			deadline:{
 				get() {
-					if(this.task.presumedtime===false){
-						return ""
+					let index = this.task.deadline.indexOf("T");
+					if(index!==-1){
+						return this.task.deadline.substring(0,index);
 					}
-					if(!this.nullTask){
-						return (this.task.presumedtime/60).toFixed(2)
-					}
-					return ""
+					return this.task.deadline;
 				},
 				set(value) {
-					this.task.presumedtime = value*60
+					this.task.deadline = value;
 				}
 			},
 			title:{
@@ -196,14 +200,19 @@
 				}
 			},
 			updateReward(event){
-				this.task.reward = event.detail.value;
+				if(this.task.rewardtype === RewardType.Fiexd){
+					this.task.fixedreward = event.detail.value;
+				}else if(this.task.rewardtype === RewardType.Percent){
+					this.task.percentreward = event.detail.value;
+				}
+
 			},
 			updateBrief(event){
 				this.task.title = event.detail.value;
 			},
 			//更新预计时间
 			updatePt(event){
-				this.task.presumedtime = event.detail.value;
+				this.task.deadline = event.detail.value;
 			},
 			//更新描述
 			updateDes(data){
@@ -217,14 +226,23 @@
 					});
 					return false;
 				}
-				if(!this.task.reward){
+				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedreward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
 					return false;
 				}
-				if(!this.task.presumedtime){
-					this.task.presumedtime = 0;
+				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentreward){
+					uni.showModal({
+						content:"回馈值不能为空！"
+					});
+					return false;
+				}
+				if(!this.task.deadline){
+					uni.showModal({
+						content:"截止日期不能为空！"
+					});
+					return false;
 				}
 				
 				// this.$store.commit("updatePublishResults", 
@@ -258,14 +276,23 @@
 					});
 					return false;
 				}
-				if(!this.task.reward){
+				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedreward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
 					return false;
 				}
-				if(!this.task.presumedtime){
-					this.task.presumedtime = 0;
+				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentreward){
+					uni.showModal({
+						content:"回馈值不能为空！"
+					});
+					return false;
+				}
+				if(!this.task.deadline){
+					uni.showModal({
+						content:"截止日期不能为空！"
+					});
+					return false;
 				}
 				
 				// this.$store.commit("updatePublishResults", 
