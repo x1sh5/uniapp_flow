@@ -6,7 +6,7 @@
 		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
 		@after-pulish="afterPulish" @remove-task="removeTask" style="margin: 2px 3px;"></taskCard>
 	</view>
-	<view>
+	<view v-if="mode=='mutiple'">
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>
 	</view>
 	
@@ -24,23 +24,27 @@
 					  "id": 0,
 					  "branchid": 1,
 					  "description": "",
-					  "finishtime": "0001-01-01T00:00:00",
+					  "finishtime": "",
 					  "deadline": new Date().toISOString().slice(0, 10),
 					  "publishtime": "0001-01-01T00:00:00",
 					  "fixedreward": '',
-					  "percentreward": '',
-					  "rewardtype": RewardType.Fixed,
+					  "percentreward": 100,
+					  "rewardtype": RewardType.Percent,
 					  "status": TaskStatus.WaitForAccept,
 					  "title": "",
 					  "typeId": false,
 					  "verify": 0,
 					  }],
 				reffer:"",
+				$mode: ''
 			}
 		},
 		computed:{
 			taskTypes(){
 				return this.$store.state.taskTypes
+			}
+			,mode(){
+				return this.$data.$mode
 			}
 		},
 		created(op) {
@@ -51,6 +55,8 @@
 			console.log("onload")
 			let reffer = op.createType;
 			let taskType = op.typeId;
+			this.$data.$mode = op.mode;
+			
 			console.log("reffer",reffer);
 			console.log("taskType",taskType);
 			this.tasks[0].typeId= taskType;
@@ -95,12 +101,12 @@
 					"username": false,
 					"branchid": 1,
 					"description": "",
-					"finishtime": "0001-01-01T00:00:00",
-					"deadline": '',
+					"finishtime": "",
+					"deadline": new Date().toISOString().slice(0, 10),
 					"publishtime": "0001-01-01T00:00:00",
 					"fixedreward": '',
 					"percentreward": '',
-					"rewardtype": RewardType.Fixed,
+					"rewardtype": RewardType.Percent,
 					"status": TaskStatus.WaitForAccept,
 					"title": "",
 					"typeId": e.item.id,

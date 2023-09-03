@@ -25,11 +25,11 @@
 		  <!-- 预计工时 第二行第一列 -->
 			  <view class="presumedtime">
 				<view :class="`fontcolor${Id%3}`">截止日期</view>
-				<view class="rowlayout input">
+				<view class="rowlayout">
 <!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
 				   
-							<picker mode="date" style="width: 60px;height: 20px;" :value="deadline" @change="biupdatePt">
+							<picker class="input" mode="date" :value="deadline" @change="biupdatePt">
 								<view class="uni-input">{{deadline}}</view>
 							</picker>
 				  		
@@ -41,7 +41,8 @@
 			  <view class="rewardbox">
 				<view :class="`fontcolor${Id%3}`">回馈值</view>
 				<view class="rowlayout">
-				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" :value="task.reward" @blur="updateReward"/>
+				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
+				  v-model="reward" @blur="updateReward"/>
 				  <!-- <view>{{ rewardtype.value }}</view> -->
 				  <uni-data-select :localdata="rewardtype.options" :clear="false"
 				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
@@ -120,6 +121,19 @@ import { RewardType } from '../../common/Task'
 					return this.$store.getters.getTaskType(this.task.typeId)
 				}
 			},
+			reward:{
+				get(){
+					return this.task.rewardtype==1?this.task.fixedreward:this.task.percentreward;
+				},
+				set(value){
+					if(this.task.rewardtype===1){
+						this.task.fixedreward = value;
+					}
+					if(this.task.rewardtype===2){
+						this.task.percentreward = value;
+					}
+				}
+			},
 			branch:{
 				get(){
 					return this.$store.getters.getBranch(this.task.branchid)
@@ -177,6 +191,14 @@ import { RewardType } from '../../common/Task'
 			rewardTypeChange(e){
 				console.log('rewardType 改变，携带值为', e)
 				this.$rewardTypeValue = e
+				let pages = getCurrentPages();
+				let current = pages[pages.length-1]
+				if(current.mode&&current.mode=="single"){
+					this.task.percentreward = 100;
+				}else{
+					this.task.percentreward  = '';
+				}
+				
 			},
 			detail(e){
 				if(!this.editable){
@@ -217,6 +239,10 @@ import { RewardType } from '../../common/Task'
 			//更新描述
 			updateDes(data){
 				this.task.description = data;
+			},
+			biupdatePt(e){
+				console.log(e);
+				this.task.deadline = e.detail.value
 			},
 			publish(){
 				console.log(this.task);
@@ -346,12 +372,14 @@ import { RewardType } from '../../common/Task'
 				  options: [
 					{
 					  text: '￥',
-					  value: "￥",
+					  value: 1,
+					  name: "固定",
 					  selected: true
 					},
 					{
 					  text: '%',
-					  value: '%',
+					  value: 2,
+					  name: "百分比"
 					},]
 				}
 			};
@@ -536,6 +564,7 @@ import { RewardType } from '../../common/Task'
 		border-bottom: 1px dashed gray;
 		flex-basis: 60rpx;
 		text-align: center;
+		margin-top: 10px;
 	}
 	
 	.margin-right10{
@@ -601,6 +630,7 @@ import { RewardType } from '../../common/Task'
 	  width: 60%;
 	  text-align: center;
 	  border-bottom: 1px dashed gray;
+	  margin-top: 10px;
 	  //border-bottom: 1px,rgb(10, 221, 63),dashed;
 	}
 	.brief{

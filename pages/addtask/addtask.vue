@@ -18,7 +18,8 @@
 				ctype: [
 					{text: '单卡', value: 0}, {text: '多卡', value: 1}
 				],
-				defaultT:0
+				defaultT:0,
+				mode: ''
 			}
 		},
 		computed:{
@@ -36,15 +37,17 @@
 			createTask(e){
 				console.log("createTask",e);
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeId="+this.selected.id+"&createType="+this.defaultT,
+				  url:"/pages/newTask/newTask?typeId="+this.selected.id+"&createType="+this.defaultT+"&mode="+this.mode,
 				})
 			},
 			typeChange(e){
 				console.log("typechange",e)
 				if(e.detail.value === 1){
+					this.mode = 'mutiple';
 					this.$refs.dataSelect.statusDisable(true)
 				}
 				if(e.detail.value === 0){
+					this.mode = 'single';
 					this.$refs.dataSelect.statusDisable(false)
 				}
 			},
