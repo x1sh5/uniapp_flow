@@ -118,6 +118,7 @@
 			if (this.collection && !this.localdata.length) {
 				this.debounceGet();
 			}
+			this.initDefVal()
 		},
 		computed: {
 			typePlaceholder() {

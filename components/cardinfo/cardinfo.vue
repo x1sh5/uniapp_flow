@@ -44,7 +44,7 @@
 				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
 				  v-model="reward" @blur="updateReward"/>
 				  <!-- <view>{{ rewardtype.value }}</view> -->
-				  <uni-data-select :localdata="rewardtype.options" :clear="false"
+				  <uni-data-select :localdata="rewardtype.options" :clear="false" modelValue="2" 
 				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
 				   style="z-index: 2;width: 20px;margin-left: 5rpx;margin-bottom: 5rpx;" 
 				   :disabled="!editable">
@@ -372,13 +372,13 @@ import { RewardType } from '../../common/Task'
 				  options: [
 					{
 					  text: '￥',
-					  value: 1,
+					  value: '1',
 					  name: "固定",
 					  selected: true
 					},
 					{
 					  text: '%',
-					  value: 2,
+					  value: '2',
 					  name: "百分比"
 					},]
 				}

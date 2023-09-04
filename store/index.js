@@ -7,7 +7,7 @@ import { Messages } from "./messages.js"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://localhost:7221"//"https://localhost:7221"; //"https://www.wangyan.net"; 
+const baseUrl = "https://www.liusha-gy.com"; //"https://localhost:7221"//"https://www.liusha-gy.com"; //"https://www.wangyan.net"; 
 
 const store = createStore({
 	state:{
@@ -226,6 +226,9 @@ const store = createStore({
 				uni.requestWithCookie({
 				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeId="+typeId ,
 				  method: 'GET',
+				  header:{
+					  'Access-Control-Allow-Origin': '*'
+				  },
 				  success:(res)=>{
 					  console.log(res)
 					  let data = res.data
