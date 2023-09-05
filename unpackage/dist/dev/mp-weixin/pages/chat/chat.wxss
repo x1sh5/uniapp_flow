@@ -1,33 +1,75 @@
-
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.chat-messages {
+  flex-grow: 1;
+  height: inherit;
+  /* overflow-y: auto; */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 10px;
+  height: 4%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px #dedede solid;
+}
+.chat-input {
+  flex-grow: 1;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 0px 10px;
+}
+.send-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0px 10px;
+  cursor: pointer;
+  font-size: inherit;
+  line-height: initial;
+  right: 10px;
+}
 .input{
-		width: 75%;
-		height: 70rpx;
-		border: 1px solid #8c8c8c;
-		border-radius: 50px; /* 将输入框的圆角设置为50 */
+	width: 75%;
+	height: 70rpx;
+	border: 1px solid #8c8c8c;
+	border-radius: 50px; /* 将输入框的圆角设置为50 */
 }
 .transmit{
-		display: flex;
-		padding: 8rpx 5rpx;
-		width: 100%;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		height: 40px;
-		box-sizing: border-box;
-		position: absolute;
-		left: 0;
-		bottom: 40rpx;
+	display: flex;
+	padding: 8rpx 5rpx;
+	width: 100%;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+	box-sizing: border-box;
+	position: absolute;
+	left: 0;
+	bottom: 40rpx;
 }
 .sendbutton {
-	height: 40px;
-	
-	background-color: #007AFF; /* 设置背景色为蓝色 */
-	border: none; /* 去掉边框 */
-	color: #fff; /* 设置文字颜色为白色 */
-	font-size: 16px; /* 设置文字大小 */
-	width: 60px; /* 设置宽度为 40px */
-	border-radius: 20px; /* 将按钮的圆角设置为 20px，即宽度的一半 */
-	display: flex; /* 将按钮设置为 flex 布局 */
-	justify-content: center; /* 水平居中 */
-	align-items: center; /* 垂直居中 */
+height: 40px;
+
+background-color: #007AFF; /* 设置背景色为蓝色 */
+border: none; /* 去掉边框 */
+color: #fff; /* 设置文字颜色为白色 */
+font-size: 16px; /* 设置文字大小 */
+width: 60px; /* 设置宽度为 40px */
+border-radius: 20px; /* 将按钮的圆角设置为 20px，即宽度的一半 */
+display: flex; /* 将按钮设置为 flex 布局 */
+justify-content: center; /* 水平居中 */
+align-items: center; /* 垂直居中 */
 }

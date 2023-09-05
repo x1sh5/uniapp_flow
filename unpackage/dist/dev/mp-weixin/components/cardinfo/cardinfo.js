@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_Task = require("../../common/Task.js");
 const _sfc_main = {
   name: "cardinfo",
   props: {
@@ -9,7 +10,8 @@ const _sfc_main = {
     //颜色代码
     colorid: Number,
     //可编辑组件（input,textarea等）是否能编辑，默认不能编辑
-    editable: Boolean
+    editable: Boolean,
+    mode: String
   },
   created() {
     console.log("task is:", this.task);
@@ -28,7 +30,20 @@ const _sfc_main = {
     },
     taskType: {
       get() {
-        return this.$store.getters.getTaskType(this.task.typeid);
+        return this.$store.getters.getTaskType(this.task.typeId);
+      }
+    },
+    reward: {
+      get() {
+        return this.task.rewardtype == 1 ? this.task.fixedreward : this.task.percentreward;
+      },
+      set(value) {
+        if (this.task.rewardtype === 1) {
+          this.task.fixedreward = value;
+        }
+        if (this.task.rewardtype === 2) {
+          this.task.percentreward = value;
+        }
       }
     },
     branch: {
@@ -56,18 +71,16 @@ const _sfc_main = {
       }
       return false;
     },
-    spendtime: {
+    deadline: {
       get() {
-        if (this.task.presumedtime === false) {
-          return "";
+        let index = this.task.deadline.indexOf("T");
+        if (index !== -1) {
+          return this.task.deadline.substring(0, index);
         }
-        if (!this.nullTask) {
-          return (this.task.presumedtime / 60).toFixed(2);
-        }
-        return "";
+        return this.task.deadline;
       },
       set(value) {
-        this.task.presumedtime = value * 60;
+        this.task.deadline = value;
       }
     },
     title: {
@@ -89,6 +102,13 @@ const _sfc_main = {
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
       this.$rewardTypeValue = e;
+      let pages = getCurrentPages();
+      let current = pages[pages.length - 1];
+      if (current.mode && current.mode == "single") {
+        this.task.percentreward = 100;
+      } else {
+        this.task.percentreward = "";
+      }
     },
     detail(e) {
       if (!this.editable) {
@@ -97,32 +117,141 @@ const _sfc_main = {
             url: "/pages/logintips/logintips"
           });
         } else {
-          common_vendor.index.navigateTo({
-            url: "/pages/taskDetail/taskDetail?id=" + this.task.id
-          });
+          const pages = getCurrentPages();
+          let current = pages[pages.length - 1];
+          if (current.route.split("/").at(-1) !== "taskDetail") {
+            this.$store.commit("setCurrentTask", this.task);
+            this.$store.dispatch("genHistory", this.task.id);
+            common_vendor.index.navigateTo({
+              url: "/pages/taskDetail/taskDetail?id=" + this.task.id + "&mode=" + this.mode
+            });
+          }
         }
       }
     },
     updateReward(event) {
-      this.task.reward = event.detail.value;
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
+        this.task.fixedreward = event.detail.value;
+      } else if (this.task.rewardtype === common_Task.RewardType.Percent) {
+        this.task.percentreward = event.detail.value;
+      }
     },
     updateBrief(event) {
       this.task.title = event.detail.value;
     },
     //更新预计时间
     updatePt(event) {
-      this.task.presumedtime = event.detail.value;
+      this.task.deadline = event.detail.value;
     },
     //更新描述
     updateDes(data) {
       this.task.description = data;
     },
+    biupdatePt(e) {
+      console.log(e);
+      this.task.deadline = e.detail.value;
+    },
     publish() {
       console.log(this.task);
-      this.$store.commit(
-        "updatePublishResults",
-        { data: { success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" }, func: Array.prototype.push }
-      );
+      if (!this.task.title) {
+        common_vendor.index.showModal({
+          content: "标题不能为空！"
+        });
+        return false;
+      }
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedreward) {
+        common_vendor.index.showModal({
+          content: "回馈值不能为空！"
+        });
+        return false;
+      }
+      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentreward) {
+        common_vendor.index.showModal({
+          content: "回馈值不能为空！"
+        });
+        return false;
+      }
+      if (!this.task.deadline) {
+        common_vendor.index.showModal({
+          content: "截止日期不能为空！"
+        });
+        return false;
+      }
+      let posturl = this.$store.state.apiBaseUrl + "/api/Assignment";
+      common_vendor.index.requestWithCookie({
+        url: posturl,
+        method: "POST",
+        data: this.task,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" });
+            this.$emit("after-publish", this.task.id);
+          } else {
+            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "server error" });
+          }
+        },
+        fail: (err) => {
+          console.error(err);
+          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "client error" });
+        }
+      });
+    },
+    put() {
+      console.log(this.task);
+      if (!this.task.title) {
+        common_vendor.index.showModal({
+          content: "标题不能为空！"
+        });
+        return false;
+      }
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedreward) {
+        common_vendor.index.showModal({
+          content: "回馈值不能为空！"
+        });
+        return false;
+      }
+      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentreward) {
+        common_vendor.index.showModal({
+          content: "回馈值不能为空！"
+        });
+        return false;
+      }
+      if (!this.task.deadline) {
+        common_vendor.index.showModal({
+          content: "截止日期不能为空！"
+        });
+        return false;
+      }
+      let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/" + this.task.id;
+      common_vendor.index.requestWithCookie({
+        url: posturl,
+        method: "PUT",
+        data: this.task,
+        success: (res) => {
+          if (res.statusCode === 204) {
+            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" });
+            this.$emit("after-publish", this.task.id);
+          } else {
+            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "server error" });
+          }
+        },
+        fail: (err) => {
+          console.error(err);
+          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "client error" });
+        }
+      });
+    },
+    removeTask(e) {
+      console.log(e);
+      this.$emit("remove-task", this.task.id);
+    },
+    showPopup(e) {
+      console.log("click show");
+      this.vis = true;
+    },
+    exitDel(e) {
+      console.log("exit");
+      this.vis = false;
     }
   },
   data() {
@@ -130,7 +259,8 @@ const _sfc_main = {
       // 预计时间
       //spendtime:"",
       //tasktype:"类型",
-      status: ["代接", "未完成", "完成"],
+      vis: false,
+      status: ["代接", "待完成", "完成"],
       branchIndex: false,
       $rewardTypeValue: 0,
       rewardtype: {
@@ -138,12 +268,14 @@ const _sfc_main = {
         options: [
           {
             text: "￥",
-            value: "￥",
+            value: "1",
+            name: "固定",
             selected: true
           },
           {
             text: "%",
-            value: "%"
+            value: "2",
+            name: "百分比"
           }
         ]
       }
@@ -159,44 +291,56 @@ if (!Math) {
   _easycom_uni_data_select();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
+  return common_vendor.e({
     a: common_vendor.n(`fontcolor${$options.Id % 3} poster`),
     b: common_vendor.t($options.Id),
     c: !$props.editable,
     d: $options.title,
     e: common_vendor.o((...args) => $options.updateBrief && $options.updateBrief(...args)),
     f: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    g: !$props.editable,
-    h: $options.spendtime,
-    i: common_vendor.o((...args) => $options.updatePt && $options.updatePt(...args)),
+    g: common_vendor.t($options.deadline),
+    h: $options.deadline,
+    i: common_vendor.o((...args) => $options.biupdatePt && $options.biupdatePt(...args)),
     j: common_vendor.n(`fontcolor${$options.Id % 3}`),
     k: !$props.editable,
-    l: $props.task.reward,
-    m: common_vendor.o((...args) => $options.updateReward && $options.updateReward(...args)),
-    n: common_vendor.o($options.rewardTypeChange),
-    o: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
-    p: common_vendor.p({
+    l: common_vendor.o((...args) => $options.updateReward && $options.updateReward(...args)),
+    m: $options.reward,
+    n: common_vendor.o(($event) => $options.reward = $event.detail.value),
+    o: common_vendor.o($options.rewardTypeChange),
+    p: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
+    q: common_vendor.p({
       localdata: $data.rewardtype.options,
       clear: false,
+      modelValue: "2",
       placeholder: "类型",
       disabled: !$props.editable,
       modelValue: $data.$rewardTypeValue
     }),
-    q: common_vendor.t($options.taskType),
-    r: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
-    s: !$props.editable,
-    t: $options.branchs,
-    v: $options.branchOrder,
-    w: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    x: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    y: common_vendor.t($options.userName),
+    r: $props.editable
+  }, $props.editable ? {
+    s: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+  } : {}, {
+    t: common_vendor.t($options.taskType),
+    v: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
+    w: !$props.editable,
+    x: $options.branchs,
+    y: $options.branchOrder,
     z: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    A: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    B: common_vendor.t($data.status[$props.task.status]),
-    C: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    D: common_vendor.n(`task${$options.Id % 3}`),
-    E: common_vendor.o((...args) => $options.detail && $options.detail(...args))
-  };
+    A: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
+    B: common_vendor.t($options.userName),
+    C: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    D: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
+    E: common_vendor.t($data.status[$props.task.status]),
+    F: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    G: $data.vis
+  }, $data.vis ? {
+    H: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
+    I: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
+  } : {}, {
+    J: common_vendor.n(`task${$options.Id % 3}`),
+    K: common_vendor.o((...args) => $options.detail && $options.detail(...args)),
+    L: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args))
+  });
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

@@ -59,7 +59,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "5847397a-0-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: false
+          editable: false,
+          mode: "waitfor"
         }),
         c: item.id
       };

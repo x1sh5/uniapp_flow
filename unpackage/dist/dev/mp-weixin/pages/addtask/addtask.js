@@ -9,7 +9,8 @@ const _sfc_main = {
         { text: "单卡", value: 0 },
         { text: "多卡", value: 1 }
       ],
-      defaultT: 0
+      defaultT: 0,
+      mode: ""
     };
   },
   computed: {
@@ -21,21 +22,23 @@ const _sfc_main = {
     editTask(e) {
       console.log(e);
       common_vendor.index.navigateTo({
-        url: "/pages/newTask/newTask?typeid=" + e
+        url: "/pages/newTask/newTask?typeId=" + e
       });
     },
     createTask(e) {
       console.log("createTask", e);
       common_vendor.index.navigateTo({
-        url: "/pages/newTask/newTask?typeid=" + this.selected.id + "&createType=" + this.defaultT
+        url: "/pages/newTask/newTask?typeId=" + this.selected.id + "&createType=" + this.defaultT + "&mode=" + this.mode
       });
     },
     typeChange(e) {
       console.log("typechange", e);
       if (e.detail.value === 1) {
+        this.mode = "mutiple";
         this.$refs.dataSelect.statusDisable(true);
       }
       if (e.detail.value === 0) {
+        this.mode = "single";
         this.$refs.dataSelect.statusDisable(false);
       }
     },

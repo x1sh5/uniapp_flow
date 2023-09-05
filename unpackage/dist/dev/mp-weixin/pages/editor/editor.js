@@ -6,15 +6,16 @@ const _sfc_main = {
     return {
       id: "",
       readOnly: false,
-      formats: {}
+      formats: {},
+      files: []
     };
   },
   onLoad(options) {
     this.id = options.id;
-    // common_vendor.index.loadFontFace({
-    //   family: "Pacifico",
-    //   source: 'url("../../static/Pacifico.ttf")'
-    // });
+    common_vendor.index.loadFontFace({
+      family: "Pacifico",
+      source: 'url("./static/Pacifico.ttf")'
+    });
   },
   mounted() {
     console.log(this.editorCtx);
@@ -30,10 +31,14 @@ const _sfc_main = {
       this.editorCtx.getContents({
         success: (res) => {
           console.log(res);
+          let images = res.delta.ops.filter((item) => item.attributes && item.attributes.alt === "图像");
+          const lastFiles = this.files.filter((itemB) => {
+            return images.some((itemA) => itemA.attributes["data-local"] === itemB.path);
+          });
           const pages = getCurrentPages();
           if (pages.length >= 2) {
-            const newTask = pages[pages.length - 1];
-            newTask.$vm.updateTask(this.id, res);
+            const newTask = pages[pages.length - 2];
+            newTask.updateTask(this.id, { ctx: res, files: lastFiles });
           }
         }
       });
@@ -101,15 +106,24 @@ const _sfc_main = {
     insertImage() {
       common_vendor.index.chooseImage({
         count: 1,
+        sizeType: ["compressed"],
         success: (res) => {
           console.log(res);
-          this.editorCtx.insertImage({
-            src: res.tempFilePaths[0],
-            alt: "图像",
-            success: function() {
-              console.log("insert image success");
-            }
-          });
+          let file = res.tempFiles[0];
+          this.files.push(file);
+          if (file.size > 2097152) {
+            common_vendor.index.showModal({
+              content: "文件大于2Mb"
+            });
+          } else {
+            this.editorCtx.insertImage({
+              src: res.tempFilePaths[0],
+              alt: "图像",
+              success: function() {
+                console.log("insert image success");
+              }
+            });
+          }
         }
       });
     },

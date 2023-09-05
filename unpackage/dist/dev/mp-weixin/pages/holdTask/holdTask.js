@@ -37,6 +37,12 @@ const _sfc_main = {
           }
         });
       });
+    },
+    removeItem(id) {
+      let index = this.$data.$incompletes.findIndex((item) => item.id == id);
+      if (index !== -1) {
+        this.$data.$incompletes.splice(index, 1);
+      }
     }
   },
   computed: {
@@ -47,7 +53,8 @@ const _sfc_main = {
       return this.$data.$completes;
     }
   },
-  onLoad() {
+  onLoad(op) {
+    this.current = parseInt(op.current);
     this.getByStatus(1).then((res) => this.$data.$incompletes = res).catch((err) => console.log(err));
     this.getByStatus(2).then((res) => this.$data.$completes = res).catch((err) => console.log(err));
   }
@@ -78,7 +85,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "1bfcffd0-1-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: false
+          editable: false,
+          mode: "undone"
         }),
         c: item.id
       };
@@ -91,7 +99,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "1bfcffd0-2-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: false
+          editable: false,
+          mode: "done"
         }),
         c: item.id
       };

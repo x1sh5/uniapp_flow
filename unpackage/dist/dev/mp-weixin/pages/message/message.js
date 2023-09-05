@@ -3,20 +3,23 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      chatChannels: [1, 2, 3, 4]
+      //chatChannels:[1,2,3,4],
     };
   },
   methods: {
     send(e) {
       this.messages.push(e);
+    },
+    deleteCc(e) {
+      this.$store.commit("Msgs/delete", e);
+    }
+  },
+  computed: {
+    chatChannels() {
+      return this.$store.state.Msgs.$chatChannels;
     }
   },
   onLoad(e) {
-    this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
-      console.log("receiveMessage", user, message);
-      this.$store.dispatch("receiveMessage", { user, message });
-    });
-    this.$store.dispatch("connect");
   }
 };
 if (!Array) {
@@ -29,16 +32,14 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.f(_ctx.messages, (m, k0, i0) => {
+    a: common_vendor.f($options.chatChannels, (channel, k0, i0) => {
       return {
-        a: common_vendor.t(m.message),
-        b: m.id
-      };
-    }),
-    b: common_vendor.f($data.chatChannels, (c, k0, i0) => {
-      return {
-        a: c,
-        b: "42102b40-0-" + i0
+        a: channel.cid,
+        b: common_vendor.o($options.deleteCc, channel.cid),
+        c: "42102b40-0-" + i0,
+        d: common_vendor.p({
+          cc: channel
+        })
       };
     })
   };

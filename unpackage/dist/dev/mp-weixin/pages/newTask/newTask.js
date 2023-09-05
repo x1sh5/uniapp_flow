@@ -9,22 +9,27 @@ const _sfc_main = {
         "id": 0,
         "branchid": 1,
         "description": "",
-        "finishtime": "0001-01-01T00:00:00",
-        "presumedtime": false,
+        "finishtime": "",
+        "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
         "publishtime": "0001-01-01T00:00:00",
-        "reward": "",
-        "rewardtype": common_Task.RewardType.Fixed,
+        "fixedreward": "",
+        "percentreward": 100,
+        "rewardtype": common_Task.RewardType.Percent,
         "status": common_Task.TaskStatus.WaitForAccept,
         "title": "",
-        "typeid": false,
+        "typeId": false,
         "verify": 0
       }],
-      reffer: ""
+      reffer: "",
+      $mode: ""
     };
   },
   computed: {
     taskTypes() {
       return this.$store.state.taskTypes;
+    },
+    mode() {
+      return this.$data.$mode;
     }
   },
   created(op) {
@@ -34,31 +39,40 @@ const _sfc_main = {
   onLoad(op) {
     console.log("onload");
     let reffer = op.createType;
-    let taskType = op.typeid;
+    let taskType = op.typeId;
+    this.$data.$mode = op.mode;
     console.log("reffer", reffer);
     console.log("taskType", taskType);
-    this.tasks[0].typeid = taskType;
+    this.tasks[0].typeId = taskType;
   },
   methods: {
     backEvent() {
-      common_vendor.index.showModal({
-        content: "返回后以编辑的内容将会消失，是否放弃修改。",
-        success: function(res) {
-          if (res.confirm) {
-            common_vendor.index.navigateBack();
-          } else if (res.cancel) {
-            console.log("用户点击取消");
+      if (this.tasks.length > 0) {
+        common_vendor.index.showModal({
+          content: "返回后以编辑的内容将会消失，是否放弃修改。",
+          success: function(res) {
+            if (res.confirm) {
+              common_vendor.index.navigateBack();
+            } else if (res.cancel) {
+              console.log("用户点击取消");
+            }
           }
-        }
-      });
+        });
+      } else {
+        common_vendor.index.navigateBack();
+      }
     },
     submitEvent() {
+      let results = [];
       for (let item of this.tasks) {
-        this.$refs["id" + item.id][0].publish();
+        let res = this.$refs["id" + item.id][0].publish();
+        results.push(res);
       }
-      common_vendor.index.navigateTo({
-        url: "/pages/publishResult/publishResult"
-      });
+      if (results.every((ele) => Boolean(ele))) {
+        common_vendor.index.navigateTo({
+          url: "/pages/publishResult/publishResult"
+        });
+      }
     },
     createTask(e) {
       console.log(e);
@@ -67,14 +81,15 @@ const _sfc_main = {
         "username": false,
         "branchid": 1,
         "description": "",
-        "finishtime": "0001-01-01T00:00:00",
-        "presumedtime": false,
+        "finishtime": "",
+        "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
         "publishtime": "0001-01-01T00:00:00",
-        "reward": "",
-        "rewardtype": common_Task.RewardType.Fixed,
+        "fixedreward": "",
+        "percentreward": "",
+        "rewardtype": common_Task.RewardType.Percent,
         "status": common_Task.TaskStatus.WaitForAccept,
         "title": "",
-        "typeid": e.item.id,
+        "typeId": e.item.id,
         "verify": 0
       });
     },
@@ -87,6 +102,15 @@ const _sfc_main = {
         this.tasks[index].description = payload.html;
         this.$refs["id" + id][0].updateT(payload);
       }
+    },
+    //发布成功后，移除task
+    afterPublish(id) {
+      let index = this.tasks.findIndex((item) => item.id === parseInt(id));
+      this.tasks.splice(index, 1);
+    },
+    removeTask(id) {
+      let index = this.tasks.findIndex((item) => item.id === parseInt(id));
+      this.tasks.splice(index, 1);
     }
   },
   mounted() {
@@ -109,7 +133,7 @@ if (!Math) {
   (_easycom_uni_nav_bar + _easycom_taskCard + _easycom_uni_fab)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
+  return common_vendor.e({
     a: common_vendor.o($options.backEvent),
     b: common_vendor.o($options.submitEvent),
     c: common_vendor.p({
@@ -126,20 +150,24 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         b: item.id,
         c: "id" + item.id,
-        d: "329834dc-1-" + i0,
-        e: common_vendor.p({
+        d: common_vendor.o(_ctx.afterPulish, item.id),
+        e: common_vendor.o($options.removeTask, item.id),
+        f: "329834dc-1-" + i0,
+        g: common_vendor.p({
           task: item,
           editable: true
         })
       };
     }),
-    e: common_vendor.o($options.createTask),
-    f: common_vendor.p({
+    e: $options.mode == "mutiple"
+  }, $options.mode == "mutiple" ? {
+    f: common_vendor.o($options.createTask),
+    g: common_vendor.p({
       horizontal: "right",
       content: $options.taskTypes,
       showProp: "name"
     })
-  };
+  } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);

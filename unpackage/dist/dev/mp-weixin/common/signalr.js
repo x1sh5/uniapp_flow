@@ -758,8 +758,8 @@ const common_vendor = require("./vendor.js");
       return new SubjectSubscription(this, observer);
     }
   }
-  const DEFAULT_TIMEOUT_IN_MS = 30 * 1e3;
-  const DEFAULT_PING_INTERVAL_IN_MS = 15 * 1e3;
+  const DEFAULT_TIMEOUT_IN_MS = 60 * 1e3;
+  const DEFAULT_PING_INTERVAL_IN_MS = 45 * 1e3;
   exports2.HubConnectionState = void 0;
   (function(HubConnectionState) {
     HubConnectionState["Disconnected"] = "Disconnected";
@@ -2103,6 +2103,7 @@ const common_vendor = require("./vendor.js");
       this._logger = createLogger(options.logger);
       this.baseUrl = this._resolveUrl(url);
       options = options || {};
+      options.UniWebSocket = UniWebSocket.prototype;
       options.logMessageContent = options.logMessageContent === void 0 ? false : options.logMessageContent;
       if (typeof options.withCredentials === "boolean" || options.withCredentials === void 0) {
         options.withCredentials = false;
@@ -2162,7 +2163,7 @@ const common_vendor = require("./vendor.js");
     send(data) {
       if (this._connectionState !== "Connected") {
         common_vendor.index.showToast({
-          title: "网络错误！"
+          title: "�������"
         });
         return Promise.reject(new Error("Cannot send data if the connection is not in the 'Connected' State."));
       }
@@ -2351,7 +2352,7 @@ const common_vendor = require("./vendor.js");
     _constructTransport(transport) {
       switch (transport) {
         case exports2.HttpTransportType.WebSockets:
-          if (!this._options.WebSocket) {
+          if (!this._options.WebSocket && !this._options.UniWebSocket) {
             throw new Error("'WebSocket' is not supported in your environment.");
           }
           return new WebSocketTransport(this._httpClient, this._accessTokenFactory, this._logger, this._options.logMessageContent, this._options.WebSocket, this._options.headers || {});
@@ -2380,7 +2381,7 @@ const common_vendor = require("./vendor.js");
         if (transportMatches(requestedTransport, transport)) {
           const transferFormats = endpoint.transferFormats.map((s) => exports2.TransferFormat[s]);
           if (transferFormats.indexOf(requestedTransferFormat) >= 0) {
-            if (transport === exports2.HttpTransportType.WebSockets && !this._options.WebSocket || transport === exports2.HttpTransportType.ServerSentEvents && !this._options.EventSource) {
+            if (transport === exports2.HttpTransportType.WebSockets && !this._options.WebSocket || !this._options.UniWebSocket || transport === exports2.HttpTransportType.ServerSentEvents && !this._options.EventSource) {
               this._logger.log(exports2.LogLevel.Debug, `Skipping transport '${exports2.HttpTransportType[transport]}' because it is not supported in your environment.'`);
               return new UnsupportedTransportError(`'${exports2.HttpTransportType[transport]}' is not supported in your environment.`, transport);
             } else {

@@ -3,7 +3,9 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      title: "Hello"
+      title: "Hello",
+      currentTypeId: "",
+      taskTypeName: "全部"
     };
   },
   onLoad() {
@@ -12,11 +14,10 @@ const _sfc_main = {
   computed: {
     tasks: {
       get() {
-        console.log("index tasks:", this.$store.getters.getTasks);
-        return this.$store.getters.getTasks;
+        return this.$store.getters.getTasks(this.taskTypeName);
       },
       set(value) {
-        this.$store.commit("setTasks", value);
+        this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: value });
       }
     },
     taskTypes() {
@@ -42,21 +43,25 @@ const _sfc_main = {
       });
     },
     //requestWithCookie
-    searchByTpe(id) {
+    searchByTpe(id, name) {
+      this.currentTypeId = id;
+      this.taskTypeName = name;
       let url = this.$store.state.apiBaseUrl + "/api/Assignment/type/" + id;
-      common_vendor.index.requestWithCookie({
-        url,
-        success: (res) => {
-          console.log(res);
-          if (res.statusCode === 200) {
-            this.tasks = res.data.$values;
-          } else {
-            common_vendor.index.showToast({
-              title: "网络出错了！"
-            });
+      if (this.$store.state.tasks.get(this.taskTypeName).length === 0) {
+        common_vendor.index.requestWithCookie({
+          url,
+          success: (res) => {
+            console.log(res);
+            if (res.statusCode === 200) {
+              this.tasks = res.data.$values;
+            } else {
+              common_vendor.index.showToast({
+                title: "网络出错了！"
+              });
+            }
           }
-        }
-      });
+        });
+      }
     },
     inputEvent(e) {
       console.log(e);
@@ -71,21 +76,19 @@ const _sfc_main = {
   //上拉更新数据
   onReachBottom() {
     let maxIndex = this.maxIndex;
-    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex }).then((data) => {
-      this.$store.commit("updateTasks", data["$values"]);
+    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, typeId: this.currentTypeId }).then((data) => {
+      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data: data["$values"] });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
   },
   //下拉刷新页面
   onPullDownRefresh() {
-    if (!this.$store.state.tasks.status) {
-      this.$store.dispatch("fetchTasks", { count: 10, offset: 0 }).then((data) => {
-        this.$store.commit("setTasks", data["$values"]);
-      }).catch((error) => {
-        console.error("获取数据失败：", error);
-      });
-    }
+    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: this.currentTypeId }).then((data) => {
+      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: data["$values"] });
+    }).catch((error) => {
+      console.error("获取数据失败：", error);
+    });
   }
 };
 if (!Array) {
@@ -111,7 +114,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return {
         a: common_vendor.t(item.name),
         b: item.id,
-        c: common_vendor.o(($event) => $options.searchByTpe(item.id), item.id)
+        c: common_vendor.o(($event) => $options.searchByTpe(item.id, item.name), item.id)
       };
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
@@ -119,7 +122,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         a: "4d84c736-1-" + i0,
         b: common_vendor.p({
           task: item,
-          editable: false
+          editable: false,
+          mode: "waitfor"
         }),
         c: item.id
       };

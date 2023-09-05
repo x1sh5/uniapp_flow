@@ -1,27 +1,31 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
+const store_messages = require("./messages.js");
 const signalR = require("../common/signalr.js");
-const baseUrl = "https://localhost:7221";
+const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,
     $userName: "未登录",
     branchs: [],
+    currentTask: {},
     taskTypes: [],
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
-    tasks: {
-      status: false,
-      values: []
-    },
-    workSocket: new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build(),
-    messages: [],
+    tasks: /* @__PURE__ */ new Map(),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub",{skipNegotiation:true,transport:1}).configureLogging(signalR.LogLevel.Trace).build()),
+    messages: /* @__PURE__ */ new Map(),
+    //对话消息
     $currentContent: {},
     //当前正在编辑的task.description
     $publishResults: []
+    //发布结果
   },
   mutations: {
+    setCurrentTask(state2, payload) {
+      state2.currentTask = payload;
+    },
     updateBranchs(state2, payload) {
       console.log("branchs:", payload);
       state2.branchs = common_vendor.toRaw(payload);
@@ -29,23 +33,24 @@ const store = common_vendor.createStore({
     updateTaskTypes(state2, payload) {
       console.log("taskTypes:", payload);
       state2.taskTypes = common_vendor.toRaw(payload);
+      state2.tasks.set("全部", []);
+      for (let t of state2.taskTypes) {
+        state2.tasks.set(t.name, []);
+      }
     },
     setTasks(state2, payload) {
       console.log("tasks:", payload);
-      state2.tasks.status = true;
-      state2.tasks.values = payload;
+      let t = payload.taskTypeName;
+      state2.tasks.set(t, payload.data);
     },
     updateTasks(state2, payload) {
       console.log("tasks:", payload);
-      state2.tasks.status = true;
-      state2.tasks.values = state2.tasks.values.concat(payload);
+      let t = payload.taskTypeName;
+      state2.tasks.get(t).push(...payload.data);
     },
     changeLoginState(state2) {
       state2.$hasLogin = !state2.$hasLogin;
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, state2.$hasLogin);
-    },
-    updateMessage(state2, payload) {
-      state2.messages.push(payload);
     },
     setUserName(state2, payload) {
       state2.$userName = payload;
@@ -98,19 +103,21 @@ const store = common_vendor.createStore({
       } else {
         console.error("Invalid input");
       }
+    },
+    clearStorageInfo(state2) {
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._hasLogin);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._userName);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.__cookie_store__);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._task_content);
     }
   },
   getters: {
-    getTasks(state2) {
-      if (state2.tasks.status) {
-        return state2.tasks.values;
-      }
+    getTasks: (state2) => (taskTypeName) => {
+      return state2.tasks.get(taskTypeName);
     },
     getTaskById: (state2) => (id) => {
-      if (state2.tasks.status) {
-        let i = state2.tasks.values.find((item) => item.id === parseInt(id));
-        return i;
-      }
+      let i = state2.tasks.get("全部").find((item) => item.id === parseInt(id));
+      return i;
     },
     getBranch: (state2) => (branchid) => {
       let i = state2.branchs.find((item) => item.id === parseInt(branchid));
@@ -120,10 +127,10 @@ const store = common_vendor.createStore({
       }
       return i["name"];
     },
-    getTaskType: (state2) => (typeid) => {
-      console.log("typeid is ", typeid);
+    getTaskType: (state2) => (typeId) => {
+      console.log("typeId is ", typeId);
       console.log("taskTypes are ", state2.taskTypes);
-      let i = state2.taskTypes.find((item) => item.id === parseInt(typeid));
+      let i = state2.taskTypes.find((item) => item.id === parseInt(typeId));
       console.log("taskType is: ", i);
       if (i === void 0) {
         return "类型";
@@ -137,8 +144,8 @@ const store = common_vendor.createStore({
       }
       return i;
     },
-    getMessages: (state2) => {
-      return state2.messages;
+    getMessages: (state2) => (toUserId) => {
+      return state2.messages.get(parseInt(toUserId));
     },
     currentEditContent(state2) {
       return state2.$currentContent;
@@ -194,11 +201,14 @@ const store = common_vendor.createStore({
         console.error("fetch updateTaskTypes error:", error);
       }
     },
-    fetchTasks({ commit, state: state2 }, { count, offset }) {
+    fetchTasks({ commit, state: state2 }, { count, offset, typeId }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.requestWithCookie({
-          url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset,
+          url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset + "&typeId=" + typeId,
           method: "GET",
+          header: {
+            "Access-Control-Allow-Origin": "*"
+          },
           success: (res) => {
             console.log(res);
             let data = res.data;
@@ -228,14 +238,27 @@ const store = common_vendor.createStore({
         console.error("fetch tasks error:", error);
       }
     },
-    async sendMessage({ commit, state: state2 }, { user, message }) {
-      await state2.workSocket.invoke("SendMessage", [user, message]);
-      console.log("sendMessage");
-      state2.messages.push(message);
+    async sendMsg({ commit, state: state2 }, { user, message }) {
+      await state2.workSocket.invoke("SendToUser", user, message);
+      console.log("sendMsg");
+      let userId = parseInt(user);
+      let chat = state2.messages.get(userId);
+      if (typeof chat === "undefined") {
+        state2.messages.set(userId, new Array());
+      }
+      state2.messages.get(userId).push({ isLeft: false, content: message });
     },
-    receiveMessage({ commit, state: state2 }, { user, message }) {
-      console.log("receiveMessage");
-      state2.messages.push(message);
+    receiveMsg({ commit, state: state2, dispatch }, { user, message }) {
+      console.log("receiveMsg");
+      let userId = parseInt(user);
+      message.cid = userId;
+      let chat = state2.messages.get(userId);
+      if (typeof chat === "undefined") {
+        state2.messages.set(userId, new Array());
+      }
+      message.isLeft = true;
+      state2.messages.get(userId).push(message);
+      dispatch("Msgs/updateAsync", message);
     },
     async connect({ state: state2, actions }) {
       async function reconnect() {
@@ -248,7 +271,26 @@ const store = common_vendor.createStore({
         }
       }
       await reconnect();
+    },
+    genHistory({ state: state2 }, id) {
+      let qurl = state2.apiBaseUrl + "/api/History";
+      common_vendor.index.uploadFileWithCookie({
+        url: qurl,
+        filePath: "123",
+        // 随便填，不为空即可  
+        name: "123",
+        // 随便填，不为空即可  
+        //header: header, // 可以加access_token等  
+        formData: { asgid: id },
+        // 接口参数，json格式，底层自动转为FormData的格式数据  
+        success: (res) => {
+          console.log(res);
+        }
+      });
     }
+  },
+  modules: {
+    Msgs: store_messages.Messages
   }
 });
 exports.store = store;

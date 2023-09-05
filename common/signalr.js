@@ -939,8 +939,8 @@
 
     // Licensed to the .NET Foundation under one or more agreements.
     // The .NET Foundation licenses this file to you under the MIT license.
-    const DEFAULT_TIMEOUT_IN_MS = 30 * 1000;
-    const DEFAULT_PING_INTERVAL_IN_MS = 15 * 1000;
+    const DEFAULT_TIMEOUT_IN_MS = 60 * 1000;
+    const DEFAULT_PING_INTERVAL_IN_MS = 45 * 1000;
     /** Describes the current state of the {@link HubConnection} to the server. */
     exports.HubConnectionState = void 0;
     (function (HubConnectionState) {
@@ -2522,6 +2522,7 @@
             this._logger = createLogger(options.logger);
             this.baseUrl = this._resolveUrl(url);
             options = options || {};
+            options.UniWebSocket = UniWebSocket.prototype;
             options.logMessageContent = options.logMessageContent === undefined ? false : options.logMessageContent;
             if (typeof options.withCredentials === "boolean" || options.withCredentials === undefined) {
                 options.withCredentials = false; //options.withCredentials === undefined ? true : options.withCredentials;
@@ -2589,7 +2590,7 @@
         send(data) {
             if (this._connectionState !== "Connected" /* ConnectionState.Connected */) {
                 uni.showToast({
-                    title: "网络错误！"
+                    title: "�������"
                 });
                 return Promise.reject(new Error("Cannot send data if the connection is not in the 'Connected' State."));
             }
@@ -2816,7 +2817,7 @@
         _constructTransport(transport) {
             switch (transport) {
                 case exports.HttpTransportType.WebSockets:
-                    if (!this._options.WebSocket) {
+                    if (!this._options.WebSocket || !this._options.UniWebSocket) {
                         throw new Error("'WebSocket' is not supported in your environment.");
                     }
                     return new WebSocketTransport(this._httpClient, this._accessTokenFactory, this._logger, this._options.logMessageContent, this._options.WebSocket, this._options.headers || {});
@@ -2846,7 +2847,7 @@
                 if (transportMatches(requestedTransport, transport)) {
                     const transferFormats = endpoint.transferFormats.map((s) => exports.TransferFormat[s]);
                     if (transferFormats.indexOf(requestedTransferFormat) >= 0) {
-                        if ((transport === exports.HttpTransportType.WebSockets && !this._options.WebSocket) ||
+                        if ((transport === exports.HttpTransportType.WebSockets && !this._options.WebSocket || !this._options.UniWebSocket) ||
                             (transport === exports.HttpTransportType.ServerSentEvents && !this._options.EventSource)) {
                             this._logger.log(exports.LogLevel.Debug, `Skipping transport '${exports.HttpTransportType[transport]}' because it is not supported in your environment.'`);
                             return new UnsupportedTransportError(`'${exports.HttpTransportType[transport]}' is not supported in your environment.`, transport);

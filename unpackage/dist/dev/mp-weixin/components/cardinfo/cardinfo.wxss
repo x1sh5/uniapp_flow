@@ -16,6 +16,39 @@
   font-size: large;
   font-style: italic;
 }
+.popupbutton {
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  line-height: 24px;
+  right: 5px;
+  top: 10px;
+  margin: 0px auto;
+  font-size: 20px;
+  word-wrap: break-word;
+  -webkit-writing-mode: vertical-lr;
+          writing-mode: vertical-lr;
+  color: red;
+}
+.popup {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+.delbtn {
+  position: absolute;
+  left: 40%;
+  top: 40%;
+}
 .example1 {
   width: 200px;
   height: 300px;
@@ -130,6 +163,7 @@
   border-bottom: 1px dashed gray;
   flex-basis: 60rpx;
   text-align: center;
+  margin-top: 10px;
 }
 .margin-right10 {
   margin-right: 10px;
@@ -186,6 +220,7 @@
   width: 60%;
   text-align: center;
   border-bottom: 1px dashed gray;
+  margin-top: 10px;
 }
 .brief {
   color: black;

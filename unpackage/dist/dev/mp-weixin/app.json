@@ -18,7 +18,10 @@
     "pages/taskDetail/taskDetail",
     "pages/test/test",
     "pages/searchResult/searchResult",
-    "pages/publishResult/publishResult"
+    "pages/publishResult/publishResult",
+    "pages/settings/settings",
+    "pages/myTaskDetail/myTaskDetail",
+    "pages/editTask/editTask"
   ],
   "window": {
     "navigationBarTextStyle": "black",

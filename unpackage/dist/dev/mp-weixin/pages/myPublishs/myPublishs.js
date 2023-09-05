@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_Task = require("../../common/Task.js");
 const _sfc_main = {
   data() {
     return {
@@ -12,7 +13,26 @@ const _sfc_main = {
       return this.$data.$publishs;
     }
   },
-  methods: {},
+  methods: {
+    mode(item) {
+      if (item.status === common_Task.TaskStatus.WaitForAccept)
+        return "waitfor";
+      if (item.status === common_Task.TaskStatus.Unfinished)
+        return "undone";
+      return "done";
+    },
+    toDetails(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/myTaskDetail/myTaskDetail"
+      });
+    },
+    removeById(id) {
+      let index = this.publishs.findIndex((item) => item.id == id);
+      if (index != -1) {
+        this.publishs.splice(index, 1);
+      }
+    }
+  },
   onLoad() {
     if (!this.hasPushlishs) {
       console.log("get user task");
@@ -38,12 +58,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
-        a: "e0884de0-0-" + i0,
-        b: common_vendor.p({
+        a: common_vendor.o($options.toDetails, item.id),
+        b: "e0884de0-0-" + i0,
+        c: common_vendor.p({
           task: item,
-          editable: false
+          editable: false,
+          mode: $options.mode(item)
         }),
-        c: item.id
+        d: item.id
       };
     })
   };

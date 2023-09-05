@@ -76,7 +76,7 @@
 			</view>
 			
 			
-			<view  :style="{visibility:vis}" class="popup" @click="exitDel">
+			<view  v-if="vis" class="popup" @click="exitDel">
 				<button class="delbtn" @click="removeTask">删除</button>
 			</view>
 		
@@ -350,11 +350,13 @@ import { RewardType } from '../../common/Task'
 			},
 			showPopup(e){
 				console.log("click show");
-				this.vis = 'visible';
+				//this.vis = 'visible';
+				this.vis = true
 			},
 			exitDel(e){
 				console.log("exit");
-				this.vis = 'hidden';
+				//this.vis = 'hidden';
+				this.vis = false
 			}
 			
 		},
@@ -363,7 +365,7 @@ import { RewardType } from '../../common/Task'
 				// 预计时间
 				//spendtime:"",
 				//tasktype:"类型",
-				vis: 'hidden',
+				vis: false,
 				status:["代接","待完成","完成"],
 				branchIndex:false,
 				$rewardTypeValue: 0,

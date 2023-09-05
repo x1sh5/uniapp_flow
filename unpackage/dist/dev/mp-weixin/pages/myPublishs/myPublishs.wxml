@@ -1,1 +1,1 @@
-<view><view wx:for="{{a}}" wx:for-item="item" wx:key="c" style="margin-top:5px"><cardinfo wx:if="{{item.b}}" style="margin-top:5px" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"/></view></view>
+<view><view wx:for="{{a}}" wx:for-item="item" wx:key="d" style="margin-top:5px"><cardinfo wx:if="{{item.c}}" bindclick="{{item.a}}" style="margin-top:5px" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"/></view></view>

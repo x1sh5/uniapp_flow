@@ -1,5 +1,5 @@
 import {createStore} from "vuex";
-import {toRaw,nextTick} from "vue";
+import {toRaw,nextTick, markRaw} from "vue";
 import { StorageKeys } from "../common/storageKeys.js";
 //import { Publish } from "./publish.js"
 import { Messages } from "./messages.js"
@@ -18,10 +18,10 @@ const store = createStore({
 		taskTypes:[],
 		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
 		tasks:new Map(),
-		workSocket : new signalR.HubConnectionBuilder()
+		workSocket : markRaw( new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
         .configureLogging(signalR.LogLevel.Trace)
-        .build(),
+        .build() ),
 		messages:new Map(), //对话消息
 		$currentContent:{}, //当前正在编辑的task.description
 		$publishResults:[] //发布结果
