@@ -581,7 +581,7 @@
             }
             let urlinfo = (request.url || "").split("/");
             let o = urlinfo[2].split(":")[0];
-            request.url = request.url + "&accesstoken=" + uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o).value;
+            request.url = request.url + "&" + uni.getRequestQueries(o, "/");
             let response;
             try {
                 response = await this._fetchType(request.url, {
@@ -2141,9 +2141,9 @@
             //�Ķ�
             let urlinfo = (url || "").split("/");
             let o = urlinfo[2].split(":")[0];
-            let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);
+            let cookiequry = uni.getRequestQueries(o, "/");
             //�Ķ�
-            url = url + "&accesstoken=" + cookiequry.value;
+            url = url + "&" + cookiequry;
             this._url = url;
             if (this._accessToken) {
                 url += (url.indexOf("?") < 0 ? "?" : "&") + `access_token=${encodeURIComponent(this._accessToken)}`;
@@ -2227,46 +2227,10 @@
     }
 
     class UniWebSocket {
-        /**
-         * Returns a string that indicates how binary data from the WebSocket object is exposed to scripts:
-         *
-         * Can be set, to change how binary data is returned. The default is "blob".
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType)
-         */
-        //private binaryType: BinaryType;
-        /**
-         * Returns the number of bytes of application data (UTF-8 text and binary data) that have been queued using send() but not yet been transmitted to the network.
-         *
-         * If the WebSocket connection is closed, this attribute's value will only increase with each call to the send() method. (The number does not reset to zero once the connection closes.)
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/bufferedAmount)
-         */
-        //private readonly bufferedAmount: number;
-        /**
-         * Returns the extensions selected by the server, if any.
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/extensions)
-         */
-        //private readonly extensions: string;
-        /**
-         * Returns the subprotocol selected by the server, if any. It can be used in conjunction with the array form of the constructor's second argument to perform subprotocol negotiation.
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/protocol)
-         */
-        //private readonly protocol: string;
-        /**
-         * Returns the state of the WebSocket object's connection. It can have the values described below.
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/readyState)
-         */
         get readyState() {
             return this._socketTask.readyState;
         }
-        get url() {
-            return this._url;
-        }
-        constructor(url, socket) {
+        constructor(url, protocols, socket) {
             this.CONNECTING = 0;
             this.OPEN = 1;
             this.CLOSING = 2;
@@ -2278,14 +2242,12 @@
             this._url = url;
             this._socketTask = socket;
         }
+        url() {
+            return this._url;
+        }
         close(code, reason) {
             this._socketTask.close({ code: code, reason: reason });
         }
-        /**
-         * Transmits data using the WebSocket connection. data can be a string, a Blob, an ArrayBuffer, or an ArrayBufferView.
-         *
-         * [MDN Reference](https://developer.mozilla.org/docs/Web/API/WebSocket/send)
-         */
         send(data) {
             this._socketTask.send({ data: data });
         }
@@ -2319,10 +2281,10 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);
+                    let cookiequry = uni.getRequestQueries(o, "/");
                     url = url.replace(/^http/, "ws");
                     //改动
-                    url = url + "&accesstoken=" + cookiequry.value;
+                    url = url + "&" + cookiequry;
                     let opened = false;
                     let webSocket;
                     let options = {
@@ -2333,7 +2295,7 @@
                     webSocket = uni.connectSocket(options);
                     webSocket.onOpen((res) => {
                         this._logger.log(exports.LogLevel.Information, `SocketTask connected to ${url}.`);
-                        this._webSocket = new UniWebSocket(url, webSocket);
+                        this._webSocket = new UniWebSocket(url, undefined, webSocket);
                         opened = true;
                         resolve();
                     });
@@ -2378,10 +2340,10 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);;
+                    let cookiequry = uni.getRequestQueries(o, "/");
                     url = url.replace(/^http/, "ws");
                     //改动
-                    url = url + "&accesstoken=" + cookiequry.value;
+                    url = url + "&" + cookiequry;
                     let webSocket;
                     const cookies = this._httpClient.getCookieString(url);
                     let opened = false;
@@ -2466,7 +2428,7 @@
             }
         }
         send(data) {
-            if (this._webSocket && this._webSocket.readyState === this._webSocketConstructor.OPEN) {
+            if (this._webSocket && this._webSocket.readyState === 1) {
                 this._logger.log(exports.LogLevel.Trace, `(WebSockets transport) sending data. ${getDataDetail(data, this._logMessageContent)}.`);
                 this._webSocket.send(data);
                 return Promise.resolve();
@@ -2650,9 +2612,6 @@
             // Store the original base url and the access token factory since they may change
             // as part of negotiating
             let url = this.baseUrl;
-			// let urlinfo = url.split("/");
-			// let o = urlinfo[2].split(":")[0];
-			// url = url + "&accesstoken=" + uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o).value;
             this._accessTokenFactory = this._options.accessTokenFactory;
             this._httpClient._accessTokenFactory = this._accessTokenFactory;
             try {

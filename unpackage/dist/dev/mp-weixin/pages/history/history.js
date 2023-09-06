@@ -56,7 +56,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($data.$historys, (item, k0, i0) => {
       return {
-        a: "5847397a-0-" + i0,
+        a: "4801f8e0-0-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -67,5 +67,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/history/history.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/history/history.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -7,3 +7,7 @@
 	line36 newTask.$vm.updateTask(this.id, res);
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
+	
+	4. 修改commen/signalr.js 
+		添加const common_weappCookie = require("./weapp-cookie.js");
+		替换common_vendor.index.getRequestQueries为common_weappCookie.cookieManager.default.getRequestQueries
