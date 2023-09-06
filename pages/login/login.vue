@@ -10,6 +10,7 @@
 </template>
 
 <script>
+	import { cookieManager } from "../../common/weapp-cookie.js"
 	export default {
 		data() {
 			return {
@@ -29,8 +30,8 @@
 						console.log(res);
 						console.log(that.$store);
 						let domain = url.split("/")[2].split(":")[0];
-						uni.setResponseCookies(res.data.accessToken,domain);
-						uni.setResponseCookies(res.data.refreshToken,domain);
+						cookieManager.default.setResponseCookies(res.data.accessToken,domain);
+						cookieManager.default.setResponseCookies(res.data.refreshToken,domain);
 						that.$store.commit("changeLoginState");
 						that.$store.commit("setUserName", res.data.userName);
 						// uni.navigateBack({

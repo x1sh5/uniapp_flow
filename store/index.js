@@ -226,9 +226,6 @@ const store = createStore({
 				uni.requestWithCookie({
 				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeId="+typeId ,
 				  method: 'GET',
-				  header:{
-					  'Access-Control-Allow-Origin': '*'
-				  },
 				  success:(res)=>{
 					  console.log(res)
 					  let data = res.data

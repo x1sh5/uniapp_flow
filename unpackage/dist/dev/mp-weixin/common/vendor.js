@@ -351,9 +351,9 @@ E$1.prototype = {
     return this;
   },
   once: function(name, callback, ctx) {
-    var self2 = this;
+    var self = this;
     function listener() {
-      self2.off(name, listener);
+      self.off(name, listener);
       callback.apply(ctx, arguments);
     }
     listener._ = callback;
@@ -396,7 +396,7 @@ class BaseFormatter {
     }
     let tokens = this._caches[message];
     if (!tokens) {
-      tokens = parse(message, delimiters);
+      tokens = parse$1(message, delimiters);
       this._caches[message] = tokens;
     }
     return compile$1(tokens, values);
@@ -404,7 +404,7 @@ class BaseFormatter {
 }
 const RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
 const RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
-function parse(format, [startDelimiter, endDelimiter]) {
+function parse$1(format, [startDelimiter, endDelimiter]) {
   const tokens = [];
   let position = 0;
   let text = "";
@@ -2795,13 +2795,13 @@ class ComputedRefImpl {
     ] = isReadonly2;
   }
   get value() {
-    const self2 = toRaw(this);
-    trackRefValue(self2);
-    if (self2._dirty || !self2._cacheable) {
-      self2._dirty = false;
-      self2._value = self2.effect.run();
+    const self = toRaw(this);
+    trackRefValue(self);
+    if (self._dirty || !self._cacheable) {
+      self._dirty = false;
+      self._value = self.effect.run();
     }
-    return self2._value;
+    return self._value;
   }
   set value(newValue) {
     this._setter(newValue);
@@ -7076,354 +7076,176 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
-var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
-var weappCookie_umdExports = {};
-var weappCookie_umd = {
+exports.setCookieExports = {};
+var setCookie = {
   get exports() {
-    return weappCookie_umdExports;
+    return exports.setCookieExports;
   },
   set exports(v2) {
-    weappCookie_umdExports = v2;
+    exports.setCookieExports = v2;
   }
 };
-(function(module2, exports2) {
-  (function(d2, f2) {
-    module2.exports = f2();
-  })(
-    commonjsGlobal,
-    function() {
-      var d2 = { exports: {} }, f2 = { decodeValues: true, map: false, silent: false };
-      function m2(a2) {
-        return typeof a2 == "string" && !!a2.trim();
-      }
-      function g2(a2, e2) {
-        var t2 = a2.split(";").filter(m2), r2 = t2.shift().split("="), s2 = r2.shift(), i2 = r2.join("=");
-        e2 = e2 ? Object.assign({}, f2, e2) : f2;
-        try {
-          i2 = e2.decodeValues ? decodeURIComponent(i2) : i2;
-        } catch (l2) {
-          console.error("set-cookie-parser encountered an error while decoding a cookie with value '" + i2 + "'. Set options.decodeValues to false to disable this feature.", l2);
-        }
-        var o2 = { name: s2, value: i2 };
-        return t2.forEach(function(l2) {
-          var h2 = l2.split("="), c2 = h2.shift().trimLeft().toLowerCase(), u2 = h2.join("=");
-          c2 === "expires" ? o2.expires = new Date(u2) : c2 === "max-age" ? o2.maxAge = parseInt(u2, 10) : c2 === "secure" ? o2.secure = true : c2 === "httponly" ? o2.httpOnly = true : c2 === "samesite" ? o2.sameSite = u2 : o2[c2] = u2;
-        }), o2;
-      }
-      function v2(a2, e2) {
-        if (e2 = e2 ? Object.assign({}, f2, e2) : f2, !a2)
-          return e2.map ? {} : [];
-        if (a2.headers && a2.headers["set-cookie"])
-          a2 = a2.headers["set-cookie"];
-        else if (a2.headers) {
-          var t2 = a2.headers[Object.keys(a2.headers).find(function(s2) {
-            return s2.toLowerCase() === "set-cookie";
-          })];
-          !t2 && a2.headers.cookie && !e2.silent && console.warn("Warning: set-cookie-parser appears to have been called on a request object. It is designed to parse Set-Cookie headers from responses, not Cookie headers from requests. Set the option {silent: true} to suppress this warning."), a2 = t2;
-        }
-        if (Array.isArray(a2) || (a2 = [a2]), e2 = e2 ? Object.assign({}, f2, e2) : f2, e2.map) {
-          var r2 = {};
-          return a2.filter(m2).reduce(function(s2, i2) {
-            var o2 = g2(i2, e2);
-            return s2[o2.name] = o2, s2;
-          }, r2);
-        } else
-          return a2.filter(m2).map(function(s2) {
-            return g2(s2, e2);
-          });
-      }
-      function C(a2) {
-        if (Array.isArray(a2))
-          return a2;
-        if (typeof a2 != "string")
-          return [];
-        var e2 = [], t2 = 0, r2, s2, i2, o2, l2;
-        function h2() {
-          for (; t2 < a2.length && /\s/.test(a2.charAt(t2)); )
-            t2 += 1;
-          return t2 < a2.length;
-        }
-        function c2() {
-          return s2 = a2.charAt(t2), s2 !== "=" && s2 !== ";" && s2 !== ",";
-        }
-        for (; t2 < a2.length; ) {
-          for (r2 = t2, l2 = false; h2(); )
-            if (s2 = a2.charAt(t2), s2 === ",") {
-              for (i2 = t2, t2 += 1, h2(), o2 = t2; t2 < a2.length && c2(); )
-                t2 += 1;
-              t2 < a2.length && a2.charAt(t2) === "=" ? (l2 = true, t2 = o2, e2.push(a2.substring(r2, i2)), r2 = t2) : t2 = i2 + 1;
-            } else
-              t2 += 1;
-          (!l2 || t2 >= a2.length) && e2.push(a2.substring(r2, a2.length));
-        }
-        return e2;
-      }
-      d2.exports = v2, d2.exports.parse = v2, d2.exports.parseString = g2, d2.exports.splitCookiesString = C;
-      var y2 = d2.exports;
-      class x2 {
-        getCookieScopeDomain(e2 = "") {
-          if (!e2)
-            return [];
-          e2 = e2.replace(/^\.+/gi, "");
-          let t2 = e2.split(".").map((r2) => [".", e2.slice(e2.indexOf(r2))].join(""));
-          return [e2].concat(t2);
-        }
-        normalizeDomain(e2 = "") {
-          return e2.replace(/^(\.*)?(?=\S)/gi, ".");
-        }
-      }
-      var k2 = new x2();
-      class _2 {
-        constructor(e2) {
-          this.name = e2.name || "", this.value = e2.value || "", this.domain = e2.domain || "", this.path = e2.path || "/", this.expires = e2.expires ? new Date(e2.expires) : null, this.maxAge = e2.maxAge !== void 0 && e2.maxAge !== null ? parseInt(e2.maxAge) : null, this.httpOnly = !!e2.httpOnly, this.dateTime = e2.dateTime ? new Date(e2.dateTime) : /* @__PURE__ */ new Date();
-        }
-        set(e2 = "") {
-          var t2 = y2.parse(e2, { decodeValues: false })[0];
-          return t2 && (Object.assign(this, t2), this.dateTime = /* @__PURE__ */ new Date()), this;
-        }
-        merge(e2) {
-          return Object.assign(this, e2);
-        }
-        isExpired() {
-          return this.maxAge === 0 ? true : this.maxAge > 0 ? (Date.now() - this.dateTime.getTime()) / 1e3 > this.maxAge : !!(this.expires && this.expires < /* @__PURE__ */ new Date());
-        }
-        isPersistence() {
-          return this.maxAge ? this.maxAge > 0 : true;
-        }
-        sInDomain(e2) {
-          return k2.getCookieScopeDomain(e2).indexOf(this.domain) >= 0;
-        }
-        isInPath(e2) {
-          return e2.indexOf(this.path) === 0 || this.path.replace(/\/$/, "") === e2;
-        }
-        toString() {
-          return [this.name, this.value].join("=");
-        }
-      }
-      function A2() {
-        return typeof my != "undefined" ? (my.platform = "my", my) : typeof tt != "undefined" ? (tt.platform = "tt", tt) : typeof swan != "undefined" ? (swan.platform = "swan", swan) : typeof qq != "undefined" ? (qq.platform = "qq", qq) : typeof wx$1 != "undefined" ? (wx$1.platform = typeof window != "undefined" && typeof location != "undefined" ? "h5" : "wx", wx$1) : { platform: "none" };
-      }
-      var n2 = A2();
-      class S2 {
-        getItem(e2) {
-          return n2.platform === "my" ? n2.getStorageSync({ key: e2 }).data : n2.getStorageSync(e2);
-        }
-        setItem(e2, t2) {
-          return n2.platform === "my" ? n2.setStorageSync({ key: e2, data: t2 }) : n2.setStorageSync(e2, t2);
-        }
-      }
-      var w2 = new S2(n2);
-      class b2 {
-        constructor() {
-          this.__storageKey = "__cookie_store__", this.__cookiesMap = this.__readFromStorage() || /* @__PURE__ */ new Map();
-        }
-        has(e2, t2, r2) {
-          return this.getCookie(e2, t2, r2) !== void 0;
-        }
-        get(e2 = "", t2 = "", r2 = "/") {
-          let s2 = this.getCookie(e2, t2, r2);
-          return s2 ? s2.value : void 0;
-        }
-        set(e2 = "", t2 = "", r2 = {}) {
-          let s2 = r2.domain;
-          if (!s2 || !e2)
-            throw new Error("name 和 options.domain 值不正确！");
-          let i2 = new _2(Object.assign(r2, { name: e2, value: t2 })), o2 = this.__cookiesMap.get(s2) || /* @__PURE__ */ new Map();
-          return o2.set(e2, i2), this.__cookiesMap.set(s2, o2), this.__saveToStorage(), i2;
-        }
-        dir() {
-          let e2 = {};
-          for (let t2 of this.__cookiesMap.keys())
-            e2[t2] = this.getCookies(t2);
-          return e2;
-        }
-        remove(e2 = "", t2 = "") {
-          if (t2) {
-            let r2 = this.__cookiesMap.get(t2);
-            r2 && r2.delete(e2), r2 = this.__cookiesMap.get(k2.normalizeDomain(t2)), r2 && r2.delete(e2);
-          } else
-            for (let r2 of this.__cookiesMap.values())
-              r2.delete(e2);
-          return this.__saveToStorage(), true;
-        }
-        getCookie(e2 = "", t2 = "", r2 = "/") {
-          let s2, i2 = k2.getCookieScopeDomain(t2);
-          for (let [o2, l2] of this.__cookiesMap.entries())
-            if (!(t2 && i2.indexOf(o2) < 0)) {
-              if (s2 = l2.get(e2), s2 && s2.isInPath(r2) && !s2.isExpired())
-                break;
-              s2 = void 0;
-            }
-          return s2;
-        }
-        getCookies(e2, t2) {
-          let r2 = {};
-          return this.getCookiesArray(e2, t2).forEach((s2) => {
-            r2[s2.name] = s2.value;
-          }), r2;
-        }
-        getCookiesArray(e2 = "", t2 = "/") {
-          let r2 = [], s2 = k2.getCookieScopeDomain(e2);
-          for (let [i2, o2] of this.__cookiesMap.entries())
-            if (!(e2 && s2.indexOf(i2) < 0))
-              for (let l2 of o2.values())
-                l2.isInPath(t2) && !l2.isExpired() && r2.push(l2);
-          return r2;
-        }
-        setCookiesArray(e2 = []) {
-          return this.__cookiesMap = this.__cookiesMap || /* @__PURE__ */ new Map(), e2.forEach((t2) => {
-            let r2 = this.__cookiesMap.get(t2.domain);
-            r2 || (r2 = /* @__PURE__ */ new Map(), this.__cookiesMap.set(t2.domain, r2)), r2.set(t2.name, t2);
-          }), this.__saveToStorage(), this.__cookiesMap;
-        }
-        clearCookies(e2) {
-          if (e2) {
-            let t2 = this.__cookiesMap.get(e2);
-            t2 && t2.clear();
-          } else
-            this.__cookiesMap.clear();
-          return this.__saveToStorage(), true;
-        }
-        getRequestCookies(e2, t2) {
-          let r2 = this.getCookiesArray(e2, t2);
-          return this.stringify(r2);
-        }
-        getRequestQueries(e2, t2) {
-          let r2 = this.getCookiesArray(e2, t2);
-          return this.querify(r2);
-        }
-        setResponseCookies(e2, t2) {
-          console.log("this", this);
-          let r2 = this.parse(e2, t2);
-          return this.setCookiesArray(r2);
-        }
-        parse(e2 = "", t2) {
-          var r2 = y2.parse(y2.splitCookiesString(e2), { decodeValues: false });
-          return r2.map((s2) => (s2.domain = k2.normalizeDomain(s2.domain) || t2, new _2(s2)));
-        }
-        stringify(e2) {
-          return e2.map((t2) => t2.toString()).join("; ");
-        }
-        querify(e2) {
-          return e2.map((t2) => t2.toString()).join("&");
-        }
-        __saveToStorage() {
-          try {
-            let e2 = [];
-            for (let t2 of this.__cookiesMap.values())
-              for (let r2 of t2.values())
-                r2.isExpired() ? t2.delete(r2.name) : r2.isPersistence() && e2.push(r2);
-            w2.setItem(this.__storageKey, e2);
-          } catch (e2) {
-            console.warn("Cookie 存储异常：", e2);
-          }
-        }
-        __readFromStorage() {
-          try {
-            let e2 = w2.getItem(this.__storageKey) || [];
-            return e2 = e2.map((t2) => new _2(t2)), this.setCookiesArray(e2);
-          } catch (e2) {
-            console.warn("Cookie 读取异常：", e2);
-          }
-        }
-      }
-      return function() {
-        const a2 = new b2();
-        function e2(i2) {
-          if (i2.cookie = i2.cookie === void 0 || !!i2.cookie, i2.dataType = i2.dataType || "json", i2.header = i2.headers = i2.header || i2.headers || {}, i2.header["X-Requested-With"] = "XMLHttpRequest", i2.dataType === "json" && (i2.header.Accept = "application/json, text/plain, */*"), //n.platform !== "h5" && i.cookie,
-          true) {
-            let urlinfo = (i2.url || "").split("/");
-            let [parameters] = urlinfo.slice(-1);
-            let o2 = urlinfo[2].split(":")[0], h2 = a2.getRequestQueries(o2, "/");
-            let index$1 = parameters.indexOf("?");
-            if (index$1 === -1) {
-              i2.url = i2.url + "?" + h2;
-            } else {
-              let reqUrlWithoutPara = i2.url.slice(0, i2.url.indexOf("?"));
-              let parmstr = parameters.slice(index$1 + 1, parameters.length);
-              let parms = parmstr.split("&");
-              let pf = "";
-              for (let x3 of parms) {
-                if (!x3.startsWith("accesstoken") && !x3.startsWith("refreshToken")) {
-                  pf += x3 + "&";
-                }
-              }
-              i2.url = reqUrlWithoutPara + "?" + pf + h2;
-            }
-            let hasRefresh = false;
-            let c2 = i2.success;
-            i2.success = function(u2) {
-              if (!hasRefresh) {
-                if (u2.statusCode === 401) {
-                  index.request({
-                    url: "https://localhost:7221/api/Account/refresh-token?" + index.getRequestQueries(o2, "/"),
-                    success(res) {
-                      hasRefresh = true;
-                      if (res.statusCode !== 200) {
-                        index.showToast({
-                          title: "登录过期！",
-                          duration: 1e3
-                        });
-                        index.reLaunch({
-                          url: "/pages/login/login"
-                        });
-                      } else {
-                        index.requestWithCookie(i2);
-                      }
-                    },
-                    fail() {
-                      hasRefresh = true;
-                      index.showToast({
-                        title: "登录过期！",
-                        duration: 1e3
-                      });
-                      index.reLaunch({
-                        url: "/pages/login/login"
-                      });
-                    }
-                  });
-                }
-              }
-              u2.header = u2.header || u2.headers;
-              let p2 = u2.header ? u2.header["Set-Cookie"] || u2.header["set-cookie"] : "";
-              p2 && (p2 = p2.replace(/\;([^\s\;]*?(?=\=))/gi, ",$1"), a2.setResponseCookies(p2, o2)), c2 && c2(u2);
-            };
-          }
-          return this(i2);
-        }
-        function cookieSetProxy(cookies, domain) {
-          console.log("cookieSetProxy this", this);
-          cookies.replace(/\;([^\s\;]*?(?=\=))/gi, ",$1");
-          this.setResponseCookies(cookies, domain);
-        }
-        function getRequestQueriesProxy(e3, t3) {
-          return this.getRequestQueries(e3, t3);
-        }
-        const t2 = e2.bind(n2.request), r2 = e2.bind(n2.uploadFile), s2 = e2.bind(n2.downloadFile), src = cookieSetProxy.bind(a2), grqp = getRequestQueriesProxy.bind(a2);
-        try {
-          Object.defineProperties(n2, {
-            requestWithCookie: { value: t2 },
-            uploadFileWithCookie: { value: r2 },
-            downloadFileWithCookie: { value: s2 },
-            setResponseCookies: { value: src },
-            getRequestQueries: { value: grqp }
-          });
-        } catch (i2) {
-          console.error("weapp-cookie: ", i2);
-        }
-        return a2.config = function(i2) {
-          i2 = Object.assign({
-            requestAlias: "requestWithCookie",
-            uploadFileAlias: "uploadFileWithCookie",
-            downloadFileAlias: "downloadFileWithCookie",
-            setResponseCookies: "setResponseCookies",
-            getRequestQueries: "getRequestQueries"
-          }, i2), i2.requestAlias && Object.defineProperty(n2, i2.requestAlias, { value: t2 }), i2.uploadFileAlias && Object.defineProperty(n2, i2.uploadFileAlias, { value: r2 }), i2.downloadFileAlias && Object.defineProperty(n2, i2.downloadFileAlias, { value: s2 }), i2.setResponseCookies && Object.defineProperty(n2, i2.setResponseCookies, { value: src }), i2.getRequestQueries && Object.defineProperty(n2, i2.getRequestQueries, { value: grqp });
-        }, a2;
-      }();
+var defaultParseOptions = {
+  decodeValues: true,
+  map: false,
+  silent: false
+};
+function isNonEmptyString(str) {
+  return typeof str === "string" && !!str.trim();
+}
+function parseString(setCookieValue, options) {
+  var parts = setCookieValue.split(";").filter(isNonEmptyString);
+  var nameValuePairStr = parts.shift();
+  var parsed = parseNameValuePair(nameValuePairStr);
+  var name = parsed.name;
+  var value = parsed.value;
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  try {
+    value = options.decodeValues ? decodeURIComponent(value) : value;
+  } catch (e2) {
+    console.error(
+      "set-cookie-parser encountered an error while decoding a cookie with value '" + value + "'. Set options.decodeValues to false to disable this feature.",
+      e2
+    );
+  }
+  var cookie = {
+    name,
+    value
+  };
+  parts.forEach(function(part) {
+    var sides = part.split("=");
+    var key = sides.shift().trimLeft().toLowerCase();
+    var value2 = sides.join("=");
+    if (key === "expires") {
+      cookie.expires = new Date(value2);
+    } else if (key === "max-age") {
+      cookie.maxAge = parseInt(value2, 10);
+    } else if (key === "secure") {
+      cookie.secure = true;
+    } else if (key === "httponly") {
+      cookie.httpOnly = true;
+    } else if (key === "samesite") {
+      cookie.sameSite = value2;
+    } else {
+      cookie[key] = value2;
     }
-  );
-})(weappCookie_umd);
+  });
+  return cookie;
+}
+function parseNameValuePair(nameValuePairStr) {
+  var name = "";
+  var value = "";
+  var nameValueArr = nameValuePairStr.split("=");
+  if (nameValueArr.length > 1) {
+    name = nameValueArr.shift();
+    value = nameValueArr.join("=");
+  } else {
+    value = nameValuePairStr;
+  }
+  return { name, value };
+}
+function parse(input, options) {
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  if (!input) {
+    if (!options.map) {
+      return [];
+    } else {
+      return {};
+    }
+  }
+  if (input.headers) {
+    if (typeof input.headers.getSetCookie === "function") {
+      input = input.headers.getSetCookie();
+    } else if (input.headers["set-cookie"]) {
+      input = input.headers["set-cookie"];
+    } else {
+      var sch = input.headers[Object.keys(input.headers).find(function(key) {
+        return key.toLowerCase() === "set-cookie";
+      })];
+      if (!sch && input.headers.cookie && !options.silent) {
+        console.warn(
+          "Warning: set-cookie-parser appears to have been called on a request object. It is designed to parse Set-Cookie headers from responses, not Cookie headers from requests. Set the option {silent: true} to suppress this warning."
+        );
+      }
+      input = sch;
+    }
+  }
+  if (!Array.isArray(input)) {
+    input = [input];
+  }
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  if (!options.map) {
+    return input.filter(isNonEmptyString).map(function(str) {
+      return parseString(str, options);
+    });
+  } else {
+    var cookies = {};
+    return input.filter(isNonEmptyString).reduce(function(cookies2, str) {
+      var cookie = parseString(str, options);
+      cookies2[cookie.name] = cookie;
+      return cookies2;
+    }, cookies);
+  }
+}
+function splitCookiesString(cookiesString) {
+  if (Array.isArray(cookiesString)) {
+    return cookiesString;
+  }
+  if (typeof cookiesString !== "string") {
+    return [];
+  }
+  var cookiesStrings = [];
+  var pos = 0;
+  var start;
+  var ch;
+  var lastComma;
+  var nextStart;
+  var cookiesSeparatorFound;
+  function skipWhitespace() {
+    while (pos < cookiesString.length && /\s/.test(cookiesString.charAt(pos))) {
+      pos += 1;
+    }
+    return pos < cookiesString.length;
+  }
+  function notSpecialChar() {
+    ch = cookiesString.charAt(pos);
+    return ch !== "=" && ch !== ";" && ch !== ",";
+  }
+  while (pos < cookiesString.length) {
+    start = pos;
+    cookiesSeparatorFound = false;
+    while (skipWhitespace()) {
+      ch = cookiesString.charAt(pos);
+      if (ch === ",") {
+        lastComma = pos;
+        pos += 1;
+        skipWhitespace();
+        nextStart = pos;
+        while (pos < cookiesString.length && notSpecialChar()) {
+          pos += 1;
+        }
+        if (pos < cookiesString.length && cookiesString.charAt(pos) === "=") {
+          cookiesSeparatorFound = true;
+          pos = nextStart;
+          cookiesStrings.push(cookiesString.substring(start, lastComma));
+          start = pos;
+        } else {
+          pos = lastComma + 1;
+        }
+      } else {
+        pos += 1;
+      }
+    }
+    if (!cookiesSeparatorFound || pos >= cookiesString.length) {
+      cookiesStrings.push(cookiesString.substring(start, cookiesString.length));
+    }
+  }
+  return cookiesStrings;
+}
+setCookie.exports = parse;
+exports.setCookieExports.parse = parse;
+exports.setCookieExports.parseString = parseString;
+exports.setCookieExports.splitCookiesString = splitCookiesString;
 /*!
  * vuex v4.1.0
  * (c) 2022 Evan You
@@ -9273,7 +9095,7 @@ class et {
     return this._cache.getStore(this._cache.keys.loginTypeKey);
   }
 }
-let tt$1 = class tt2 extends Xe {
+class tt extends Xe {
   async signIn() {
     this._cache.updatePersistence("local");
     const { anonymousUuidKey: e2, refreshTokenKey: t2 } = this._cache.keys, n2 = this._cache.getStore(e2) || void 0, s2 = this._cache.getStore(t2) || void 0, r2 = await this._request.send("auth.signInAnonymously", { anonymous_uuid: n2, refresh_token: s2 });
@@ -9297,7 +9119,7 @@ let tt$1 = class tt2 extends Xe {
   _clearAnonymousUUID() {
     this._cache.removeStore(this._cache.keys.anonymousUuidKey);
   }
-};
+}
 class nt extends Xe {
   async signIn(e2) {
     if ("string" != typeof e2)
@@ -9347,7 +9169,7 @@ class it {
     return this._cache.getStore(this._cache.keys.loginTypeKey);
   }
   anonymousAuthProvider() {
-    return new tt$1(this.config);
+    return new tt(this.config);
   }
   customAuthProvider() {
     return new nt(this.config);
@@ -9359,7 +9181,7 @@ class it {
     return new rt(this.config);
   }
   async signInAnonymously() {
-    return new tt$1(this.config).signIn();
+    return new tt(this.config).signIn();
   }
   async signInWithEmailAndPassword(e2, t2) {
     return new st(this.config).signIn(e2, t2);
@@ -9368,7 +9190,7 @@ class it {
     return new rt(this.config).signIn(e2, t2);
   }
   async linkAndRetrieveDataWithTicket(e2) {
-    this._anonymousAuthProvider || (this._anonymousAuthProvider = new tt$1(this.config)), De(Be, this._onAnonymousConverted);
+    this._anonymousAuthProvider || (this._anonymousAuthProvider = new tt(this.config)), De(Be, this._onAnonymousConverted);
     return await this._anonymousAuthProvider.linkAndRetrieveDataWithTicket(e2);
   }
   async signOut() {

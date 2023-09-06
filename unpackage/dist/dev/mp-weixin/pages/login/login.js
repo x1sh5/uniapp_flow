@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_weappCookie = require("../../common/weapp-cookie.js");
 const _sfc_main = {
   data() {
     return {
@@ -19,8 +20,8 @@ const _sfc_main = {
           console.log(res);
           console.log(that.$store);
           let domain = url.split("/")[2].split(":")[0];
-          common_vendor.index.setResponseCookies(res.data.accessToken, domain);
-          common_vendor.index.setResponseCookies(res.data.refreshToken, domain);
+          common_weappCookie.cookieManager.default.setResponseCookies(res.data.accessToken, domain);
+          common_weappCookie.cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
           that.$store.commit("changeLoginState");
           that.$store.commit("setUserName", res.data.userName);
           common_vendor.index.reLaunch({

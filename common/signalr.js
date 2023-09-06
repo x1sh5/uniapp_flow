@@ -581,7 +581,7 @@
             }
             let urlinfo = (request.url || "").split("/");
             let o = urlinfo[2].split(":")[0];
-            request.url = request.url + "&" + uni.getRequestQueries(o, "/");
+            request.url = request.url + "&accesstoken=" + uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o).value;
             let response;
             try {
                 response = await this._fetchType(request.url, {
@@ -2141,9 +2141,9 @@
             //�Ķ�
             let urlinfo = (url || "").split("/");
             let o = urlinfo[2].split(":")[0];
-            let cookiequry = uni.getRequestQueries(o, "/");
+            let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);
             //�Ķ�
-            url = url + "&" + cookiequry;
+            url = url + "&accesstoken=" + cookiequry.value;
             this._url = url;
             if (this._accessToken) {
                 url += (url.indexOf("?") < 0 ? "?" : "&") + `access_token=${encodeURIComponent(this._accessToken)}`;
@@ -2319,10 +2319,10 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getRequestQueries(o, "/");
+                    let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);
                     url = url.replace(/^http/, "ws");
                     //改动
-                    url = url + "&" + cookiequry;
+                    url = url + "&accesstoken=" + cookiequry.value;
                     let opened = false;
                     let webSocket;
                     let options = {
@@ -2378,10 +2378,10 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getRequestQueries(o, "/");
+                    let cookiequry = uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o);;
                     url = url.replace(/^http/, "ws");
                     //改动
-                    url = url + "&" + cookiequry;
+                    url = url + "&accesstoken=" + cookiequry.value;
                     let webSocket;
                     const cookies = this._httpClient.getCookieString(url);
                     let opened = false;
@@ -2650,6 +2650,9 @@
             // Store the original base url and the access token factory since they may change
             // as part of negotiating
             let url = this.baseUrl;
+			// let urlinfo = url.split("/");
+			// let o = urlinfo[2].split(":")[0];
+			// url = url + "&accesstoken=" + uni.getStorageSync('__cookie_store__').find(item=>item.name=='accesstoken'&&item.domain==o).value;
             this._accessTokenFactory = this._options.accessTokenFactory;
             this._httpClient._accessTokenFactory = this._accessTokenFactory;
             try {
@@ -2817,7 +2820,7 @@
         _constructTransport(transport) {
             switch (transport) {
                 case exports.HttpTransportType.WebSockets:
-                    if (!this._options.WebSocket || !this._options.UniWebSocket) {
+                    if (!this._options.WebSocket && !this._options.UniWebSocket) {
                         throw new Error("'WebSocket' is not supported in your environment.");
                     }
                     return new WebSocketTransport(this._httpClient, this._accessTokenFactory, this._logger, this._options.logMessageContent, this._options.WebSocket, this._options.headers || {});
@@ -2847,7 +2850,7 @@
                 if (transportMatches(requestedTransport, transport)) {
                     const transferFormats = endpoint.transferFormats.map((s) => exports.TransferFormat[s]);
                     if (transferFormats.indexOf(requestedTransferFormat) >= 0) {
-                        if ((transport === exports.HttpTransportType.WebSockets && !this._options.WebSocket || !this._options.UniWebSocket) ||
+                        if ((transport === exports.HttpTransportType.WebSockets && !this._options.WebSocket && !this._options.UniWebSocket) ||
                             (transport === exports.HttpTransportType.ServerSentEvents && !this._options.EventSource)) {
                             this._logger.log(exports.LogLevel.Debug, `Skipping transport '${exports.HttpTransportType[transport]}' because it is not supported in your environment.'`);
                             return new UnsupportedTransportError(`'${exports.HttpTransportType[transport]}' is not supported in your environment.`, transport);

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
+const common_weappCookie = require("./common/weapp-cookie.js");
 require("./common/signalr.js");
 const store_index = require("./store/index.js");
 require("./common/storageKeys.js");
@@ -29,6 +30,7 @@ if (!Math) {
   "./pages/myTaskDetail/myTaskDetail.js";
   "./pages/editTask/editTask.js";
 }
+common_weappCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
 const _sfc_main = {
   async beforeCreate() {
     let hasLogin = this.$store.commit("loginTest");

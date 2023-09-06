@@ -2,7 +2,6 @@
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
-const signalR = require("../common/signalr.js");
 const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
@@ -14,7 +13,7 @@ const store = common_vendor.createStore({
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub",{skipNegotiation:true,transport:1}).configureLogging(signalR.LogLevel.Trace).build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},
@@ -206,9 +205,6 @@ const store = common_vendor.createStore({
         common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset + "&typeId=" + typeId,
           method: "GET",
-          header: {
-            "Access-Control-Allow-Origin": "*"
-          },
           success: (res) => {
             console.log(res);
             let data = res.data;
