@@ -1,13 +1,31 @@
 1. uni.requestWithCookie不能再以promise风格调用
 
+uniapp
+  1. 修改common/signalr.js
+		引入import { cookieManager } from './weapp-cookie.js';
+		uni.getRequestQueries 替换为 cookieManager.default.getRequestQueries
+
+
 微信小程序：
 	1. 修改store/index.js 添加const signalR = require("../common/signalr.js");
-	2. 修改editor.js line16 source: 'url("../../static/Pacifico.ttf")'
-	line35 const newTask = pages[pages.length - 1];
-	line36 newTask.$vm.updateTask(this.id, res);
+	2. 修改pages/editor/editor.js 
+		line16 source: 'url("../../static/Pacifico.ttf")'
+		line35 const newTask = pages[pages.length - 1];
+		line36 newTask.$vm.updateTask(this.id, res);
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	
 	4. 修改commen/signalr.js 
 		添加const common_weappCookie = require("./weapp-cookie.js");
 		替换common_vendor.index.getRequestQueries为common_weappCookie.cookieManager.default.getRequestQueries
+		
+	5. commen/signalr.js
+		修改this._webSocket && this._webSocket.readyState === WebSocket.OPEN为this._webSocket && this._webSocket.readyState === 1
+		
+	6. pages/login/login.wxml
+		修改<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
+			为 <text>密码：<text>密码：</text><input name="password" class="lg-input" password type="text" value="lisi1234"/>
+		
+	微信开发工具本地设置：
+	a. 调试基础库 2.32.3
+	b. 将js编译es5

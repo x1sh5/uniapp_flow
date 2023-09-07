@@ -49,16 +49,16 @@
 		methods: {
 			async send(e){
 				console.log(this.text1)
-				this.inputValue = "";
 				//
-				let cc = this.$store.commit("Msgs/getById",this.userId)
+				let cc = this.$store.getters["Msgs/getCcById"](this.userId)
 				if(!cc){
 					let ncc = new ChatChannel(this.userId,0,this.userName,new Date().toLocaleString(),"");
 					await this.$store.dispatch("Msgs/addChatAsync",ncc);
 				}
 				
-				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1})
+				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1});
 				
+				this.inputValue = "";
 			},
 			change(e){
 				

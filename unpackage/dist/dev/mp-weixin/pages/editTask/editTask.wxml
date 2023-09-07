@@ -1,1 +1,1 @@
-<uni-nav-bar wx:if="{{c}}" bindclickLeft="{{a}}" bindclickRight="{{b}}" u-i="41cc80c6-0" bind:__l="__l" u-p="{{c}}"></uni-nav-bar><view><task-card wx:if="{{f}}" class="r" u-r="{{e}}" style="margin:2px 3px" u-i="41cc80c6-1" bind:__l="__l" u-p="{{f}}"></task-card></view>
+<uni-nav-bar wx:if="{{c}}" bindclickLeft="{{a}}" bindclickRight="{{b}}" u-i="664237a0-0" bind:__l="__l" u-p="{{c}}"></uni-nav-bar><view><task-card wx:if="{{f}}" class="r" u-r="{{e}}" style="margin:2px 3px" u-i="664237a0-1" bind:__l="__l" u-p="{{f}}"></task-card></view>

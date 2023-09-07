@@ -102,11 +102,11 @@
 			}
 		},
 		//上拉更新数据
-		onReachBottom() {
+		 onReachBottom() {
 			let maxIndex = this.maxIndex;
 			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, typeId:this.currentTypeId})
 			.then(data => {
-				 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data["$values"]});
+				 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data});
 				 // 在这里处理获取到的数据
 			  })
 			  .catch(error => {
@@ -115,10 +115,12 @@
 			  });
 		},
 		//下拉刷新页面
-		onPullDownRefresh() {
+		async onPullDownRefresh() {
+			await this.$store.dispatch("fetchBranchs");
+			await this.$store.dispatch("fetchTaskTypes");
 			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:this.currentTypeId})
 			 .then(data => {
-				 this.$store.commit('setTasks', {taskTypeName: this.taskTypeName, data: data["$values"]});
+				 this.$store.commit('setTasks', {taskTypeName: this.taskTypeName, data: data});
 				 // 在这里处理获取到的数据
 			   })
 			   .catch(error => {

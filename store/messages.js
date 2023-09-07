@@ -82,7 +82,11 @@ export const Messages = {
 	},
 	getters:{
 		getCcById:(state)=>(id)=>{
-			
+			let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(id));
+			if(cc!== -1){
+				return state.$chatChannels[cc];
+			}
+			return null;
 		}
 	},
 	actions:{

@@ -32,25 +32,38 @@ const store = createStore({
 		},
 		updateBranchs(state,payload){
 			console.log("branchs:",payload)
-			state.branchs = toRaw(payload)
+			if(payload !== void 0){
+				state.branchs = toRaw(payload)
+			}
+			
 		},
 		updateTaskTypes(state,payload){
 			console.log("taskTypes:",payload)
-			state.taskTypes = toRaw(payload)
-			state.tasks.set("全部",[]);
-			for(let t of state.taskTypes){
-				state.tasks.set(t.name,[]);
+			if(payload !== void 0){
+				state.taskTypes = toRaw(payload)
 			}
+			state.tasks.set("全部",[]);
+			if(typeof state.taskTypes[Symbol.iterator] === 'function'){
+				for(let t of state.taskTypes){
+					state.tasks.set(t.name,[]);
+				}
+			}
+
 		},
 		setTasks(state,payload){
 			console.log("tasks:",payload)
-			let t = payload.taskTypeName;
-			state.tasks.set(t, payload.data);
+			if(payload !== void 0){
+				let t = payload.taskTypeName;
+				state.tasks.set(t, payload.data);
+			}
+
 		},
 		updateTasks(state,payload){
 			console.log("tasks:",payload)
-			let t = payload.taskTypeName;
-			state.tasks.get(t).push(...payload.data);
+			if(payload !== void 0){
+				let t = payload.taskTypeName;
+				state.tasks.get(t).push(...payload.data);
+			}
 		},
 		changeLoginState(state){
 			state.$hasLogin = !state.$hasLogin
@@ -97,7 +110,10 @@ const store = createStore({
 			state.$currentContent = payload;
 		},
 		setPublishResults(state,payload){
-			state.$publishResults = payload;
+			if(payload !== void 0){
+				state.$publishResults = payload;
+			}
+			
 		},
 		updatePublishResults(state, payload){
 			console.log("call")
@@ -173,9 +189,7 @@ const store = createStore({
 					  success:function(res){
 						  console.log(res)
 						  let data = res.data
-						  nextTick(()=>{
-							  commit('updateBranchs', data["$values"]);
-						  })
+						  commit('updateBranchs', data);
 					  						  
 					  },
 					 //  header:{
@@ -203,9 +217,7 @@ const store = createStore({
 					  success:function(res){
 						  console.log(res)
 						  let data = res.data
-						  nextTick(()=>{
-							  commit('updateTaskTypes', data["$values"]);
-						  })
+						  commit('updateTaskTypes', data);
 					  						  
 					  },
 					 //  header:{
@@ -248,7 +260,7 @@ const store = createStore({
 						  console.log(res)
 						  let data = res.data
 						  nextTick(()=>{
-							  commit('setTasks', data["$values"]);
+							  commit('setTasks', data);
 						  })
 						  
 					  },

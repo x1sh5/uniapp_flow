@@ -1,8 +1,8 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
-const store_messages = require("./messages.js");
 const signalR = require("../common/signalr.js");
+const store_messages = require("./messages.js");
 const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
@@ -34,19 +34,28 @@ const store = common_vendor.createStore({
       console.log("taskTypes:", payload);
       state2.taskTypes = common_vendor.toRaw(payload);
       state2.tasks.set("全部", []);
-      for (let t of state2.taskTypes) {
-        state2.tasks.set(t.name, []);
+      if(state2.taskTypes && typeof state2.taskTypes[Symbol.iterator] === 'function'){
+        for (let t of state2.taskTypes) {
+          state2.tasks.set(t.name, []);
+        }
       }
+
     },
     setTasks(state2, payload) {
       console.log("tasks:", payload);
-      let t = payload.taskTypeName;
-      state2.tasks.set(t, payload.data);
+      if(payload!==void 0){
+        let t = payload.taskTypeName;
+        state2.tasks.set(t, payload.data);
+      }
+
     },
     updateTasks(state2, payload) {
       console.log("tasks:", payload);
-      let t = payload.taskTypeName;
-      state2.tasks.get(t).push(...payload.data);
+      if(payload !== void 0){
+        let t = payload.taskTypeName;
+        state2.tasks.get(t).push(...payload.data);
+      }
+
     },
     changeLoginState(state2) {
       state2.$hasLogin = !state2.$hasLogin;
@@ -166,9 +175,7 @@ const store = common_vendor.createStore({
           success: function(res) {
             console.log(res);
             let data = res.data;
-            common_vendor.nextTick$1(() => {
-              commit("updateBranchs", data["$values"]);
-            });
+            commit("updateBranchs", data);
           }
           //  header:{
           // 'Access-Control-Allow-Origin': '*'
@@ -189,9 +196,7 @@ const store = common_vendor.createStore({
           success: function(res) {
             console.log(res);
             let data = res.data;
-            common_vendor.nextTick$1(() => {
-              commit("updateTaskTypes", data["$values"]);
-            });
+            commit("updateTaskTypes", data);
           }
           //  header:{
           // 'Access-Control-Allow-Origin': '*'
@@ -227,7 +232,7 @@ const store = common_vendor.createStore({
             console.log(res);
             let data = res.data;
             common_vendor.nextTick$1(() => {
-              commit("setTasks", data["$values"]);
+              commit("setTasks", data);
             });
           }
         });

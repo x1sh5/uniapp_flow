@@ -94,10 +94,10 @@
 			// #endif
 		},
 		mounted() {
-			console.log(this.editorCtx);
-			if(this.editorCtx){
-				this.editorCtx.setContents(this.$store.state.$currentContent);
-			}
+			// console.log(this.editorCtx);
+			// if(this.editorCtx){
+			// 	this.editorCtx.setContents(this.$store.state.$currentContent);
+			// }
 		},
 		methods: {
 			backEvent(){
@@ -133,7 +133,8 @@
 
 				// #ifdef APP-PLUS || MP-WEIXIN || H5
 				uni.createSelectorQuery().select('#editor').context((res) => {
-					this.editorCtx = res.context
+					this.editorCtx = res.context;
+					this.editorCtx.setContents(this.$store.state.$currentContent);
 				}).exec()
 				// #endif
 			},

@@ -46,7 +46,7 @@
 				uni.requestWithCookie({
 					url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 					success: (res) => {//必须用箭头函数
-						this.$data.$publishs = res.data["$values"];
+						this.$data.$publishs = res.data;
 						this.hasPushlishs = true;
 					}
 				})

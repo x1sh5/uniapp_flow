@@ -6,7 +6,7 @@
   },
   "setting": {
     "urlCheck": false,
-    "es6": false,
+    "es6": true,
     "postcss": true,
     "minified": false,
     "newFeature": true,
@@ -15,10 +15,12 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    }
+    },
+    "enhance": true,
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "3.0.0",
+  "libVersion": "",
   "appid": "wxbef31cb0acc4e14c",
   "projectname": "flow",
   "condition": {},

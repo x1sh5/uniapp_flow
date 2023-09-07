@@ -22,8 +22,8 @@
 						url:qurl,
 						success: (res) => {
 							if(res.statusCode === 200){
-								if(res.data["$values"]){
-									resolve(res.data["$values"])
+								if(res.data){
+									resolve(res.data)
 								}
 								
 							}else{

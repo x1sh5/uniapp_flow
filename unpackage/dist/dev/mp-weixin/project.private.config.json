@@ -3,5 +3,6 @@
   "projectname": "flow",
   "setting": {
     "compileHotReLoad": true
-  }
+  },
+  "libVersion": "2.32.3"
 }

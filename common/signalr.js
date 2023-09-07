@@ -1,3 +1,4 @@
+import { cookieManager } from './weapp-cookie.js';
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -451,204 +452,6 @@
         }
         return `${e}`;
     }
-    /** @private */
-    function getGlobalThis() {
-        // globalThis is semi-new and not available in Node until v12
-        if (typeof globalThis !== "undefined") {
-            return globalThis;
-        }
-        if (typeof self !== "undefined") {
-            return self;
-        }
-        if (typeof window !== "undefined") {
-            return window;
-        }
-        if (typeof global !== "undefined") {
-            return global;
-        }
-        throw new Error("could not find global");
-    }
-
-    // Licensed to the .NET Foundation under one or more agreements.
-    // The .NET Foundation licenses this file to you under the MIT license.
-    /** @private */
-    function configureFetch(obj) {
-        // Node added a fetch implementation to the global scope starting in v18.
-        // We need to add a cookie jar in node to be able to share cookies with WebSocket
-        if (typeof fetch === "undefined" || Platform.isNode) {
-            // Cookies aren't automatically handled in Node so we need to add a CookieJar to preserve cookies across requests
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            obj._jar = new (require("tough-cookie")).CookieJar();
-            if (typeof fetch === "undefined") {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                obj._fetchType = require("node-fetch");
-            }
-            else {
-                // Use fetch from Node if available
-                obj._fetchType = fetch;
-            }
-            // node-fetch doesn't have a nice API for getting and setting cookies
-            // fetch-cookie will wrap a fetch implementation with a default CookieJar or a provided one
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            obj._fetchType = require("fetch-cookie")(obj._fetchType, obj._jar);
-            return true;
-        }
-        return false;
-    }
-    /** @private */
-    function configureAbortController(obj) {
-        if (typeof AbortController === "undefined") {
-            // Node needs EventListener methods on AbortController which our custom polyfill doesn't provide
-            obj._abortControllerType = require("abort-controller");
-            return true;
-        }
-        return false;
-    }
-    /** @private */
-    function getWS() {
-        return require("ws");
-    }
-    /** @private */
-    function getEventSource() {
-        return require("eventsource");
-    }
-
-    // Licensed to the .NET Foundation under one or more agreements.
-    // The .NET Foundation licenses this file to you under the MIT license.
-    class FetchHttpClient extends HttpClient {
-        constructor(logger) {
-            super();
-            this._logger = logger;
-            // This is how you do "reference" arguments
-            const fetchObj = { _fetchType: undefined, _jar: undefined };
-            if (configureFetch(fetchObj)) {
-                this._fetchType = fetchObj._fetchType;
-                this._jar = fetchObj._jar;
-            }
-            else {
-                this._fetchType = fetch.bind(getGlobalThis());
-            }
-            this._abortControllerType = AbortController;
-            const abortObj = { _abortControllerType: this._abortControllerType };
-            if (configureAbortController(abortObj)) {
-                this._abortControllerType = abortObj._abortControllerType;
-            }
-        }
-        /** @inheritDoc */
-        async send(request) {
-            // Check that abort was not signaled before calling send
-            if (request.abortSignal && request.abortSignal.aborted) {
-                throw new AbortError();
-            }
-            if (!request.method) {
-                throw new Error("No method defined.");
-            }
-            if (!request.url) {
-                throw new Error("No url defined.");
-            }
-            const abortController = new this._abortControllerType();
-            let error;
-            // Hook our abortSignal into the abort controller
-            if (request.abortSignal) {
-                request.abortSignal.onabort = () => {
-                    abortController.abort();
-                    error = new AbortError();
-                };
-            }
-            // If a timeout has been passed in, setup a timeout to call abort
-            // Type needs to be any to fit window.setTimeout and NodeJS.setTimeout
-            let timeoutId = null;
-            if (request.timeout) {
-                const msTimeout = request.timeout;
-                timeoutId = setTimeout(() => {
-                    abortController.abort();
-                    this._logger.log(exports.LogLevel.Warning, `Timeout from HTTP request.`);
-                    error = new TimeoutError();
-                }, msTimeout);
-            }
-            if (request.content === "") {
-                request.content = undefined;
-            }
-            if (request.content) {
-                // Explicitly setting the Content-Type header for React Native on Android platform.
-                request.headers = request.headers || {};
-                if (isArrayBuffer(request.content)) {
-                    request.headers["Content-Type"] = "application/octet-stream";
-                }
-                else {
-                    request.headers["Content-Type"] = "text/plain;charset=UTF-8";
-                }
-            }
-            let urlinfo = (request.url || "").split("/");
-            let o = urlinfo[2].split(":")[0];
-            request.url = request.url + "&" + uni.getRequestQueries(o, "/");
-            let response;
-            try {
-                response = await this._fetchType(request.url, {
-                    body: request.content,
-                    cache: "no-cache",
-                    credentials: "omit",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                        ...request.headers,
-                    },
-                    method: request.method,
-                    mode: "cors",
-                    redirect: "follow",
-                    signal: abortController.signal,
-                });
-            }
-            catch (e) {
-                if (error) {
-                    throw error;
-                }
-                this._logger.log(exports.LogLevel.Warning, `Error from HTTP request. ${e}.`);
-                throw e;
-            }
-            finally {
-                if (timeoutId) {
-                    clearTimeout(timeoutId);
-                }
-                if (request.abortSignal) {
-                    request.abortSignal.onabort = null;
-                }
-            }
-            if (!response.ok) {
-                const errorMessage = await deserializeContent(response, "text");
-                throw new HttpError(errorMessage || response.statusText, response.status);
-            }
-            const content = deserializeContent(response, request.responseType);
-            const payload = await content;
-            return new HttpResponse(response.status, response.statusText, payload);
-        }
-        getCookieString(url) {
-            let cookies = "";
-            if (Platform.isNode && this._jar) {
-                // @ts-ignore: unused variable
-                this._jar.getCookies(url, (e, c) => cookies = c.join("; "));
-            }
-            return cookies;
-        }
-    }
-    function deserializeContent(response, responseType) {
-        let content;
-        switch (responseType) {
-            case "arraybuffer":
-                content = response.arrayBuffer();
-                break;
-            case "text":
-                content = response.text();
-                break;
-            case "blob":
-            case "document":
-            case "json":
-                throw new Error(`${responseType} is not supported.`);
-            default:
-                content = response.text();
-                break;
-        }
-        return content;
-    }
 
     class UniHttpClient extends HttpClient {
         constructor(logger) {
@@ -785,9 +588,6 @@
             super();
             if (typeof wx !== "undefined") {
                 this._httpClient = new UniHttpClient(logger);
-            }
-            else if (typeof fetch !== "undefined" || Platform.isNode) {
-                this._httpClient = new FetchHttpClient(logger);
             }
             else if (typeof XMLHttpRequest !== "undefined") {
                 this._httpClient = new XhrHttpClient(logger);
@@ -1274,6 +1074,14 @@
                 });
                 this._launchStreams(streams, promiseQueue);
             });
+            this._timeoutHandle = setTimeout(() => {
+                p.catch((e) => {
+                    if (this._connectionState === exports.HubConnectionState.Disconnected ||
+                        this._connectionState === exports.HubConnectionState.Disconnecting) {
+                        this._reconnect(new Error(e || "server not connected"));
+                    }
+                });
+            }, 5000);
             return p;
         }
         on(methodName, newMethod) {
@@ -1921,7 +1729,7 @@
     // it's a very new API right now.
     // Not exported from index.
     /** @private */
-    let AbortController$1 = class AbortController {
+    class AbortController {
         constructor() {
             this._isAborted = false;
             this.onabort = null;
@@ -1940,7 +1748,7 @@
         get aborted() {
             return this._isAborted;
         }
-    };
+    }
 
     // Licensed to the .NET Foundation under one or more agreements.
     // The .NET Foundation licenses this file to you under the MIT license.
@@ -1954,7 +1762,7 @@
         constructor(httpClient, logger, options) {
             this._httpClient = httpClient;
             this._logger = logger;
-            this._pollAbort = new AbortController$1();
+            this._pollAbort = new AbortController();
             this._options = options;
             this._running = false;
             this.onreceive = null;
@@ -2141,7 +1949,7 @@
             //�Ķ�
             let urlinfo = (url || "").split("/");
             let o = urlinfo[2].split(":")[0];
-            let cookiequry = uni.getRequestQueries(o, "/");
+            let cookiequry = cookieManager.default.getRequestQueries(o, "/");
             //�Ķ�
             url = url + "&" + cookiequry;
             this._url = url;
@@ -2281,7 +2089,7 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getRequestQueries(o, "/");
+                    let cookiequry = cookieManager.default.getRequestQueries(o, "/");
                     url = url.replace(/^http/, "ws");
                     //改动
                     url = url + "&" + cookiequry;
@@ -2340,7 +2148,7 @@
                     //改动
                     let urlinfo = (url || "").split("/");
                     let o = urlinfo[2].split(":")[0];
-                    let cookiequry = uni.getRequestQueries(o, "/");
+                    let cookiequry = cookieManager.default.getRequestQueries(o, "/");
                     url = url.replace(/^http/, "ws");
                     //改动
                     url = url + "&" + cookiequry;
@@ -2428,7 +2236,7 @@
             }
         }
         send(data) {
-            if (this._webSocket && this._webSocket.readyState === 1) {
+            if (this._webSocket && this._webSocket.readyState === WebSocket.OPEN) {
                 this._logger.log(exports.LogLevel.Trace, `(WebSockets transport) sending data. ${getDataDetail(data, this._logMessageContent)}.`);
                 this._webSocket.send(data);
                 return Promise.resolve();
@@ -2493,25 +2301,16 @@
                 throw new Error("withCredentials option was not a 'boolean' or 'undefined' value");
             }
             options.timeout = options.timeout === undefined ? 100 * 1000 : options.timeout;
-            let webSocketModule = null;
             let eventSourceModule = null;
-            if (Platform.isNode && typeof require !== "undefined") {
-                webSocketModule = getWS();
-                eventSourceModule = getEventSource();
-            }
             if (!Platform.isNode && typeof WebSocket !== "undefined" && !options.WebSocket) {
                 options.WebSocket = WebSocket;
             }
-            else if (Platform.isNode && !options.WebSocket) {
-                if (webSocketModule) {
-                    options.WebSocket = webSocketModule;
-                }
-            }
+            else if (Platform.isNode && !options.WebSocket) ;
             if (!Platform.isNode && typeof EventSource !== "undefined" && !options.EventSource) {
                 options.EventSource = EventSource;
             }
             else if (Platform.isNode && !options.EventSource) {
-                if (typeof eventSourceModule !== "undefined") {
+                {
                     options.EventSource = eventSourceModule;
                 }
             }

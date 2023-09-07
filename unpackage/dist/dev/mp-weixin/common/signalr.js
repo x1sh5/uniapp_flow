@@ -1,8 +1,8 @@
 "use strict";
 const common_vendor = require("./vendor.js");
-const common_weappCookie = require("./weapp-cookie.js"); 
-(function(global2, factory) {
-  typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.signalR = {}));
+const common_weappCookie = require("./weapp-cookie.js");
+(function(global, factory) {
+  typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.signalR = {}));
 })(globalThis, function(exports2) {
   class HttpError extends Error {
     /** Constructs a new instance of {@link @microsoft/signalr.HttpError}.
@@ -361,170 +361,6 @@ const common_weappCookie = require("./weapp-cookie.js");
     }
     return `${e}`;
   }
-  function getGlobalThis() {
-    if (typeof globalThis !== "undefined") {
-      return globalThis;
-    }
-    if (typeof self !== "undefined") {
-      return self;
-    }
-    if (typeof window !== "undefined") {
-      return window;
-    }
-    if (typeof global !== "undefined") {
-      return global;
-    }
-    throw new Error("could not find global");
-  }
-  function configureFetch(obj) {
-    if (typeof fetch === "undefined" || Platform.isNode) {
-      obj._jar = new (require("tough-cookie")).CookieJar();
-      if (typeof fetch === "undefined") {
-        obj._fetchType = require("node-fetch");
-      } else {
-        obj._fetchType = fetch;
-      }
-      obj._fetchType = require("fetch-cookie")(obj._fetchType, obj._jar);
-      return true;
-    }
-    return false;
-  }
-  function configureAbortController(obj) {
-    if (typeof AbortController === "undefined") {
-      obj._abortControllerType = require("abort-controller");
-      return true;
-    }
-    return false;
-  }
-  function getWS() {
-    return require("ws");
-  }
-  function getEventSource() {
-    return require("eventsource");
-  }
-  class FetchHttpClient extends HttpClient {
-    constructor(logger) {
-      super();
-      this._logger = logger;
-      const fetchObj = { _fetchType: void 0, _jar: void 0 };
-      if (configureFetch(fetchObj)) {
-        this._fetchType = fetchObj._fetchType;
-        this._jar = fetchObj._jar;
-      } else {
-        this._fetchType = fetch.bind(getGlobalThis());
-      }
-      this._abortControllerType = AbortController;
-      const abortObj = { _abortControllerType: this._abortControllerType };
-      if (configureAbortController(abortObj)) {
-        this._abortControllerType = abortObj._abortControllerType;
-      }
-    }
-    /** @inheritDoc */
-    async send(request) {
-      if (request.abortSignal && request.abortSignal.aborted) {
-        throw new AbortError();
-      }
-      if (!request.method) {
-        throw new Error("No method defined.");
-      }
-      if (!request.url) {
-        throw new Error("No url defined.");
-      }
-      const abortController = new this._abortControllerType();
-      let error;
-      if (request.abortSignal) {
-        request.abortSignal.onabort = () => {
-          abortController.abort();
-          error = new AbortError();
-        };
-      }
-      let timeoutId = null;
-      if (request.timeout) {
-        const msTimeout = request.timeout;
-        timeoutId = setTimeout(() => {
-          abortController.abort();
-          this._logger.log(exports2.LogLevel.Warning, `Timeout from HTTP request.`);
-          error = new TimeoutError();
-        }, msTimeout);
-      }
-      if (request.content === "") {
-        request.content = void 0;
-      }
-      if (request.content) {
-        request.headers = request.headers || {};
-        if (isArrayBuffer(request.content)) {
-          request.headers["Content-Type"] = "application/octet-stream";
-        } else {
-          request.headers["Content-Type"] = "text/plain;charset=UTF-8";
-        }
-      }
-      let urlinfo = (request.url || "").split("/");
-      let o = urlinfo[2].split(":")[0];
-      request.url = request.url + "&" + common_weappCookie.cookieManager.default.getRequestQueries(o, "/");
-      let response;
-      try {
-        response = await this._fetchType(request.url, {
-          body: request.content,
-          cache: "no-cache",
-          credentials: "omit",
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            ...request.headers
-          },
-          method: request.method,
-          mode: "cors",
-          redirect: "follow",
-          signal: abortController.signal
-        });
-      } catch (e) {
-        if (error) {
-          throw error;
-        }
-        this._logger.log(exports2.LogLevel.Warning, `Error from HTTP request. ${e}.`);
-        throw e;
-      } finally {
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-        }
-        if (request.abortSignal) {
-          request.abortSignal.onabort = null;
-        }
-      }
-      if (!response.ok) {
-        const errorMessage = await deserializeContent(response, "text");
-        throw new HttpError(errorMessage || response.statusText, response.status);
-      }
-      const content = deserializeContent(response, request.responseType);
-      const payload = await content;
-      return new HttpResponse(response.status, response.statusText, payload);
-    }
-    getCookieString(url) {
-      let cookies = "";
-      if (Platform.isNode && this._jar) {
-        this._jar.getCookies(url, (e, c) => cookies = c.join("; "));
-      }
-      return cookies;
-    }
-  }
-  function deserializeContent(response, responseType) {
-    let content;
-    switch (responseType) {
-      case "arraybuffer":
-        content = response.arrayBuffer();
-        break;
-      case "text":
-        content = response.text();
-        break;
-      case "blob":
-      case "document":
-      case "json":
-        throw new Error(`${responseType} is not supported.`);
-      default:
-        content = response.text();
-        break;
-    }
-    return content;
-  }
   class UniHttpClient extends HttpClient {
     constructor(logger) {
       super();
@@ -645,8 +481,6 @@ const common_weappCookie = require("./weapp-cookie.js");
       super();
       if (typeof common_vendor.wx$1 !== "undefined") {
         this._httpClient = new UniHttpClient(logger);
-      } else if (typeof fetch !== "undefined" || Platform.isNode) {
-        this._httpClient = new FetchHttpClient(logger);
       } else if (typeof XMLHttpRequest !== "undefined") {
         this._httpClient = new XhrHttpClient(logger);
       } else {
@@ -1047,6 +881,13 @@ const common_weappCookie = require("./weapp-cookie.js");
         });
         this._launchStreams(streams, promiseQueue);
       });
+      this._timeoutHandle = setTimeout(() => {
+        p.catch((e) => {
+          if (this._connectionState === exports2.HubConnectionState.Disconnected || this._connectionState === exports2.HubConnectionState.Disconnecting) {
+            this._reconnect(new Error(e || "server not connected"));
+          }
+        });
+      }, 5e3);
       return p;
     }
     on(methodName, newMethod) {
@@ -1589,7 +1430,7 @@ const common_weappCookie = require("./weapp-cookie.js");
     TransferFormat[TransferFormat["Text"] = 1] = "Text";
     TransferFormat[TransferFormat["Binary"] = 2] = "Binary";
   })(exports2.TransferFormat || (exports2.TransferFormat = {}));
-  let AbortController$1 = class AbortController {
+  class AbortController {
     constructor() {
       this._isAborted = false;
       this.onabort = null;
@@ -1608,7 +1449,7 @@ const common_weappCookie = require("./weapp-cookie.js");
     get aborted() {
       return this._isAborted;
     }
-  };
+  }
   class LongPollingTransport {
     // This is an internal type, not exported from 'index' so this is really just internal.
     get pollAborted() {
@@ -1617,7 +1458,7 @@ const common_weappCookie = require("./weapp-cookie.js");
     constructor(httpClient, logger, options) {
       this._httpClient = httpClient;
       this._logger = logger;
-      this._pollAbort = new AbortController$1();
+      this._pollAbort = new AbortController();
       this._options = options;
       this._running = false;
       this.onreceive = null;
@@ -2074,23 +1915,15 @@ const common_weappCookie = require("./weapp-cookie.js");
         throw new Error("withCredentials option was not a 'boolean' or 'undefined' value");
       }
       options.timeout = options.timeout === void 0 ? 100 * 1e3 : options.timeout;
-      let webSocketModule = null;
       let eventSourceModule = null;
-      if (Platform.isNode && typeof require !== "undefined") {
-        webSocketModule = getWS();
-        eventSourceModule = getEventSource();
-      }
       if (!Platform.isNode && typeof WebSocket !== "undefined" && !options.WebSocket) {
         options.WebSocket = WebSocket;
-      } else if (Platform.isNode && !options.WebSocket) {
-        if (webSocketModule) {
-          options.WebSocket = webSocketModule;
-        }
-      }
+      } else if (Platform.isNode && !options.WebSocket)
+        ;
       if (!Platform.isNode && typeof EventSource !== "undefined" && !options.EventSource) {
         options.EventSource = EventSource;
       } else if (Platform.isNode && !options.EventSource) {
-        if (typeof eventSourceModule !== "undefined") {
+        {
           options.EventSource = eventSourceModule;
         }
       }

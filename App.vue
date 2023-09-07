@@ -71,7 +71,7 @@
 
 			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
 			 .then(data => {
-				 this.$store.commit('setTasks', {taskTypeName: "全部", data: data["$values"]});
+				 this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
 				 // 在这里处理获取到的数据
 			   })
 			   .catch(error => {

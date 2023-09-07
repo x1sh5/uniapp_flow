@@ -77,15 +77,17 @@ const _sfc_main = {
   onReachBottom() {
     let maxIndex = this.maxIndex;
     this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, typeId: this.currentTypeId }).then((data) => {
-      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data: data["$values"] });
+      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data: data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
   },
   //下拉刷新页面
-  onPullDownRefresh() {
+  async onPullDownRefresh() {
+    await this.$store.dispatch("fetchBranchs");
+    await this.$store.dispatch("fetchTaskTypes");
     this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: this.currentTypeId }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: data["$values"] });
+      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
@@ -119,7 +121,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
       return {
-        a: "0c9de768-1-" + i0,
+        a: "4d84c736-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -130,5 +132,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);
