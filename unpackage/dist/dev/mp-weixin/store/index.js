@@ -14,7 +14,7 @@ const store = common_vendor.createStore({
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).withAutomaticReconnect().build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},

@@ -20,6 +20,7 @@ const store = createStore({
 		tasks:new Map(),
 		workSocket : markRaw( new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
+		.withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Trace)
         .build() ),
 		messages:new Map(), //对话消息

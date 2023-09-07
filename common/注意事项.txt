@@ -21,6 +21,10 @@ uniapp
 		
 	5. commen/signalr.js
 		修改this._webSocket && this._webSocket.readyState === WebSocket.OPEN为this._webSocket && this._webSocket.readyState === 1
+		修改this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds ?? DEFAULT_TIMEOUT_IN_MS 为
+		 this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
+		修改this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds??DEFAULT_PING_INTERVAL_IN_MS 为
+		 this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds!==null&&keepAliveIntervalInMilliseconds!==undefined ?keepAliveIntervalInMilliseconds : DEFAULT_PING_INTERVAL_IN_MS;
 		
 	6. pages/login/login.wxml
 		修改<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>

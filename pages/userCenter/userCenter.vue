@@ -3,7 +3,7 @@
 		
 		<view class="userinfo">
 			<!-- avatar -->
-			<view class="user-avatar"><image src="https://wx.qlogo.cn/mmhead/PiajxSqBRaEI2Vb5Lp2pyzDTF41qKU7ibeBXArLoXdJVpDhMGfib2VWEQ/0" class="user-avatar-img"></image></view>
+			<view class="user-avatar"><image :src="imgsrc" class="user-avatar-img"></image></view>
 			<view>{{ userName }}</view>
 		</view>
 		
