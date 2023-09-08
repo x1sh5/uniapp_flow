@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view v-for="item in publishs" :key="item.id" style="margin-top:5px;">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click="toDetails" style="margin-top:5px;"/>
+		<view v-for="item in publishs" :key="item.id" class="custom-margin">
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>
@@ -56,5 +56,5 @@
 </script>
 
 <style>
-
+	@import url("../../common/commen.css");
 </style>

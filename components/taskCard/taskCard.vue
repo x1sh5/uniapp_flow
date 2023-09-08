@@ -26,8 +26,8 @@
 					  "description": "",
 					  "finishtime": "0001-01-01T00:00:00",
 					  "deadline": "",
-					  "fixedreward": '',
-					  "percentreward": '',
+					  "fixedReward": '',
+					  "percentReward": '',
 					  "publishtime": "0001-01-01T00:00:00",
 					  "rewardtype": 1,
 					  "status": 1,
@@ -58,6 +58,10 @@
 		computed:{
 			html:{
 				get(){
+					if(this.content.html===void 0){
+						this.setContent(this.task.description)
+						return this.task.description;
+					}
 					return this.content.html;
 				},
 				set(value){
@@ -77,6 +81,9 @@
 				uni.navigateTo({
 					url:"/pages/editor/editor?id="+this.task.id
 				})
+			},
+			setContent(value){
+				this.content.html = value
 			},
 			updateT(payload){
 				//{ctx:res, files: lastFiles}

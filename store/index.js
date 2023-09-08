@@ -100,10 +100,14 @@ const store = createStore({
 				url:state.apiBaseUrl+"/api/Account/loginTest",
 				method:"HEAD",
 				success:(res)=>{
-					if(res.statusCode === 200)login = true
+					if(res.statusCode === 200){
+						uni.setStorageSync(StorageKeys.hasLogin,true);
+					}else{
+						uni.setStorageSync(StorageKeys.hasLogin,false);
+					}
 				}
 			 });
-			uni.setStorageSync(StorageKeys.hasLogin,login);
+			
 			return login;
 		},
 		//设置正在编辑的任务中的description
@@ -176,6 +180,16 @@ const store = createStore({
 		publishResults(state){
 			return state.$publishResults
 		},
+		hasLogin(){
+			let hasLogin = false;
+			try{
+				hasLogin = uni.getStorageSync(StorageKeys.hasLogin);
+			}catch(e){
+				hasLogin = false;
+				console.error(e);
+			}
+			return hasLogin;
+		}
 	},
 	actions:{
 		//获取部门信息

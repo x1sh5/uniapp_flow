@@ -5,6 +5,7 @@ export const Messages = {
 	state:{
 		//objs obj like {cid:int,unread:int,title:string,lasttime:datatime,message:string,mtype:default 1}
 		$chatChannels:[],
+		hasFirstLoad: new Map(), // {userid,bool}
 		
 	},
 	mutations:{
@@ -87,6 +88,13 @@ export const Messages = {
 				return state.$chatChannels[cc];
 			}
 			return null;
+		},
+		getHasFirstLoad:(state)=>(userid)=>{
+			let has = state.hasFirstLoad.get(userid);
+			if(has===void 0){
+				return false;
+			}
+			return true;
 		}
 	},
 	actions:{
@@ -118,6 +126,11 @@ export const Messages = {
 				2000);
 				
 			}) 
+		},
+		updateHasFirstLoad({state},userid){
+			if(state.hasFirstLoad.get(userid)===void 0){
+				state.hasFirstLoad.set(userid,true)
+			}
 		}
 	}
 }

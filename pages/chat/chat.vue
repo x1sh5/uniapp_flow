@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<view style="width: 100%;height: 44px;"></view>
 		<uni-nav-bar left-icon="left" @clickLeft="back" :title="userName"></uni-nav-bar>
 		
 		<!-- <view v-for="m in messages" :key="m.id">{{m.message}}</view> -->
@@ -14,8 +15,8 @@
 			<!-- </view> -->
 
 			<view class="chat-input-container">
-			      <input type="text" class="chat-input" v-model="inputValue" @blur="change" ref="input">
-			      <button class="send-button" @click="send">发送</button>
+			      <input type="text" class="chat-input" v-model="text1" ref="input">
+			      <button class="send-button" :disabled="canSend" @click="send">发送</button>
 			</view>
 			
 <!-- 			<view class="transmit">
@@ -32,19 +33,24 @@
 	export default {
 		data() {
 			return {
-				text1:"",
+				text1:"",//输入框消息
 				userName:"",
 				userId:NaN,//发卡人id
-				inputValue:"",
 				calcHeight:NaN, //
-				//messages:[]
+				//messages:[],
+
 			}
 		},
 		computed:{
 			messages(){
 				return this.$store.getters.getMessages(this.userId)
 			},
-
+			canSend(){
+				if(this.text1!==null&&this.text1!==""&&this.text1!==void 0){
+					return false;
+				}
+				return true;
+			}
 		},
 		methods: {
 			async send(e){
@@ -58,11 +64,7 @@
 				
 				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1});
 				
-				this.inputValue = "";
-			},
-			change(e){
-				
-				this.text1 = e.detail.value
+				this.text1 = "";
 			},
 			back(e){
 				uni.navigateBack()
@@ -97,29 +99,37 @@
 			this.userId = parseInt(op.userId);
 			
 			let info = uni.getWindowInfo();
-			this.calcHeight = info.windowHeight*96/100 -66;
+			this.calcHeight = info.windowHeight*96/100 -66-74;
 			
+			let hasLoad = this.$store.getters["Msgs/getHasFirstLoad"](this.userId)
+			if(!hasLoad){
 			//let [lastid] = this.messages.slice(-1);
-			let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId
-			+"&count=10";
-			uni.requestWithCookie({
-				url:qurl,
-				success: (res) => {
-					if(res.statusCode===200){
-						for(let m of res.data){
-							this.$store.dispatch("receiveMsg",{user:m.from,message:m})
+				let qurl = this.$store.state.apiBaseUrl+"/api/messages/receives?receiverId="+this.userId
+				+"&count=10";
+				uni.requestWithCookie({
+					url:qurl,
+					success: (res) => {
+						if(res.statusCode===200){
+							for(let m of res.data){
+								this.$store.dispatch("receiveMsg",{user:m.from,message:m})
+							}
+						}
+						if(res.statusCode>=400){
+							uni.showToast({
+								title:"网络异常，请稍后再试!"
+							})
 						}
 					}
-					if(res.statusCode>=400){
-						uni.showToast({
-							title:"网络异常，请稍后再试!"
-						})
-					}
-				}
-			});
+				});
+				
+				this.$store.dispatch("Msgs/updateHasFirstLoad",this.userId);
+			}
 		},
 		onUnload() {
+			
 			this.$store.commit("Msgs/clearUnread",this.userId);
+
+			
 		},
 	}
 </script>

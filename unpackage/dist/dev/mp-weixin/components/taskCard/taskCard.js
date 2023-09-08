@@ -14,8 +14,8 @@ const _sfc_main = {
           "description": "",
           "finishtime": "0001-01-01T00:00:00",
           "deadline": "",
-          "fixedreward": "",
-          "percentreward": "",
+          "fixedReward": "",
+          "percentReward": "",
           "publishtime": "0001-01-01T00:00:00",
           "rewardtype": 1,
           "status": 1,
@@ -46,6 +46,10 @@ const _sfc_main = {
   computed: {
     html: {
       get() {
+        if (this.content.html === void 0) {
+          this.setContent(this.task.description);
+          return this.task.description;
+        }
         return this.content.html;
       },
       set(value) {
@@ -65,6 +69,9 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "/pages/editor/editor?id=" + this.task.id
       });
+    },
+    setContent(value) {
+      this.content.html = value;
     },
     updateT(payload) {
       console.log("updateT trigger", payload);

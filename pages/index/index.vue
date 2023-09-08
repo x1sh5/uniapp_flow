@@ -12,7 +12,7 @@
 			<button v-for="item in taskTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
 		</view>
 		
-		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
+		<view v-for="item in tasks" :key="item.id" class="custom-margin">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
 		
@@ -80,7 +80,7 @@
 						success:(res)=>{
 							console.log(res)
 							if(res.statusCode === 200){
-								this.tasks = res.data.$values
+								this.tasks = res.data
 							}else{
 								uni.showToast({
 									title:"网络出错了！"
@@ -134,4 +134,5 @@
 
 <style>
 	@import url('./index.css');
+	@import url("../../common/commen.css");
 </style>

@@ -620,7 +620,7 @@ const common_weappCookie = require("./weapp-cookie.js");
       Arg.isRequired(connection, "connection");
       Arg.isRequired(logger, "logger");
       Arg.isRequired(protocol, "protocol");
-      this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined  ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
+      this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
       this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds!==null&&keepAliveIntervalInMilliseconds!==undefined ?keepAliveIntervalInMilliseconds : DEFAULT_PING_INTERVAL_IN_MS;
       this._logger = logger;
       this._protocol = protocol;

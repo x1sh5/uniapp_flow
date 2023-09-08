@@ -43,11 +43,11 @@
 				<view class="rowlayout">
 				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
 				  v-model="reward" @blur="updateReward"/>
-				  <!-- <view>{{ rewardtype.value }}</view> -->
-				  <uni-data-select :localdata="rewardtype.options" :clear="false" modelValue="2" 
-				   v-model="$rewardTypeValue" placeholder="类型" @change="rewardTypeChange" 
-				   style="z-index: 2;width: 20px;margin-left: 5rpx;margin-bottom: 5rpx;" 
-				   :disabled="!editable">
+				  <view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
+				  <uni-data-select :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
+				    placeholder="类型" @change="rewardTypeChange" 
+				   style="z-index: 2;width: auto;min-width: 10px;margin-left: 5rpx;margin-bottom: 5rpx;" 
+				   v-if="editable">
 					  
 				  </uni-data-select>
 				</view>
@@ -64,7 +64,7 @@
 		   <!-- range-key 用于指定显示名称属性值 -->
 			<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
-			{{branchs[branchOrder]["name"]}}</picker>
+			{{ depart }}</picker>
 			<!-- 发起人 -->
 			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
@@ -123,21 +123,49 @@ import { RewardType } from '../../common/Task'
 			},
 			reward:{
 				get(){
-					return this.task.rewardtype==1?this.task.fixedreward:this.task.percentreward;
+					return this.task.rewardtype===RewardType.Fiexd?this.task.fixedReward:this.task.percentReward;
 				},
 				set(value){
-					if(this.task.rewardtype===1){
-						this.task.fixedreward = value;
+					if(this.task.rewardtype===RewardType.Fiexd){
+						this.task.fixedReward = value;
 					}
-					if(this.task.rewardtype===2){
-						this.task.percentreward = value;
+					if(this.task.rewardtype===RewardType.Percent){
+						this.task.percentReward = value;
 					}
 				}
+			},
+			rewardtype:{
+				get(){
+					return this.task.rewardtype
+				},
+				set(value){
+					this.task.rewardtype = parseInt(value)
+				}
+			},
+			rewardSymbol(){
+				if(this.task.rewardtype===RewardType.Fiexd){
+					return '￥'
+				}
+				if(this.task.rewardtype===RewardType.Percent){
+					return '%'
+				}
+				return ''
 			},
 			branch:{
 				get(){
 					return this.$store.getters.getBranch(this.task.branchid)
 				},
+			},
+			depart(){
+				let d;
+				try{
+					d = this.branchs[this.branchOrder]["name"];
+				}catch(e){
+					//TODO handle the exception
+					d = "部门";
+				}
+
+				return d
 			},
 			branchOrder:{
 				get(){
@@ -162,9 +190,14 @@ import { RewardType } from '../../common/Task'
 			},
 			deadline:{
 				get() {
-					let index = this.task.deadline.indexOf("T");
-					if(index!==-1){
-						return this.task.deadline.substring(0,index);
+					try{
+						let index = this.task.deadline.indexOf("T");
+						if(index!==-1){
+							return this.task.deadline.substring(0,index);
+						}
+						
+					}catch(e){
+						//TODO handle the exception
 					}
 					return this.task.deadline;
 				},
@@ -190,13 +223,13 @@ import { RewardType } from '../../common/Task'
 			},
 			rewardTypeChange(e){
 				console.log('rewardType 改变，携带值为', e)
-				this.$rewardTypeValue = e
+				this.rewardtypeSymbol.text = e.text;
 				let pages = getCurrentPages();
 				let current = pages[pages.length-1]
 				if(current.mode&&current.mode=="single"){
-					this.task.percentreward = 100;
+					this.task.percentReward = 100;
 				}else{
-					this.task.percentreward  = '';
+					this.task.percentReward  = '';
 				}
 				
 			},
@@ -209,7 +242,7 @@ import { RewardType } from '../../common/Task'
 					}else{
 						const pages = getCurrentPages();
 						let current = pages[pages.length-1];
-						if(current.route.split("/").at(-1)!=='taskDetail'){
+						if(current.route.split("/").at(-1)!=='taskDetail'&&current.route.split("/").at(-1)!=='myTaskDetail'){
 							this.$store.commit('setCurrentTask',this.task);
 							this.$store.dispatch('genHistory',this.task.id);
 							uni.navigateTo({
@@ -223,9 +256,9 @@ import { RewardType } from '../../common/Task'
 			},
 			updateReward(event){
 				if(this.task.rewardtype === RewardType.Fiexd){
-					this.task.fixedreward = event.detail.value;
+					this.task.fixedReward = event.detail.value;
 				}else if(this.task.rewardtype === RewardType.Percent){
-					this.task.percentreward = event.detail.value;
+					this.task.percentReward = event.detail.value;
 				}
 
 			},
@@ -252,13 +285,13 @@ import { RewardType } from '../../common/Task'
 					});
 					return false;
 				}
-				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedreward){
+				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
 					return false;
 				}
-				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentreward){
+				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
@@ -302,13 +335,13 @@ import { RewardType } from '../../common/Task'
 					});
 					return false;
 				}
-				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedreward){
+				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
 					return false;
 				}
-				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentreward){
+				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
@@ -368,9 +401,8 @@ import { RewardType } from '../../common/Task'
 				vis: false,
 				status:["代接","待完成","完成"],
 				branchIndex:false,
-				$rewardTypeValue: 0,
-				rewardtype: {
-				  value: 0,
+				rewardtypeSymbol: {
+				  text: '%',
 				  options: [
 					{
 					  text: '￥',

@@ -5,18 +5,24 @@ const _sfc_main = {
   data() {
     return {
       text1: "",
+      //输入框消息
       userName: "",
       userId: NaN,
       //发卡人id
-      inputValue: "",
       calcHeight: NaN
       //
-      //messages:[]
+      //messages:[],
     };
   },
   computed: {
     messages() {
       return this.$store.getters.getMessages(this.userId);
+    },
+    canSend() {
+      if (this.text1 !== null && this.text1 !== "" && this.text1 !== void 0) {
+        return false;
+      }
+      return true;
     }
   },
   methods: {
@@ -28,10 +34,7 @@ const _sfc_main = {
         await this.$store.dispatch("Msgs/addChatAsync", ncc);
       }
       this.$store.dispatch("sendMsg", { user: this.userId, message: this.text1 });
-      this.inputValue = "";
-    },
-    change(e) {
-      this.text1 = e.detail.value;
+      this.text1 = "";
     },
     back(e) {
       common_vendor.index.navigateBack();
@@ -64,23 +67,27 @@ const _sfc_main = {
     this.userName = op.userName;
     this.userId = parseInt(op.userId);
     let info = common_vendor.index.getWindowInfo();
-    this.calcHeight = info.windowHeight * 96 / 100 - 66;
-    let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&count=10";
-    common_vendor.index.requestWithCookie({
-      url: qurl,
-      success: (res) => {
-        if (res.statusCode === 200) {
-          for (let m of res.data) {
-            this.$store.dispatch("receiveMsg", { user: m.from, message: m });
+    this.calcHeight = info.windowHeight * 96 / 100 - 140;
+    let hasLoad = this.$store.getters["Msgs/getHasFirstLoad"](this.userId);
+    if (!hasLoad) {
+      let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&count=10";
+      common_vendor.index.requestWithCookie({
+        url: qurl,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            for (let m of res.data) {
+              this.$store.dispatch("receiveMsg", { user: m.from, message: m });
+            }
+          }
+          if (res.statusCode >= 400) {
+            common_vendor.index.showToast({
+              title: "网络异常，请稍后再试!"
+            });
           }
         }
-        if (res.statusCode >= 400) {
-          common_vendor.index.showToast({
-            title: "网络异常，请稍后再试!"
-          });
-        }
-      }
-    });
+      });
+      this.$store.dispatch("Msgs/updateHasFirstLoad", this.userId);
+    }
   },
   onUnload() {
     this.$store.commit("Msgs/clearUnread", this.userId);
@@ -117,9 +124,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.s(`height:${$data.calcHeight}px`),
     e: common_vendor.o((...args) => $options.receiveOld && $options.receiveOld(...args)),
     f: common_vendor.o((...args) => $options.scrollDown && $options.scrollDown(...args)),
-    g: common_vendor.o((...args) => $options.change && $options.change(...args)),
-    h: $data.inputValue,
-    i: common_vendor.o(($event) => $data.inputValue = $event.detail.value),
+    g: $data.text1,
+    h: common_vendor.o(($event) => $data.text1 = $event.detail.value),
+    i: $options.canSend,
     j: common_vendor.o((...args) => $options.send && $options.send(...args))
   };
 }

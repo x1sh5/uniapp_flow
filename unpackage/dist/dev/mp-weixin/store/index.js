@@ -1,8 +1,8 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
-const signalR = require("../common/signalr.js");
 const store_messages = require("./messages.js");
+const signalR = require("../common/signalr.js");
 const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
@@ -14,7 +14,7 @@ const store = common_vendor.createStore({
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").configureLogging(signalR.LogLevel.Trace).withAutomaticReconnect().build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Trace).build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},
@@ -28,34 +28,35 @@ const store = common_vendor.createStore({
     },
     updateBranchs(state2, payload) {
       console.log("branchs:", payload);
-      state2.branchs = common_vendor.toRaw(payload);
+      if (payload !== void 0) {
+        state2.branchs = common_vendor.toRaw(payload);
+      }
     },
     updateTaskTypes(state2, payload) {
       console.log("taskTypes:", payload);
-      state2.taskTypes = common_vendor.toRaw(payload);
+      if (payload !== void 0) {
+        state2.taskTypes = common_vendor.toRaw(payload);
+      }
       state2.tasks.set("全部", []);
-      if(state2.taskTypes && typeof state2.taskTypes[Symbol.iterator] === 'function'){
+      if (typeof state2.taskTypes[Symbol.iterator] === "function") {
         for (let t of state2.taskTypes) {
           state2.tasks.set(t.name, []);
         }
       }
-
     },
     setTasks(state2, payload) {
       console.log("tasks:", payload);
-      if(payload!==void 0){
+      if (payload !== void 0) {
         let t = payload.taskTypeName;
         state2.tasks.set(t, payload.data);
       }
-
     },
     updateTasks(state2, payload) {
       console.log("tasks:", payload);
-      if(payload !== void 0){
+      if (payload !== void 0) {
         let t = payload.taskTypeName;
         state2.tasks.get(t).push(...payload.data);
       }
-
     },
     changeLoginState(state2) {
       state2.$hasLogin = !state2.$hasLogin;
@@ -91,11 +92,13 @@ const store = common_vendor.createStore({
         url: state2.apiBaseUrl + "/api/Account/loginTest",
         method: "HEAD",
         success: (res) => {
-          if (res.statusCode === 200)
-            login = true;
+          if (res.statusCode === 200) {
+            common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
+          } else {
+            common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, false);
+          }
         }
       });
-      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, login);
       return login;
     },
     //设置正在编辑的任务中的description
@@ -103,7 +106,9 @@ const store = common_vendor.createStore({
       state2.$currentContent = payload;
     },
     setPublishResults(state2, payload) {
-      state2.$publishResults = payload;
+      if (payload !== void 0) {
+        state2.$publishResults = payload;
+      }
     },
     updatePublishResults(state2, payload) {
       console.log("call");
@@ -161,6 +166,16 @@ const store = common_vendor.createStore({
     },
     publishResults(state2) {
       return state2.$publishResults;
+    },
+    hasLogin() {
+      let hasLogin = false;
+      try {
+        hasLogin = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.hasLogin);
+      } catch (e) {
+        hasLogin = false;
+        console.error(e);
+      }
+      return hasLogin;
     }
   },
   actions: {

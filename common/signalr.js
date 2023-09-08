@@ -773,8 +773,8 @@ import { cookieManager } from './weapp-cookie.js';
             Arg.isRequired(connection, "connection");
             Arg.isRequired(logger, "logger");
             Arg.isRequired(protocol, "protocol");
-            this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds ?? DEFAULT_TIMEOUT_IN_MS;
-            this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds ?? DEFAULT_PING_INTERVAL_IN_MS;
+            this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
+            this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds!==null&&keepAliveIntervalInMilliseconds!==undefined ?keepAliveIntervalInMilliseconds : DEFAULT_PING_INTERVAL_IN_MS;
             this._logger = logger;
             this._protocol = protocol;
             this.connection = connection;
@@ -2236,7 +2236,7 @@ import { cookieManager } from './weapp-cookie.js';
             }
         }
         send(data) {
-            if (this._webSocket && this._webSocket.readyState === WebSocket.OPEN) {
+            if (this._webSocket && this._webSocket.readyState === 1) {
                 this._logger.log(exports.LogLevel.Trace, `(WebSockets transport) sending data. ${getDataDetail(data, this._logMessageContent)}.`);
                 this._webSocket.send(data);
                 return Promise.resolve();

@@ -5,6 +5,7 @@
 		<view>内容编辑</view>
 		<button @click="submitEvent">确认</button> -->
 	<!-- </view> -->
+	<view style="width: 100%;height: 44px;"></view>
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 			
@@ -117,7 +118,7 @@
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							const newTask = pages[pages.length - 2]; // 获取页面A的实例
-							newTask.updateTask(this.id, {ctx:res, files: lastFiles}); // 修改页面A的属性a1的值
+							newTask.$vm.updateTask(this.id, {ctx:res, files: lastFiles}); // 修改页面A的属性a1的值
 						}
 					}
 				})

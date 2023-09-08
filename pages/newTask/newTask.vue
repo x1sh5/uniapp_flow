@@ -1,4 +1,5 @@
 <template>
+	<view style="width: 100%;height: 44px;"></view>
 	<!-- left-icon的值为uni组件中uniicons下uniicons.css中的类名去掉前缀uniui-后得到的值 -->
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
@@ -27,8 +28,8 @@
 					  "finishtime": "",
 					  "deadline": new Date().toISOString().slice(0, 10),
 					  "publishtime": "0001-01-01T00:00:00",
-					  "fixedreward": '',
-					  "percentreward": 100,
+					  "fixedReward": '',
+					  "percentReward": 100,
 					  "rewardtype": RewardType.Percent,
 					  "status": TaskStatus.WaitForAccept,
 					  "title": "",
@@ -104,8 +105,8 @@
 					"finishtime": "",
 					"deadline": new Date().toISOString().slice(0, 10),
 					"publishtime": "0001-01-01T00:00:00",
-					"fixedreward": '',
-					"percentreward": '',
+					"fixedReward": '',
+					"percentReward": '',
 					"rewardtype": RewardType.Percent,
 					"status": TaskStatus.WaitForAccept,
 					"title": "",
@@ -123,6 +124,7 @@
 					this.tasks[index].description = payload.html;
 					this.$refs['id'+id][0].updateT(payload);
 				}
+
 			},
 			//发布成功后，移除task
 			afterPublish(id){

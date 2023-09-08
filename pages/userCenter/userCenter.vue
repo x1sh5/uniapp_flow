@@ -58,7 +58,7 @@
 		},
 		computed:{
 			hasLogin(){
-				return this.$store.state.$hasLogin
+				return this.$store.getters.hasLogin
 			},
 			userName(){
 				return this.$store.state.$userName;
@@ -126,6 +126,8 @@
 		created() {
 			uni.showModal({
 				content:"小程序将使用用户微信头像作为默认头像",
+				cancelText: "不同意",
+				confirmText: "同意",
 				success:()=>{
 					uni.getUserInfo({
 						success:(res)=>{

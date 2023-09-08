@@ -31,7 +31,7 @@
 					url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURI(searchWord),
 					success:(res)=>{
 						if(res.statusCode === 200){
-							this.tasks = res.data.$values
+							this.tasks = res.data
 						}else{
 							uni.showToast({
 								title: "网络出错！"

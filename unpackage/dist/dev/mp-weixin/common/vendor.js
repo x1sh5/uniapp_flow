@@ -7929,7 +7929,7 @@ const pages = [
   {
     path: "pages/addtask/addtask",
     style: {
-      navigationBarTitleText: "创建任务",
+      navigationBarTitleText: "",
       enablePullDownRefresh: false
     }
   },
@@ -7952,7 +7952,7 @@ const pages = [
     path: "pages/newTask/newTask",
     style: {
       navigationStyle: "custom",
-      navigationBarTitleText: "编辑任务"
+      navigationBarTitleText: "创建任务"
     }
   },
   {
@@ -8070,6 +8070,7 @@ const pages = [
   {
     path: "pages/editTask/editTask",
     style: {
+      navigationStyle: "custom",
       navigationBarTitleText: "编辑任务",
       enablePullDownRefresh: false
     }

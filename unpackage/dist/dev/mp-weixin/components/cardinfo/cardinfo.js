@@ -35,21 +35,47 @@ const _sfc_main = {
     },
     reward: {
       get() {
-        return this.task.rewardtype == 1 ? this.task.fixedreward : this.task.percentreward;
+        return this.task.rewardtype === common_Task.RewardType.Fiexd ? this.task.fixedReward : this.task.percentReward;
       },
       set(value) {
-        if (this.task.rewardtype === 1) {
-          this.task.fixedreward = value;
+        if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
+          this.task.fixedReward = value;
         }
-        if (this.task.rewardtype === 2) {
-          this.task.percentreward = value;
+        if (this.task.rewardtype === common_Task.RewardType.Percent) {
+          this.task.percentReward = value;
         }
       }
+    },
+    rewardtype: {
+      get() {
+        return this.task.rewardtype;
+      },
+      set(value) {
+        this.task.rewardtype = parseInt(value);
+      }
+    },
+    rewardSymbol() {
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
+        return "￥";
+      }
+      if (this.task.rewardtype === common_Task.RewardType.Percent) {
+        return "%";
+      }
+      return "";
     },
     branch: {
       get() {
         return this.$store.getters.getBranch(this.task.branchid);
       }
+    },
+    depart() {
+      let d;
+      try {
+        d = this.branchs[this.branchOrder]["name"];
+      } catch (e) {
+        d = "部门";
+      }
+      return d;
     },
     branchOrder: {
       get() {
@@ -73,9 +99,12 @@ const _sfc_main = {
     },
     deadline: {
       get() {
-        let index = this.task.deadline.indexOf("T");
-        if (index !== -1) {
-          return this.task.deadline.substring(0, index);
+        try {
+          let index = this.task.deadline.indexOf("T");
+          if (index !== -1) {
+            return this.task.deadline.substring(0, index);
+          }
+        } catch (e) {
         }
         return this.task.deadline;
       },
@@ -101,13 +130,13 @@ const _sfc_main = {
     },
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
-      this.$rewardTypeValue = e;
+      this.rewardtypeSymbol.text = e.text;
       let pages = getCurrentPages();
       let current = pages[pages.length - 1];
       if (current.mode && current.mode == "single") {
-        this.task.percentreward = 100;
+        this.task.percentReward = 100;
       } else {
-        this.task.percentreward = "";
+        this.task.percentReward = "";
       }
     },
     detail(e) {
@@ -119,7 +148,7 @@ const _sfc_main = {
         } else {
           const pages = getCurrentPages();
           let current = pages[pages.length - 1];
-          if (current.route.split("/").at(-1) !== "taskDetail") {
+          if (current.route.split("/").at(-1) !== "taskDetail" && current.route.split("/").at(-1) !== "myTaskDetail") {
             this.$store.commit("setCurrentTask", this.task);
             this.$store.dispatch("genHistory", this.task.id);
             common_vendor.index.navigateTo({
@@ -131,9 +160,9 @@ const _sfc_main = {
     },
     updateReward(event) {
       if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
-        this.task.fixedreward = event.detail.value;
+        this.task.fixedReward = event.detail.value;
       } else if (this.task.rewardtype === common_Task.RewardType.Percent) {
-        this.task.percentreward = event.detail.value;
+        this.task.percentReward = event.detail.value;
       }
     },
     updateBrief(event) {
@@ -159,13 +188,13 @@ const _sfc_main = {
         });
         return false;
       }
-      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedreward) {
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
         return false;
       }
-      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentreward) {
+      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
@@ -204,13 +233,13 @@ const _sfc_main = {
         });
         return false;
       }
-      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedreward) {
+      if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
         return false;
       }
-      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentreward) {
+      if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
@@ -262,9 +291,8 @@ const _sfc_main = {
       vis: false,
       status: ["代接", "待完成", "完成"],
       branchIndex: false,
-      $rewardTypeValue: 0,
-      rewardtype: {
-        value: 0,
+      rewardtypeSymbol: {
+        text: "%",
         options: [
           {
             text: "￥",
@@ -306,40 +334,41 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     l: common_vendor.o((...args) => $options.updateReward && $options.updateReward(...args)),
     m: $options.reward,
     n: common_vendor.o(($event) => $options.reward = $event.detail.value),
-    o: common_vendor.o($options.rewardTypeChange),
-    p: common_vendor.o(($event) => $data.$rewardTypeValue = $event),
-    q: common_vendor.p({
-      localdata: $data.rewardtype.options,
-      clear: false,
-      modelValue: "2",
-      placeholder: "类型",
-      disabled: !$props.editable,
-      modelValue: $data.$rewardTypeValue
-    }),
-    r: $props.editable
+    o: common_vendor.t($options.rewardSymbol),
+    p: $props.editable
   }, $props.editable ? {
-    s: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+    q: common_vendor.o($options.rewardTypeChange),
+    r: common_vendor.p({
+      localdata: $data.rewardtypeSymbol.options,
+      clear: false,
+      modelValue: $options.rewardtype,
+      placeholder: "类型"
+    })
   } : {}, {
-    t: common_vendor.t($options.taskType),
-    v: common_vendor.t($options.branchs[$options.branchOrder]["name"]),
-    w: !$props.editable,
-    x: $options.branchs,
-    y: $options.branchOrder,
-    z: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    A: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    B: common_vendor.t($options.userName),
-    C: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    D: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
-    E: common_vendor.t($data.status[$props.task.status]),
-    F: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    G: $data.vis
+    s: $props.editable
+  }, $props.editable ? {
+    t: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+  } : {}, {
+    v: common_vendor.t($options.taskType),
+    w: common_vendor.t($options.depart),
+    x: !$props.editable,
+    y: $options.branchs,
+    z: $options.branchOrder,
+    A: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    B: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
+    C: common_vendor.t($options.userName),
+    D: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    E: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
+    F: common_vendor.t($data.status[$props.task.status]),
+    G: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    H: $data.vis
   }, $data.vis ? {
-    H: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
-    I: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
+    I: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
+    J: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
   } : {}, {
-    J: common_vendor.n(`task${$options.Id % 3}`),
-    K: common_vendor.o((...args) => $options.detail && $options.detail(...args)),
-    L: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args))
+    K: common_vendor.n(`task${$options.Id % 3}`),
+    L: common_vendor.o((...args) => $options.detail && $options.detail(...args)),
+    M: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args))
   });
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);

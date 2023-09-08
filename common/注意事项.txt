@@ -4,6 +4,14 @@ uniapp
   1. 修改common/signalr.js
 		引入import { cookieManager } from './weapp-cookie.js';
 		uni.getRequestQueries 替换为 cookieManager.default.getRequestQueries
+		
+		修改this._webSocket && this._webSocket.readyState === WebSocket.OPEN为this._webSocket && this._webSocket.readyState === 1
+		
+		修改this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds ?? DEFAULT_TIMEOUT_IN_MS 为
+		 this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
+		 
+		修改this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds??DEFAULT_PING_INTERVAL_IN_MS 为
+		 this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds!==null&&keepAliveIntervalInMilliseconds!==undefined ?keepAliveIntervalInMilliseconds : DEFAULT_PING_INTERVAL_IN_MS;
 
 
 微信小程序：
@@ -15,20 +23,10 @@ uniapp
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	
-	4. 修改commen/signalr.js 
-		添加const common_weappCookie = require("./weapp-cookie.js");
-		替换common_vendor.index.getRequestQueries为common_weappCookie.cookieManager.default.getRequestQueries
 		
-	5. commen/signalr.js
-		修改this._webSocket && this._webSocket.readyState === WebSocket.OPEN为this._webSocket && this._webSocket.readyState === 1
-		修改this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds ?? DEFAULT_TIMEOUT_IN_MS 为
-		 this.serverTimeoutInMilliseconds = serverTimeoutInMilliseconds!==null&&serverTimeoutInMilliseconds!==undefined ?serverTimeoutInMilliseconds : DEFAULT_TIMEOUT_IN_MS;
-		修改this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds??DEFAULT_PING_INTERVAL_IN_MS 为
-		 this.keepAliveIntervalInMilliseconds = keepAliveIntervalInMilliseconds!==null&&keepAliveIntervalInMilliseconds!==undefined ?keepAliveIntervalInMilliseconds : DEFAULT_PING_INTERVAL_IN_MS;
-		
-	6. pages/login/login.wxml
+	4. pages/login/login.wxml
 		修改<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
-			为 <text>密码：<text>密码：</text><input name="password" class="lg-input" password type="text" value="lisi1234"/>
+			为 <text>密码：</text><input name="password" class="lg-input" password type="text" value="lisi1234"/>
 		
 	微信开发工具本地设置：
 	a. 调试基础库 2.32.3

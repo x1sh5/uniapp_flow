@@ -36,8 +36,8 @@
 					  "finishtime": "0001-01-01T00:00:00",
 					  "deadline": "",
 					  "publishtime": "0001-01-01T00:00:00",
-					  "fixedreward": '',
-					  "percentreward": '',
+					  "fixedReward": '',
+					  "percentReward": '',
 					  "rewardtype": 1,
 					  "status": 1,
 					  "title": "",
@@ -78,6 +78,7 @@
 		},
 		methods:{
 			edit(e){
+				
 				uni.navigateTo({
 					url:"/pages/editTask/editTask"
 				})

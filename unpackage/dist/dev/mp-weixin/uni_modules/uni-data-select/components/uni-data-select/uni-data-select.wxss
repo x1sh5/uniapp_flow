@@ -32,16 +32,17 @@
   display: flex;
   align-items: center;
   width: 100%;
+  /* width: auto; */
   flex: 1;
   box-sizing: border-box;
 }
 .uni-stat-box {
-  width: 100%;
-  flex: 1;
+  width: auto;
+  min-width: 5em;
 }
 .uni-stat__actived {
-  width: 100%;
-  flex: 1;
+  width: auto;
+  min-width: 5em;
 }
 .uni-label-text {
   font-size: 14px;

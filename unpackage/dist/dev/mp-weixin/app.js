@@ -49,7 +49,7 @@ const _sfc_main = {
     await this.$store.dispatch("fetchBranchs");
     await this.$store.dispatch("fetchTaskTypes");
     this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: "" }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: "全部", data: data });
+      this.$store.commit("setTasks", { taskTypeName: "全部", data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });

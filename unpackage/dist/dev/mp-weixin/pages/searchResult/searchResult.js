@@ -19,7 +19,7 @@ const _sfc_main = {
         url: this.$store.state.apiBaseUrl + "/api/Assignment/search/" + encodeURI(searchWord),
         success: (res) => {
           if (res.statusCode === 200) {
-            this.tasks = res.data.$values;
+            this.tasks = res.data;
           } else {
             common_vendor.index.showToast({
               title: "网络出错！"

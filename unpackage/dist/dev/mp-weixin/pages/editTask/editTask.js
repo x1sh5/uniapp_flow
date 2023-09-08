@@ -28,6 +28,11 @@ const _sfc_main = {
           url: "/pages/publishResult/publishResult"
         });
       }
+    },
+    updateTask(id, payload) {
+      console.log("updateTask triggered", id, payload);
+      this.item.description = payload.html;
+      this.$refs["id" + id].updateT(payload);
     }
   },
   created() {

@@ -1,4 +1,5 @@
 <template>
+	<view style="width: 100%;height: 44px;"></view>
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" right-icon="checkmarkempty" title="任务编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 	<view>
@@ -40,6 +41,14 @@
 				}
 			
 			},
+			updateTask(id,payload){
+				//{ctx:res, files: lastFiles}
+				console.log("updateTask triggered",id,payload)
+
+				this.item.description = payload.html;
+				this.$refs['id'+id].updateT(payload);
+			},
+
 		},
 		created() {
 			this.item = this.$store.state.currentTask;

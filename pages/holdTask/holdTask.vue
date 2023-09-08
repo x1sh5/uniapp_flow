@@ -2,7 +2,7 @@
 	<view>
 		<uni-segmented-control :current="current" :values="items" style-type="text"
 			active-color="#4cd964" @clickItem="onClickItem" ></uni-segmented-control>
-		<view style="width: 90%;">
+		<view style="width: 96%;margin-left: auto;margin-right: auto;">
 			<view v-if="current === 0">
 				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'undone'" style="margin-top:5px;"/>

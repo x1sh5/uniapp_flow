@@ -53,7 +53,7 @@ const _sfc_main = {
           success: (res) => {
             console.log(res);
             if (res.statusCode === 200) {
-              this.tasks = res.data.$values;
+              this.tasks = res.data;
             } else {
               common_vendor.index.showToast({
                 title: "网络出错了！"
@@ -77,7 +77,7 @@ const _sfc_main = {
   onReachBottom() {
     let maxIndex = this.maxIndex;
     this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, typeId: this.currentTypeId }).then((data) => {
-      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data: data });
+      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
@@ -87,7 +87,7 @@ const _sfc_main = {
     await this.$store.dispatch("fetchBranchs");
     await this.$store.dispatch("fetchTaskTypes");
     this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: this.currentTypeId }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: data });
+      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });

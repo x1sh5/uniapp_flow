@@ -28,6 +28,9 @@
   font-size: large;
   font-style: italic;
 }
+.custom-margin{
+	margin:5px 10px;
+}
 .user-avatar{
 	width: 48px;
 	height: 48px;

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-for="item in $historys" :key="item.id" style="margin-top:5px;">
+		<view v-for="item in $historys" :key="item.id" class="custom-margin">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
 	</view>
@@ -58,5 +58,5 @@
 </script>
 
 <style>
-
+	@import url("../../common/commen.css");
 </style>

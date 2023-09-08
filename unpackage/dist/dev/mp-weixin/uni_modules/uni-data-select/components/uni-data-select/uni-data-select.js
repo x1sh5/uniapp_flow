@@ -190,13 +190,13 @@ const _sfc_main = {
       if (!item.disable) {
         this.showSelector = false;
         this.current = this.formatItemName(item);
-        this.emit(item.value);
+        this.emit(item);
         this.$emit("data-to-parent", item);
       }
     },
     emit(val) {
-      this.$emit("input", val);
-      this.$emit("update:modelValue", val);
+      this.$emit("input", val.value);
+      this.$emit("update:modelValue", val.value);
       this.$emit("change", val);
       if (this.collection) {
         this.setCache(val);

@@ -1,9 +1,9 @@
 ///发布任务时的任务模型
 
 export class Task {
-    constructor(branchid, deadline, /*finishtime, publishtime, */title, typeId, id, description, fixedreward, percentreward, rewardtype, status) {
-        this.fixedreward = '';
-		this.percentreward = '';
+    constructor(branchid, deadline, /*finishtime, publishtime, */title, typeId, id, description, fixedReward, percentReward, rewardtype, status) {
+        this.fixedReward = '';
+		this.percentReward = '';
         this.rewardtype = RewardType.Fiexd;
         this.status = TaskStatus.WaitForAccept;
         this.verify = false;
@@ -24,10 +24,10 @@ export class Task {
 			this.description = description;
 		}
         if (fixedreward) {
-            this.fixedreward = fixedreward;
+            this.fixedReward = fixedReward;
         }
-		if (percentreward) {
-		    this.percentreward = percentreward;
+		if (percentReward) {
+		    this.percentReward = percentReward;
 		}
         if (rewardtype) {
             this.rewardtype = rewardtype;

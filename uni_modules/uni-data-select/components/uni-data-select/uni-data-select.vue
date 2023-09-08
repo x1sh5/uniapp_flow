@@ -246,13 +246,13 @@
 				if (!item.disable) {
 					this.showSelector = false
 					this.current = this.formatItemName(item)
-					this.emit(item.value)
+					this.emit(item)
 					this.$emit("data-to-parent",item)
 				}
 			},
 			emit(val) {
-				this.$emit('input', val)
-				this.$emit('update:modelValue', val)
+				this.$emit('input', val.value)
+				this.$emit('update:modelValue', val.value)
 				this.$emit('change', val)
 				if (this.collection) {
 					this.setCache(val);
@@ -344,19 +344,22 @@
 		/* #ifdef H5 */
 		cursor: pointer;
 		/* #endif */
-		width: 100%;
+		width: 100%; 
+		/* width: auto; */
 		flex: 1;
 		box-sizing: border-box;
 	}
 
 	.uni-stat-box {
-		width: 100%;
-		flex: 1;
+		width: auto;
+		min-width: 5em;
+		//flex: 1;
 	}
 
 	.uni-stat__actived {
-		width: 100%;
-		flex: 1;
+		width: auto;
+		min-width: 5em;
+		//flex: 1;
 		// outline: 1px solid #2979ff;
 	}
 

@@ -9,7 +9,7 @@ const _sfc_main = {
   },
   computed: {
     hasLogin() {
-      return this.$store.state.$hasLogin;
+      return this.$store.getters.hasLogin;
     },
     userName() {
       return this.$store.state.$userName;
@@ -75,6 +75,8 @@ const _sfc_main = {
   created() {
     common_vendor.index.showModal({
       content: "小程序将使用用户微信头像作为默认头像",
+      cancelText: "不同意",
+      confirmText: "同意",
       success: () => {
         common_vendor.index.getUserInfo({
           success: (res) => {
@@ -87,22 +89,23 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.t($options.userName),
-    b: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
-    c: common_vendor.o((...args) => $options.history && $options.history(...args)),
-    d: common_vendor.o((...args) => $options.draftBox && $options.draftBox(...args)),
-    e: common_vendor.o((...args) => $options.holds && $options.holds(...args)),
-    f: common_vendor.o(($event) => $options.holds(0)),
-    g: common_vendor.o(($event) => $options.holds(1)),
-    h: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    i: $options.hasLogin
+    a: $data.imgsrc,
+    b: common_vendor.t($options.userName),
+    c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
+    d: common_vendor.o((...args) => $options.history && $options.history(...args)),
+    e: common_vendor.o((...args) => $options.draftBox && $options.draftBox(...args)),
+    f: common_vendor.o((...args) => $options.holds && $options.holds(...args)),
+    g: common_vendor.o(($event) => $options.holds(0)),
+    h: common_vendor.o(($event) => $options.holds(1)),
+    i: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    j: $options.hasLogin
   }, $options.hasLogin ? {
-    j: common_vendor.o((...args) => $options.signout && $options.signout(...args))
+    k: common_vendor.o((...args) => $options.signout && $options.signout(...args))
   } : common_vendor.e({
-    k: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    l: !$options.hasLogin
+    l: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
+    m: !$options.hasLogin
   }, !$options.hasLogin ? {
-    m: common_vendor.o((...args) => $options.signup && $options.signup(...args))
+    n: common_vendor.o((...args) => $options.signup && $options.signup(...args))
   } : {}));
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userCenter/userCenter.vue"]]);

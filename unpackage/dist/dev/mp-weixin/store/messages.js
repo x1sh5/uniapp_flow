@@ -4,7 +4,9 @@ const Messages = {
   namespaced: true,
   state: {
     //objs obj like {cid:int,unread:int,title:string,lasttime:datatime,message:string,mtype:default 1}
-    $chatChannels: []
+    $chatChannels: [],
+    hasFirstLoad: /* @__PURE__ */ new Map()
+    // {userid,bool}
   },
   mutations: {
     addChat(state, payload) {
@@ -77,11 +79,18 @@ const Messages = {
   },
   getters: {
     getCcById: (state) => (id) => {
-      let cc = state.$chatChannels.findIndex(item=>item.cid == parseInt(id));
-			if(cc!== -1){
-				return state.$chatChannels[cc];
-			}
-			return null;
+      let cc = state.$chatChannels.findIndex((item) => item.cid == parseInt(id));
+      if (cc !== -1) {
+        return state.$chatChannels[cc];
+      }
+      return null;
+    },
+    getHasFirstLoad: (state) => (userid) => {
+      let has = state.hasFirstLoad.get(userid);
+      if (has === void 0) {
+        return false;
+      }
+      return true;
     }
   },
   actions: {
@@ -113,6 +122,11 @@ const Messages = {
           2e3
         );
       });
+    },
+    updateHasFirstLoad({ state }, userid) {
+      if (state.hasFirstLoad.get(userid) === void 0) {
+        state.hasFirstLoad.set(userid, true);
+      }
     }
   }
 };
