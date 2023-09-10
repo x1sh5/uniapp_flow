@@ -26,23 +26,27 @@
 					url:url,
 					method:"POST",
 					data:JSON.stringify(e.detail.value),
-					success(res) {
+					success:(res)=> {
 						console.log(res);
-						console.log(that.$store);
-						let domain = url.split("/")[2].split(":")[0];
-						cookieManager.default.setResponseCookies(res.data.accessToken,domain);
-						cookieManager.default.setResponseCookies(res.data.refreshToken,domain);
-						that.$store.commit("changeLoginState");
-						that.$store.commit("setUserName", res.data.userName);
-						// uni.navigateBack({
-						// 	delta:that.depth
-						// })
-						uni.reLaunch({
-							url: '/pages/userCenter/userCenter'
-						})
-					},
-					fail(err) {
-						console.log(err)
+						if(res.statusCode===200){
+							let domain = url.split("/")[2].split(":")[0];
+							cookieManager.default.setResponseCookies(res.data.accessToken,domain);
+							cookieManager.default.setResponseCookies(res.data.refreshToken,domain);
+							that.$store.commit("login");
+							that.$store.commit("setUserName", res.data.userName);
+							// uni.navigateBack({
+							// 	delta:that.depth
+							// })
+							uni.reLaunch({
+								url: '/pages/userCenter/userCenter'
+							})
+						}else if(res.statusCode===401){
+							uni.showModal({
+								content: res.data,
+								showCancel:false
+							})
+						}
+
 					},
 					complete() {
 						

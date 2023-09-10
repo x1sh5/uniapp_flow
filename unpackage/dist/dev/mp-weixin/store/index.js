@@ -3,7 +3,7 @@ const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
 const signalR = require("../common/signalr.js");
-const baseUrl = "https://www.liusha-gy.com";
+const baseUrl = "https://localhost:7221";
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,

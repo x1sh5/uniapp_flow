@@ -5,7 +5,7 @@
 		<view>内容编辑</view>
 		<button @click="submitEvent">确认</button> -->
 	<!-- </view> -->
-	<view style="width: 100%;height: 44px;"></view>
+	<view style="width: 100%;height: 60px;"></view>
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
 			

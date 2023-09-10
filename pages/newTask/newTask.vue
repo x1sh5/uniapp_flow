@@ -1,5 +1,5 @@
 <template>
-	<view style="width: 100%;height: 44px;"></view>
+	<view style="width: 100%;height: 60px;"></view>
 	<!-- left-icon的值为uni组件中uniicons下uniicons.css中的类名去掉前缀uniui-后得到的值 -->
 	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
 	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>

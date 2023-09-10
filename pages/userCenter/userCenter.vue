@@ -30,6 +30,7 @@
 		<view class="driver"></view>
 		
 		<view class="misc">
+			<view @click="toReference">审核区间参考</view>
 			<view>帮助中心</view>
 			<view>技能互助文档</view>
 			<view>收益来源</view>
@@ -37,11 +38,13 @@
 		</view>
 		
 		<view class="driver"></view>
+		<view v-show="hasLogin">
+			<button @click="signout">退出</button>
+		</view>
 		
-		<button v-if="hasLogin" @click="signout">注销</button>
-		<view v-else>
+		<view v-show="!hasLogin">
 			<button  @click="signin">登录</button>
-			<button v-if="!hasLogin"  @click="signup">注册</button>
+			<button  @click="signup">注册</button>
 		</view>
 		
 		
@@ -50,21 +53,33 @@
 
 <script>
 	import { StorageKeys } from "../../common/storageKeys.js";
+
 	export default {
 		data() {
 			return {
 				imgsrc:"",
+				login: false
 			};
 		},
 		computed:{
-			hasLogin(){
-				return this.$store.getters.hasLogin
+			hasLogin:{
+				get(){
+					return this.login;
+				},
+				set(value){
+					this.login = value
+				}
 			},
 			userName(){
 				return this.$store.state.$userName;
 			}
 		},
 		methods:{
+			toReference(e){
+				uni.navigateTo({
+					url: "/pages/reference/reference"
+				})
+			},
 			myPublishs(e){
 				uni.navigateTo({
 					url:"/pages/myPublishs/myPublishs"
@@ -101,6 +116,16 @@
 			},
 			signout(e){
 				console.log("signout")
+				const lurl = this.$store.state.apiBaseUrl+"/api/Account/logout"
+				uni.requestWithCookie({
+					url: lurl,
+					method: "POST",
+					success:()=>{
+						this.$store.commit("loginOut");
+						this.hasLogin = this.$store.getters.hasLogin();
+						this.$nextTick();
+					}
+				});
 				uni.removeStorage({
 					key:StorageKeys.cookies
 				});
@@ -110,7 +135,7 @@
 				uni.removeStorage({
 					key:StorageKeys.userName
 				});
-				this.$store.commit("changeLoginState")
+				
 			},
 			toSetting(e){
 				uni.navigateTo({
@@ -121,9 +146,12 @@
 		onLoad() {
 			this.$store.commit("initHasLogin");
 			this.$store.commit("initUserName");
+			
 		},
-		// #ifdef MP-WEIXIN
+		
 		created() {
+			this.hasLogin = this.$store.getters.hasLogin();
+			// #ifdef MP-WEIXIN
 			uni.showModal({
 				content:"小程序将使用用户微信头像作为默认头像",
 				cancelText: "不同意",
@@ -136,9 +164,9 @@
 					});
 				}
 			});
-
+			// #endif
 		}
-		// #endif
+		
 	}
 </script>
 

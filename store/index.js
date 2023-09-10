@@ -7,7 +7,7 @@ import { Messages } from "./messages.js"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://www.liusha-gy.com"; //"https://localhost:7221"//"https://www.liusha-gy.com"; //"https://www.wangyan.net"; 
+const baseUrl = "https://localhost:7221"; //""//"https://www.liusha-gy.com"; //"https://www.wangyan.net"; 
 
 const store = createStore({
 	state:{
@@ -66,9 +66,14 @@ const store = createStore({
 				state.tasks.get(t).push(...payload.data);
 			}
 		},
-		changeLoginState(state){
-			state.$hasLogin = !state.$hasLogin
-			uni.setStorageSync(StorageKeys.hasLogin,state.$hasLogin);
+		login(state){
+
+			uni.setStorageSync(StorageKeys.hasLogin,true);
+			state.$hasLogin = true
+		},
+		loginOut(state){
+			uni.setStorageSync(StorageKeys.hasLogin,false);
+			state.$hasLogin = false
 		},
 		setUserName(state,payload){
 			state.$userName = payload;
@@ -180,15 +185,15 @@ const store = createStore({
 		publishResults(state){
 			return state.$publishResults
 		},
-		hasLogin(){
-			let hasLogin = false;
+		hasLogin:(state)=>(p=1)=>{
+			let Login;
 			try{
-				hasLogin = uni.getStorageSync(StorageKeys.hasLogin);
+				Login = uni.getStorageSync(StorageKeys.hasLogin);
 			}catch(e){
-				hasLogin = false;
+				Login = false;
 				console.error(e);
 			}
-			return hasLogin;
+			return Login;
 		}
 	},
 	actions:{
