@@ -16,11 +16,11 @@
 				</view>
 				<view>
 				   <view v-for="t in lines" :key="t.id" class="td">
-						<view class="stitle"><textarea @blur="stitleChange(t.id)" auto-height="true" rows="3" inputmode="text"/></view>
-						<view class="rate"><textarea @blur="rateChange(t.id)" auto-height="true" rows="3" inputmode="text"/></view>
-						<view class="brief"><textarea @blur="briefChange(t.id)" auto-height="true" rows="3" inputmode="text"/></view>
-						<view class="detail"><textarea @blur="detailChange(t.id)" maxlength="400" auto-height="true" rows="3" inputmode="text"/></view>
-						<view class="remark"><textarea @blur="remarkChange(t.id)"  auto-height="true" rows="3" inputmode="text"/></view>
+						<view class="stitle"><textarea ref="`{'stitle'+t.id}`" @blur="stitleChange" auto-height="true" rows="3" inputmode="text"/></view>
+						<view class="rate"><textarea ref="`{'rate'+t.id}`" @blur="rateChange" auto-height="true" rows="3" inputmode="text"/></view>
+						<view class="brief"><textarea ref="`{'brief'+t.id}`" @blur="briefChange" auto-height="true" rows="3" inputmode="text"/></view>
+						<view class="detail"><textarea ref="`{'detail'+t.id}`" @blur="detailChange" maxlength="400" auto-height="true" rows="3" inputmode="text"/></view>
+						<view class="remark"><textarea ref="`{'remark'+t.id}`" @blur="remarkChange"  auto-height="true" rows="3" inputmode="text"/></view>
 						<view class="del"><button @click="delLine(t.id)" style="color: red;">x</button></view>
 					</view>
 				</view>
