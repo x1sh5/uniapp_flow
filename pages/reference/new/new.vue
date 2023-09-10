@@ -62,9 +62,8 @@
 					data: e
 				});
 			},
-			stitleChange:(e)=>(id)=>{
-				console.log(3)
-				console.log(e,id)
+			stitleChange(e){
+				console.log(e)
 			},
 			rateChange(id){
 				
