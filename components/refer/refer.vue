@@ -33,7 +33,7 @@
 						<view class="remark">
 							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
-						<view class="del" v-show="editable">
+						<view class="del" v-show="!editable">
 							<button @click="delLine(t.id)" style="color: red;">x</button>
 						</view>
 					</view>
@@ -43,7 +43,7 @@
 			<view class="addLine" @click="addLine">
 				<view style="margin-top: auto;margin-bottom:auto;text-align: center;">+</view>
 			</view>
-			<button v-show="editable" style="width: 80px;height: 40px;"  form-type="submit">提交</button>
+			<button v-show="!editable" style="width: 80px;height: 40px;"  form-type="submit">提交</button>
 		</form>
 
 	</view>
@@ -81,7 +81,6 @@
 			addLine(e){
 				this.content.set(this.curr,{ stitle:"", rate: "", brief: "", detail: "", remark: "" });
 				this.lines.push({id:this.curr++});
-				this.$nextTick();
 			},
 			delLine(id){
 				let index = this.lines.find(item=>item.id===id);
@@ -89,7 +88,6 @@
 					this.lines.splice(index,1);
 				}
 				this.content.delete(id);
-				this.$nextTick();
 			},
 			commit(e){
 				console.log(e);
