@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-for="d in datas" :key="d.id" @class="detail(d.id)">
+		<view v-for="d in datas" :key="d.id" @click="detail(d.id)">
 			{{d.title}}
 		</view>
 		<view class="addcontainer" @click="newRefer">
@@ -13,7 +13,12 @@
 	export default {
 		data() {
 			return {
-				datas: new Array(),
+				
+			}
+		},
+		computed:{
+			datas(){
+				return this.$store.getters["Refer/refers"]
 			}
 		},
 		methods: {
@@ -30,14 +35,27 @@
 			}
 		},
 		onLoad() {
+			let curl = this.$store.state.apiBaseUrl+"/api/Reference/count";
+			
 			let qurl = this.$store.state.apiBaseUrl+"/api/Reference/gets";
-			uni.requestWithCookie({
-				url: qurl,
-				method: "GET",
+			
+			uni.request({
+				url: curl,
 				success: (res) => {
-					this.datas = res.data;
+					if(this.datas.length!== parseInt(res.data)){
+						uni.requestWithCookie({
+							url: qurl,
+							method: "GET",
+							success: (res) => {
+								this.datas = res.data;
+							}
+						})
+					}
 				}
 			})
+			
+			
+
 		}
 	}
 </script>

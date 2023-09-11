@@ -64,7 +64,7 @@
 		   <!-- range-key 用于指定显示名称属性值 -->
 			<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
-			{{ depart }}</picker>
+			{{ depart["name"] }}</picker>
 			<!-- 发起人 -->
 			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
@@ -159,7 +159,7 @@ import { RewardType } from '../../common/Task'
 			depart(){
 				let d;
 				try{
-					d = this.branchs[this.branchOrder]["name"];
+					d = this.branchs[this.branchOrder];
 				}catch(e){
 					//TODO handle the exception
 					d = "部门";
@@ -213,6 +213,25 @@ import { RewardType } from '../../common/Task'
 					this.task.title = value
 				}
 			},
+			rewardtypeSymbol(){
+				return {
+				  text: '%',
+				  options: [
+					{
+					  text: '￥',
+					  value: '1',
+					  name: "固定",
+					  selected: true,
+					  disable: this.depart&&this.depart.rewardType === "only percent"
+					},
+					{
+					  text: '%',
+					  value: '2',
+					  name: "百分比",
+					  disable: this.depart&&this.depart.rewardType === "only fixed"
+					},]
+				}
+			}
 		},
 		methods:{
 			branchChange(e) {
@@ -220,10 +239,17 @@ import { RewardType } from '../../common/Task'
 				let branchIndex = e.detail.value;
 				this.branchIndex = branchIndex;
 				this.task.branchid = branchIndex;
+				let d = this.branchs[this.branchOrder];
+				if(d.rewardType==="only percent"){
+					this.task.rewardtype = 2
+				}
+				if(d.rewardType==="only fixed"){
+					this.task.rewardtype = 1
+				}
 			},
 			rewardTypeChange(e){
 				console.log('rewardType 改变，携带值为', e)
-				this.rewardtypeSymbol.text = e.text;
+				this.task.rewardtype = parseInt(e.value);
 				let pages = getCurrentPages();
 				let current = pages[pages.length-1]
 				if(current.mode&&current.mode=="single"){
@@ -365,15 +391,15 @@ import { RewardType } from '../../common/Task'
 					data:this.task,
 					success:(res)=> {
 						if(res.statusCode === 204){
-							this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"});
+							this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"修改成功", errMsg:"ok"});
 							this.$emit('after-publish',this.task.id)
 						}else{
-							this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"})
+							this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"修改失败", errMsg:"server error"})
 						}
 					},
 					fail:(err)=>{
 						console.error(err);
-						this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"})
+						this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"修改失败", errMsg:"client error"})
 					}
 				});
 			},
@@ -401,21 +427,7 @@ import { RewardType } from '../../common/Task'
 				vis: false,
 				status:["代接","待完成","完成"],
 				branchIndex:false,
-				rewardtypeSymbol: {
-				  text: '%',
-				  options: [
-					{
-					  text: '￥',
-					  value: '1',
-					  name: "固定",
-					  selected: true
-					},
-					{
-					  text: '%',
-					  value: '2',
-					  name: "百分比"
-					},]
-				}
+
 			};
 		}
 	}

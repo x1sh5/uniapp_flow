@@ -3,6 +3,7 @@ import {toRaw,nextTick, markRaw} from "vue";
 import { StorageKeys } from "../common/storageKeys.js";
 //import { Publish } from "./publish.js"
 import { Messages } from "./messages.js"
+import { References } from "./reference.js"
 //import * as signalr from "signalr-for-wx/dist/index"
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
@@ -351,7 +352,8 @@ const store = createStore({
 
 	},
 	modules:{
-		Msgs:Messages
+		Msgs: Messages,
+		Refer: References
 	}
 })
 
