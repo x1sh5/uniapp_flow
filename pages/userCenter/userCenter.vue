@@ -30,11 +30,11 @@
 		<view class="driver"></view>
 		
 		<view class="misc">
-			<view @click="toReference">审核区间参考</view>
-			<view>帮助中心</view>
-			<view>技能互助文档</view>
-			<view>收益来源</view>
-			<view @click="toSetting">用户设置</view>
+			<view class="user-view" @click="toReference">审核区间参考</view>
+			<view class="user-view">帮助中心</view>
+			<view class="user-view">技能互助文档</view>
+			<view class="user-view">收益来源</view>
+			<view class="user-view" @click="toSetting">用户设置</view>
 		</view>
 		
 		<view class="driver"></view>
@@ -172,4 +172,14 @@
 
 <style lang="less">
 	@import url('./userCenter.less');
+	
+	.user-view{
+		margin-left: 10px;
+		margin-top: 2px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+		box-sizing: content-box;
+		border: 1px solid darkgrey;
+		background-color: antiquewhite;
+	}
 </style>
