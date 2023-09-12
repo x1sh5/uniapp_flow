@@ -33,7 +33,7 @@
 						<view class="remark">
 							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="refer.content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
-						<view class="del" v-show="!editable">
+						<view class="del" v-show="editable">
 							<button @click="delLine(t.id)" style="color: red;">x</button>
 						</view>
 					</view>
@@ -71,14 +71,18 @@
 		beforeMount() {
 			console.log("beforeMount");
 			this.curr = this.refer.content.size;
-			let l = [];
-			for(let i of Array.from(this.refer.content.keys()) ){
-				l.push({id: i});
+
+			if(this.curr>0){
+				let l = [];
+				for(let i of Array.from(this.refer.content.keys()) ){
+					l.push({id: i});
+				}
+				this.lines = l; 
 			}
-			this.lines = l; 
+			
 		},
 		mounted() {
-			
+			console.log("mounted");
 		},
 		methods: {
 			addLine(e){
@@ -145,6 +149,12 @@
 		created() {
 			console.log("created");
 		},
+		beforeRouteEnter(){
+			console.log("beforeRouteEnter");
+		},
+		beforeRouteLeave(){
+			console.log("beforeRouteLeave");
+		}
 	}
 </script>
 

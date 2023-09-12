@@ -64,7 +64,7 @@
 		   <!-- range-key 用于指定显示名称属性值 -->
 			<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
-			{{ depart["name"] }}</picker>
+			{{ depart?depart["name"]:'' }}</picker>
 			<!-- 发起人 -->
 			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
