@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-for="d in datas" :key="d.id" @click="detail(d.id)">
+		<view v-for="d in datas" :key="d.id" @click="detail(d.id)" class="title">
 			{{d.title}}
 		</view>
 		<view class="addcontainer" @click="newRefer">
@@ -47,7 +47,7 @@
 							url: qurl,
 							method: "GET",
 							success: (res) => {
-								this.datas = res.data;
+								this.$store.commit("Refer/updateRefers", res.data);
 							}
 						})
 					}
@@ -61,6 +61,22 @@
 </script>
 
 <style>
+	@import url('../../common/unicon.css');
+	
+  .title{
+	display: flex;
+    height: 40px;
+    width: 80%;
+    background-color: rgb(218 175 178 / 10%);
+    margin-left: auto;
+    margin-right: auto;
+    /* align-content: center; */
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+	margin-bottom: 5px;
+  }
+	 
   .addcontainer{
 	  width: 55px;
 	  height: 55px;
@@ -87,7 +103,7 @@
   }
   
   .add-icon::before{
-	  content: "\e67b";
+	  content: "\e468";
   }
   
 </style>

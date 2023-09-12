@@ -2,9 +2,9 @@
 
 <template>
 	<view style="width: 90%;margin-left: auto;margin-right: auto;">
-		<form @submit="commit" >
+		
 			<view style="text-align: center;">
-				<input :disabled="!editable" name="title" type="text" placeholder="标题"/>
+				<input :disabled="!editable" v-model="refer.title" type="text" placeholder="标题"/>
 			</view>
 			<view>
 				<!-- 标头 -->
@@ -19,19 +19,19 @@
 				<view>
 				   <view v-for="t in lines" :key="t.id" class="td">
 						<view class="stitle">
-							<textarea :disabled="!editable" :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="content.get(t.id).stitle" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable" :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle" auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="rate">
-							<textarea :disabled="!editable" :ref="'rate'+`${t.id}`" @blur="rateChange(t.id)" v-model="content.get(t.id).rate" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable" :ref="'rate'+`${t.id}`" @blur="rateChange(t.id)" v-model="refer.content.get(t.id).rate" auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="brief">
-							<textarea :disabled="!editable" :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="content.get(t.id).brief" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable" :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="detail">
-							<textarea :disabled="!editable" :ref="'detail'+`${t.id}`" @blur="detailChange(t.id)" v-model="content.get(t.id).detail" maxlength="400" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable" :ref="'detail'+`${t.id}`" @blur="detailChange(t.id)" v-model="refer.content.get(t.id).detail" maxlength="400" auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="remark">
-							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="refer.content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="del" v-show="!editable">
 							<button @click="delLine(t.id)" style="color: red;">x</button>
@@ -40,12 +40,11 @@
 				</view>
 
 			</view>
-			<view class="addLine" @click="addLine">
+			<view v-show="editable"  class="addLine" @click="addLine">
 				<view style="margin-top: auto;margin-bottom:auto;text-align: center;">+</view>
 			</view>
-			<button v-show="!editable" style="width: 80px;height: 40px;"  form-type="submit">提交</button>
-		</form>
-
+			<button v-show="editable" style="width: 80px;height: 40px;"  @click="commit">提交</button>
+		
 	</view>
 </template>
 
@@ -54,22 +53,11 @@
 		data() {
 			return {
 				curr:0,
-				
+				lines: []
 			}
 		},
 		props: {
-			lines:{
-				type: Array,
-				default(){
-					return new Array();
-				}
-			},
-			content: {
-				type: Map,
-				default(){
-					return new Map();
-				}
-			},
+			refer: Object,
 			editable: {
 				type: Boolean,
 				default(){
@@ -77,9 +65,12 @@
 				}
 			}
 		},
+		computed: {
+
+		},
 		methods: {
 			addLine(e){
-				this.content.set(this.curr,{ stitle:"", rate: "", brief: "", detail: "", remark: "" });
+				this.refer.content.set(this.curr,{ stitle:"", rate: "", brief: "", detail: "", remark: "" });
 				this.lines.push({id:this.curr++});
 			},
 			delLine(id){
@@ -87,22 +78,29 @@
 				if(index!==-1){
 					this.lines.splice(index,1);
 				}
-				this.content.delete(id);
+				this.refer.content.delete(id);
 			},
 			commit(e){
-				console.log(e);
-				let title = e.detail.value.title;
-				if(!title){
+				if(this.refer.title===""){
 					uni.showToast({
 						title: "标题不能为空。"
-					})
+					});
+					return
 				}
-				let content = JSON.stringify(Array.from(this.content));
+				
+				if(this.lines.length === 0){
+					uni.showToast({
+						title: "内容不能为空。"
+					});
+					return
+				}
+				
+				let content = JSON.stringify(Array.from(this.refer.content));
 				let qurl = this.$store.state.apiBaseUrl+"/api/Reference";
-				uni.request({
+				uni.requestWithCookie({
 					url: qurl,
 					method: "POST",
-					data: {id:0, title: title, content: content, authId:0},
+					data: {id:0, title: this.refer.title, content: content, authId:0},
 					success: (res) => {
 						uni.showModal({
 							showCancel: false,
@@ -129,9 +127,24 @@
 			}
 			
 		},
-		onLoad() {
-			this.curr = this.content.size;
-		}
+		beforeCreate() {
+			console.log("beforeCreate");
+			this.curr = this.refer.content.size;
+			let l = [];
+			for(let i of Array.from(this.refer.content.keys()) ){
+				l.push({id: i});
+			}
+			this.lines = l; 
+		},
+		created() {
+			console.log("created");
+			this.curr = this.refer.content.size;
+			let l = [];
+			for(let i of Array.from(this.refer.content.keys()) ){
+				l.push({id: i});
+			}
+			this.lines = l; 
+		},
 	}
 </script>
 

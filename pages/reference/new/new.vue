@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<refer ></refer>
+		<refer :refer="refer" :editable="true"></refer>
 	</view>
 </template>
 
@@ -8,6 +8,7 @@
 	export default {
 		data() {
 			return {
+				refer: {title: "", lines: new Array(), content: new Map()}
 
 			}
 		},

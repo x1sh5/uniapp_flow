@@ -8,14 +8,18 @@ export const References = {
 			return state.datas
 		},
 		getReferById: (state)=>(id)=>{
-			let index = state.datas.find(item=>item.id===id);
-			if(index!==-1){
-				return state.datas[index]
+			let r = state.datas.find(item=>item.id=== parseInt(id) );
+			if(r!== void 0){
+				return r;
 			}
 		}
 	},
 	mutations:{
-		
+		updateRefers(state,payload){
+			if(payload){
+				state.datas = payload;
+			}
+		}
 	},
 	actions:{
 		
