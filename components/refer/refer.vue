@@ -68,6 +68,18 @@
 		computed: {
 
 		},
+		beforeMount() {
+			console.log("beforeMount");
+			this.curr = this.refer.content.size;
+			let l = [];
+			for(let i of Array.from(this.refer.content.keys()) ){
+				l.push({id: i});
+			}
+			this.lines = l; 
+		},
+		mounted() {
+			
+		},
 		methods: {
 			addLine(e){
 				this.refer.content.set(this.curr,{ stitle:"", rate: "", brief: "", detail: "", remark: "" });
@@ -129,21 +141,9 @@
 		},
 		beforeCreate() {
 			console.log("beforeCreate");
-			this.curr = this.refer.content.size;
-			let l = [];
-			for(let i of Array.from(this.refer.content.keys()) ){
-				l.push({id: i});
-			}
-			this.lines = l; 
 		},
 		created() {
 			console.log("created");
-			this.curr = this.refer.content.size;
-			let l = [];
-			for(let i of Array.from(this.refer.content.keys()) ){
-				l.push({id: i});
-			}
-			this.lines = l; 
 		},
 	}
 </script>
