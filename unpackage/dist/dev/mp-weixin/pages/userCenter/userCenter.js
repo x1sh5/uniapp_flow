@@ -4,18 +4,29 @@ const common_storageKeys = require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
-      imgsrc: ""
+      imgsrc: "",
+      login: false
     };
   },
   computed: {
-    hasLogin() {
-      return this.$store.getters.hasLogin;
+    hasLogin: {
+      get() {
+        return this.login;
+      },
+      set(value) {
+        this.login = value;
+      }
     },
     userName() {
       return this.$store.state.$userName;
     }
   },
   methods: {
+    toReference(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/reference/reference"
+      });
+    },
     myPublishs(e) {
       common_vendor.index.navigateTo({
         url: "/pages/myPublishs/myPublishs"
@@ -51,6 +62,16 @@ const _sfc_main = {
     },
     signout(e) {
       console.log("signout");
+      const lurl = this.$store.state.apiBaseUrl + "/api/Account/logout";
+      common_vendor.index.requestWithCookie({
+        url: lurl,
+        method: "POST",
+        success: () => {
+          this.$store.commit("loginOut");
+          this.hasLogin = this.$store.getters.hasLogin();
+          this.$nextTick();
+        }
+      });
       common_vendor.index.removeStorage({
         key: common_storageKeys.StorageKeys.cookies
       });
@@ -60,7 +81,6 @@ const _sfc_main = {
       common_vendor.index.removeStorage({
         key: common_storageKeys.StorageKeys.userName
       });
-      this.$store.commit("changeLoginState");
     },
     toSetting(e) {
       common_vendor.index.navigateTo({
@@ -73,6 +93,7 @@ const _sfc_main = {
     this.$store.commit("initUserName");
   },
   created() {
+    this.hasLogin = this.$store.getters.hasLogin();
     common_vendor.index.showModal({
       content: "小程序将使用用户微信头像作为默认头像",
       cancelText: "不同意",
@@ -88,7 +109,7 @@ const _sfc_main = {
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return common_vendor.e({
+  return {
     a: $data.imgsrc,
     b: common_vendor.t($options.userName),
     c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
@@ -97,16 +118,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.o((...args) => $options.holds && $options.holds(...args)),
     g: common_vendor.o(($event) => $options.holds(0)),
     h: common_vendor.o(($event) => $options.holds(1)),
-    i: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    j: $options.hasLogin
-  }, $options.hasLogin ? {
-    k: common_vendor.o((...args) => $options.signout && $options.signout(...args))
-  } : common_vendor.e({
-    l: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    m: !$options.hasLogin
-  }, !$options.hasLogin ? {
-    n: common_vendor.o((...args) => $options.signup && $options.signup(...args))
-  } : {}));
+    i: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
+    j: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    k: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
+    l: $options.hasLogin,
+    m: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
+    n: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
+    o: !$options.hasLogin
+  };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

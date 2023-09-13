@@ -67,7 +67,7 @@ const _sfc_main = {
     this.userName = op.userName;
     this.userId = parseInt(op.userId);
     let info = common_vendor.index.getWindowInfo();
-    this.calcHeight = info.windowHeight * 96 / 100 - 140;
+    this.calcHeight = info.windowHeight * 96 / 100 - 66 - 74;
     let hasLoad = this.$store.getters["Msgs/getHasFirstLoad"](this.userId);
     if (!hasLoad) {
       let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&count=10";

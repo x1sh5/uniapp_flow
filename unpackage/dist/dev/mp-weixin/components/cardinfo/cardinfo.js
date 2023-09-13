@@ -71,7 +71,7 @@ const _sfc_main = {
     depart() {
       let d;
       try {
-        d = this.branchs[this.branchOrder]["name"];
+        d = this.branchs[this.branchOrder];
       } catch (e) {
         d = "部门";
       }
@@ -119,6 +119,26 @@ const _sfc_main = {
       set(value) {
         this.task.title = value;
       }
+    },
+    rewardtypeSymbol() {
+      return {
+        text: "%",
+        options: [
+          {
+            text: "￥",
+            value: "1",
+            name: "固定",
+            selected: true,
+            disable: this.depart && this.depart.rewardType === "only percent"
+          },
+          {
+            text: "%",
+            value: "2",
+            name: "百分比",
+            disable: this.depart && this.depart.rewardType === "only fixed"
+          }
+        ]
+      };
     }
   },
   methods: {
@@ -127,10 +147,17 @@ const _sfc_main = {
       let branchIndex = e.detail.value;
       this.branchIndex = branchIndex;
       this.task.branchid = branchIndex;
+      let d = this.branchs[this.branchOrder];
+      if (d.rewardType === "only percent") {
+        this.task.rewardtype = 2;
+      }
+      if (d.rewardType === "only fixed") {
+        this.task.rewardtype = 1;
+      }
     },
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
-      this.rewardtypeSymbol.text = e.text;
+      this.task.rewardtype = parseInt(e.value);
       let pages = getCurrentPages();
       let current = pages[pages.length - 1];
       if (current.mode && current.mode == "single") {
@@ -258,15 +285,15 @@ const _sfc_main = {
         data: this.task,
         success: (res) => {
           if (res.statusCode === 204) {
-            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" });
+            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "修改成功", errMsg: "ok" });
             this.$emit("after-publish", this.task.id);
           } else {
-            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "server error" });
+            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "修改失败", errMsg: "server error" });
           }
         },
         fail: (err) => {
           console.error(err);
-          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "client error" });
+          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "修改失败", errMsg: "client error" });
         }
       });
     },
@@ -290,23 +317,7 @@ const _sfc_main = {
       //tasktype:"类型",
       vis: false,
       status: ["代接", "待完成", "完成"],
-      branchIndex: false,
-      rewardtypeSymbol: {
-        text: "%",
-        options: [
-          {
-            text: "￥",
-            value: "1",
-            name: "固定",
-            selected: true
-          },
-          {
-            text: "%",
-            value: "2",
-            name: "百分比"
-          }
-        ]
-      }
+      branchIndex: false
     };
   }
 };
@@ -339,7 +350,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $props.editable ? {
     q: common_vendor.o($options.rewardTypeChange),
     r: common_vendor.p({
-      localdata: $data.rewardtypeSymbol.options,
+      localdata: $options.rewardtypeSymbol.options,
       clear: false,
       modelValue: $options.rewardtype,
       placeholder: "类型"
@@ -350,7 +361,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     t: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
   } : {}, {
     v: common_vendor.t($options.taskType),
-    w: common_vendor.t($options.depart),
+    w: common_vendor.t($options.depart ? $options.depart["name"] : ""),
     x: !$props.editable,
     y: $options.branchs,
     z: $options.branchOrder,

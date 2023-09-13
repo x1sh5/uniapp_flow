@@ -2,9 +2,9 @@ import {createStore} from "vuex";
 import {toRaw,nextTick, markRaw} from "vue";
 import { StorageKeys } from "../common/storageKeys.js";
 //import { Publish } from "./publish.js"
-import { Messages } from "./messages.js"
-import { References } from "./reference.js"
-//import * as signalr from "signalr-for-wx/dist/index"
+import { Messages } from "./messages.js";
+import { References } from "./reference.js";
+//import { HubConnectionBuilder, LogLevel } from "../common/signalr.js";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
@@ -166,9 +166,9 @@ const store = createStore({
 			let i = state.taskTypes.find(item => item.id === parseInt(typeId))
 			console.log("taskType is: ",i)
 			if(i===undefined){
-				return "类型"
+				return {id: 0, name: "类型", "rewardType": "all"}
 			}
-			return i["name"]
+			return i
 		},
 		getBranchIndex:(state)=>(branchid)=>{
 			let i = state.branchs.findIndex(item => item.id === branchid)

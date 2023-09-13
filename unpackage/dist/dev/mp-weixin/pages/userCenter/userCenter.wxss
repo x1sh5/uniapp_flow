@@ -143,3 +143,12 @@
 .misc {
   margin: 10rpx 5rpx;
 }
+.user-view {
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  box-sizing: content-box;
+  border: 1px solid darkgrey;
+  background-color: antiquewhite;
+}

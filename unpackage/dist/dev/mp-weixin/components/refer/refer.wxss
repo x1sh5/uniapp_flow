@@ -1,0 +1,43 @@
+
+.td, .th{
+		border: 1px solid black;
+		display: flex;
+		flex-direction: row;
+		min-height: 30px;
+		
+		width: 100%;
+}
+.th{
+		text-align: center;
+		height: 30px;
+}
+.th > textarea{
+		height: 30px;
+}
+.td{
+		
+		height: auto;
+}
+.stitle, .rate, .brief, .detail, .remark{
+		border: 1px solid black;
+		box-sizing: border-box;
+}
+from > view {
+		text-align: center;
+}
+.addLine{
+		margin-top: 5px;
+		margin-bottom: 5px;
+		width: 40px;
+		height: 20px;
+		margin-left: auto;
+		margin-right: auto;
+		border: 1px solid black;
+		border-radius: 10px;
+}
+.del{
+		width: 40px;
+		margin-top: auto;
+		margin-bottom: auto;
+		border: 1px solid black;
+}

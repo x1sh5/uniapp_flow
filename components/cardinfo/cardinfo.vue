@@ -57,7 +57,7 @@
 			<!-- 右半部分，只包括：类型 -->
 			<view class="bigtype" >
 				<view v-if="editable" class="popupbutton" @click="showPopup">...</view>
-				<view class="tasktype columnlayout">{{ taskType }}</view>
+				<view class="tasktype columnlayout">{{ taskType["name"] }}</view>
 			</view>
 		
 		   <!-- 部门 -->
@@ -116,7 +116,7 @@ import { RewardType } from '../../common/Task'
 					this.task.username = value
 				}
 			},
-			taskType:{
+			taskType:{//["name"]
 				get() {
 					return this.$store.getters.getTaskType(this.task.typeId)
 				}
@@ -222,13 +222,13 @@ import { RewardType } from '../../common/Task'
 					  value: '1',
 					  name: "固定",
 					  selected: true,
-					  disable: this.depart&&this.depart.rewardType === "only percent"
+					  disable: this.taskType&&this.taskType.rewardType === "only percent"
 					},
 					{
 					  text: '%',
 					  value: '2',
 					  name: "百分比",
-					  disable: this.depart&&this.depart.rewardType === "only fixed"
+					  disable: this.taskType&&this.taskType.rewardType === "only fixed"
 					},]
 				}
 			}

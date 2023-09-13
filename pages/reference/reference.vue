@@ -42,15 +42,13 @@
 			uni.request({
 				url: curl,
 				success: (res) => {
-					if(this.datas.length!== parseInt(res.data)){
-						uni.requestWithCookie({
-							url: qurl,
-							method: "GET",
-							success: (res) => {
-								this.$store.commit("Refer/updateRefers", res.data);
-							}
-						})
-					}
+					uni.requestWithCookie({
+						url: qurl,
+						method: "GET",
+						success: (res) => {
+							this.$store.commit("Refer/updateRefers", res.data);
+						}
+					});
 				}
 			})
 			

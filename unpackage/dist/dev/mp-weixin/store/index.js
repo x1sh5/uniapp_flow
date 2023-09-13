@@ -1,8 +1,9 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
-const store_messages = require("./messages.js");
 const signalR = require("../common/signalr.js");
+const store_messages = require("./messages.js");
+const store_reference = require("./reference.js");
 const baseUrl = "https://localhost:7221";
 const store = common_vendor.createStore({
   state: {
@@ -58,9 +59,13 @@ const store = common_vendor.createStore({
         state2.tasks.get(t).push(...payload.data);
       }
     },
-    changeLoginState(state2) {
-      state2.$hasLogin = !state2.$hasLogin;
-      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, state2.$hasLogin);
+    login(state2) {
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
+      state2.$hasLogin = true;
+    },
+    loginOut(state2) {
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, false);
+      state2.$hasLogin = false;
     },
     setUserName(state2, payload) {
       state2.$userName = payload;
@@ -167,15 +172,15 @@ const store = common_vendor.createStore({
     publishResults(state2) {
       return state2.$publishResults;
     },
-    hasLogin() {
-      let hasLogin = false;
+    hasLogin: (state2) => (p = 1) => {
+      let Login;
       try {
-        hasLogin = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.hasLogin);
+        Login = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.hasLogin);
       } catch (e) {
-        hasLogin = false;
+        Login = false;
         console.error(e);
       }
-      return hasLogin;
+      return Login;
     }
   },
   actions: {
@@ -307,7 +312,8 @@ const store = common_vendor.createStore({
     }
   },
   modules: {
-    Msgs: store_messages.Messages
+    Msgs: store_messages.Messages,
+    Refer: store_reference.References
   }
 });
 exports.store = store;

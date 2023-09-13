@@ -21,7 +21,13 @@
     "pages/publishResult/publishResult",
     "pages/settings/settings",
     "pages/myTaskDetail/myTaskDetail",
-    "pages/editTask/editTask"
+    "pages/editTask/editTask",
+    "pages/reference/reference",
+    "pages/reference/detail/detail",
+    "pages/reference/new/new",
+    "pages/reference/edit/edit",
+    "pages/reference/history/history",
+    "pages/reference/history/detail/detail"
   ],
   "window": {
     "navigationBarTextStyle": "black",

@@ -1,0 +1,1 @@
+<view><refer wx:if="{{a}}" u-i="72f09d6c-0" bind:__l="__l" u-p="{{b}}"></refer><button style="width:80px;height:40px;margin-top:10px" bindtap="{{c}}">编辑</button><view bindtap="{{d}}">编辑历史</view></view>

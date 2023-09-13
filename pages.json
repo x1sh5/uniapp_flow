@@ -233,6 +233,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/reference/history/detail/detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "详细",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

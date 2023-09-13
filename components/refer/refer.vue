@@ -43,7 +43,7 @@
 			<view v-show="editable"  class="addLine" @click="addLine">
 				<view style="margin-top: auto;margin-bottom:auto;text-align: center;">+</view>
 			</view>
-			<button v-show="editable" style="width: 80px;height: 40px;"  @click="commit">提交</button>
+			
 		
 	</view>
 </template>
@@ -95,35 +95,6 @@
 					this.lines.splice(index,1);
 				}
 				this.refer.content.delete(id);
-			},
-			commit(e){
-				if(this.refer.title===""){
-					uni.showToast({
-						title: "标题不能为空。"
-					});
-					return
-				}
-				
-				if(this.lines.length === 0){
-					uni.showToast({
-						title: "内容不能为空。"
-					});
-					return
-				}
-				
-				let content = JSON.stringify(Array.from(this.refer.content));
-				let qurl = this.$store.state.apiBaseUrl+"/api/Reference";
-				uni.requestWithCookie({
-					url: qurl,
-					method: "POST",
-					data: {id:0, title: this.refer.title, content: content, authId:0},
-					success: (res) => {
-						uni.showModal({
-							showCancel: false,
-							content: res.data
-						})
-					}
-				});
 			},
 			stitleChange(e){
 				console.log(e);

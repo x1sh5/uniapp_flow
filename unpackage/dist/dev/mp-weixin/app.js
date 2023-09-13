@@ -6,6 +6,7 @@ require("./common/signalr.js");
 const store_index = require("./store/index.js");
 require("./common/storageKeys.js");
 require("./store/messages.js");
+require("./store/reference.js");
 if (!Math) {
   "./pages/userCenter/userCenter.js";
   "./pages/addtask/addtask.js";
@@ -29,6 +30,12 @@ if (!Math) {
   "./pages/settings/settings.js";
   "./pages/myTaskDetail/myTaskDetail.js";
   "./pages/editTask/editTask.js";
+  "./pages/reference/reference.js";
+  "./pages/reference/detail/detail.js";
+  "./pages/reference/new/new.js";
+  "./pages/reference/edit/edit.js";
+  "./pages/reference/history/history.js";
+  "./pages/reference/history/detail/detail.js";
 }
 common_weappCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
 const _sfc_main = {

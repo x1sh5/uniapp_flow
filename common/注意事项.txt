@@ -19,12 +19,11 @@ uniapp
 	2. 修改pages/editor/editor.js 
 		line16 source: 'url("../../static/Pacifico.ttf")'
 		line35 const newTask = pages[pages.length - 1];
-		line36 newTask.$vm.updateTask(this.id, res);
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	
 		
-	4. pages/login/login.wxml
+	*4. pages/login/login.wxml
 		修改<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
 			为 <text>密码：</text><input name="password" class="lg-input" password type="text" value="lisi1234"/>
 		

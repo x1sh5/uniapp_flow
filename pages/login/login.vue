@@ -2,7 +2,7 @@
 	<view class="usercenter">
 		<form @submit="login" style="margin: 20px 10px;">
 			<text>用户名：</text><input name="userName" class="lg-input" type="text" value="lisi" />
-			<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
+			<text>密码：</text><input name="password" class="lg-input" password value="lisi1234"/>
 			<button form-type="submit">登录</button>
 		</form>
 		<button @click="register">注册</button>
