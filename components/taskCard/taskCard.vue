@@ -1,8 +1,8 @@
 <template>
-	<view  class="newtaskbox">
+	<view  class="newtaskbox" @check-Result="checkResult">
 		<view style="width: 90%;">
 			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode" 
-			@remove-task="removeTask" @after-publish="afterPublish"></cardinfo>
+			@remove-task="removeTask" ></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
@@ -34,6 +34,7 @@
 					  "title": "",
 					  "typeId": false,
 					  "verify": 0,
+					  "main": 0
 					  }
 				}
 			},
@@ -110,8 +111,11 @@
 				this.content = payload.ctx;
 				
 			},
-			publish(){
-				return this.$refs.cardinfo.publish();
+			check(){
+				return this.$refs.cardinfo.check();
+			},
+			checkResult(data){
+				this.$emit("check-Result",data);
 			},
 			put(){
 				return this.$refs.cardinfo.put();

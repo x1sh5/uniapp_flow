@@ -2,7 +2,7 @@
 <!-- 	<view> -->
 	<!-- 任务卡片 -->
 	<!-- 任务卡片 -->
-	<view @click.stop="detail" @longpress="removeTask">
+	<view @click.stop="detail">
 		<view :class="`task${Id%3}`">
 			<!-- 编号 标题 -->
 			<!-- 第一行，第一列起横跨2列 -->
@@ -42,9 +42,9 @@
 				<view :class="`fontcolor${Id%3}`">回馈值</view>
 				<view class="rowlayout">
 				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
-				  v-model="reward" @blur="updateReward"/>
+				  v-model="reward" /> <!-- @blur="updateReward" -->
 				  <view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
-				  <uni-data-select :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
+				  <uni-data-select :disabled="task.main===1" :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
 				    placeholder="类型" @change="rewardTypeChange" 
 				   style="z-index: 2;width: auto;min-width: 10px;margin-left: 5rpx;margin-bottom: 5rpx;" 
 				   v-if="editable">
@@ -123,14 +123,28 @@ import { RewardType } from '../../common/Task'
 			},
 			reward:{
 				get(){
-					return this.task.rewardtype===RewardType.Fiexd?this.task.fixedReward:this.task.percentReward;
+					if(this.task.rewardtype===RewardType.Fiexd){
+						if(this.task.fixedReward&&this.task.fixedReward!==0){
+							return this.task.fixedReward/100
+						}else{
+							return ''
+						}
+						
+					}else{
+						if(this.task.percentReward&&this.task.percentReward!==0){
+							return this.task.percentReward/100
+						}else{
+							return ''
+						}
+					}
+					return '';
 				},
 				set(value){
 					if(this.task.rewardtype===RewardType.Fiexd){
-						this.task.fixedReward = value;
+						this.task.fixedReward = !isNaN(parseFloat(value))?parseInt(parseFloat(value)*100):0 ;
 					}
 					if(this.task.rewardtype===RewardType.Percent){
-						this.task.percentReward = value;
+						this.task.percentReward = !isNaN(parseFloat(value))?parseInt(parseFloat(value)*100):0;
 					}
 				}
 			},
@@ -239,13 +253,13 @@ import { RewardType } from '../../common/Task'
 				let branchIndex = e.detail.value;
 				this.branchIndex = branchIndex;
 				this.task.branchid = branchIndex;
-				let d = this.branchs[this.branchOrder];
-				if(d.rewardType==="only percent"){
-					this.task.rewardtype = 2
-				}
-				if(d.rewardType==="only fixed"){
-					this.task.rewardtype = 1
-				}
+				// let d = this.branchs[this.branchOrder];
+				// if(d.rewardType==="only percent"){
+				// 	this.task.rewardtype = 2
+				// }
+				// if(d.rewardType==="only fixed"){
+				// 	this.task.rewardtype = 1
+				// }
 			},
 			rewardTypeChange(e){
 				console.log('rewardType 改变，携带值为', e)
@@ -253,7 +267,8 @@ import { RewardType } from '../../common/Task'
 				let pages = getCurrentPages();
 				let current = pages[pages.length-1]
 				if(current.mode&&current.mode=="single"){
-					this.task.percentReward = 100;
+					this.task.percentReward = 10000;
+					this.task.fixedReward = 0;
 				}else{
 					this.task.percentReward  = '';
 				}
@@ -280,14 +295,14 @@ import { RewardType } from '../../common/Task'
 					}
 				}
 			},
-			updateReward(event){
-				if(this.task.rewardtype === RewardType.Fiexd){
-					this.task.fixedReward = event.detail.value;
-				}else if(this.task.rewardtype === RewardType.Percent){
-					this.task.percentReward = event.detail.value;
-				}
+			// updateReward(event){
+			// 	if(this.task.rewardtype === RewardType.Fiexd){
+			// 		this.task.fixedReward = event.detail.value ;
+			// 	}else if(this.task.rewardtype === RewardType.Percent){
+			// 		this.task.percentReward = event.detail.value;
+			// 	}
 
-			},
+			// },
 			updateBrief(event){
 				this.task.title = event.detail.value;
 			},
@@ -303,55 +318,43 @@ import { RewardType } from '../../common/Task'
 				console.log(e);
 				this.task.deadline = e.detail.value
 			},
-			publish(){
+			check(){
 				console.log(this.task);
 				if(!this.task.title){
 					uni.showModal({
 						content:"标题不能为空！"
 					});
-					return false;
+					this.$emit("check-Result",false);
+					return;
 				}
 				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
-					return false;
+					this.$emit("check-Result",false);
+					return;
 				}
 				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentReward){
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
-					return false;
+					this.$emit("check-Result",false);
+					return;
 				}
 				if(!this.task.deadline){
 					uni.showModal({
 						content:"截止日期不能为空！"
 					});
-					return false;
+					this.$emit("check-Result",false);
+					return;
 				}
 				
+				this.$emit("check-Result",true);
+				return;
 				// this.$store.commit("updatePublishResults", 
 				// 	{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
 				//发布任务
 				
-				let posturl = this.$store.state.apiBaseUrl + "/api/Assignment"
-				uni.requestWithCookie({
-					url:posturl,
-					method:"POST",
-					data:this.task,
-					success:(res)=> {
-						if(res.statusCode === 200){
-							this.$store.state.$publishResults.push({success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"});
-							this.$emit('after-publish',this.task.id)
-						}else{
-							this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"server error"})
-						}
-					},
-					fail:(err)=>{
-						console.error(err);
-						this.$store.state.$publishResults.push({success:false, message:"任务："+this.task.title+"发布失败", errMsg:"client error"})
-					}
-				});
 			},
 			put(){
 				console.log(this.task);
@@ -405,6 +408,14 @@ import { RewardType } from '../../common/Task'
 			},
 			removeTask(e){
 				console.log(e);
+				if(this.task.main === 1){
+					uni.showModal({
+						title: "错误！",
+						showCancel: false,
+						content: "主任务不能被移除。只能返回后重新创建新任务。"
+					});
+					return;
+				}
 				this.$emit('remove-task',this.task.id)
 			},
 			showPopup(e){
