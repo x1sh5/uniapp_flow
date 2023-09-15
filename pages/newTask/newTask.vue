@@ -37,6 +37,7 @@
 					  "rewardtype": RewardType.Percent,
 					  "status": TaskStatus.WaitForAccept,
 					  "title": "",
+					  "canTake": 0,
 					  "typeId": false,
 					  "verify": 0,
 					  "main": 1
@@ -158,6 +159,7 @@
 					"title": "",
 					"typeId": e.item.id,
 					"verify": 0,
+					"canTake": 1,
 					"main": 0
 				})
 			},
