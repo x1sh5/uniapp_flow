@@ -113,7 +113,7 @@
 						success:(res)=> {
 							if(res.statusCode === 201){
 								this.$store.state.$publishResults.push({success:true, message:"任务发布成功", errMsg:"ok"});
-								this.afterPublish();
+								//this.afterPublish();
 							}else{
 								this.$store.state.$publishResults.push({success:false, message:"任务发布失败", errMsg:"server error"})
 							}
