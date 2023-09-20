@@ -1,25 +1,41 @@
 <template>
 	<view  class="newtaskbox">
-		<view style="width: 90%;">
-			<cardinfo :task="task" :editable="false"></cardinfo>
-			<view class="ql-container">  
-			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
-			</view>
+		<view >
+			<taskCard :task="task" :editable="false"></taskCard>
 			
 			<view v-if="mode=='waitfor'">
-				<button @click="contact">联系发布人</button>
-				<button @click="gain">接取任务</button>
+				<button class="detail-btn" @click="contact">联系发布人</button>
+				<button class="detail-btn" @click="gain">申请接取任务</button>
 			</view>
 			
 			<view v-if="mode=='undone'">
-				<button @click="contact">联系发布人</button>
-				<button @click="abandon" :disabled="enable">放弃任务</button>
+				<button class="detail-btn" @click="contact">联系发布人</button>
+				<button class="detail-btn" @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 			
 			<view v-if="mode=='done'">
 			</view>
 			
 		</view>
+		
+		<view class="driver"></view>
+		<view class="relate">
+			<view style="color: orangered;margin-bottom: 10px;">相关任务:</view>
+			<view>
+				<view v-if="ptask">
+					<cardinfo @click="reloadTask(ptask)" :task="ptask" :editable="false"></cardinfo>
+				</view>
+			</view>
+			<view>
+				<view v-if="ctasks">
+					<view v-for="c in ctasks" :key="c.id">
+						<cardinfo @click="reloadTask(c)" style="margin-top:5px;" :task="c" :editable="false"></cardinfo>
+					</view>
+				</view>
+				
+			</view>
+		</view>
+
 	</view>
 </template>
 
@@ -29,6 +45,8 @@
 		data() {
 			return {
 				$enable:false,
+				ptask: undefined,
+				ctasks: undefined,
 				task:{
 					  "id": false,
 					  "username": false,
@@ -51,7 +69,7 @@
 						return "done"
 					}
 				},
-				status:["waitfor","undone","done"]
+				status:["waitfor","undone","done","announcement"]
 			}
 		},
 		created() {
@@ -66,6 +84,33 @@
 					return this.task.description
 				}
 			},
+		},
+		mounted() {
+			let curl = this.$store.state.apiBaseUrl+"/api/Assignment/childs/"+this.task.id;
+			let purl = this.$store.state.apiBaseUrl+"/api/Assignment/parent/"+this.task.id;
+			
+			if(!this.ptask){
+				uni.request({
+					url: curl,
+					success:(res)=> {
+						if(res.statusCode === 200){
+							this.ctasks = res.data;
+						}
+					}
+				});
+			}
+			
+			if(!this.ctasks){
+				uni.request({
+					url: purl,
+					success: (res) => {
+						if(res.statusCode === 200){
+							this.ptask = res.data;
+						}
+					}
+				});
+			}
+
 		},
 		onLoad(op) {
 		  console.log("options:",op)
@@ -139,6 +184,13 @@
 				},
 				});
 			},
+			reloadTask(task){
+				console.log(task.id);
+				this.$store.commit("setCurrentTask",task);
+				uni.redirectTo({
+					url:"/pages/taskDetail/taskDetail?id="+task.id
+				});
+			}
 		}
 	}
 </script>

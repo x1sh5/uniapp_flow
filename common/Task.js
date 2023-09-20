@@ -1,7 +1,8 @@
 ///发布任务时的任务模型
 
 export class Task {
-    constructor(branchid, deadline, /*finishtime, publishtime, */title, typeId, id, description, fixedReward, percentReward, rewardtype, status) {
+    constructor(branchid, deadline, /*finishtime, publishtime, */title, typeId, id, description, fixedReward, percentReward,
+	 rewardtype, status, main, canTake) {
         this.fixedReward = '';
 		this.percentReward = '';
         this.rewardtype = RewardType.Fiexd;
@@ -35,6 +36,12 @@ export class Task {
         if (status) {
             this.status = status;
         }
+		if (main) {
+		    this.main = main;
+		}
+		if (canTake) {
+		    this.canTake = canTake;
+		}
     }
 }
 Task.couter = 1;
@@ -48,5 +55,6 @@ export var TaskStatus;
     TaskStatus[TaskStatus["WaitForAccept"] = 0] = "WaitForAccept";
     TaskStatus[TaskStatus["Unfinished"] = 1] = "Unfinished";
     TaskStatus[TaskStatus["Finished"] = 2] = "Finished";
+	TaskStatus[TaskStatus["Announcement"] = 3] = "Announcement";
 })(TaskStatus || (TaskStatus = {}));
 //# sourceMappingURL=Task.js.map

@@ -22,7 +22,7 @@ const store = createStore({
 		workSocket : markRaw( new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
 		.withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Trace)
+        .configureLogging(signalR.LogLevel.Information)
         .build() ),
 		messages:new Map(), //对话消息
 		$currentContent:{}, //当前正在编辑的task.description
@@ -140,6 +140,9 @@ const store = createStore({
 			uni.removeStorageSync(StorageKeys._userName);
 			uni.removeStorageSync(StorageKeys.__cookie_store__);
 			uni.removeStorageSync(StorageKeys._task_content);
+		},
+		disconnect(state){
+			state.workSocket.stop();
 		}
 	},
 	getters:{

@@ -14,7 +14,7 @@
 			<view class="taskinfo">
 				<view class="wr icon1" @click="myPublishs"><view class="item_title">历史发布</view></view>
 				<view class="wr icon3" @click="history"><view class="item_title">浏览记录</view></view>
-				<view class="wr icon4" @click="draftBox"><view class="item_title">草稿箱</view></view>
+				<view class="wr icon4" @click="draftBox"><view class="item_title">接取请求</view></view>
 			</view>
 		</view>
 		
@@ -24,17 +24,29 @@
 			<view class="taskinfo">
 				<view class="uni-icons icon-incomplete" @click="holds(0)"><view class="item_title">待完成</view></view>
 				<view class="wr icon2" @click="holds(1)"><view class="item_title">完成项目</view></view>
+				<view>我的申请</view>
 			</view>
 		</view>
 		
 		<view class="driver"></view>
 		
 		<view class="misc">
-			<view class="user-view" @click="toReference">审核区间参考</view>
+			<view @click="toReference" class="user-view" style="display: flex;flex-direction: row; position: relative">
+				<view  >审核区间参考</view>
+				<view style="position: absolute;right: 0;">></view>
+			</view>
+			<view class="driver"></view>
 			<view class="user-view">帮助中心</view>
+			<view class="driver"></view>
 			<view class="user-view">技能互助文档</view>
+			<view class="driver"></view>
 			<view class="user-view">收益来源</view>
-			<view class="user-view" @click="toSetting">用户设置</view>
+			<view class="driver"></view>
+			<view @click="toSetting" class="user-view" style="display: flex;flex-direction: row; position: relative">
+				<view >用户设置</view>
+				<view style="position: absolute;right: 0;">></view>
+			</view>
+			
 		</view>
 		
 		<view class="driver"></view>
@@ -173,13 +185,4 @@
 <style lang="less">
 	@import url('./userCenter.less');
 	
-	.user-view{
-		margin-left: 10px;
-		margin-top: 2px;
-		margin-bottom: 2px;
-		border-radius: 5px;
-		box-sizing: content-box;
-		border: 1px solid darkgrey;
-		background-color: antiquewhite;
-	}
 </style>

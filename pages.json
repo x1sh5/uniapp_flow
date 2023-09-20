@@ -242,6 +242,42 @@
             }
             
         }
+        ,{
+            "path" : "pages/test/A/A",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "A",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/test/B/B",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "B",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/settings/unregister/unregister",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注销",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/settings/identityCheck/identityCheck",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "身份验证",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

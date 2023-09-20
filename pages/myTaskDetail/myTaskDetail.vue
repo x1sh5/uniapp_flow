@@ -50,7 +50,7 @@
 						return "done"
 					}
 				},
-				status:["waitfor","undone","done"]
+				status:["waitfor","undone","done","announcement"]
 			}
 		},
 		created() {

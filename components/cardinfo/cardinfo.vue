@@ -436,7 +436,7 @@ import { RewardType } from '../../common/Task'
 				//spendtime:"",
 				//tasktype:"类型",
 				vis: false,
-				status:["代接","待完成","完成"],
+				status:["待接", "待完成", "完成", "公示"],
 				branchIndex:false,
 
 			};

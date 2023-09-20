@@ -109,22 +109,13 @@ export const Messages = {
 		},
 		getByIdAsync({commit, state},payload){
 			return new Promise((resolve,reject)=>{
-				setTimeout(
-					()=>{
-						resolve(commit('getById',payload));
-					},
-				2000);
+				resolve(commit('getById',payload));
 				
 			}) 
 		},
 		existsAsync({commit, state},payload){
 			return new Promise((resolve,reject)=>{
-				setTimeout(
-					()=>{
-						resolve(commit('exists',payload));
-					},
-				2000);
-				
+				resolve(commit('exists',payload));	
 			}) 
 		},
 		updateHasFirstLoad({state},userid){
