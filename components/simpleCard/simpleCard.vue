@@ -9,7 +9,7 @@
 		name:"simpleCard",
 		data() {
 			return {
-				
+				simpleInfo: {}
 			};
 		}
 	}
