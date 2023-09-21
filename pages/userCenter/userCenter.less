@@ -74,7 +74,9 @@
 	.icon2, //完成项目
 	.icon3, //浏览记录
 	.icon4, //草稿箱
-	.icon5  //待完成
+	.icon5,  //待完成
+	.icon6,  //任务申请
+	.icon7   //我的申请
 	{
 		.icon1()
 	}
@@ -93,6 +95,15 @@
 	
 	.icon5::before{
 		content: '\e67f';
+	}
+	
+	.icon6::before{
+		content: '\e6a6';
+	}
+	
+	.icon7::before{
+		content: '\e6bd';
+		transform: rotateY(45);
 	}
 	
 	.misc{

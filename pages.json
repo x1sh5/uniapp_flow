@@ -57,10 +57,10 @@
             
         }
         ,{
-            "path" : "pages/draftBox/draftBox",
+            "path" : "pages/taskReq/taskReq",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "草稿箱",
+                "navigationBarTitleText": "任务请求",
                 "enablePullDownRefresh": false
             }
             
@@ -274,6 +274,15 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "身份验证",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/myApply/myApply",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的申请",
                 "enablePullDownRefresh": false
             }
             
