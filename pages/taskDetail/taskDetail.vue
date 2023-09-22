@@ -73,7 +73,19 @@
 			}
 		},
 		created() {
-			this.task = this.$store.state.currentTask;
+			let task = this.$store.getters.getTaskById(this.id);
+			if(task!==undefined){
+				this.task = task
+			}else{
+				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/";
+				uni.request({
+					url: qurl,
+					success: (res) => {
+						
+					}
+				})
+			}
+
 		},
 		computed:{
 			enable(){
@@ -114,7 +126,7 @@
 		},
 		onLoad(op) {
 		  console.log("options:",op)
-		  const id = op.id
+		  this.id = op.id
 		  //this.mode = op.mode
 		  this.mode = this.status[this.task.status]
 		  // let t  = this.$store.getters.getTaskById(id)
@@ -134,35 +146,23 @@
 				})
 			},
 			gain(e){
-				console.log("接取任务")
-				let url = this.$store.state.apiBaseUrl+"/api/Assignment/take/"+this.task.id;
-				uni.requestWithCookie({
-					url:url,
-					success: (res) => {
-						if(res.statusCode === 200){
-							if(res.data.data.success){
-								uni.showModal({
-									content: res.data.message
-								})
-							}else{
-								uni.showModal({
-									content: res.data.data.reason
-								})
-							}
-						}else{
-							uni.showModal({
-								content: "网络出错"
-							})
-						}
-
-					},
-					fail:(err)=>{
-						console.log("failed")
+				let gurl = this.$store.state.apiBaseUrl+"/api/TaskRequest;
+				uni.request({
+					url: gurl,
+					method: "POST",
+					data: new {id:0,}
+					success: (res)=>{
 						uni.showModal({
-							content: err
+							content: res.data,
+							showCancel: false
+						});
+					},
+					fail: (err)=>{
+						uni.showModal({
+							content:err
 						})
 					}
-				});
+				})
 			},
 			abandon(e){
 				let url = this.$store.state.apiBaseUrl+"/api/AssignmentUser/abandon/"+this.task.id;
@@ -181,7 +181,7 @@
 							const holdTask = pages[pages.length - 2]; // 获取页面A的实例
 							holdTask.removeItem(this.task.id); // 修改页面A的属性a1的值
 						}
-				},
+					},
 				});
 			},
 			reloadTask(task){

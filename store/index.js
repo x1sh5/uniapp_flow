@@ -151,8 +151,20 @@ const store = createStore({
 
 		},
 		getTaskById:(state)=>(id)=>{
-			let i = state.tasks.get("全部").find(item=>item.id === parseInt(id))
-			return i
+			let task = null;
+			for (let [key, value] of state.tasks) {
+			  for (let item of value) {
+			    if (item.id === parseInt(id)) {
+			      task=item;
+			      break;
+			    }
+			  }
+			}
+			if(task!=null){
+				return task;
+			}
+			
+			return undefined;
 			
 		},
 		getBranch:(state)=>(branchid)=>{
