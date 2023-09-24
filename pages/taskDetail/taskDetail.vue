@@ -77,11 +77,13 @@
 			if(task!==undefined){
 				this.task = task
 			}else{
-				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/";
-				uni.request({
+				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/"+this.id;
+				uni.requestWithCookie({
 					url: qurl,
 					success: (res) => {
-						
+						if(res.statusCode==200){
+							this.task = res.data
+						}
 					}
 				})
 			}

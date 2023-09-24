@@ -26,7 +26,7 @@
 		methods:{
 			agree(e){
 				console.log("接取任务")
-				let url = this.$store.state.apiBaseUrl+"/api/Assignment/take/"+this.task.id;
+				let url = this.$store.state.apiBaseUrl+"/api/Assignment/take/"+this.simpleInfo.id;
 				uni.requestWithCookie({
 					url:url,
 					success: (res) => {
