@@ -19,6 +19,7 @@
 <script>
 	// import {Task,TaskStatus,RewardType} from "../../common/Task.js";
 	// new Task(1,false,"",false,false,"","",RewardType.Fixed,TaskStatus.WaitForAccept);
+	import { v4 as uuidv4 } from 'uuid';
 	import {TaskStatus,RewardType} from "../../common/Task.js";
 	export default {
 		data() {
@@ -184,18 +185,44 @@
 				this.tasks.splice(index,1);
 			},
 			pay(e){
-				uni.requestPayment({
-					timeStamp: Date.now(),
-					nonceStr: '',
-					package: '',
-					paySign: '',
-					success:(res)=>{
-						
-					},
-					fail: (err)=>{
-						
-					}
-				})
+				let qurl = this.$store.state.apiBaseUrl + "/api/Bill/pubPayV3";
+				let notify = this.$store.state.apiBaseUrl + "/api/wechatpay/v3/notify/transactions";
+				let pray_id;
+				wx.login({
+				  success: (res)=> {
+				    if (res.code) {
+						uni.request({
+							url: qurl,
+							method: "POST",
+							data: {OutTradeNo:"",Description:"测试",Total:this.balance*100,JsCode:res.code,NotifyUrl:notify}
+							success: (result) => {
+								pray_id = result.data;
+							},
+							fail: (err)=>{
+								
+							}
+						})
+				    } else {
+				      console.log('登录失败！' + res.errMsg)
+				    }
+				  }
+				});
+
+				if(pray_id){
+					uni.requestPayment({
+						timeStamp: Date.now(),
+						nonceStr: uuidv4(),
+						package: pray_id,
+						paySign: '',
+						success:(res)=>{
+							
+						},
+						fail: (err)=>{
+							
+						}
+					})
+				}
+
 			}
 		},
 		mounted() {
