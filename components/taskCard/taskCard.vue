@@ -2,7 +2,7 @@
 	<view  class="newtaskbox" @check-Result="checkResult">
 		<view style="width: 90%;">
 			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode" 
-			@remove-task="removeTask" ></cardinfo>
+			@check-Result="checkResult" @remove-task="removeTask" ></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>

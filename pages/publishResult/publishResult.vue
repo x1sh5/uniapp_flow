@@ -11,6 +11,13 @@
 				
 			}
 		},
+		mounted() {
+			setTimeout(()=> {
+			  uni.navigateTo({
+			  	url: "/pages/myTaskDetail/myTaskDetail?id="+this.results[0].id
+			  })
+			}, 1000); // 延时 1 秒执行
+		},
 		methods: {
 			
 		},

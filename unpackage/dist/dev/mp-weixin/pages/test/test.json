@@ -2,6 +2,7 @@
   "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "simple-card": "../../components/simpleCard/simpleCard",
     "counter": "../../components/counter/counter"
   }
 }

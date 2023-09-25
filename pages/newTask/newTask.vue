@@ -10,16 +10,11 @@
 	<view v-if="mode=='mutiple'">
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>
 	</view>
-	<view class="pay-container">
-		<view class="balance">金额：{{ balance }}</view>
-		<button @click="pay">支付</button>
-	</view>
 </template>
 
 <script>
 	// import {Task,TaskStatus,RewardType} from "../../common/Task.js";
 	// new Task(1,false,"",false,false,"","",RewardType.Fixed,TaskStatus.WaitForAccept);
-	import { v4 as uuidv4 } from 'uuid';
 	import {TaskStatus,RewardType} from "../../common/Task.js";
 	export default {
 		data() {
@@ -54,14 +49,6 @@
 			,mode(){
 				return this.$data.$mode
 			},
-			balance(){
-				const fixs = this.tasks.reduce((newarr,item)=>{
-					if(item.rewardtype === RewardType.Fiexd)newarr.push(item);
-					return newarr;
-				}, []);
-				const sum = fixs.reduce((total, obj) => total +obj.fixedReward, 0);
-				return sum/100;
-			}
 		},
 		created(op) {
 			console.log("created");
@@ -79,6 +66,13 @@
 
 		},
 		methods:{
+			getUuid() {
+			  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			    var r = (Math.random() * 16) | 0,
+			      v = c == 'x' ? r : (r & 0x3) | 0x8;
+			    return v.toString(16);
+			  }).replace('-','');
+			},
 			backEvent(){
 				if(this.tasks.length>0){
 					uni.showModal({
@@ -105,7 +99,7 @@
 					this.$refs['id'+item.id][0].check();
 					
 				}
-				if(this.results.every(ele=>Boolean(ele)) ){
+				if(this.results.length>0&&this.results.every(ele=>Boolean(ele)) ){
 					let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/posts"
 					uni.requestWithCookie({
 						url:posturl,
@@ -113,7 +107,7 @@
 						data:this.tasks,
 						success:(res)=> {
 							if(res.statusCode === 201){
-								this.$store.state.$publishResults.push({success:true, message:"任务发布成功", errMsg:"ok"});
+								this.$store.state.$publishResults.push({success:true, message:"任务发布成功", errMsg:"ok",id:res.data.id});
 								//this.afterPublish();
 							}else{
 								this.$store.state.$publishResults.push({success:false, message:"任务发布失败", errMsg:"server error"})
@@ -128,7 +122,6 @@
 						url:"/pages/publishResult/publishResult"
 					})
 				}
-
 			},
 			rewardType(tasktype){
 				let t =  this.$store.getters.getTaskType(tasktype)
@@ -184,46 +177,6 @@
 				let index = this.tasks.findIndex((item)=>item.id === parseInt(id));
 				this.tasks.splice(index,1);
 			},
-			pay(e){
-				let qurl = this.$store.state.apiBaseUrl + "/api/Bill/pubPayV3";
-				let notify = this.$store.state.apiBaseUrl + "/api/wechatpay/v3/notify/transactions";
-				let pray_id;
-				wx.login({
-				  success: (res)=> {
-				    if (res.code) {
-						uni.request({
-							url: qurl,
-							method: "POST",
-							data: {OutTradeNo:"",Description:"测试",Total:this.balance*100,JsCode:res.code,NotifyUrl:notify}
-							success: (result) => {
-								pray_id = result.data;
-							},
-							fail: (err)=>{
-								
-							}
-						})
-				    } else {
-				      console.log('登录失败！' + res.errMsg)
-				    }
-				  }
-				});
-
-				if(pray_id){
-					uni.requestPayment({
-						timeStamp: Date.now(),
-						nonceStr: uuidv4(),
-						package: pray_id,
-						paySign: '',
-						success:(res)=>{
-							
-						},
-						fail: (err)=>{
-							
-						}
-					})
-				}
-
-			}
 		},
 		mounted() {
 			console.log(this.$refs)

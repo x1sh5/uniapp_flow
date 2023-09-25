@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-const common_storageKeys = require("../common/storageKeys.js");
 const signalR = require("../common/signalr.js");
+const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
 const store_reference = require("./reference.js");
 const baseUrl = "https://localhost:7221";
@@ -15,7 +15,7 @@ const store = common_vendor.createStore({
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Trace).build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Information).build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},
@@ -58,6 +58,18 @@ const store = common_vendor.createStore({
         let t = payload.taskTypeName;
         state2.tasks.get(t).push(...payload.data);
       }
+    },
+    updateTaskById(state2, payload) {
+      this.getters.getTaskById(payload);
+      let qurl = state2.apiBaseUrl + "/api/Assignment/" + payload;
+      common_vendor.index.requestWithCookie({
+        url: qurl,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            res.data;
+          }
+        }
+      });
     },
     login(state2) {
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
@@ -128,6 +140,9 @@ const store = common_vendor.createStore({
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._userName);
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.__cookie_store__);
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._task_content);
+    },
+    disconnect(state2) {
+      state2.workSocket.stop();
     }
   },
   getters: {
@@ -135,8 +150,19 @@ const store = common_vendor.createStore({
       return state2.tasks.get(taskTypeName);
     },
     getTaskById: (state2) => (id) => {
-      let i = state2.tasks.get("全部").find((item) => item.id === parseInt(id));
-      return i;
+      let task = null;
+      for (let [key, value] of state2.tasks) {
+        for (let item of value) {
+          if (item.id === parseInt(id)) {
+            task = item;
+            break;
+          }
+        }
+      }
+      if (task != null) {
+        return task;
+      }
+      return void 0;
     },
     getBranch: (state2) => (branchid) => {
       let i = state2.branchs.find((item) => item.id === parseInt(branchid));
@@ -152,9 +178,9 @@ const store = common_vendor.createStore({
       let i = state2.taskTypes.find((item) => item.id === parseInt(typeId));
       console.log("taskType is: ", i);
       if (i === void 0) {
-        return "类型";
+        return { id: 0, name: "类型", "rewardType": "all" };
       }
-      return i["name"];
+      return i;
     },
     getBranchIndex: (state2) => (branchid) => {
       let i = state2.branchs.findIndex((item) => item.id === branchid);

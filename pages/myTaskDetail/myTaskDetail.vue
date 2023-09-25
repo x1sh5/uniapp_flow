@@ -18,6 +18,11 @@
 				<button @click="del">删除</button>
 			</view>
 			
+			<view v-if="task.canTake==0&&task.main==1" class="pay-container">
+				<view class="balance">金额：{{ balance }}</view>
+				<button v-show="balance*100>0" @click="pay">支付</button>
+			</view>
+			
 		</view>
 	</view>
 </template>
@@ -65,11 +70,29 @@
 					return this.task.description
 				}
 			},
+			balance(){
+				return this.task.fixedReward/100;
+			}
 		},
 		onLoad(op) {
 		  console.log("options:",op)
-		  const id = op.id
-		  //this.mode = op.mode
+		  this.id = op.id;
+		  
+		  let task = this.$store.getters.getTaskById(this.id);
+		  if(task!==undefined){
+		  	this.task = task
+		  }else{
+		  	let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/"+this.id;
+		  	uni.requestWithCookie({
+		  		url: qurl,
+		  		success: (res) => {
+		  			if(res.statusCode==200){
+		  				this.task = res.data
+		  			}
+		  		}
+		  	})
+		  }
+		  
 		  this.mode = this.status[this.task.status]
 		  // let t  = this.$store.getters.getTaskById(id)
 		  // if(t!==undefined && t!==null){
@@ -111,12 +134,65 @@
 						}
 					}
 				})
-			}
+			},
 			
+			pay(e){
+				let qurl = this.$store.state.apiBaseUrl + "/api/Bill/pubPayV3";
+				let notify = this.$store.state.apiBaseUrl + "/api/wechatpay/v3/notify/transactions";
+				let praypay;
+				wx.login({
+				  success: (res)=> {
+				    if (res.code) {
+						uni.request({
+							url: qurl,
+							method: "POST",
+							data: {OutTradeNo:"1",Description:"固定任务预支付费用",Total:this.balance*100,
+							JsCode:res.code,NotifyUrl:notify,Attach:"taskid="+this.task.id},
+							success: (result) => {
+								if(result.statusCode===200){
+									let praypay = result.data;
+									console.log(praypay)
+									uni.requestPayment({
+										timeStamp: praypay.timeStamp,
+										nonceStr: praypay.nonceStr,
+										package: praypay.package,
+										signType: 'RSA',
+										paySign: praypay.paySign,
+										success:(res)=>{
+											console.log(res)
+										},
+										fail: (err)=>{
+											
+										}
+									})
+								}
+			
+							},
+							fail: (err)=>{
+								
+							}
+						})
+				    } else {
+				      console.log('登录失败！' + res.errMsg)
+				    }
+				  }
+				});
+			}
 		}
 	}
 </script>
 
 <style lang="less">
 	@import url('../taskDetail/taskDetail.css');
+	.pay-container{
+		display: flex;
+		flex-direction: row;
+		margin-top: 10px;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.balance{
+		margin-left: 30px;
+	}
 </style>

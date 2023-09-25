@@ -101,6 +101,15 @@
   background-color: #a8a8a8;
   margin: 10rpx 0;
 }
+.user-view {
+  margin-left: 10px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  box-sizing: content-box;
+  border: 1px solid darkgrey;
+  background-color: antiquewhite;
+}
 .item_title {
   font-size: 24rpx;
   color: #666;
@@ -120,7 +129,9 @@
 .icon2,
 .icon3,
 .icon4,
-.icon5 {
+.icon5,
+.icon6,
+.icon7 {
   font-size: 23px;
   background-image: -webkit-linear-gradient(90deg, #6a6a6a 0%, #929292 100%);
   -webkit-background-clip: text;
@@ -140,15 +151,13 @@
 .icon5::before {
   content: '\e67f';
 }
+.icon6::before {
+  content: '\e006';
+}
+.icon7::before {
+  content: '\e04f';
+  display: inline-block;
+}
 .misc {
   margin: 10rpx 5rpx;
-}
-.user-view {
-  margin-left: 10px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border-radius: 5px;
-  box-sizing: content-box;
-  border: 1px solid darkgrey;
-  background-color: antiquewhite;
 }

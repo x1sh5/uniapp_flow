@@ -8,12 +8,14 @@ const _sfc_main = {
   }
 };
 if (!Array) {
+  const _easycom_simpleCard2 = common_vendor.resolveComponent("simpleCard");
   const _easycom_counter2 = common_vendor.resolveComponent("counter");
-  _easycom_counter2();
+  (_easycom_simpleCard2 + _easycom_counter2)();
 }
+const _easycom_simpleCard = () => "../../components/simpleCard/simpleCard.js";
 const _easycom_counter = () => "../../components/counter/counter.js";
 if (!Math) {
-  _easycom_counter();
+  (_easycom_simpleCard + _easycom_counter)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -25,5 +27,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/test/test.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/test/test.vue"]]);
 wx.createPage(MiniProgramPage);

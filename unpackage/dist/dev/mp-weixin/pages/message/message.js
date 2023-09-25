@@ -36,7 +36,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return {
         a: channel.cid,
         b: common_vendor.o($options.deleteCc, channel.cid),
-        c: "42102b40-0-" + i0,
+        c: "62afb476-0-" + i0,
         d: common_vendor.p({
           cc: channel
         })
@@ -44,5 +44,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/message/message.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/message/message.vue"]]);
 wx.createPage(MiniProgramPage);

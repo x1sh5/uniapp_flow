@@ -7,7 +7,7 @@
     "pages/newTask/newTask",
     "pages/message/message",
     "pages/userTaskDetail/userTaskDetail",
-    "pages/draftBox/draftBox",
+    "pages/taskReq/taskReq",
     "pages/history/history",
     "pages/myPublishs/myPublishs",
     "pages/logintips/logintips",
@@ -27,7 +27,12 @@
     "pages/reference/new/new",
     "pages/reference/edit/edit",
     "pages/reference/history/history",
-    "pages/reference/history/detail/detail"
+    "pages/reference/history/detail/detail",
+    "pages/test/A/A",
+    "pages/test/B/B",
+    "pages/settings/unregister/unregister",
+    "pages/settings/identityCheck/identityCheck",
+    "pages/myApply/myApply"
   ],
   "window": {
     "navigationBarTextStyle": "black",

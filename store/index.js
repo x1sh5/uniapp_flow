@@ -67,6 +67,18 @@ const store = createStore({
 				state.tasks.get(t).push(...payload.data);
 			}
 		},
+		updateTaskById(state,payload){
+			let task = this.getters.getTaskById(payload);
+			let qurl = state.apiBaseUrl+"/api/Assignment/"+payload;
+			uni.requestWithCookie({
+				url: qurl,
+				success: (res) => {
+					if(res.statusCode===200){
+						task = res.data
+					}
+				}
+			})
+		},
 		login(state){
 
 			uni.setStorageSync(StorageKeys.hasLogin,true);
@@ -243,8 +255,8 @@ const store = createStore({
 		},
 		//获取任务类型信息
 		async fetchTaskTypes({commit,state}){
-			try {
-			        const response = await uni.requestWithCookie({
+			return new Promise((resolve,reject)=> {
+			        uni.requestWithCookie({
 			          url: state.apiBaseUrl+"/api/Information/customtypes",
 			          method: 'GET',
 					  complete(){
@@ -252,21 +264,11 @@ const store = createStore({
 					  },
 					  success:function(res){
 						  console.log(res)
-						  let data = res.data
-						  commit('updateTaskTypes', data);
-					  						  
+						  let data = res.data;
+						  resolve(data);				  
 					  },
-					 //  header:{
-						// 'Access-Control-Allow-Origin': '*'
-					 //  }
 			        });
-
-			    } catch (error) {
-					// uni.showModal({
-					// 	content:err.errMsg
-					// })
-			        console.error("fetch updateTaskTypes error:",error);
-			    }
+				});
 				
 		},
 		fetchTasks({commit,state},{count,offset,typeId}){

@@ -9,4 +9,5 @@ exports.TaskStatus = void 0;
   TaskStatus[TaskStatus["WaitForAccept"] = 0] = "WaitForAccept";
   TaskStatus[TaskStatus["Unfinished"] = 1] = "Unfinished";
   TaskStatus[TaskStatus["Finished"] = 2] = "Finished";
+  TaskStatus[TaskStatus["Announcement"] = 3] = "Announcement";
 })(exports.TaskStatus || (exports.TaskStatus = {}));

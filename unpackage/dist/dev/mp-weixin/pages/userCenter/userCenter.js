@@ -44,10 +44,16 @@ const _sfc_main = {
         url: turl
       });
     },
-    draftBox(e) {
+    taskReq(e) {
       console.log(e);
       common_vendor.index.navigateTo({
-        url: "/pages/draftBox/draftBox"
+        url: "/pages/taskReq/taskReq"
+      });
+    },
+    myApply(e) {
+      console.log(e);
+      common_vendor.index.navigateTo({
+        url: "/pages/myApply/myApply"
       });
     },
     signin(e) {
@@ -114,18 +120,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.t($options.userName),
     c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
     d: common_vendor.o((...args) => $options.history && $options.history(...args)),
-    e: common_vendor.o((...args) => $options.draftBox && $options.draftBox(...args)),
+    e: common_vendor.o((...args) => $options.taskReq && $options.taskReq(...args)),
     f: common_vendor.o((...args) => $options.holds && $options.holds(...args)),
     g: common_vendor.o(($event) => $options.holds(0)),
     h: common_vendor.o(($event) => $options.holds(1)),
-    i: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
-    j: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    k: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
-    l: $options.hasLogin,
-    m: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    n: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
-    o: !$options.hasLogin
+    i: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
+    j: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
+    k: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    l: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
+    m: $options.hasLogin,
+    n: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
+    o: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
+    p: !$options.hasLogin
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userCenter/userCenter.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -4,33 +4,19 @@ const _sfc_main = {
   data() {
     return {
       $enable: false,
-      task: {
-        "id": false,
-        "username": false,
-        "branchid": 1,
-        "description": "任务描述",
-        "finishtime": "0001-01-01T00:00:00",
-        "deadline": "",
-        "publishtime": "0001-01-01T00:00:00",
-        "fixedReward": "",
-        "percentReward": "",
-        "rewardtype": 1,
-        "status": 1,
-        "title": "",
-        "typeId": false,
-        "verify": 0
-      },
+      ptask: void 0,
+      ctasks: void 0,
       mode: {
         type: String,
         default() {
           return "done";
         }
       },
-      status: ["waitfor", "undone", "done"]
+      status: ["waitfor", "undone", "done", "announcement"]
     };
   },
   created() {
-    this.task = this.$store.state.currentTask;
+    console.log("created");
   },
   computed: {
     enable() {
@@ -42,9 +28,48 @@ const _sfc_main = {
       }
     }
   },
+  mounted() {
+    console.log("mounted");
+    let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.task.id;
+    let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.task.id;
+    if (!this.ptask) {
+      common_vendor.index.request({
+        url: curl,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            this.ctasks = res.data;
+          }
+        }
+      });
+    }
+    if (!this.ctasks) {
+      common_vendor.index.request({
+        url: purl,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            this.ptask = res.data;
+          }
+        }
+      });
+    }
+  },
   onLoad(op) {
     console.log("options:", op);
-    op.id;
+    this.id = op.id;
+    let task = this.$store.getters.getTaskById(this.id);
+    if (task !== void 0) {
+      this.task = task;
+    } else {
+      let qurl = this.$store.state.apiBaseUrl + "/api/Assignment/" + this.id;
+      common_vendor.index.requestWithCookie({
+        url: qurl,
+        success: (res) => {
+          if (res.statusCode == 200) {
+            this.task = res.data;
+          }
+        }
+      });
+    }
     this.mode = this.status[this.task.status];
   },
   methods: {
@@ -59,32 +84,40 @@ const _sfc_main = {
       });
     },
     gain(e) {
-      console.log("接取任务");
-      let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.task.id;
-      common_vendor.index.requestWithCookie({
-        url,
+      let gurl = this.$store.state.apiBaseUrl + "/api/TaskRequest";
+      common_vendor.index.showModal({
+        editable: true,
+        title: "输入留言。",
+        placeholderText: "输入留言。",
         success: (res) => {
-          if (res.statusCode === 200) {
-            if (res.data.data.success) {
-              common_vendor.index.showModal({
-                content: res.data.message
-              });
-            } else {
-              common_vendor.index.showModal({
-                content: res.data.data.reason
-              });
-            }
-          } else {
-            common_vendor.index.showModal({
-              content: "网络出错"
+          if (res.confirm) {
+            common_vendor.index.requestWithCookie({
+              url: gurl,
+              method: "POST",
+              data: {
+                id: 0,
+                userId: 0,
+                title: this.task.title,
+                typeid: this.task.typeid,
+                taskId: this.task.id,
+                agree: 2,
+                requestDate: /* @__PURE__ */ new Date(),
+                agreeDate: /* @__PURE__ */ new Date(),
+                comment: res.content
+              },
+              success: (result) => {
+                common_vendor.index.showModal({
+                  content: result.data,
+                  showCancel: false
+                });
+              },
+              fail: (err) => {
+                common_vendor.index.showModal({
+                  content: err
+                });
+              }
             });
           }
-        },
-        fail: (err) => {
-          console.log("failed");
-          common_vendor.index.showModal({
-            content: err
-          });
         }
       });
     },
@@ -98,46 +131,74 @@ const _sfc_main = {
             common_vendor.index.showModal({
               content: "网络出错"
             });
+          } else {
+            common_vendor.index.showModal({
+              content: "已放弃该任务。"
+            });
           }
           this.$data.$enable = true;
-          const pages = getCurrentPages();
-          if (pages.length >= 2) {
-            const holdTask = pages[pages.length - 2];
-            holdTask.removeItem(this.task.id);
-          }
+          this.$store.commit("updateTaskById", this.task.id);
         }
+      });
+    },
+    reloadTask(task) {
+      console.log(task.id);
+      this.$store.commit("setCurrentTask", task);
+      common_vendor.index.redirectTo({
+        url: "/pages/taskDetail/taskDetail?id=" + task.id
       });
     }
   }
 };
 if (!Array) {
+  const _easycom_taskCard2 = common_vendor.resolveComponent("taskCard");
   const _easycom_cardinfo2 = common_vendor.resolveComponent("cardinfo");
-  _easycom_cardinfo2();
+  (_easycom_taskCard2 + _easycom_cardinfo2)();
 }
+const _easycom_taskCard = () => "../../components/taskCard/taskCard.js";
 const _easycom_cardinfo = () => "../../components/cardinfo/cardinfo.js";
 if (!Math) {
-  _easycom_cardinfo();
+  (_easycom_taskCard + _easycom_cardinfo)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: common_vendor.p({
-      task: $data.task,
+      task: _ctx.task,
       editable: false
     }),
-    b: $options.html,
-    c: $data.mode == "waitfor"
+    b: $data.mode == "waitfor"
   }, $data.mode == "waitfor" ? {
-    d: common_vendor.o((...args) => $options.contact && $options.contact(...args)),
-    e: common_vendor.o((...args) => $options.gain && $options.gain(...args))
+    c: common_vendor.o((...args) => $options.contact && $options.contact(...args)),
+    d: common_vendor.o((...args) => $options.gain && $options.gain(...args))
   } : {}, {
-    f: $data.mode == "undone"
+    e: $data.mode == "undone"
   }, $data.mode == "undone" ? {
-    g: common_vendor.o((...args) => $options.contact && $options.contact(...args)),
-    h: common_vendor.o((...args) => $options.abandon && $options.abandon(...args)),
-    i: $options.enable
+    f: common_vendor.o((...args) => $options.contact && $options.contact(...args)),
+    g: common_vendor.o((...args) => $options.abandon && $options.abandon(...args)),
+    h: $options.enable
   } : {}, {
-    j: $data.mode == "done"
-  }, $data.mode == "done" ? {} : {});
+    i: $data.ptask
+  }, $data.ptask ? {
+    j: common_vendor.o(($event) => $options.reloadTask($data.ptask)),
+    k: common_vendor.p({
+      task: $data.ptask,
+      editable: false
+    })
+  } : {}, {
+    l: $data.ctasks
+  }, $data.ctasks ? {
+    m: common_vendor.f($data.ctasks, (c, k0, i0) => {
+      return {
+        a: common_vendor.o(($event) => $options.reloadTask(c), c.id),
+        b: "83597234-2-" + i0,
+        c: common_vendor.p({
+          task: c,
+          editable: false
+        }),
+        d: c.id
+      };
+    })
+  } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/taskDetail/taskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/taskDetail/taskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -105,22 +105,12 @@ const Messages = {
     },
     getByIdAsync({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
-        setTimeout(
-          () => {
-            resolve(commit("getById", payload));
-          },
-          2e3
-        );
+        resolve(commit("getById", payload));
       });
     },
     existsAsync({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
-        setTimeout(
-          () => {
-            resolve(commit("exists", payload));
-          },
-          2e3
-        );
+        resolve(commit("exists", payload));
       });
     },
     updateHasFirstLoad({ state }, userid) {

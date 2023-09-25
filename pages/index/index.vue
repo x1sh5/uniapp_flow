@@ -33,9 +33,19 @@
 		},
 		onLoad() {
 			console.log("page index onload");
-
+			
 		},
-		
+		mounted() {
+			this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
+			.then(data => {
+							 this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
+							 // 在这里处理获取到的数据
+			  })
+			  .catch(error => {
+							 console.error('获取数据失败：', error);
+							 // 在这里处理错误情况
+			  });
+		},
 		computed:{
 			tasks:{
 				get() {

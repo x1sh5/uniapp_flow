@@ -29,20 +29,33 @@ const _sfc_main = {
       }
     },
     taskType: {
+      //["name"]
       get() {
         return this.$store.getters.getTaskType(this.task.typeId);
       }
     },
     reward: {
       get() {
-        return this.task.rewardtype === common_Task.RewardType.Fiexd ? this.task.fixedReward : this.task.percentReward;
+        if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
+          if (this.task.fixedReward && this.task.fixedReward !== 0) {
+            return this.task.fixedReward / 100;
+          } else {
+            return "";
+          }
+        } else {
+          if (this.task.percentReward && this.task.percentReward !== 0) {
+            return this.task.percentReward / 100;
+          } else {
+            return "";
+          }
+        }
       },
       set(value) {
         if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
-          this.task.fixedReward = value;
+          this.task.fixedReward = !isNaN(parseFloat(value)) ? parseInt(parseFloat(value) * 100) : 0;
         }
         if (this.task.rewardtype === common_Task.RewardType.Percent) {
-          this.task.percentReward = value;
+          this.task.percentReward = !isNaN(parseFloat(value)) ? parseInt(parseFloat(value) * 100) : 0;
         }
       }
     },
@@ -129,13 +142,13 @@ const _sfc_main = {
             value: "1",
             name: "固定",
             selected: true,
-            disable: this.depart && this.depart.rewardType === "only percent"
+            disable: this.taskType && this.taskType.rewardType === "only percent"
           },
           {
             text: "%",
             value: "2",
             name: "百分比",
-            disable: this.depart && this.depart.rewardType === "only fixed"
+            disable: this.taskType && this.taskType.rewardType === "only fixed"
           }
         ]
       };
@@ -147,13 +160,6 @@ const _sfc_main = {
       let branchIndex = e.detail.value;
       this.branchIndex = branchIndex;
       this.task.branchid = branchIndex;
-      let d = this.branchs[this.branchOrder];
-      if (d.rewardType === "only percent") {
-        this.task.rewardtype = 2;
-      }
-      if (d.rewardType === "only fixed") {
-        this.task.rewardtype = 1;
-      }
     },
     rewardTypeChange(e) {
       console.log("rewardType 改变，携带值为", e);
@@ -161,7 +167,8 @@ const _sfc_main = {
       let pages = getCurrentPages();
       let current = pages[pages.length - 1];
       if (current.mode && current.mode == "single") {
-        this.task.percentReward = 100;
+        this.task.percentReward = 1e4;
+        this.task.fixedReward = 0;
       } else {
         this.task.percentReward = "";
       }
@@ -179,19 +186,19 @@ const _sfc_main = {
             this.$store.commit("setCurrentTask", this.task);
             this.$store.dispatch("genHistory", this.task.id);
             common_vendor.index.navigateTo({
-              url: "/pages/taskDetail/taskDetail?id=" + this.task.id + "&mode=" + this.mode
+              url: "/pages/taskDetail/taskDetail?id=" + this.task.id
             });
           }
         }
       }
     },
-    updateReward(event) {
-      if (this.task.rewardtype === common_Task.RewardType.Fiexd) {
-        this.task.fixedReward = event.detail.value;
-      } else if (this.task.rewardtype === common_Task.RewardType.Percent) {
-        this.task.percentReward = event.detail.value;
-      }
-    },
+    // updateReward(event){
+    // 	if(this.task.rewardtype === RewardType.Fiexd){
+    // 		this.task.fixedReward = event.detail.value ;
+    // 	}else if(this.task.rewardtype === RewardType.Percent){
+    // 		this.task.percentReward = event.detail.value;
+    // 	}
+    // },
     updateBrief(event) {
       this.task.title = event.detail.value;
     },
@@ -207,50 +214,38 @@ const _sfc_main = {
       console.log(e);
       this.task.deadline = e.detail.value;
     },
-    publish() {
+    check() {
       console.log(this.task);
       if (!this.task.title) {
         common_vendor.index.showModal({
           content: "标题不能为空！"
         });
-        return false;
+        this.$emit("check-Result", false);
+        return;
       }
       if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
-        return false;
+        this.$emit("check-Result", false);
+        return;
       }
       if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentReward) {
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
-        return false;
+        this.$emit("check-Result", false);
+        return;
       }
       if (!this.task.deadline) {
         common_vendor.index.showModal({
           content: "截止日期不能为空！"
         });
-        return false;
+        this.$emit("check-Result", false);
+        return;
       }
-      let posturl = this.$store.state.apiBaseUrl + "/api/Assignment";
-      common_vendor.index.requestWithCookie({
-        url: posturl,
-        method: "POST",
-        data: this.task,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "发布成功", errMsg: "ok" });
-            this.$emit("after-publish", this.task.id);
-          } else {
-            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "server error" });
-          }
-        },
-        fail: (err) => {
-          console.error(err);
-          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "发布失败", errMsg: "client error" });
-        }
-      });
+      this.$emit("check-Result", true);
+      return;
     },
     put() {
       console.log(this.task);
@@ -299,6 +294,14 @@ const _sfc_main = {
     },
     removeTask(e) {
       console.log(e);
+      if (this.task.main === 1) {
+        common_vendor.index.showModal({
+          title: "错误！",
+          showCancel: false,
+          content: "主任务不能被移除。只能返回后重新创建新任务。"
+        });
+        return;
+      }
       this.$emit("remove-task", this.task.id);
     },
     showPopup(e) {
@@ -316,7 +319,7 @@ const _sfc_main = {
       //spendtime:"",
       //tasktype:"类型",
       vis: false,
-      status: ["代接", "待完成", "完成"],
+      status: ["待接", "待完成", "完成", "公示"],
       branchIndex: false
     };
   }
@@ -342,45 +345,44 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: common_vendor.o((...args) => $options.biupdatePt && $options.biupdatePt(...args)),
     j: common_vendor.n(`fontcolor${$options.Id % 3}`),
     k: !$props.editable,
-    l: common_vendor.o((...args) => $options.updateReward && $options.updateReward(...args)),
-    m: $options.reward,
-    n: common_vendor.o(($event) => $options.reward = $event.detail.value),
-    o: common_vendor.t($options.rewardSymbol),
-    p: $props.editable
+    l: $options.reward,
+    m: common_vendor.o(($event) => $options.reward = $event.detail.value),
+    n: common_vendor.t($options.rewardSymbol),
+    o: $props.editable
   }, $props.editable ? {
-    q: common_vendor.o($options.rewardTypeChange),
-    r: common_vendor.p({
+    p: common_vendor.o($options.rewardTypeChange),
+    q: common_vendor.p({
+      disabled: $props.task.main === 1,
       localdata: $options.rewardtypeSymbol.options,
       clear: false,
       modelValue: $options.rewardtype,
       placeholder: "类型"
     })
   } : {}, {
-    s: $props.editable
+    r: $props.editable
   }, $props.editable ? {
-    t: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+    s: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
   } : {}, {
-    v: common_vendor.t($options.taskType),
-    w: common_vendor.t($options.depart ? $options.depart["name"] : ""),
-    x: !$props.editable,
-    y: $options.branchs,
-    z: $options.branchOrder,
-    A: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    B: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    C: common_vendor.t($options.userName),
-    D: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    E: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
-    F: common_vendor.t($data.status[$props.task.status]),
-    G: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    H: $data.vis
+    t: common_vendor.t($options.taskType["name"]),
+    v: common_vendor.t($options.depart ? $options.depart["name"] : ""),
+    w: !$props.editable,
+    x: $options.branchs,
+    y: $options.branchOrder,
+    z: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    A: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
+    B: common_vendor.t($options.userName),
+    C: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    D: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
+    E: common_vendor.t($data.status[$props.task.status]),
+    F: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    G: $data.vis
   }, $data.vis ? {
-    I: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
-    J: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
+    H: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
+    I: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
   } : {}, {
-    K: common_vendor.n(`task${$options.Id % 3}`),
-    L: common_vendor.o((...args) => $options.detail && $options.detail(...args)),
-    M: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args))
+    J: common_vendor.n(`task${$options.Id % 3}`),
+    K: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

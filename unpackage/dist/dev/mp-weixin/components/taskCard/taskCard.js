@@ -21,7 +21,8 @@ const _sfc_main = {
           "status": 1,
           "title": "",
           "typeId": false,
-          "verify": 0
+          "verify": 0,
+          "main": 0
         };
       }
     },
@@ -96,8 +97,11 @@ const _sfc_main = {
       }
       this.content = payload.ctx;
     },
-    publish() {
-      return this.$refs.cardinfo.publish();
+    check() {
+      return this.$refs.cardinfo.check();
+    },
+    checkResult(data) {
+      this.$emit("check-Result", data);
     },
     put() {
       return this.$refs.cardinfo.put();
@@ -121,19 +125,20 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.sr("cardinfo", "445dab1a-0"),
+    a: common_vendor.sr("cardinfo", "0f887c44-0"),
     b: common_vendor.o($options.removeTask),
-    c: common_vendor.o($options.afterPublish),
-    d: common_vendor.p({
+    c: common_vendor.p({
       task: $props.task,
       editable: $props.editable,
       mode: $props.mode
     }),
-    e: $options.html,
-    f: $props.editable
+    d: $options.html,
+    e: $props.editable
   }, $props.editable ? {
-    g: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
-  } : {});
+    f: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
+  } : {}, {
+    g: common_vendor.o((...args) => $options.checkResult && $options.checkResult(...args))
+  });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/taskCard/taskCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/taskCard/taskCard.vue"]]);
 wx.createComponent(Component);

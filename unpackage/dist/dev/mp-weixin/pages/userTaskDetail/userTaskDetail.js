@@ -64,7 +64,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 0 ? {
     d: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
-        a: "564b4720-1-" + i0,
+        a: "31f86ff4-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -77,7 +77,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 1 ? {
     f: common_vendor.f($data.$historys, (item, k0, i0) => {
       return {
-        a: "564b4720-2-" + i0,
+        a: "31f86ff4-2-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -87,5 +87,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userTaskDetail/userTaskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userTaskDetail/userTaskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

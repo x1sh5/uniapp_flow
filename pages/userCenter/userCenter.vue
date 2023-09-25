@@ -24,7 +24,7 @@
 			<view class="taskinfo">
 				<view class="uni-icons icon-incomplete" @click="holds(0)"><view class="item_title">待完成</view></view>
 				<view class="wr icon2" @click="holds(1)"><view class="item_title">完成项目</view></view>
-				<view class="wr icon7" @click="myApply">我的申请</view>
+				<view class="wr icon7" @click="myApply"><view class="item_title">我的申请</view></view>
 			</view>
 		</view>
 		

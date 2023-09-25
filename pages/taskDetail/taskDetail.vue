@@ -13,7 +13,7 @@
 				<button class="detail-btn" @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 			
-			<view v-if="mode=='done'">
+			<view v-else>
 			</view>
 			
 		</view>
@@ -47,22 +47,6 @@
 				$enable:false,
 				ptask: undefined,
 				ctasks: undefined,
-				task:{
-					  "id": false,
-					  "username": false,
-					  "branchid": 1,
-					  "description": "任务描述",
-					  "finishtime": "0001-01-01T00:00:00",
-					  "deadline": '',
-					  "publishtime": "0001-01-01T00:00:00",
-					  "fixedReward": '',
-					  "percentReward": '',
-					  "rewardtype": 1,
-					  "status": 1,
-					  "title": "",
-					  "typeId": false,
-					  "verify": 0,
-					  },
 				mode:{
 					type:String,
 					default(){
@@ -73,21 +57,7 @@
 			}
 		},
 		created() {
-			let task = this.$store.getters.getTaskById(this.id);
-			if(task!==undefined){
-				this.task = task
-			}else{
-				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/"+this.id;
-				uni.requestWithCookie({
-					url: qurl,
-					success: (res) => {
-						if(res.statusCode==200){
-							this.task = res.data
-						}
-					}
-				})
-			}
-
+			console.log("created")//1
 		},
 		computed:{
 			enable(){
@@ -100,6 +70,7 @@
 			},
 		},
 		mounted() {
+			console.log("mounted")//3
 			let curl = this.$store.state.apiBaseUrl+"/api/Assignment/childs/"+this.task.id;
 			let purl = this.$store.state.apiBaseUrl+"/api/Assignment/parent/"+this.task.id;
 			
@@ -127,9 +98,24 @@
 
 		},
 		onLoad(op) {
-		  console.log("options:",op)
-		  this.id = op.id
-		  //this.mode = op.mode
+		  console.log("options:",op)//2
+		  this.id = op.id;
+		  
+		  let task = this.$store.getters.getTaskById(this.id);
+		  if(task!==undefined){
+		  	this.task = task
+		  }else{
+		  	let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/"+this.id;
+		  	uni.requestWithCookie({
+		  		url: qurl,
+		  		success: (res) => {
+		  			if(res.statusCode==200){
+		  				this.task = res.data
+		  			}
+		  		}
+		  	})
+		  }
+		  
 		  this.mode = this.status[this.task.status]
 		  // let t  = this.$store.getters.getTaskById(id)
 		  // if(t!==undefined && t!==null){
@@ -148,23 +134,41 @@
 				})
 			},
 			gain(e){
-				let gurl = this.$store.state.apiBaseUrl+"/api/TaskRequest;
-				uni.request({
-					url: gurl,
-					method: "POST",
-					data: new {id:0,}
-					success: (res)=>{
-						uni.showModal({
-							content: res.data,
-							showCancel: false
-						});
-					},
-					fail: (err)=>{
-						uni.showModal({
-							content:err
-						})
+				let gurl = this.$store.state.apiBaseUrl+"/api/TaskRequest";
+				uni.showModal({
+					editable:true,
+					title:"输入留言。",
+					placeholderText:"输入留言。",
+					success: (res) => {
+						if (res.confirm) {
+							uni.requestWithCookie({
+								url: gurl,
+								method: "POST",
+								data: {  id: 0,
+											  userId: 0,
+											  title: this.task.title,
+											  typeid: this.task.typeid,
+											  taskId: this.task.id,
+											  agree: 2,
+											  requestDate: new Date(),
+											  agreeDate: new Date(),
+											  comment: res.content},
+								success: (result)=>{
+									uni.showModal({
+										content: result.data,
+										showCancel: false
+									});
+								},
+								fail: (err)=>{
+									uni.showModal({
+										content:err
+									})
+								}
+							})
+						}
 					}
 				})
+
 			},
 			abandon(e){
 				let url = this.$store.state.apiBaseUrl+"/api/AssignmentUser/abandon/"+this.task.id;
@@ -176,13 +180,13 @@
 							uni.showModal({
 								content: "网络出错"
 							})
+						}else{
+							uni.showModal({
+								content: "已放弃该任务。"
+							})
 						}
 						this.$data.$enable = true;
-						const pages = getCurrentPages();
-						if (pages.length >= 2) {
-							const holdTask = pages[pages.length - 2]; // 获取页面A的实例
-							holdTask.removeItem(this.task.id); // 修改页面A的属性a1的值
-						}
+						this.$store.commit("updateTaskById",this.task.id); 
 					},
 				});
 			},

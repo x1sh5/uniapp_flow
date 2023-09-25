@@ -67,17 +67,13 @@
 		async onLaunch() {
 			console.log("before Create")
 			await this.$store.dispatch('fetchBranchs');
-			await this.$store.dispatch('fetchTaskTypes');
-
-			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
-			 .then(data => {
-				 this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
-				 // 在这里处理获取到的数据
-			   })
-			   .catch(error => {
-				 console.error('获取数据失败：', error);
-				 // 在这里处理错误情况
-			   });
+			this.$store.dispatch('fetchTaskTypes')
+			.then(data=>{
+				this.$store.commit('updateTaskTypes', data);
+			})
+			.catch (error =>{
+			    console.error("fetch updateTaskTypes error:",error);
+			});
 		    
 		},
 		onShow: function() {

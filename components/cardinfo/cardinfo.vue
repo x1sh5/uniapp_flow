@@ -287,7 +287,7 @@ import { RewardType } from '../../common/Task'
 							this.$store.commit('setCurrentTask',this.task);
 							this.$store.dispatch('genHistory',this.task.id);
 							uni.navigateTo({
-								url:"/pages/taskDetail/taskDetail?id="+this.task.id+"&mode="+this.mode,
+								url:"/pages/taskDetail/taskDetail?id="+this.task.id,
 								
 							})
 						}
@@ -321,31 +321,35 @@ import { RewardType } from '../../common/Task'
 			check(){
 				console.log(this.task);
 				if(!this.task.title){
+					this.$emit("check-Result",false);
 					uni.showModal({
 						content:"标题不能为空！"
 					});
-					this.$emit("check-Result",false);
+					
 					return;
 				}
 				if(this.task.rewardtype === RewardType.Fiexd&&!this.task.fixedReward){
+					this.$emit("check-Result",false);
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
-					this.$emit("check-Result",false);
+					
 					return;
 				}
 				if(this.task.rewardtype === RewardType.Percent&&!this.task.percentReward){
+					this.$emit("check-Result",false);
 					uni.showModal({
 						content:"回馈值不能为空！"
 					});
-					this.$emit("check-Result",false);
+					
 					return;
 				}
 				if(!this.task.deadline){
+					this.$emit("check-Result",false);
 					uni.showModal({
 						content:"截止日期不能为空！"
 					});
-					this.$emit("check-Result",false);
+					
 					return;
 				}
 				

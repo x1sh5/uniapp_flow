@@ -9,7 +9,6 @@
 
 <script>
 import { markRaw } from "vue";
-import { _ } from "lodash";
 
 function deepClone(obj) {
   if (obj === null || typeof obj !== 'object') {

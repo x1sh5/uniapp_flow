@@ -1,4 +1,5 @@
 	<template>
+		<simpleCard></simpleCard>
 		<view>
 			<view>父组件-count的值是：{{count}}</view>
 			<button type="default" @click="count +=1">+1</button>
