@@ -217,31 +217,31 @@ const _sfc_main = {
     check() {
       console.log(this.task);
       if (!this.task.title) {
+        this.$emit("check-Result", false);
         common_vendor.index.showModal({
           content: "标题不能为空！"
         });
-        this.$emit("check-Result", false);
         return;
       }
       if (this.task.rewardtype === common_Task.RewardType.Fiexd && !this.task.fixedReward) {
+        this.$emit("check-Result", false);
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
-        this.$emit("check-Result", false);
         return;
       }
       if (this.task.rewardtype === common_Task.RewardType.Percent && !this.task.percentReward) {
+        this.$emit("check-Result", false);
         common_vendor.index.showModal({
           content: "回馈值不能为空！"
         });
-        this.$emit("check-Result", false);
         return;
       }
       if (!this.task.deadline) {
+        this.$emit("check-Result", false);
         common_vendor.index.showModal({
           content: "截止日期不能为空！"
         });
-        this.$emit("check-Result", false);
         return;
       }
       this.$emit("check-Result", true);
@@ -384,5 +384,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

@@ -22,6 +22,8 @@ uniapp
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	
+	4. pages/myPublishs/myPublishs.wxml bindclick改为capture-catch:tap
+	
 		
 		
 	微信开发工具本地设置：

@@ -5,10 +5,10 @@
     "include": []
   },
   "setting": {
-    "urlCheck": false,
-    "es6": false,
+    "urlCheck": true,
+    "es6": true,
     "postcss": true,
-    "minified": false,
+    "minified": true,
     "newFeature": true,
     "bigPackageSizeSupport": true,
     "babelSetting": {
@@ -16,7 +16,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "ignoreUploadUnusedFiles": true
+    "enhance": true
   },
   "compileType": "miniprogram",
   "libVersion": "",

@@ -1,8 +1,8 @@
 <template>
 	<view class="usercenter">
 		<form @submit="login" style="margin: 20px 10px;">
-			<text>用户名：</text><input name="userName" class="lg-input" type="text" value="lisi" />
-			<text>密码：</text><input name="password" class="lg-input" password value="lisi1234"/>
+			<text>用户名：</text><input name="userName" class="lg-input" type="text" value="" />
+			<text>密码：</text><input name="password" class="lg-input" password value=""/>
 			<button form-type="submit">登录</button>
 		</form>
 		<button @click="register">注册</button>
@@ -37,9 +37,16 @@
 							// uni.navigateBack({
 							// 	delta:that.depth
 							// })
-							uni.reLaunch({
-								url: '/pages/userCenter/userCenter'
-							})
+							if(this.refer === "order"){
+								uni.redirectTo({
+									url: "/pages/order/order"
+								});
+							}else{
+								uni.reLaunch({
+									url: '/pages/userCenter/userCenter'
+								})
+							}
+
 						}else if(res.statusCode===401){
 							uni.showModal({
 								content: res.data,
@@ -62,6 +69,7 @@
 		onLoad(op) {
 			const refer = op.refer
 			console.log(refer)
+			this.refer = refer;
 			if(refer==='usercenter'){
 				console.log("equal")
 				this.depth = 1

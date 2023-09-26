@@ -1,10 +1,10 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
-const signalR = require("../common/signalr.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
+const signalR = require("../common/signalr.js");
 const store_reference = require("./reference.js");
-const baseUrl = "https://localhost:7221";
+const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,
@@ -60,16 +60,33 @@ const store = common_vendor.createStore({
       }
     },
     updateTaskById(state2, payload) {
-      this.getters.getTaskById(payload);
-      let qurl = state2.apiBaseUrl + "/api/Assignment/" + payload;
-      common_vendor.index.requestWithCookie({
-        url: qurl,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            res.data;
+      let task = null;
+      for (let [key, value] of state2.tasks) {
+        for (let item of value) {
+          if (item.id === parseInt(id)) {
+            task = item;
+            break;
           }
         }
-      });
+      }
+      if (task != null) {
+        let qurl = state2.apiBaseUrl + "/api/Assignment/" + payload;
+        common_vendor.index.requestWithCookie({
+          url: qurl,
+          success: (res) => {
+            if (res.statusCode === 200) {
+              task = res.data;
+            }
+          }
+        });
+      }
+    },
+    updateLocalTask(payload) {
+      for (let item of $publishs) {
+        if (item.id === parseInt(payload.id)) {
+          break;
+        }
+      }
     },
     login(state2) {
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
@@ -149,11 +166,11 @@ const store = common_vendor.createStore({
     getTasks: (state2) => (taskTypeName) => {
       return state2.tasks.get(taskTypeName);
     },
-    getTaskById: (state2) => (id) => {
+    getTaskById: (state2) => (id2) => {
       let task = null;
       for (let [key, value] of state2.tasks) {
         for (let item of value) {
-          if (item.id === parseInt(id)) {
+          if (item.id === parseInt(id2)) {
             task = item;
             break;
           }
@@ -233,8 +250,8 @@ const store = common_vendor.createStore({
     },
     //获取任务类型信息
     async fetchTaskTypes({ commit, state: state2 }) {
-      try {
-        const response = await common_vendor.index.requestWithCookie({
+      return new Promise((resolve, reject) => {
+        common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Information/customtypes",
           method: "GET",
           complete() {
@@ -242,15 +259,10 @@ const store = common_vendor.createStore({
           success: function(res) {
             console.log(res);
             let data = res.data;
-            commit("updateTaskTypes", data);
+            resolve(data);
           }
-          //  header:{
-          // 'Access-Control-Allow-Origin': '*'
-          //  }
         });
-      } catch (error) {
-        console.error("fetch updateTaskTypes error:", error);
-      }
+      });
     },
     fetchTasks({ commit, state: state2 }, { count, offset, typeId }) {
       return new Promise((resolve, reject) => {
@@ -268,8 +280,8 @@ const store = common_vendor.createStore({
         });
       });
     },
-    async fetchTaskById({ commit }, id) {
-      let qurl = state.apiBaseUrl + "/api/Assignment/" + id;
+    async fetchTaskById({ commit }, id2) {
+      let qurl = state.apiBaseUrl + "/api/Assignment/" + id2;
       try {
         const response = await common_vendor.index.requestWithCookie({
           url: qurl,
@@ -320,7 +332,7 @@ const store = common_vendor.createStore({
       }
       await reconnect();
     },
-    genHistory({ state: state2 }, id) {
+    genHistory({ state: state2 }, id2) {
       let qurl = state2.apiBaseUrl + "/api/History";
       common_vendor.index.uploadFileWithCookie({
         url: qurl,
@@ -329,7 +341,7 @@ const store = common_vendor.createStore({
         name: "123",
         // 随便填，不为空即可  
         //header: header, // 可以加access_token等  
-        formData: { asgid: id },
+        formData: { asgid: id2 },
         // 接口参数，json格式，底层自动转为FormData的格式数据  
         success: (res) => {
           console.log(res);

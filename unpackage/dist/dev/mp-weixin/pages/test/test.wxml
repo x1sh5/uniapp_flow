@@ -1,1 +1,1 @@
-<simple-card u-i="8bedf4b4-0" bind:__l="__l"></simple-card><view><view>父组件-count的值是：{{a}}</view><button type="default" bindtap="{{b}}">+1</button><counter wx:if="{{d}}" u-i="8bedf4b4-1" bind:__l="__l" bindupdateNumber="{{c}}" u-p="{{d}}"></counter></view>
+<simple-card u-i="46827310-0" bind:__l="__l"></simple-card><view><view>父组件-count的值是：{{a}}</view><button type="default" bindtap="{{b}}">+1</button><counter wx:if="{{d}}" u-i="46827310-1" bind:__l="__l" bindupdateNumber="{{c}}" u-p="{{d}}"></counter></view>

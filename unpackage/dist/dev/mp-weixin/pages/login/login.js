@@ -24,9 +24,15 @@ const _sfc_main = {
             common_weappCookie.cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
             that.$store.commit("login");
             that.$store.commit("setUserName", res.data.userName);
-            common_vendor.index.reLaunch({
-              url: "/pages/userCenter/userCenter"
-            });
+            if (this.refer === "order") {
+              common_vendor.index.redirectTo({
+                url: "/pages/order/order"
+              });
+            } else {
+              common_vendor.index.reLaunch({
+                url: "/pages/userCenter/userCenter"
+              });
+            }
           } else if (res.statusCode === 401) {
             common_vendor.index.showModal({
               content: res.data,
@@ -47,6 +53,7 @@ const _sfc_main = {
   onLoad(op) {
     const refer = op.refer;
     console.log(refer);
+    this.refer = refer;
     if (refer === "usercenter") {
       console.log("equal");
       this.depth = 1;
@@ -61,5 +68,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/login/login.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/login/login.vue"]]);
 wx.createPage(MiniProgramPage);

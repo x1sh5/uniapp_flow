@@ -8,9 +8,9 @@ require("./common/storageKeys.js");
 require("./store/messages.js");
 require("./store/reference.js");
 if (!Math) {
+  "./pages/index/index.js";
   "./pages/userCenter/userCenter.js";
   "./pages/addtask/addtask.js";
-  "./pages/index/index.js";
   "./pages/editor/editor.js";
   "./pages/newTask/newTask.js";
   "./pages/message/message.js";
@@ -41,6 +41,7 @@ if (!Math) {
   "./pages/settings/unregister/unregister.js";
   "./pages/settings/identityCheck/identityCheck.js";
   "./pages/myApply/myApply.js";
+  "./pages/order/order.js";
 }
 common_weappCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
 const _sfc_main = {
@@ -59,11 +60,10 @@ const _sfc_main = {
   async onLaunch() {
     console.log("before Create");
     await this.$store.dispatch("fetchBranchs");
-    await this.$store.dispatch("fetchTaskTypes");
-    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: "" }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: "全部", data });
+    this.$store.dispatch("fetchTaskTypes").then((data) => {
+      this.$store.commit("updateTaskTypes", data);
     }).catch((error) => {
-      console.error("获取数据失败：", error);
+      console.error("fetch updateTaskTypes error:", error);
     });
   },
   onShow: function() {
@@ -73,7 +73,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/x/Documents/HBuilderProjects/flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/流沙任务系统uniapp/uniapp_flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);

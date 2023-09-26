@@ -18,7 +18,7 @@
 				<button @click="del">删除</button>
 			</view>
 			
-			<view v-if="task.canTake==0&&task.main==1" class="pay-container">
+			<view v-if="task.canTake==0&&task.main==1&&task.payed==0" class="pay-container">
 				<view class="balance">金额：{{ balance }}</view>
 				<button v-show="balance*100>0" @click="pay">支付</button>
 			</view>
@@ -140,13 +140,16 @@
 				let qurl = this.$store.state.apiBaseUrl + "/api/Bill/pubPayV3";
 				let notify = this.$store.state.apiBaseUrl + "/api/wechatpay/v3/notify/transactions";
 				let praypay;
+				if(!(this.task&&this.task.id)){
+					return
+				}
 				wx.login({
 				  success: (res)=> {
 				    if (res.code) {
 						uni.request({
 							url: qurl,
 							method: "POST",
-							data: {OutTradeNo:"1",Description:"固定任务预支付费用",Total:this.balance*100,
+							data: {OutTradeNo:"1",Description:"任务"+this.task.id+"的固定预支付费用",Total:this.balance*100,
 							JsCode:res.code,NotifyUrl:notify,Attach:"taskid="+this.task.id},
 							success: (result) => {
 								if(result.statusCode===200){
@@ -159,7 +162,11 @@
 										signType: 'RSA',
 										paySign: praypay.paySign,
 										success:(res)=>{
-											console.log(res)
+											uni.showToast({
+												title: "支付成功"
+											});
+											this.task.payed = 1;
+											this.$store.commit("updateLocalTaskById",this.task) 
 										},
 										fail: (err)=>{
 											

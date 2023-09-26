@@ -53,7 +53,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     c: common_vendor.f($data.tasks, (item, k0, i0) => {
       return {
-        a: "42edecf4-1-" + i0,
+        a: "12de62f0-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -64,5 +64,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/searchResult/searchResult.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/searchResult/searchResult.vue"]]);
 wx.createPage(MiniProgramPage);

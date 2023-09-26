@@ -38,6 +38,8 @@
 			<view class="driver"></view>
 			<view class="user-view">帮助中心</view>
 			<view class="driver"></view>
+			<view class="user-view" @click="toOrder">我的支付</view>
+			<view class="driver"></view>
 			<view class="user-view">技能互助文档</view>
 			<view class="driver"></view>
 			<view class="user-view">收益来源</view>
@@ -76,10 +78,11 @@
 		computed:{
 			hasLogin:{
 				get(){
-					return this.login;
+					return this.$store.state.$hasLogin;
 				},
 				set(value){
-					this.login = value
+					this.login = value;
+					this.$store.state.$hasLogin = value;
 				}
 			},
 			userName(){
@@ -120,6 +123,11 @@
 				console.log(e);
 				uni.navigateTo({
 					url:"/pages/myApply/myApply"
+				});
+			},
+			toOrder(e){
+				uni.navigateTo({
+					url:"/pages/order/order"
 				});
 			},
 			signin(e){
@@ -169,20 +177,6 @@
 		
 		created() {
 			this.hasLogin = this.$store.getters.hasLogin();
-			// #ifdef MP-WEIXIN
-			uni.showModal({
-				content:"小程序将使用用户微信头像作为默认头像",
-				cancelText: "不同意",
-				confirmText: "同意",
-				success:()=>{
-					uni.getUserInfo({
-						success:(res)=>{
-							this.imgsrc = res.userInfo.avatarUrl;
-						}
-					});
-				}
-			});
-			// #endif
 		}
 		
 	}

@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/userCenter/userCenter",
     "pages/addtask/addtask",
-    "pages/index/index",
     "pages/editor/editor",
     "pages/newTask/newTask",
     "pages/message/message",
@@ -32,7 +32,8 @@
     "pages/test/B/B",
     "pages/settings/unregister/unregister",
     "pages/settings/identityCheck/identityCheck",
-    "pages/myApply/myApply"
+    "pages/myApply/myApply",
+    "pages/order/order"
   ],
   "window": {
     "navigationBarTextStyle": "black",

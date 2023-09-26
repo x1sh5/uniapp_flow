@@ -8,7 +8,7 @@ import { References } from "./reference.js";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://localhost:7221"; //""//"https://www.liusha-gy.com"; //"https://www.wangyan.net"; 
+const baseUrl = "https://www.liusha-gy.com"//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
 
 const store = createStore({
 	state:{
@@ -68,16 +68,42 @@ const store = createStore({
 			}
 		},
 		updateTaskById(state,payload){
-			let task = this.getters.getTaskById(payload);
-			let qurl = state.apiBaseUrl+"/api/Assignment/"+payload;
-			uni.requestWithCookie({
-				url: qurl,
-				success: (res) => {
-					if(res.statusCode===200){
-						task = res.data
+			let task = null;
+			for (let [key, value] of state.tasks) {
+			  for (let item of value) {
+			    if (item.id === parseInt(id)) {
+			      task=item;
+			      break;
+			    }
+			  }
+			}
+			if(task!=null){
+				let qurl = state.apiBaseUrl+"/api/Assignment/"+payload;
+				uni.requestWithCookie({
+					url: qurl,
+					success: (res) => {
+						if(res.statusCode===200){
+							task = res.data
+						}
 					}
-				}
-			})
+				})
+			}
+
+		},
+		updateLocalTask(payload){
+		 let task = null;
+			
+		  for (let item of $publishs) {
+			if (item.id === parseInt(payload.id)) {
+			  task=item;
+			  break;
+			}
+		  }
+			
+			if(task!=null){
+				task = payload;
+			}
+			
 		},
 		login(state){
 

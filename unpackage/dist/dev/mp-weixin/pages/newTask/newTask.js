@@ -33,15 +33,6 @@ const _sfc_main = {
     },
     mode() {
       return this.$data.$mode;
-    },
-    balance() {
-      const fixs = this.tasks.reduce((newarr, item) => {
-        if (item.rewardtype === common_Task.RewardType.Fiexd)
-          newarr.push(item);
-        return newarr;
-      }, []);
-      const sum = fixs.reduce((total, obj) => total + obj.fixedReward, 0);
-      return sum / 100;
     }
   },
   created(op) {
@@ -83,12 +74,44 @@ const _sfc_main = {
     checkResult(data) {
       this.results.push(data);
     },
-    submitEvent() {
+    async showModal() {
+      return new Promise((resolve, reject) => {
+        common_vendor.index.showModal({
+          showCancel: false,
+          title: "提示",
+          content: "还有比例未分配完整。",
+          success: function(res) {
+            if (res.confirm) {
+              resolve();
+            } else if (res.cancel) {
+              reject(new Error("用户取消操作"));
+            }
+          },
+          fail: function(error) {
+            reject(error);
+          }
+        });
+      });
+    },
+    async submitEvent() {
+      let sum = this.tasks.reduce((a, b) => {
+        if (b.rewardtype === common_Task.RewardType.Percent && b.main === 0) {
+          return a + b.percentReward;
+        }
+        return a;
+      }, 0);
+      if (sum !== 1e4) {
+        try {
+          await this.showModal();
+          return;
+        } catch (error) {
+        }
+      }
       this.$store.commit("setPublishResults", []);
       for (let item of this.tasks) {
         this.$refs["id" + item.id][0].check();
       }
-      if (this.results.every((ele) => Boolean(ele))) {
+      if (this.results.length > 0 && this.results.every((ele) => Boolean(ele))) {
         let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/posts";
         common_vendor.index.requestWithCookie({
           url: posturl,
@@ -96,7 +119,7 @@ const _sfc_main = {
           data: this.tasks,
           success: (res) => {
             if (res.statusCode === 201) {
-              this.$store.state.$publishResults.push({ success: true, message: "任务发布成功", errMsg: "ok" });
+              this.$store.state.$publishResults.push({ success: true, message: "任务发布成功", errMsg: "ok", id: res.data.id });
             } else {
               this.$store.state.$publishResults.push({ success: false, message: "任务发布失败", errMsg: "server error" });
             }
@@ -158,46 +181,6 @@ const _sfc_main = {
     removeTask(id) {
       let index = this.tasks.findIndex((item) => item.id === parseInt(id));
       this.tasks.splice(index, 1);
-    },
-    pay(e) {
-      let qurl = this.$store.state.apiBaseUrl + "/api/Bill/pubPayV3";
-      let notify = this.$store.state.apiBaseUrl + "/api/wechatpay/v3/notify/transactions";
-      let praypay;
-      common_vendor.wx$1.login({
-        success: (res) => {
-          if (res.code) {
-            common_vendor.index.request({
-              url: qurl,
-              method: "POST",
-              data: { OutTradeNo: "1", Description: "测试", Total: this.balance * 100, JsCode: res.code, NotifyUrl: notify },
-              success: (result) => {
-                if(result.statusCode===200){
-									let praypay = result.data;
-									console.log(praypay);
-										wx.requestPayment({
-											timeStamp: praypay.timeStamp,
-											nonceStr: praypay.nonceStr,
-											package: praypay.package,
-											signType: 'RSA',
-											paySign: praypay.paySign,
-											success:(res)=>{
-												console.log(res)
-											},
-											fail: (err)=>{
-												
-											}
-										})
-								}
-              },
-              fail: (err) => {
-              }
-            });
-          } else {
-            console.log("登录失败！" + res.errMsg);
-          }
-        }
-      });
-      console.log(praypay);
     }
   },
   mounted() {
@@ -232,14 +215,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($data.tasks, (item, index, i0) => {
       return {
-        a: common_vendor.sr("id" + item.id, "9360021c-1-" + i0, {
+        a: common_vendor.sr("id" + item.id, "329834dc-1-" + i0, {
           "f": 1
         }),
         b: item.id,
         c: "id" + item.id,
         d: common_vendor.o($options.checkResult, item.id),
         e: common_vendor.o($options.removeTask, item.id),
-        f: "9360021c-1-" + i0,
+        f: "329834dc-1-" + i0,
         g: common_vendor.p({
           task: item,
           editable: true
@@ -254,11 +237,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       content: $options.taskTypes,
       showProp: "name"
     })
-  } : {}, {
-    h: common_vendor.t($options.balance),
-    i: $options.balance * 100 > 0,
-    j: common_vendor.o((...args) => $options.pay && $options.pay(...args))
-  });
+  } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/newTask/newTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);

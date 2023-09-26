@@ -28,3 +28,13 @@
 		background-color: #a8a8a8;
 		margin: 10rpx 0;
 }
+.pay-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.balance {
+  margin-left: 30px;
+}

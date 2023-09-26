@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view v-for="item in publishs" :key="item.id" class="custom-margin">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)" style="margin-top:5px;"/>
 		</view>
 	</view>
 </template>
@@ -30,7 +30,7 @@
 			},
 			toDetails(e){
 				uni.navigateTo({
-					url:"/pages/myTaskDetail/myTaskDetail"
+					url:"/pages/myTaskDetail/myTaskDetail?id="+e
 				})
 			},
 			removeById(id){
@@ -38,7 +38,8 @@
 				if(index!=-1){
 					this.publishs.splice(index,1);
 				}
-			}
+			},
+
 		},
 		onLoad() {
 			if(!this.hasPushlishs){
