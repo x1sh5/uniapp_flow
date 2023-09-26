@@ -23,9 +23,6 @@ uniapp
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	
 		
-	*4. pages/login/login.wxml
-		修改<text>密码：</text><input name="password" class="lg-input" type="safe-password" value="lisi1234"/>
-			为 <text>密码：</text><input name="password" class="lg-input" password type="text" value="lisi1234"/>
 		
 	微信开发工具本地设置：
 	a. 调试基础库 2.32.3
