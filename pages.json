@@ -296,6 +296,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/userCenter/about/about",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "服务协议",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
