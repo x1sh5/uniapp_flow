@@ -57,14 +57,19 @@
 			<!-- 右半部分，只包括：类型 -->
 			<view class="bigtype" >
 				<view v-if="editable" class="popupbutton" @click="showPopup">...</view>
-				<view class="tasktype columnlayout">{{ taskType["name"] }}</view>
+				<!-- <view class="tasktype columnlayout">{{ taskType["name"] }}</view> -->
+				<input maxlength="2" :disabled="!editable" type="text" class="tasktype columnlayout"
+				v-model="task.tag" />
 			</view>
 		
 		   <!-- 部门 -->
 		   <!-- range-key 用于指定显示名称属性值 -->
-			<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
+<!-- 			<picker mode="selector" :disabled="!editable" :range="branchs" range-key="name" 
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
-			{{ depart?depart["name"]:'' }}</picker>
+			{{ depart?depart["name"]:'' }}</picker> -->
+			
+			<view :class="`fontcolor${Id%3}`" class="department">{{ branch }}卡</view>
+			
 			<!-- 发起人 -->
 			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
@@ -176,7 +181,7 @@ import { RewardType } from '../../common/Task'
 					d = this.branchs[this.branchOrder];
 				}catch(e){
 					//TODO handle the exception
-					d = "部门";
+					d = "??";
 				}
 
 				return d

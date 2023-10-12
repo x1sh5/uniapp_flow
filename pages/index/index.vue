@@ -9,7 +9,7 @@
 		</swiper>
 		
 		<view style="display: flex;flex-direction: row;height: 80px;">
-			<button v-for="item in taskTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
+			<button v-for="item in branchTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
 		</view>
 		
 		<view v-for="item in tasks" :key="item.id" class="custom-margin">
@@ -56,8 +56,8 @@
 					this.$store.commit('setTasks',{taskTypeName: this.taskTypeName, data: value})
 				}
 			},
-			taskTypes(){
-				let ts = this.$store.state.taskTypes;
+			branchTypes(){
+				let ts = this.$store.state.branchs;
 				
 				return [{id:"",name:"全部"}, ...ts];
 			},
@@ -84,21 +84,21 @@
 				this.currentTypeId = id;
 				this.taskTypeName = name;
 				let url = this.$store.state.apiBaseUrl+"/api/Assignment/type/"+id;
-				if(this.$store.state.tasks.get(this.taskTypeName).length === 0){
-					uni.requestWithCookie({
-						url:url,
-						success:(res)=>{
-							console.log(res)
-							if(res.statusCode === 200){
-								this.tasks = res.data
-							}else{
-								uni.showToast({
-									title:"网络出错了！"
-								})
-							}
+				
+				uni.requestWithCookie({
+					url:url,
+					success:(res)=>{
+						console.log(res)
+						if(res.statusCode === 200){
+							this.tasks = res.data
+						}else{
+							uni.showToast({
+								title:"网络出错了！"
+							})
 						}
-					});
-				}
+					}
+				});
+				
 				
 			},
 			inputEvent(e){

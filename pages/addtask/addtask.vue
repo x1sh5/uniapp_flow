@@ -2,7 +2,7 @@
 	<view>
 		<view>选择创建类型</view>
 		<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
-		<uni-data-select :localdata="taskTypes" :showProp="'name'" ref="dataSelect" @data-to-parent="receiveDataFromChild"></uni-data-select>
+		<uni-data-select :localdata="branchTypes" :showProp="'name'" ref="dataSelect" @data-to-parent="receiveDataFromChild"></uni-data-select>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
 		<button @click="createTask" :disabled="!Boolean(selected)">创建</button>
 	</view>
@@ -14,7 +14,7 @@
 		data(){//必须函数，对象不再支持
 			return {
 				selected:undefined,
-				$taskTypes: [],
+				$branchTypes: [],
 				ctype: [
 					{text: '单卡', value: 0}, {text: '多卡', value: 1}
 				],
@@ -23,8 +23,8 @@
 			}
 		},
 		computed:{
-			taskTypes(){
-				return this.$store.state.taskTypes
+			branchTypes(){
+				return this.$store.state.branchs
 			},
 		},
 		methods:{

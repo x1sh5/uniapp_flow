@@ -8,7 +8,7 @@ import { References } from "./reference.js";
 //import * as signalr from "../signalr_for_uniapp/index.js"
 
 
-const baseUrl = "https://www.liusha-gy.com"//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
+const baseUrl = "https://localhost:7221"//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
 
 const store = createStore({
 	state:{
