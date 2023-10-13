@@ -1,6 +1,8 @@
 <template>
 	<view class="content">
-		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" :value="searchWord" focus="true" clearButton="auto" cancelButton="none" @confirm="search" />
+		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" :value="searchWord" focus="true"
+		 clearButton="auto" cancelButton="none" @confirm="search" />
+		 
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>

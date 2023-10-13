@@ -1,4 +1,5 @@
 <template>
+	<view id="topanchor"></view>
 	<view class="content">
 		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" clearButton="auto" cancelButton="none" @focus="search" />
 		<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000"
@@ -16,6 +17,10 @@
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
 		
+		<view id="top" class="totop" @click="backtotop">
+			<view class="topicon"></view>
+			<view>顶部</view>
+		</view>
 		<!-- <uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
 			@update:modelValue="modelChange"></uni-pagination> -->
 	</view>
@@ -109,6 +114,18 @@
 			},
 			modelChange(e){
 				console.log(e)
+			},
+			backtotop(e){
+				uni.pageScrollTo({
+					selector:"#app",
+					scrollTop:0
+				})
+				// uni.createSelectorQuery()
+				// .select(".custom-margin")
+				// .boundingClientRect((res)=>{
+				// 	console.log(res)
+
+				// }).exec()
 			}
 		},
 		//上拉更新数据
