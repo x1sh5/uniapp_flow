@@ -75,7 +75,8 @@
 		,{
 			"path": "pages/myPublishs/myPublishs",
 			"style": {
-				"navigationBarTitleText": "我发布的"
+				"navigationBarTitleText": "我发布的",
+				"onReachBottomDistance": 50
 			}
 		}
         ,{
@@ -134,20 +135,12 @@
             
         }
         ,{
-            "path" : "pages/test/test",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
             "path" : "pages/searchResult/searchResult",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"onReachBottomDistance": 50
             }
             
         }
@@ -195,7 +188,6 @@
                 "navigationBarTitleText": "审核区间参考",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/reference/detail/detail",
@@ -204,7 +196,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/reference/new/new",
@@ -213,7 +204,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/reference/edit/edit",
@@ -222,7 +212,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/reference/history/history",
@@ -231,7 +220,6 @@
                 "navigationBarTitleText": "修改历史",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/reference/history/detail/detail",
@@ -240,25 +228,6 @@
                 "navigationBarTitleText": "详细",
                 "enablePullDownRefresh": false
             }
-            
-        }
-        ,{
-            "path" : "pages/test/A/A",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "A",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/test/B/B",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "B",
-                "enablePullDownRefresh": false
-            }
-            
         }
         ,{
             "path" : "pages/settings/unregister/unregister",

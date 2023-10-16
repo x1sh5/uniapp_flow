@@ -20,6 +20,12 @@
 				//必须使用this.$data.$publishs;而不能使用this.$publishs;
 				//because it starts with a reserved character ("$" or "_") and is not proxied on the render context
 				return this.$data.$publishs;
+			},
+			maxid(){
+				if(this.$data.$publishs.length===0){
+					return 0
+				}
+				return this.$data.$publishs[this.$data.$publishs.length-1].id;
 			}
 		},
 		methods: {
@@ -45,13 +51,16 @@
 			if(!this.hasPushlishs){
 				console.log("get user task")
 				uni.requestWithCookie({
-					url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
+					url:this.$store.state.apiBaseUrl+"/api/Assignment/user?count=10&offset="+this.maxid,
 					success: (res) => {//必须用箭头函数
 						this.$data.$publishs = res.data;
 						this.hasPushlishs = true;
 					}
 				})
 			}
+		},
+		onReachBottom() {
+			
 		}
 	}
 </script>
