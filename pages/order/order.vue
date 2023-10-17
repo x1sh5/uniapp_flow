@@ -9,12 +9,14 @@
 				</view>
 			</view>
 			
+			<!-- 完成的订单 -->
 			<view v-if="current === 1">
 				<view v-for="item in completes" :key="item.id" style="margin-top:5px;">
 				  <bill v-bind:bill="item" style="margin-top:5px;"/>
 				</view>
 			</view>
 			
+			<!-- 未完成订单 -->
 			<view v-if="current === 2">
 				<view v-for="item in incompletes" :key="item.id" style="margin-top:5px;">
 				  <bill v-bind:bill="item" style="margin-top:5px;"/>
@@ -31,7 +33,9 @@
 			return {
 				current: 0,
 				items:["全部","已完成","未完成"],
-				all: []
+				all: [],
+				status: "more",
+				contentText: {contentdown: "上拉显示更多",contentrefresh: "正在加载...",contentnomore: "没有更多数据了"},
 			}
 		},
 		computed:{
@@ -40,6 +44,9 @@
 			},
 			completes(){
 				return this.all.filter(item=>item.status===1)
+			},
+			maxid(){
+				
 			}
 		},
 		mounted() {
@@ -66,7 +73,22 @@
 					url:"/pages/login/login?refer=order"
 				})
 			}
+		},
+		onReachBottom() {
+			let maxIndex = this.maxIndex;
+			this.status = "loading";
+			let qurl = this.$store.state.apiBaseUrl+"/api/Bill";
+			uni.request({
+				url: qurl,
+				success: (res) => {
+					if(res.statusCode===200){
+						this.all = res.data;
+						this.status = "more";
+					}
+				}
+			})
 		}
+		
 	}
 </script>
 
