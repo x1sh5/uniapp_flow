@@ -102,8 +102,9 @@
 				return "标题出错";
 			},
 			type(){
-				if(this.simpleInfo&&this.simpleInfo.typeId){
-					return this.$store.getters.getTaskType(this.simpleInfo.typeId).name;
+				if(this.simpleInfo&&this.simpleInfo.tag){
+					//return this.$store.getters.getTaskType(this.simpleInfo.typeId).name;
+					return this.simpleInfo.tag
 				}
 				return "类型";
 			},

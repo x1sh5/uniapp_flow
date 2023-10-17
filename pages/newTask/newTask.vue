@@ -34,9 +34,10 @@
 					  "status": TaskStatus.WaitForAccept,
 					  "title": "",
 					  "canTake": 0,
-					  "typeId": false,
+					  "tag": "",
 					  "verify": 0,
-					  "main": 1
+					  "main": 1,
+					  "tag":""
 					  }],
 				reffer:"",
 				$mode: ''
@@ -57,12 +58,12 @@
 		onLoad(op) {
 			console.log("onload")
 			let reffer = op.createType;
-			let taskType = op.typeId;
+			let branchType = op.branchid;
 			this.$data.$mode = op.mode;
 			
 			console.log("reffer",reffer);
-			console.log("taskType",taskType);
-			this.tasks[0].typeId= taskType;
+			console.log("branchType",branchType);
+			this.tasks[0].branchid= branchType;
 
 		},
 		methods:{
@@ -186,7 +187,7 @@
 					"rewardtype": this.rewardType(e.item.id),
 					"status": TaskStatus.WaitForAccept,
 					"title": "",
-					"typeId": e.item.id,
+					"branchid": e.item.id,
 					"verify": 0,
 					"canTake": 1,
 					"main": 0

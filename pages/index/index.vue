@@ -16,6 +16,7 @@
 		<view v-for="item in tasks" :key="item.id" class="custom-margin">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
+		<uni-load-more iconType="auto" :contentText="contentText" :status="status"></uni-load-more>
 		
 		<view id="top" class="totop" @click="backtotop">
 			<view class="topicon"></view>
@@ -32,8 +33,10 @@
 		data() {
 			return {
 				title: 'Hello',
-				currentTypeId:"",
-				taskTypeName:"全部"
+				curBranchid:"",
+				taskTypeName:"全部",
+				status: "more",
+				contentText: {contentdown: "上拉显示更多",contentrefresh: "正在加载...",contentnomore: "没有更多数据了"}
 			}
 		},
 		onLoad() {
@@ -41,14 +44,14 @@
 			
 		},
 		mounted() {
-			this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:""})
+			this.$store.dispatch('fetchTasks',{count:10,offset:0, branchid:""})
 			.then(data => {
-							 this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
-							 // 在这里处理获取到的数据
+					this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
+					// 在这里处理获取到的数据
 			  })
 			  .catch(error => {
-							 console.error('获取数据失败：', error);
-							 // 在这里处理错误情况
+					console.error('获取数据失败：', error);
+					// 在这里处理错误情况
 			  });
 		},
 		computed:{
@@ -86,7 +89,7 @@
 				})
 			},//requestWithCookie
 			searchByTpe(id, name){
-				this.currentTypeId = id;
+				this.curBranchid = id;
 				this.taskTypeName = name;
 				let url = this.$store.state.apiBaseUrl+"/api/Assignment/type/"+id;
 				
@@ -131,10 +134,12 @@
 		//上拉更新数据
 		 onReachBottom() {
 			let maxIndex = this.maxIndex;
-			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, typeId:this.currentTypeId})
+			this.status = "loading";
+			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, branchid:this.curBranchid})
 			.then(data => {
 				 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data});
 				 // 在这里处理获取到的数据
+				 this.status = "more";
 			  })
 			  .catch(error => {
 				 console.error('获取数据失败：', error);
@@ -145,7 +150,7 @@
 		async onPullDownRefresh() {
 			await this.$store.dispatch("fetchBranchs");
 			await this.$store.dispatch("fetchTaskTypes");
-			 this.$store.dispatch('fetchTasks',{count:10,offset:0, typeId:this.currentTypeId})
+			 this.$store.dispatch('fetchTasks',{count:10,offset:0, branchid:this.curBranchid})
 			 .then(data => {
 				 this.$store.commit('setTasks', {taskTypeName: this.taskTypeName, data: data});
 				 // 在这里处理获取到的数据

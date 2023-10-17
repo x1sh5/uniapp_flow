@@ -22,7 +22,7 @@ const store = createStore({
 		workSocket : markRaw( new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
 		.withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Information)
+        .configureLogging(signalR.LogLevel.Error)
         .build() ),
 		messages:new Map(), //对话消息
 		$currentContent:{}, //当前正在编辑的task.description
@@ -181,7 +181,8 @@ const store = createStore({
 		},
 		disconnect(state){
 			state.workSocket.stop();
-		}
+		},
+		
 	},
 	getters:{
 		getTasks:(state)=>(taskTypeName)=>{
@@ -213,9 +214,8 @@ const store = createStore({
 			}
 			return i["name"]
 		},
+		//deprecated 弃用
 		getTaskType:(state)=>(typeId)=>{
-			console.log("typeId is ",typeId)
-			console.log("taskTypes are ",state.taskTypes)
 			let i = state.taskTypes.find(item => item.id === parseInt(typeId))
 			console.log("taskType is: ",i)
 			if(i===undefined){
@@ -297,10 +297,10 @@ const store = createStore({
 				});
 				
 		},
-		fetchTasks({commit,state},{count,offset,typeId}){
+		fetchTasks({commit,state},{count,offset,branchid}){
 			return new Promise((resolve,reject)=> {
 				uni.requestWithCookie({
-				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&typeId="+typeId ,
+				  url: state.apiBaseUrl+"/api/Assignment"+"?count="+count+"&offset="+offset+"&branchid="+branchid ,
 				  method: 'GET',
 				  success:(res)=>{
 					  console.log(res)

@@ -1,7 +1,7 @@
 ///发布任务时的任务模型
 
 export class Task {
-    constructor(branchid, deadline, /*finishtime, publishtime, */title, typeId, id, description, fixedReward, percentReward,
+    constructor(branchid, deadline, /*finishtime, publishtime, */title, tag, id, description, fixedReward, percentReward,
 	 rewardtype, status, main, canTake) {
         this.fixedReward = '';
 		this.percentReward = '';
@@ -14,7 +14,7 @@ export class Task {
         this.deadline = deadline;
         //this.publishtime = publishtime;
         this.title = title;
-        this.typeId = typeId;
+        this.tag = tag;
         if (id) {
             this.id = id;
         }

@@ -28,10 +28,12 @@
 				<view class="rowlayout">
 <!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
-				   
-							<picker class="input" mode="date" :value="deadline" @change="biupdatePt">
+				   <uni-datetime-picker type="datetime" v-model="deadline" @change="biupdatePt">
+					   <view class="uni-input">{{deadline}}</view>
+				   </uni-datetime-picker>
+							<!-- <picker class="input" mode="date" :value="deadline" @change="biupdatePt">
 								<view class="uni-input">{{deadline}}</view>
-							</picker>
+							</picker> -->
 				  		
 				</view>
 				
@@ -54,7 +56,7 @@
 			  </view>
 				  
 		
-			<!-- 右半部分，只包括：类型 -->
+			<!-- 右半部分，只包括：类型概括 -->
 			<view class="bigtype" >
 				<view v-if="editable" class="popupbutton" @click="showPopup">...</view>
 				<!-- <view class="tasktype columnlayout">{{ taskType["name"] }}</view> -->
@@ -121,9 +123,10 @@ import { RewardType } from '../../common/Task'
 					this.task.username = value
 				}
 			},
-			taskType:{//["name"]
+			taskType:{//类型概括
 				get() {
-					return this.$store.getters.getTaskType(this.task.typeId)
+					//return this.$store.getters.getTaskType(this.task.tag)
+					return this.task.tag
 				}
 			},
 			reward:{
@@ -321,7 +324,7 @@ import { RewardType } from '../../common/Task'
 			},
 			biupdatePt(e){
 				console.log(e);
-				this.task.deadline = e.detail.value
+				this.task.deadline = e
 			},
 			check(){
 				console.log(this.task);
@@ -329,6 +332,14 @@ import { RewardType } from '../../common/Task'
 					this.$emit("check-Result",false);
 					uni.showModal({
 						content:"标题不能为空！"
+					});
+					
+					return;
+				}
+				if(!this.task.tag){
+					this.$emit("check-Result",false);
+					uni.showModal({
+						content:"类型概括不能为空！"
 					});
 					
 					return;

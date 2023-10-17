@@ -1,11 +1,18 @@
 <template>
+	<view class="container" style="background-image: url('/static/beijing.png');">
+	  <!-- 页面内容 -->
+	</view>
+	<text class="t">让生活自在掌握~</text>
 	<view class="usercenter">
-		<form @submit="login" style="margin: 20px 10px;">
-			<text>用户名：</text><input name="userName" class="lg-input" type="text" value="" />
-			<text>密码：</text><input name="password" class="lg-input" password value=""/>
-			<button form-type="submit">登录</button>
-		</form>
-		<button @click="register">注册</button>
+	<form @submit="login" >
+	<text class="y">用户名：</text>
+	<input name="userName" class="lg-input" type="text" value=""/>
+	<text class="y">密码：</text>
+	<input name="password" class="lg-input" password value=""/>
+	<button class="login-button" form-type="submit">登录</button>
+	</form>
+	<button class="register-button" @click="register">还未注册？</button>
+	
 	</view>
 </template>
 

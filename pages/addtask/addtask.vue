@@ -14,7 +14,8 @@
 			<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
 		  </view>
 		  <view class="select-container" >
-			<uni-data-select :localdata="branchTypes" :showProp="'name'" ref="dataSelect" @data-to-parent="receiveDataFromChild">
+			<uni-data-select :localdata="branchTypes" :showProp="'name'"
+			 ref="dataSelect" @data-to-parent="receiveDataFromChild">
 			</uni-data-select>
 		  </view>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
@@ -45,13 +46,13 @@
 			editTask(e){
 				console.log(e)
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeId="+e,
+				  url:"/pages/newTask/newTask?branchid="+e,
 				})
 			},
 			createTask(e){
 				console.log("createTask",e);
 				uni.navigateTo({
-				  url:"/pages/newTask/newTask?typeId="+this.selected.id+"&createType="+this.defaultT+"&mode="+this.mode,
+				  url:"/pages/newTask/newTask?branchid="+this.selected.id+"&createType="+this.defaultT+"&mode="+this.mode,
 				})
 			},
 			typeChange(e){

@@ -32,7 +32,7 @@
 					  "rewardtype": 1,
 					  "status": 1,
 					  "title": "",
-					  "typeId": false,
+					  "tag": "",
 					  "verify": 0,
 					  "main": 0
 					  }
@@ -73,8 +73,8 @@
 		},
 		onLoad(op) {
 		  console.log("options:",op)
-		  this.$data.task.typeId = op.typeId
-		  console.log("typeId is ",this.$data.task.typeId)
+		  this.$data.task.branchid = op.branchid
+		  console.log("branchid is ",this.$data.task.branchid)
 		},
 		methods:{
 			editEvent(e){

@@ -236,7 +236,9 @@
 				}
 			},
 			clearVal() {
-				this.emit('')
+				console.log("clearVal")
+				this.emit('');
+				this.initDefVal();
 				if (this.collection) {
 					this.removeCache()
 				}

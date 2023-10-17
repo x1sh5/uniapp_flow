@@ -3,7 +3,6 @@
   flex-direction: column;
   height: auto;
 }
-
 .chat-messages {
   flex-grow: 1;
   height: inherit;
@@ -11,7 +10,6 @@
   border: 1px solid #ccc;
   padding: 10px;
 }
-
 .chat-input-container {
   display: flex;
   align-items: center;
@@ -23,7 +21,6 @@
   width: 100%;
   border-top: 1px #dedede solid;
 }
-
 .chat-input {
   flex-grow: 1;
   padding: 5px;
@@ -32,7 +29,6 @@
   background-color: #fff;
   margin: 0px 10px;
 }
-
 .send-button {
   background-color: #007bff;
   color: #fff;
@@ -45,14 +41,12 @@
   line-height: initial;
   right: 10px;
 }
-
 .input{
 	width: 75%;
 	height: 70rpx;
 	border: 1px solid #8c8c8c;
 	border-radius: 50px; /* 将输入框的圆角设置为50 */
 }
-
 .transmit{
 	display: flex;
 	padding: 8rpx 5rpx;
@@ -66,7 +60,6 @@
 	left: 0;
 	bottom: 40rpx;
 }
-	
 .sendbutton {
 height: 40px;
 

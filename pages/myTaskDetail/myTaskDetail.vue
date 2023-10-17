@@ -46,7 +46,7 @@
 					  "rewardtype": 1,
 					  "status": 1,
 					  "title": "",
-					  "typeId": false,
+					  "tag": "",
 					  "verify": 0,
 					  },
 				mode:{

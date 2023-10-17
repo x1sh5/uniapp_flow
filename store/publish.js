@@ -15,7 +15,7 @@ export const Publish = {
 			  "rewardtype": RewardType.Fixed,
 			  "status": TaskStatus.WaitForAccept,
 			  "title": "",
-			  "typeId": false,
+			  "tag": "",
 			  "verify": 0,
 			  }],
 		reffer:"",

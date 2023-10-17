@@ -18,6 +18,9 @@
 		<view v-for="item in tasks" :key="item.id" style="margin-top:5px;">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
+		
+		<uni-load-more iconType="auto" :contentText="contentText" :status="status"></uni-load-more>
+		
 	</view>
 </template>
 
@@ -26,6 +29,8 @@
 	export default {
 		data() {
 			return {
+				status: "more",
+				contentText: {contentdown: "上拉显示更多",contentrefresh: "正在加载...",contentnomore: "没有更多数据了"},
 				searchWord:"",
 				tasks:[]
 			}
@@ -64,11 +69,13 @@
 			}
 		},
 		onReachBottom() {
+			this.status = "loading";
 			uni.requestWithCookie({
 				url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURI(this.searchWord)+"?count=10&offset="+this.maxid,
 				success:(res)=>{
 					if(res.statusCode === 200){
-						this.tasks = res.data
+						this.tasks = res.data;
+						this.status = "more";
 					}else{
 						uni.showToast({
 							title: "网络出错！"
