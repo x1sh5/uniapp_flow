@@ -41,6 +41,7 @@
 							cookieManager.default.setResponseCookies(res.data.refreshToken,domain);
 							that.$store.commit("login");
 							that.$store.commit("setUserName", res.data.userName);
+							that.$store.commit("setUserAvatar",res.data.Avatar);
 							// uni.navigateBack({
 							// 	delta:that.depth
 							// })

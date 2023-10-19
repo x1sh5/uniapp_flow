@@ -46,7 +46,16 @@
 				return this.all.filter(item=>item.status===1)
 			},
 			maxid(){
-				
+				if(this.all.length<=0){
+					return 0
+				}
+				const max = this.all[0]
+				for(let i of this.all){
+					if(max.id<i.id){
+						max = i
+					}
+				}
+				return max.id
 			}
 		},
 		mounted() {
@@ -77,7 +86,7 @@
 		onReachBottom() {
 			let maxIndex = this.maxIndex;
 			this.status = "loading";
-			let qurl = this.$store.state.apiBaseUrl+"/api/Bill";
+			let qurl = this.$store.state.apiBaseUrl+"/api/Bill?count=10&offset="+this.maxid;
 			uni.request({
 				url: qurl,
 				success: (res) => {

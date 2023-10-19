@@ -147,7 +147,7 @@
 								data: {  id: 0,
 											  userId: 0,
 											  title: this.task.title,
-											  typeid: this.task.typeid,
+											  branchid: this.task.branchid,
 											  taskId: this.task.id,
 											  agree: 2,
 											  requestDate: new Date(),

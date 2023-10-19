@@ -5,13 +5,20 @@
 		 
 		<view>
 			<!-- 最近搜索 -->
-			<view>
+			<view v-for="r in recents" :key="r">
 				<view></view>
+				<text>r</text>
+				<button @click="del">x</button>
 			</view>
 			<!-- 搜索发现 -->
 			<view>
 				<view>搜索发现</view>
-				<view></view>
+				<view>
+					<view v-for="h in hots" :key="h">
+						<view @click="searchx(h)">h</view>
+					</view>
+				</view>
+				
 			</view>
 		</view>
 		 
@@ -30,21 +37,34 @@
 		data() {
 			return {
 				status: "more",
-				contentText: {contentdown: "上拉显示更多",contentrefresh: "正在加载...",contentnomore: "没有更多数据了"},
+				contentText: {contentdown: "",contentrefresh: "正在加载...",contentnomore: "没有更多数据了"},
 				searchWord:"",
-				tasks:[]
+				hots: [],
+				tasks:[],
 			}
 		},
 		onLoad() {
 			console.log("page index onload")
 		},
-		
+		mounted() {
+			uni.requestWithCookie({
+				url:this.$store.state.apiBaseUrl+"/api/Information/popular",
+				success: (res) => {
+					if(res.statusCode===200){
+						this.hots = res.data
+					}
+				}
+			})
+		},
 		computed:{
 			maxid(){
 				if(this.tasks.length===0){
 					return 0
 				}
 				return this.tasks[this.tasks.length-1].id;
+			},
+			recents(){
+				return []
 			}
 		},
 		methods:{
@@ -64,7 +84,15 @@
 					}
 				})
 			},
+			searchx(w){
+				let e;
+				e.value = w;
+				this.search(e)
+			},
 			clear(e){
+				this.tasks = [];
+			},
+			del(e){
 				
 			}
 		},

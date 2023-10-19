@@ -14,6 +14,7 @@ const store = createStore({
 	state:{
 		$hasLogin:false,
 		$userName: "未登录",
+		useravatar:"/static/meactive.png",
 		branchs:[],
 		currentTask:{},
 		taskTypes:[],
@@ -118,7 +119,11 @@ const store = createStore({
 			state.$userName = payload;
 			uni.setStorageSync(StorageKeys.userName,payload);
 		},
-		initUserName:(state)=>{
+		setUserAvatar(state,payload){
+			state.useravatar = state.apiBaseUrl+payload;
+			uni.setStorageSync(StorageKeys.userAvatar,state.apiBaseUrl+payload);
+		},
+		initUserInfo:(state)=>{
 			try{
 				const userName = uni.getStorageSync(StorageKeys.userName);
 				state.$userName = userName;
@@ -391,6 +396,51 @@ const store = createStore({
 			            console.log(res);  
 			        }  
 			    });
+		},
+		upload({state}){
+			return new Promise((resolve,reject)=>{
+				uni.showActionSheet({
+					itemList: ["从相册选择","拍照"],
+					success: (e) => {
+						console.log(e)
+						if(e.tapIndex===0){
+							uni.chooseImage({
+								count:1,
+								crop: {
+									with:800,
+									height: 800
+								},
+								success: (e) => {
+									console.log(e);
+									if(e.tempFiles[0].size>2*1024*1024){
+										uni.showToast({
+											title: "图片大小超过2M,请重新选择。"
+										})
+										return
+									}
+									uni.uploadFile({
+										name: "user-avatar",
+										filePath: e.tempFilePaths[0],
+										url: state.apiBaseUrl+"/api/Image/upload",
+										success:(res)=>{
+											resolve(res)
+										},
+										fail: (err) => {
+											
+										}
+									})
+								},
+								fail:(err)=>{
+									reject(err)
+								}
+							})
+						}
+						if(e.tapIndex===1){
+							
+						}
+					}
+				})
+			})
 		}
 
 	},
