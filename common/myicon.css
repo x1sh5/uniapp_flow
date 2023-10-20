@@ -1,0 +1,53 @@
+@font-face {
+  font-family: "myicon"; /* Project id  */
+  src: url('myiconfont.ttf') format('truetype');
+}
+
+.myicons {
+  font-family: "myicon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-huangguan:before {
+  content: "\e625";
+}
+
+.icon-liebiaomoshi:before {
+  content: "\f01ec";
+}
+
+.icon-shizhong:before {
+  content: "\e74f";
+}
+
+.icon-goucha:before {
+  content: "\e8dd";
+}
+
+.icon-shanchu:before {
+  content: "\e718";
+}
+
+.icon-duigou:before {
+  content: "\ebe6";
+}
+
+.icon-chahao:before {
+  content: "\e663";
+}
+
+.icon-tianxie:before {
+  content: "\ec88";
+}
+
+.icon-fuwuqingqiu:before {
+  content: "\e68d";
+}
+
+.icon-jiahao:before {
+  content: "\e619";
+}
+

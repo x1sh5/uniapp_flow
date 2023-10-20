@@ -1,21 +1,24 @@
 <template>
 	<view class="content">
-		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" :value="searchWord" focus="true"
+		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" v-model="searchWord" :focus="true"
 		 clearButton="auto" cancelButton="none" @clear="clear" @confirm="search" />
 		 
-		<view>
+		<view v-if="show">
 			<!-- 最近搜索 -->
-			<view v-for="r in recents" :key="r">
-				<view></view>
-				<text>r</text>
-				<button @click="del">x</button>
+			<view style="display: flex;flex-direction: column;">
+				<view v-for="r in recents" :key="r" class="history-item">
+					<view class="clock myicons icon-shizhong"></view>
+					<text @click="searchx(r)">{{r}}</text>
+					<view class="delbtn myicons icon-chahao" @click="del(r)"></view>
+				</view>
 			</view>
+
 			<!-- 搜索发现 -->
 			<view>
 				<view>搜索发现</view>
-				<view>
-					<view v-for="h in hots" :key="h">
-						<view @click="searchx(h)">h</view>
+				<view class="container">
+					<view v-for="h in hots" :key="h" class="item">
+						<view @click="searchx(h)">{{h}}</view>
 					</view>
 				</view>
 				
@@ -33,6 +36,7 @@
 
 <script>
 	//import stroe from "./../../store/index.js"
+	import { StorageKeys } from "/common/storageKeys.js"
 	export default {
 		data() {
 			return {
@@ -41,6 +45,8 @@
 				searchWord:"",
 				hots: [],
 				tasks:[],
+				recents: [],
+				show:true
 			}
 		},
 		onLoad() {
@@ -63,9 +69,6 @@
 				}
 				return this.tasks[this.tasks.length-1].id;
 			},
-			recents(){
-				return []
-			}
 		},
 		methods:{
 			search(e){
@@ -74,7 +77,8 @@
 					url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURI(this.searchWord)+"?count=10&offset="+this.maxid,
 					success:(res)=>{
 						if(res.statusCode === 200){
-							this.tasks = res.data
+							this.tasks = res.data;
+							this.show = false
 						}else{
 							uni.showToast({
 								title: "网络出错！"
@@ -82,18 +86,40 @@
 						}
 						
 					}
+				});
+				const i = this.recents.findIndex((item)=>item===e.value)
+				if(i!==-1){
+					this.recents.splice(i,1);
+					this.recents.unshift(e.value);
+				}else{
+					if(this.recents.length>=10){
+						this.recents.pop();
+					}
+					this.recents.unshift(e.value);
+				}
+				uni.setStorage({
+					key:StorageKeys.searchs,
+					data:this.recents
 				})
 			},
 			searchx(w){
-				let e;
+				let e = {};
 				e.value = w;
 				this.search(e)
 			},
 			clear(e){
 				this.tasks = [];
+				this.show = true
 			},
 			del(e){
-				
+				const i = this.recents.findIndex((item)=>item===e)
+				if(i!==-1){
+					this.recents.splice(i,1)
+				}
+				uni.setStorage({
+					key:StorageKeys.searchs,
+					data:this.recents
+				})
 			}
 		},
 		onReachBottom() {
@@ -114,12 +140,50 @@
 			})
 		},
 		onLoad(e){
-			
+			this.recents = uni.getStorageSync(StorageKeys.searchs)||this.recents;
+			uni.request({
+				url:this.$store.state.apiBaseUrl+"/api/Information/popular",
+				success: (res) => {
+					if(res.statusCode===200){
+						this.hots = res.data
+					}
+				}
+				
+			})
 		}
 		
 	}
 </script>
 
 <style>
+	@import url('../../common/myicon.css');
 	@import url('../index/index.css');
+	.container {
+	  display: flex;
+	  flex-wrap: wrap;
+	}
+	
+	.item {
+	  flex: 0 0 50%; /* 每列占50%的宽度 */
+	  padding: 10px;
+	  box-sizing: border-box;
+	}
+	
+	.history-item{
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		height: 40px;
+	}
+	
+	.clock{
+		width: 30px;
+		margin-right: 40px;
+	}
+	
+	.delbtn{
+		position: fixed;
+		right: 20px;
+	}
+
 </style>

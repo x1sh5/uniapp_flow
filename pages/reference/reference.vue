@@ -4,7 +4,7 @@
 			{{d.title}}
 		</view>
 		<view class="addcontainer" @click="newRefer">
-			<text class="add-icon"></text>
+			<text class="add-icon icon-jiahao"></text>
 		</view>
 	</view>
 </template>
@@ -59,7 +59,7 @@
 </script>
 
 <style>
-	@import url('../../common/unicon.css');
+	@import url('../../common/myicon.css');
 	
   .title{
 	display: flex;
@@ -95,13 +95,10 @@
 	  color: rgb(255, 255, 255);
 	  font-size: 32px;
 	  font-weight: 200;
-	  font-family: uniicons;
+	  font-family: myicon;
 	  text-decoration: none;
 	  text-align: center;
   }
   
-  .add-icon::before{
-	  content: "\e468";
-  }
   
 </style>

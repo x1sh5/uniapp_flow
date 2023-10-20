@@ -12,9 +12,9 @@
 		<view class="taskinfobox">
 			<view style="position: relative;margin-left: 10rpx;">我发布的</view>
 			<view class="taskinfo">
-				<view class="wr icon1" @click="myPublishs"><view class="item_title">历史发布</view></view>
-				<view class="wr icon3" @click="history"><view class="item_title">浏览记录</view></view>
-				<view class="wr icon6" @click="taskReq"><view class="item_title">任务请求</view></view>
+				<view class="my-icons icon-huangguan" @click="myPublishs"><view class="item_title">历史发布</view></view>
+				<view class="my-icons icon-liebiaomoshi" @click="history"><view class="item_title">浏览记录</view></view>
+				<view class="my-icons icon-goucha" @click="taskReq"><view class="item_title">任务请求</view></view>
 			</view>
 		</view>
 		
@@ -22,9 +22,9 @@
 		<view class="taskinfobox">
 			<view style="position: relative;margin-left: 10rpx;">已经接取任务</view>
 			<view class="taskinfo">
-				<view class="uni-icons icon-incomplete" @click="holds(0)"><view class="item_title">待完成</view></view>
-				<view class="wr icon2" @click="holds(1)"><view class="item_title">完成项目</view></view>
-				<view class="wr icon7" @click="myApply"><view class="item_title">任务申请</view></view>
+				<view class="my-icons icon-tianxie" @click="holds(0)"><view class="item_title">待完成</view></view>
+				<view class="my-icons icon-duigou" @click="holds(1)"><view class="item_title">完成项目</view></view>
+				<view class="my-icons icon-fuwuqingqiu" @click="myApply"><view class="item_title">任务申请</view></view>
 			</view>
 		</view>
 		

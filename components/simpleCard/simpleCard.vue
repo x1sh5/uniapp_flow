@@ -1,8 +1,14 @@
 <template>
 	<view>
 		<view class="simplecard">
-			<view style="width: 75%;height: 40px;">{{title}}</view><view style="width: 20%;height: 40PX;">{{type}}</view>
-			<view style="height: 100px;width: 75%;border: 1px solid black;">{{comment}}</view>
+			<view style="width: 75%;height: 40px;">{{title}}</view>
+			<view class="sc-comment" placeholder="留言...">{{comment}}</view>
+			<view>申请人：</view>
+			<view style="display: flex;flex-direction: row;">
+				<view class="">{{simpleInfo.userName}}</view>
+				<button @click="contact">联系</button>
+			</view>
+			
 			<view v-show="showbutton&&simpleInfo.agree===2" style="display: flex;flex-direction: row;">
 				<button @click="agree">同意</button>
 				<button @click="disagree">拒绝</button>
@@ -92,6 +98,13 @@
 						})
 					}
 				});
+			},
+			contact(e){
+				
+				uni.navigateTo({
+					url:"/pages/chat/chat?cid="+this.simpleInfo.taskId+
+						"&userName="+this.simpleInfo.userName+"&userId="+this.simpleInfo.userId,
+				})
 			}
 		},
 		computed:{
@@ -126,5 +139,15 @@
 		margin-left: 30px;
 		margin-bottom: 10px;
 		background-color:aliceblue;
+	}
+	.sc-comment{
+		height: 100px;
+		width: 75%;
+		border: 1px solid black;
+	}
+	
+	.sc-comment:empty::before{
+		content: attr(placeholder);
+		color: gray;
 	}
 </style>

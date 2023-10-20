@@ -1,6 +1,5 @@
-	@import url('icon.css');
-	@import url('../../common/commen.css');
-	@import url('../../common/unicon.css');
+@import url('../../common/commen.css');
+@import url('../../common/myicon.css');
 	
 	
 .user-avatar{
@@ -42,14 +41,12 @@
   background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 
 }
-.uni-icons{
-    font-family: uniicons;
+.my-icons{
+    font-family: myicon;
     text-decoration: none;
     text-align: center
 }
-.icon-incomplete::before{
-	content: '\e400';
-}
+
 .uc-button {
   height: 32px;
 }
@@ -128,47 +125,31 @@
   line-height: 52rpx;
   
 }
-.icon1 {
+
+.icon-huangguan,
+.icon-liebiaomoshi,
+.icon-fuwuqingqiu,
+.icon-tianxie,
+.icon-duigou,
+.icon-goucha {
   font-size: 23px;
-  background-image: -webkit-linear-gradient(90deg, #6a6a6a 0%, #6c4ad1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  // background-image: -webkit-linear-gradient(90deg, #6a6a6a 0%, #6c4ad1 100%);
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
   text-align: center;
   display: block;
 }
-.icon1::before {
-  content: '\e046';
+
+.icon-huangguan,
+.icon-liebiaomoshi,
+.icon-fuwuqingqiu,
+.icon-tianxie,
+.icon-duigou,
+.icon-goucha::before{
+	color: dimgrey;
 }
-.icon2,
-.icon3,
-.icon4,
-.icon5,
-.icon6,
-.icon7 {
-  font-size: 23px;
-  background-image: -webkit-linear-gradient(90deg, #6a6a6a 0%, #6c4ad1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: center;
-  display: block;
-}
-.icon2::before {
-  content: '\e00b';
-}
-.icon3::before {
-  content: '\e00e';
-}
-.icon4::before {
-  content: '\e044';
-}
-.icon5::before {
-  content: '\e67f';
-}
-.icon6::before {
-  content: '\e006';
-}
-.icon7::before {
-  content: '\e04f';
+
+.icon-goucha::before {
   display: inline-block;
 }
 .misc {
