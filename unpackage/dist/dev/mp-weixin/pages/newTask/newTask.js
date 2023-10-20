@@ -19,9 +19,10 @@ const _sfc_main = {
         "status": common_Task.TaskStatus.WaitForAccept,
         "title": "",
         "canTake": 0,
-        "typeId": false,
+        "tag": "",
         "verify": 0,
-        "main": 1
+        "main": 1,
+        "tag": ""
       }],
       reffer: "",
       $mode: ""
@@ -42,11 +43,11 @@ const _sfc_main = {
   onLoad(op) {
     console.log("onload");
     let reffer = op.createType;
-    let taskType = op.typeId;
+    let branchType = op.branchid;
     this.$data.$mode = op.mode;
     console.log("reffer", reffer);
-    console.log("taskType", taskType);
-    this.tasks[0].typeId = taskType;
+    console.log("branchType", branchType);
+    this.tasks[0].branchid = branchType;
   },
   methods: {
     getUuid() {
@@ -158,7 +159,7 @@ const _sfc_main = {
         "rewardtype": this.rewardType(e.item.id),
         "status": common_Task.TaskStatus.WaitForAccept,
         "title": "",
-        "typeId": e.item.id,
+        "branchid": e.item.id,
         "verify": 0,
         "canTake": 1,
         "main": 0
@@ -215,14 +216,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($data.tasks, (item, index, i0) => {
       return {
-        a: common_vendor.sr("id" + item.id, "329834dc-1-" + i0, {
+        a: common_vendor.sr("id" + item.id, "9360021c-1-" + i0, {
           "f": 1
         }),
         b: item.id,
         c: "id" + item.id,
         d: common_vendor.o($options.checkResult, item.id),
         e: common_vendor.o($options.removeTask, item.id),
-        f: "329834dc-1-" + i0,
+        f: "9360021c-1-" + i0,
         g: common_vendor.p({
           task: item,
           editable: true
@@ -239,5 +240,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/newTask/newTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);

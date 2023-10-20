@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { replace } from 'lodash';
 	export default {
 		name:"bill",
 		data() {

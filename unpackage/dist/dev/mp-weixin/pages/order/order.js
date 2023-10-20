@@ -5,7 +5,9 @@ const _sfc_main = {
     return {
       current: 0,
       items: ["全部", "已完成", "未完成"],
-      all: []
+      all: [],
+      status: "more",
+      contentText: { contentdown: "上拉显示更多", contentrefresh: "正在加载...", contentnomore: "没有更多数据了" }
     };
   },
   computed: {
@@ -14,6 +16,18 @@ const _sfc_main = {
     },
     completes() {
       return this.all.filter((item) => item.status === 1);
+    },
+    maxid() {
+      if (this.all.length <= 0) {
+        return 0;
+      }
+      const max = this.all[0];
+      for (let i of this.all) {
+        if (max.id < i.id) {
+          max = i;
+        }
+      }
+      return max.id;
     }
   },
   mounted() {
@@ -40,6 +54,20 @@ const _sfc_main = {
         url: "/pages/login/login?refer=order"
       });
     }
+  },
+  onReachBottom() {
+    this.maxIndex;
+    this.status = "loading";
+    let qurl = this.$store.state.apiBaseUrl + "/api/Bill?count=10&offset=" + this.maxid;
+    common_vendor.index.request({
+      url: qurl,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          this.all = res.data;
+          this.status = "more";
+        }
+      }
+    });
   }
 };
 if (!Array) {
@@ -65,7 +93,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 0 ? {
     d: common_vendor.f($data.all, (item, k0, i0) => {
       return {
-        a: "e8e209a4-1-" + i0,
+        a: "37bb4044-1-" + i0,
         b: common_vendor.p({
           bill: item
         }),
@@ -77,7 +105,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 1 ? {
     f: common_vendor.f($options.completes, (item, k0, i0) => {
       return {
-        a: "e8e209a4-2-" + i0,
+        a: "37bb4044-2-" + i0,
         b: common_vendor.p({
           bill: item
         }),
@@ -89,7 +117,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 2 ? {
     h: common_vendor.f($options.incompletes, (item, k0, i0) => {
       return {
-        a: "e8e209a4-3-" + i0,
+        a: "37bb4044-3-" + i0,
         b: common_vendor.p({
           bill: item
         }),
@@ -98,5 +126,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/order/order.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/order/order.vue"]]);
 wx.createPage(MiniProgramPage);

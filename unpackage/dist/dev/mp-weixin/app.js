@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
-const common_weappCookie = require("./common/weapp-cookie.js");
-require("./common/signalr.js");
 const store_index = require("./store/index.js");
 require("./common/storageKeys.js");
 require("./store/messages.js");
@@ -24,7 +22,6 @@ if (!Math) {
   "./pages/chat/chat.js";
   "./pages/holdTask/holdTask.js";
   "./pages/taskDetail/taskDetail.js";
-  "./pages/test/test.js";
   "./pages/searchResult/searchResult.js";
   "./pages/publishResult/publishResult.js";
   "./pages/settings/settings.js";
@@ -36,14 +33,14 @@ if (!Math) {
   "./pages/reference/edit/edit.js";
   "./pages/reference/history/history.js";
   "./pages/reference/history/detail/detail.js";
-  "./pages/test/A/A.js";
-  "./pages/test/B/B.js";
   "./pages/settings/unregister/unregister.js";
   "./pages/settings/identityCheck/identityCheck.js";
   "./pages/myApply/myApply.js";
   "./pages/order/order.js";
+  "./pages/userCenter/about/about.js";
 }
-common_weappCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
+const UniCookie = require("../common/weapp-cookie.js");
+UniCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
 const _sfc_main = {
   async beforeCreate() {
     let hasLogin = this.$store.commit("loginTest");
@@ -73,7 +70,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/流沙任务系统uniapp/uniapp_flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/x/Documents/HBuilderProjects/flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);

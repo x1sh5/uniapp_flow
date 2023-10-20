@@ -29,9 +29,9 @@ const _sfc_main = {
       }
     },
     taskType: {
-      //["name"]
+      //类型概括
       get() {
-        return this.$store.getters.getTaskType(this.task.typeId);
+        return this.task.tag;
       }
     },
     reward: {
@@ -86,7 +86,7 @@ const _sfc_main = {
       try {
         d = this.branchs[this.branchOrder];
       } catch (e) {
-        d = "部门";
+        d = "??";
       }
       return d;
     },
@@ -212,7 +212,7 @@ const _sfc_main = {
     },
     biupdatePt(e) {
       console.log(e);
-      this.task.deadline = e.detail.value;
+      this.task.deadline = e;
     },
     check() {
       console.log(this.task);
@@ -220,6 +220,13 @@ const _sfc_main = {
         this.$emit("check-Result", false);
         common_vendor.index.showModal({
           content: "标题不能为空！"
+        });
+        return;
+      }
+      if (!this.task.tag) {
+        this.$emit("check-Result", false);
+        common_vendor.index.showModal({
+          content: "类型概括不能为空！"
         });
         return;
       }
@@ -325,12 +332,14 @@ const _sfc_main = {
   }
 };
 if (!Array) {
+  const _easycom_uni_datetime_picker2 = common_vendor.resolveComponent("uni-datetime-picker");
   const _easycom_uni_data_select2 = common_vendor.resolveComponent("uni-data-select");
-  _easycom_uni_data_select2();
+  (_easycom_uni_datetime_picker2 + _easycom_uni_data_select2)();
 }
+const _easycom_uni_datetime_picker = () => "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.js";
 const _easycom_uni_data_select = () => "../../uni_modules/uni-data-select/components/uni-data-select/uni-data-select.js";
 if (!Math) {
-  _easycom_uni_data_select();
+  (_easycom_uni_datetime_picker + _easycom_uni_data_select)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -341,17 +350,21 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     e: common_vendor.o((...args) => $options.updateBrief && $options.updateBrief(...args)),
     f: common_vendor.n(`fontcolor${$options.Id % 3}`),
     g: common_vendor.t($options.deadline),
-    h: $options.deadline,
-    i: common_vendor.o((...args) => $options.biupdatePt && $options.biupdatePt(...args)),
-    j: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    k: !$props.editable,
-    l: $options.reward,
-    m: common_vendor.o(($event) => $options.reward = $event.detail.value),
-    n: common_vendor.t($options.rewardSymbol),
-    o: $props.editable
+    h: common_vendor.o($options.biupdatePt),
+    i: common_vendor.o(($event) => $options.deadline = $event),
+    j: common_vendor.p({
+      type: "datetime",
+      modelValue: $options.deadline
+    }),
+    k: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    l: !$props.editable,
+    m: $options.reward,
+    n: common_vendor.o(($event) => $options.reward = $event.detail.value),
+    o: common_vendor.t($options.rewardSymbol),
+    p: $props.editable
   }, $props.editable ? {
-    p: common_vendor.o($options.rewardTypeChange),
-    q: common_vendor.p({
+    q: common_vendor.o($options.rewardTypeChange),
+    r: common_vendor.p({
       disabled: $props.task.main === 1,
       localdata: $options.rewardtypeSymbol.options,
       clear: false,
@@ -359,30 +372,28 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       placeholder: "类型"
     })
   } : {}, {
-    r: $props.editable
+    s: $props.editable
   }, $props.editable ? {
-    s: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+    t: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
   } : {}, {
-    t: common_vendor.t($options.taskType["name"]),
-    v: common_vendor.t($options.depart ? $options.depart["name"] : ""),
-    w: !$props.editable,
-    x: $options.branchs,
-    y: $options.branchOrder,
+    v: !$props.editable,
+    w: $props.task.tag,
+    x: common_vendor.o(($event) => $props.task.tag = $event.detail.value),
+    y: common_vendor.t($options.branch),
     z: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    A: common_vendor.o((...args) => $options.branchChange && $options.branchChange(...args)),
-    B: common_vendor.t($options.userName),
-    C: common_vendor.n(`fontcolor${$options.Id % 3}`),
-    D: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
-    E: common_vendor.t($data.status[$props.task.status]),
-    F: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    G: $data.vis
+    A: common_vendor.t($options.userName),
+    B: common_vendor.n(`fontcolor${$options.Id % 3}`),
+    C: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
+    D: common_vendor.t($data.status[$props.task.status]),
+    E: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    F: $data.vis
   }, $data.vis ? {
-    H: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
-    I: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
+    G: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
+    H: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
   } : {}, {
-    J: common_vendor.n(`task${$options.Id % 3}`),
-    K: common_vendor.o((...args) => $options.detail && $options.detail(...args))
+    I: common_vendor.n(`task${$options.Id % 3}`),
+    J: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

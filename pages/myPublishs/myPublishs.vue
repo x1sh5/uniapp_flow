@@ -1,7 +1,13 @@
 <template>
 	<view>
 		<view v-for="item in publishs" :key="item.id" class="custom-margin">
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)" style="margin-top:5px;"/>
+			<!-- #ifdef H5 -->
+			<cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)" style="margin-top:5px;"/>
+			<!-- #endif -->
+		  <!-- #ifdef MP-WEIXIN -->
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" capture-catch:tap="toDetails(item.id)" style="margin-top:5px;"/>
+		  <!-- #endif -->
+		  
 		</view>
 	</view>
 </template>

@@ -1,1 +1,0 @@
-<view><button bindtap="{{a}}">toB</button></view>

@@ -1,7 +1,14 @@
+.t{
+	margin: 100px;
+	flex-direction: column;
+}
+.y{
+  margin-top:50rpx;
+}
 .usercenter{
 	display: flex;
 	align-items: center;
-	margin: 10px;
+	margin: 1px;
 	flex-direction: column;
 }
 form {
@@ -9,32 +16,76 @@ form {
   flex-direction: column;
   align-items: center;
 }
-form > input,button,text,view {
+form > input,text,view {
   display: flex;
   align-items: center;
-  margin: 10px;
+  margin: 1px;
 }
 form > view > text {
   margin-right: 10px;
 }
 .lg-input {
-width: 75%;
-		height: 70rpx;
-		border: 1px solid #8c8c8c;
-		border-radius: 50px; /* 将输入框的圆角设置为50 */
+  margin-top: 10rpx;
+width: 300px;
+    height:20rpx;
+    border: 2px solid #6c4ad1;
+    
+    border-radius: 0px; /* 将输入框的圆角设置为50 */
+    border: none; /* 移除默认边框 */
+    border-bottom: 1px solid #6c4ad1; /* 添加底部边框，可以根据需要调整颜色和粗细 */
+    outline: none; /* 移除默认的焦点边框 */
+    background: transparent; /* 设置背景为透明，以便底部边框显示 */
+    padding: 0; /* 移除默认内边距，可以根据需要设置 */
 }
 form > view > button {
     border: 1px solid  #07c160;
-    border-radius: 50px; /* 新增：设置按钮边框为圆角 */
+    border-radius: 100px; /* 新增：设置按钮边框为圆角 */
     width: 80px;
     height: 35px;
-    color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
-    background-color: #07c160; /* 新增：设置按钮背景颜色为绿色 */
-	text-align: center;
-	display: flex;  /* 使用Flex布局 */ 
-	justify-content: center;  /* 水平居中 */
-	align-items: center; /* 垂直居中 */
-	position: absolute;
-	top: calc(25vh - 30rpx);
-	margin-top: 0;
+}
+.login-button{
+  border: 1px solid  #6c4ad1;
+  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  width: 150px;
+  height: 35px;
+  color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
+  background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
+text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+   margin-top:0;
+ display: flex;  /* 使用Flex布局 */ 
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+   margin-top: 400rpx;
+   box-shadow:0ch;
+ 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}
+.register-button{
+  border: 0px solid  #6c4ad1;
+  font-size: 13px;
+  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  width: 100px;
+  height: 35px;
+  margin-top: -400rpx;
+ display: flex;  /* 使用Flex布局 */ 
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+   margin-left: 280px;
+   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+   background-color: rgba(0, 0, 0, 0);
+   text-decoration: underline;
+}
+.container {
+  background-size:contain; /* 根据需要设置背景大小 */
+  /* 其他背景样式属性，如背景颜色、位置等 */
+  height: 100vh; /* 设置容器的高度，这里假设为屏幕高度 */
+  width: 100%; /* 设置容器的宽度 */
+  background-repeat: no-repeat;
+  z-index: -1;
+  position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
 }

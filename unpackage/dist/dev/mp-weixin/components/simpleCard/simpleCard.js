@@ -68,6 +68,11 @@ const _sfc_main = {
           });
         }
       });
+    },
+    contact(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/chat/chat?cid=" + this.simpleInfo.taskId + "&userName=" + this.simpleInfo.userName + "&userId=" + this.simpleInfo.userId
+      });
     }
   },
   computed: {
@@ -78,8 +83,8 @@ const _sfc_main = {
       return "标题出错";
     },
     type() {
-      if (this.simpleInfo && this.simpleInfo.typeId) {
-        return this.$store.getters.getTaskType(this.simpleInfo.typeId).name;
+      if (this.simpleInfo && this.simpleInfo.tag) {
+        return this.simpleInfo.tag;
       }
       return "类型";
     },
@@ -94,15 +99,16 @@ const _sfc_main = {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: common_vendor.t($options.title),
-    b: common_vendor.t($options.type),
-    c: common_vendor.t($options.comment),
-    d: common_vendor.o((...args) => $options.agree && $options.agree(...args)),
-    e: common_vendor.o((...args) => $options.disagree && $options.disagree(...args)),
-    f: $props.showbutton && $props.simpleInfo.agree === 2,
-    g: $props.simpleInfo.agree === 0
+    b: common_vendor.t($options.comment),
+    c: common_vendor.t($props.simpleInfo.userName),
+    d: common_vendor.o((...args) => $options.contact && $options.contact(...args)),
+    e: common_vendor.o((...args) => $options.agree && $options.agree(...args)),
+    f: common_vendor.o((...args) => $options.disagree && $options.disagree(...args)),
+    g: $props.showbutton && $props.simpleInfo.agree === 2,
+    h: $props.simpleInfo.agree === 0
   }, $props.simpleInfo.agree === 0 ? {} : {}, {
-    h: $props.simpleInfo.agree === 1
+    i: $props.simpleInfo.agree === 1
   }, $props.simpleInfo.agree === 1 ? {} : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/components/simpleCard/simpleCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/simpleCard/simpleCard.vue"]]);
 wx.createComponent(Component);

@@ -1,8 +1,8 @@
 <script>
-	//import cookies from "weapp-cookie/dist/weapp-cookie.umd";
-	import { cookieManager } from "./common/weapp-cookie.js"
-	import * as signalR from "./common/signalr.js";
-	//import * as signalR from "D:/signalr_for_uniapp/dist/signalr"
+	// #ifdef MP-WEIXIN
+	const UniCookie = require("../common/weapp-cookie.js");
+	// #endif
+	
 	let c = cookieManager.default.getCookie("accesstoken","www.liusha-gy.com");
 	export default {
 		async beforeCreate() {

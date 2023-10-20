@@ -221,5 +221,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     D: common_vendor.o((...args) => $options._onClick && $options._onClick(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/uni_modules/uni-fab/components/uni-fab/uni-fab.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/uni_modules/uni-fab/components/uni-fab/uni-fab.vue"]]);
 wx.createComponent(Component);

@@ -11,6 +11,12 @@ const _sfc_main = {
   computed: {
     publishs() {
       return this.$data.$publishs;
+    },
+    maxid() {
+      if (this.$data.$publishs.length === 0) {
+        return 0;
+      }
+      return this.$data.$publishs[this.$data.$publishs.length - 1].id;
     }
   },
   methods: {
@@ -37,13 +43,15 @@ const _sfc_main = {
     if (!this.hasPushlishs) {
       console.log("get user task");
       common_vendor.index.requestWithCookie({
-        url: this.$store.state.apiBaseUrl + "/api/Assignment/user",
+        url: this.$store.state.apiBaseUrl + "/api/Assignment/user?count=10&offset=" + this.maxid,
         success: (res) => {
           this.$data.$publishs = res.data;
           this.hasPushlishs = true;
         }
       });
     }
+  },
+  onReachBottom() {
   }
 };
 if (!Array) {
@@ -58,17 +66,17 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
-        a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
-        b: "e0884de0-0-" + i0,
-        c: common_vendor.p({
+        a: "64bd3aa6-0-" + i0,
+        b: common_vendor.p({
           task: item,
           editable: false,
-          mode: $options.mode(item)
+          mode: $options.mode(item),
+          ["capture-catch:tap"]: "toDetails(item.id)"
         }),
-        d: item.id
+        c: item.id
       };
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/myPublishs/myPublishs.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/myPublishs/myPublishs.vue"]]);
 wx.createPage(MiniProgramPage);

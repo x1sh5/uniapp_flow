@@ -17,7 +17,9 @@
 </template>
 
 <script>
-	import { cookieManager } from "../../common/weapp-cookie.js"
+	// #ifdef MP-WEIXIN
+	const cookieManager = require("../common/weapp-cookie.js");
+	// #endif
 	export default {
 		data() {
 			return {

@@ -10,4 +10,5 @@ exports.TaskStatus = void 0;
   TaskStatus[TaskStatus["Unfinished"] = 1] = "Unfinished";
   TaskStatus[TaskStatus["Finished"] = 2] = "Finished";
   TaskStatus[TaskStatus["Announcement"] = 3] = "Announcement";
+  TaskStatus[TaskStatus["Failed"] = 4] = "Failed";
 })(exports.TaskStatus || (exports.TaskStatus = {}));

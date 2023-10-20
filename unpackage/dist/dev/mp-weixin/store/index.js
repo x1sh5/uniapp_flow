@@ -2,20 +2,21 @@
 const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
-const signalR = require("../common/signalr.js");
 const store_reference = require("./reference.js");
+const signalR = require("../common/signalr.js");
 const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,
     $userName: "未登录",
+    useravatar: "/static/meactive.png",
     branchs: [],
     currentTask: {},
     taskTypes: [],
     apiBaseUrl: baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Information).build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Error).build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},
@@ -100,7 +101,11 @@ const store = common_vendor.createStore({
       state2.$userName = payload;
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userName, payload);
     },
-    initUserName: (state2) => {
+    setUserAvatar(state2, payload) {
+      state2.useravatar = state2.apiBaseUrl + payload;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userAvatar, state2.apiBaseUrl + payload);
+    },
+    initUserInfo: (state2) => {
       try {
         const userName = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userName);
         state2.$userName = userName;
@@ -189,9 +194,8 @@ const store = common_vendor.createStore({
       }
       return i["name"];
     },
+    //deprecated 弃用
     getTaskType: (state2) => (typeId) => {
-      console.log("typeId is ", typeId);
-      console.log("taskTypes are ", state2.taskTypes);
       let i = state2.taskTypes.find((item) => item.id === parseInt(typeId));
       console.log("taskType is: ", i);
       if (i === void 0) {
@@ -264,10 +268,10 @@ const store = common_vendor.createStore({
         });
       });
     },
-    fetchTasks({ commit, state: state2 }, { count, offset, typeId }) {
+    fetchTasks({ commit, state: state2 }, { count, offset, branchid }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.requestWithCookie({
-          url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset + "&typeId=" + typeId,
+          url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset + "&branchid=" + branchid,
           method: "GET",
           success: (res) => {
             console.log(res);
@@ -346,6 +350,49 @@ const store = common_vendor.createStore({
         success: (res) => {
           console.log(res);
         }
+      });
+    },
+    upload({ state: state2 }) {
+      return new Promise((resolve, reject) => {
+        common_vendor.index.showActionSheet({
+          itemList: ["从相册选择", "拍照"],
+          success: (e) => {
+            console.log(e);
+            if (e.tapIndex === 0) {
+              common_vendor.index.chooseImage({
+                count: 1,
+                crop: {
+                  with: 800,
+                  height: 800
+                },
+                success: (e2) => {
+                  console.log(e2);
+                  if (e2.tempFiles[0].size > 2 * 1024 * 1024) {
+                    common_vendor.index.showToast({
+                      title: "图片大小超过2M,请重新选择。"
+                    });
+                    return;
+                  }
+                  common_vendor.index.uploadFile({
+                    name: "user-avatar",
+                    filePath: e2.tempFilePaths[0],
+                    url: state2.apiBaseUrl + "/api/Image/upload",
+                    success: (res) => {
+                      resolve(res);
+                    },
+                    fail: (err) => {
+                    }
+                  });
+                },
+                fail: (err) => {
+                  reject(err);
+                }
+              });
+            }
+            if (e.tapIndex === 1)
+              ;
+          }
+        });
       });
     }
   },

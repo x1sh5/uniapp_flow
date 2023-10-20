@@ -7,3 +7,12 @@
 		margin-bottom: 10px;
 		background-color:aliceblue;
 }
+.sc-comment{
+		height: 100px;
+		width: 75%;
+		border: 1px solid black;
+}
+.sc-comment:empty::before{
+		content: attr(placeholder);
+		color: gray;
+}

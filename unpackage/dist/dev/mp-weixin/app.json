@@ -16,7 +16,6 @@
     "pages/chat/chat",
     "pages/holdTask/holdTask",
     "pages/taskDetail/taskDetail",
-    "pages/test/test",
     "pages/searchResult/searchResult",
     "pages/publishResult/publishResult",
     "pages/settings/settings",
@@ -28,12 +27,11 @@
     "pages/reference/edit/edit",
     "pages/reference/history/history",
     "pages/reference/history/detail/detail",
-    "pages/test/A/A",
-    "pages/test/B/B",
     "pages/settings/unregister/unregister",
     "pages/settings/identityCheck/identityCheck",
     "pages/myApply/myApply",
-    "pages/order/order"
+    "pages/order/order",
+    "pages/userCenter/about/about"
   ],
   "window": {
     "navigationBarTextStyle": "black",

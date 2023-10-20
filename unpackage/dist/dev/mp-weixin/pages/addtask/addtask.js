@@ -4,7 +4,7 @@ const _sfc_main = {
   data() {
     return {
       selected: void 0,
-      $taskTypes: [],
+      $branchTypes: [],
       ctype: [
         { text: "单卡", value: 0 },
         { text: "多卡", value: 1 }
@@ -14,21 +14,21 @@ const _sfc_main = {
     };
   },
   computed: {
-    taskTypes() {
-      return this.$store.state.taskTypes;
+    branchTypes() {
+      return this.$store.state.branchs;
     }
   },
   methods: {
     editTask(e) {
       console.log(e);
       common_vendor.index.navigateTo({
-        url: "/pages/newTask/newTask?typeId=" + e
+        url: "/pages/newTask/newTask?branchid=" + e
       });
     },
     createTask(e) {
       console.log("createTask", e);
       common_vendor.index.navigateTo({
-        url: "/pages/newTask/newTask?typeId=" + this.selected.id + "&createType=" + this.defaultT + "&mode=" + this.mode
+        url: "/pages/newTask/newTask?branchid=" + this.selected.id + "&createType=" + this.defaultT + "&mode=" + this.mode
       });
     },
     typeChange(e) {
@@ -77,15 +77,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       localdata: $data.ctype,
       modelValue: $data.defaultT
     }),
-    d: common_vendor.sr("dataSelect", "adab10c4-1"),
+    d: common_vendor.sr("dataSelect", "2ce241b4-1"),
     e: common_vendor.o($options.receiveDataFromChild),
     f: common_vendor.p({
-      localdata: $options.taskTypes,
+      localdata: $options.branchTypes,
       showProp: "name"
     }),
     g: common_vendor.o((...args) => $options.createTask && $options.createTask(...args)),
     h: !Boolean($data.selected)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/addtask/addtask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/addtask/addtask.vue"]]);
 wx.createPage(MiniProgramPage);

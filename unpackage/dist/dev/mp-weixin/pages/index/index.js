@@ -4,15 +4,17 @@ const _sfc_main = {
   data() {
     return {
       title: "Hello",
-      currentTypeId: "",
-      taskTypeName: "全部"
+      curBranchid: "",
+      taskTypeName: "全部",
+      status: "more",
+      contentText: { contentdown: "上拉显示更多", contentrefresh: "正在加载...", contentnomore: "没有更多数据了" }
     };
   },
   onLoad() {
     console.log("page index onload");
   },
   mounted() {
-    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: "" }).then((data) => {
+    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, branchid: "" }).then((data) => {
       this.$store.commit("setTasks", { taskTypeName: "全部", data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
@@ -27,8 +29,8 @@ const _sfc_main = {
         this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: value });
       }
     },
-    taskTypes() {
-      let ts = this.$store.state.taskTypes;
+    branchTypes() {
+      let ts = this.$store.state.branchs;
       return [{ id: "", name: "全部" }, ...ts];
     },
     total() {
@@ -51,24 +53,22 @@ const _sfc_main = {
     },
     //requestWithCookie
     searchByTpe(id, name) {
-      this.currentTypeId = id;
+      this.curBranchid = id;
       this.taskTypeName = name;
       let url = this.$store.state.apiBaseUrl + "/api/Assignment/type/" + id;
-      if (this.$store.state.tasks.get(this.taskTypeName).length === 0) {
-        common_vendor.index.requestWithCookie({
-          url,
-          success: (res) => {
-            console.log(res);
-            if (res.statusCode === 200) {
-              this.tasks = res.data;
-            } else {
-              common_vendor.index.showToast({
-                title: "网络出错了！"
-              });
-            }
+      common_vendor.index.requestWithCookie({
+        url,
+        success: (res) => {
+          console.log(res);
+          if (res.statusCode === 200) {
+            this.tasks = res.data;
+          } else {
+            common_vendor.index.showToast({
+              title: "网络出错了！"
+            });
           }
-        });
-      }
+        }
+      });
     },
     inputEvent(e) {
       console.log(e);
@@ -78,13 +78,21 @@ const _sfc_main = {
     },
     modelChange(e) {
       console.log(e);
+    },
+    backtotop(e) {
+      common_vendor.index.pageScrollTo({
+        selector: "#app",
+        scrollTop: 0
+      });
     }
   },
   //上拉更新数据
   onReachBottom() {
     let maxIndex = this.maxIndex;
-    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, typeId: this.currentTypeId }).then((data) => {
+    this.status = "loading";
+    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, branchid: this.curBranchid }).then((data) => {
       this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data });
+      this.status = "more";
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
@@ -93,7 +101,7 @@ const _sfc_main = {
   async onPullDownRefresh() {
     await this.$store.dispatch("fetchBranchs");
     await this.$store.dispatch("fetchTaskTypes");
-    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, typeId: this.currentTypeId }).then((data) => {
+    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, branchid: this.curBranchid }).then((data) => {
       this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data });
     }).catch((error) => {
       console.error("获取数据失败：", error);
@@ -103,12 +111,14 @@ const _sfc_main = {
 if (!Array) {
   const _easycom_uni_search_bar2 = common_vendor.resolveComponent("uni-search-bar");
   const _easycom_cardinfo2 = common_vendor.resolveComponent("cardinfo");
-  (_easycom_uni_search_bar2 + _easycom_cardinfo2)();
+  const _easycom_uni_load_more2 = common_vendor.resolveComponent("uni-load-more");
+  (_easycom_uni_search_bar2 + _easycom_cardinfo2 + _easycom_uni_load_more2)();
 }
 const _easycom_uni_search_bar = () => "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar.js";
 const _easycom_cardinfo = () => "../../components/cardinfo/cardinfo.js";
+const _easycom_uni_load_more = () => "../../uni_modules/uni-load-more/components/uni-load-more/uni-load-more.js";
 if (!Math) {
-  (_easycom_uni_search_bar + _easycom_cardinfo)();
+  (_easycom_uni_search_bar + _easycom_cardinfo + _easycom_uni_load_more)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -119,7 +129,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       clearButton: "auto",
       cancelButton: "none"
     }),
-    c: common_vendor.f($options.taskTypes, (item, k0, i0) => {
+    c: common_vendor.f($options.branchTypes, (item, k0, i0) => {
       return {
         a: common_vendor.t(item.name),
         b: item.id,
@@ -128,7 +138,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
       return {
-        a: "4d84c736-1-" + i0,
+        a: "0c9de768-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -136,8 +146,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         c: item.id
       };
-    })
+    }),
+    e: common_vendor.p({
+      iconType: "auto",
+      contentText: $data.contentText,
+      status: $data.status
+    }),
+    f: common_vendor.o((...args) => $options.backtotop && $options.backtotop(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

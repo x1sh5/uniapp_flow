@@ -62,6 +62,11 @@ const _sfc_main = {
         url: "/pages/order/order"
       });
     },
+    toAbout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/about/about"
+      });
+    },
     signin(e) {
       common_vendor.index.navigateTo({
         url: "/pages/login/login?refer=usercenter"
@@ -102,7 +107,7 @@ const _sfc_main = {
   },
   onLoad() {
     this.$store.commit("initHasLogin");
-    this.$store.commit("initUserName");
+    this.$store.commit("initUserInfo");
   },
   created() {
     this.hasLogin = this.$store.getters.hasLogin();
@@ -121,13 +126,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
     j: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
     k: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
-    l: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    m: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
-    n: $options.hasLogin,
-    o: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    p: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
-    q: !$options.hasLogin
+    l: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
+    m: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    n: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
+    o: $options.hasLogin,
+    p: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
+    q: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
+    r: !$options.hasLogin
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userCenter/userCenter.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -4,11 +4,13 @@ import { StorageKeys } from "../common/storageKeys.js";
 //import { Publish } from "./publish.js"
 import { Messages } from "./messages.js";
 import { References } from "./reference.js";
-//import { HubConnectionBuilder, LogLevel } from "../common/signalr.js";
-//import * as signalr from "../signalr_for_uniapp/index.js"
+
+// #ifdef MP-WEIXIN
+const signalR = require("../common/signalr.js");
+// #endif
 
 
-const baseUrl = "https://localhost:7221"//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
+const baseUrl = "https://www.liusha-gy.com"//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
 
 const store = createStore({
 	state:{

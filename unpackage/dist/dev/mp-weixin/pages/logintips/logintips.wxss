@@ -1,31 +1,55 @@
-.lgtip-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    align-content: center;
-    text-align: center; /* 新增：使文字居中 */
+
+.text{
+
+ 
+    font-size: 40rpx; /* 新增：设置文字大小为80 */
+    margin-left: 80rpx;
+    margin-top: 200rpx;
 }
-.lgtip-wrapper text {
-    font-size: 20px; /* 新增：设置文字大小为80 */
-	 margin-top: 200rpx;
-}
-.lgtip-button{
-    border: 1px solid  #07c160;
-    border-radius: 5px; /* 新增：设置按钮边框为圆角 */
-    width: 210px;
-    height: 35px;
+.lgtip-up-button{
+  transform: translate(0rpx, 10rpx) scale(1);
+    border: 1px solid  #6c4ad1;
+    border-radius:40rpx; /* 新增：设置按钮边框为圆角 */
+    width: 250rpx;
+    height: 70rpx;
     color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
-    background-color: #07c160; /* 新增：设置按钮背景颜色为绿色 */
+    background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
 	text-align: center;
-	top: calc(100vh - 300rpx);
-	   margin-top:0;
+	/* top: calc(150vh - 350rpx);
+     */
+     margin-top:0;
 	 display: flex;  /* 使用Flex布局 */ 
 	   justify-content: center;  /* 水平居中 */
-	   align-items: center; /* 垂直居中 */
+     align-items: center; /* 垂直居中 */
+     margin-top: 500rpx;
+     box-shadow:0ch;
+     margin-left: 0px;
+     box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
-.lgtip-button:nth-child(3) {
-    color: #07c160; /* 新增：设置注册按钮文字颜色为绿色 */
-    background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
+.lgtip-button{
+  transform: translate(0rpx, 0rpx) scale(1);
+  border: 1px solid  #6c4ad1;
+  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  width: 250rpx;
+  height: 70rpx;
+  margin-top: -65rpx;
+ display: flex;  /* 使用Flex布局 */ 
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+   margin-left: 380rpx;
+   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+   background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}
+.container {
+  background-size:contain; /* 根据需要设置背景大小 */
+  /* 其他背景样式属性，如背景颜色、位置等 */
+  height: 100vh; /* 设置容器的高度，这里假设为屏幕高度 */
+  width: 100%; /* 设置容器的宽度 */
+  background-repeat: no-repeat;
+  z-index: -1;
+  position: fixed;
+bottom: 0;
+left: 0;
+right: 0;
 }
