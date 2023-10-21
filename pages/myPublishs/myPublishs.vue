@@ -5,7 +5,7 @@
 			<cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)" style="margin-top:5px;"/>
 			<!-- #endif -->
 		  <!-- #ifdef MP-WEIXIN -->
-		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" capture-catch:tap="toDetails(item.id)" style="margin-top:5px;"/>
+		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.capture="toDetails(item.id)" style="margin-top:5px;"/>
 		  <!-- #endif -->
 		  
 		</view>

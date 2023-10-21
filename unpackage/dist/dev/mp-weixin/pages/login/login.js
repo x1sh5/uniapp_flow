@@ -1,6 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const cookieManager = require("../common/weapp-cookie.js");
+const common_weappCookie = require("../../common/weapp-cookie.js");
 const _sfc_main = {
   data() {
     return {
@@ -20,8 +20,8 @@ const _sfc_main = {
           console.log(res);
           if (res.statusCode === 200) {
             let domain = url.split("/")[2].split(":")[0];
-            cookieManager.default.setResponseCookies(res.data.accessToken, domain);
-            cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
+            common_weappCookie.cookieManager.default.setResponseCookies(res.data.accessToken, domain);
+            common_weappCookie.cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
             that.$store.commit("login");
             that.$store.commit("setUserName", res.data.userName);
             that.$store.commit("setUserAvatar", res.data.Avatar);

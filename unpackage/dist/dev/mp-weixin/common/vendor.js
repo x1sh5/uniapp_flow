@@ -396,7 +396,7 @@ class BaseFormatter {
     }
     let tokens = this._caches[message];
     if (!tokens) {
-      tokens = parse(message, delimiters);
+      tokens = parse$1(message, delimiters);
       this._caches[message] = tokens;
     }
     return compile$1(tokens, values);
@@ -404,7 +404,7 @@ class BaseFormatter {
 }
 const RE_TOKEN_LIST_VALUE = /^(?:\d)+/;
 const RE_TOKEN_NAMED_VALUE = /^(?:\w)+/;
-function parse(format, [startDelimiter, endDelimiter]) {
+function parse$1(format, [startDelimiter, endDelimiter]) {
   const tokens = [];
   let position = 0;
   let text = "";
@@ -7076,6 +7076,176 @@ const createSubpackageApp = initCreateSubpackageApp();
   wx.createPluginApp = global.createPluginApp = createPluginApp;
   wx.createSubpackageApp = global.createSubpackageApp = createSubpackageApp;
 }
+exports.setCookieExports = {};
+var setCookie = {
+  get exports() {
+    return exports.setCookieExports;
+  },
+  set exports(v2) {
+    exports.setCookieExports = v2;
+  }
+};
+var defaultParseOptions = {
+  decodeValues: true,
+  map: false,
+  silent: false
+};
+function isNonEmptyString(str) {
+  return typeof str === "string" && !!str.trim();
+}
+function parseString(setCookieValue, options) {
+  var parts = setCookieValue.split(";").filter(isNonEmptyString);
+  var nameValuePairStr = parts.shift();
+  var parsed = parseNameValuePair(nameValuePairStr);
+  var name = parsed.name;
+  var value = parsed.value;
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  try {
+    value = options.decodeValues ? decodeURIComponent(value) : value;
+  } catch (e2) {
+    console.error(
+      "set-cookie-parser encountered an error while decoding a cookie with value '" + value + "'. Set options.decodeValues to false to disable this feature.",
+      e2
+    );
+  }
+  var cookie = {
+    name,
+    value
+  };
+  parts.forEach(function(part) {
+    var sides = part.split("=");
+    var key = sides.shift().trimLeft().toLowerCase();
+    var value2 = sides.join("=");
+    if (key === "expires") {
+      cookie.expires = new Date(value2);
+    } else if (key === "max-age") {
+      cookie.maxAge = parseInt(value2, 10);
+    } else if (key === "secure") {
+      cookie.secure = true;
+    } else if (key === "httponly") {
+      cookie.httpOnly = true;
+    } else if (key === "samesite") {
+      cookie.sameSite = value2;
+    } else {
+      cookie[key] = value2;
+    }
+  });
+  return cookie;
+}
+function parseNameValuePair(nameValuePairStr) {
+  var name = "";
+  var value = "";
+  var nameValueArr = nameValuePairStr.split("=");
+  if (nameValueArr.length > 1) {
+    name = nameValueArr.shift();
+    value = nameValueArr.join("=");
+  } else {
+    value = nameValuePairStr;
+  }
+  return { name, value };
+}
+function parse(input, options) {
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  if (!input) {
+    if (!options.map) {
+      return [];
+    } else {
+      return {};
+    }
+  }
+  if (input.headers) {
+    if (typeof input.headers.getSetCookie === "function") {
+      input = input.headers.getSetCookie();
+    } else if (input.headers["set-cookie"]) {
+      input = input.headers["set-cookie"];
+    } else {
+      var sch = input.headers[Object.keys(input.headers).find(function(key) {
+        return key.toLowerCase() === "set-cookie";
+      })];
+      if (!sch && input.headers.cookie && !options.silent) {
+        console.warn(
+          "Warning: set-cookie-parser appears to have been called on a request object. It is designed to parse Set-Cookie headers from responses, not Cookie headers from requests. Set the option {silent: true} to suppress this warning."
+        );
+      }
+      input = sch;
+    }
+  }
+  if (!Array.isArray(input)) {
+    input = [input];
+  }
+  options = options ? Object.assign({}, defaultParseOptions, options) : defaultParseOptions;
+  if (!options.map) {
+    return input.filter(isNonEmptyString).map(function(str) {
+      return parseString(str, options);
+    });
+  } else {
+    var cookies = {};
+    return input.filter(isNonEmptyString).reduce(function(cookies2, str) {
+      var cookie = parseString(str, options);
+      cookies2[cookie.name] = cookie;
+      return cookies2;
+    }, cookies);
+  }
+}
+function splitCookiesString(cookiesString) {
+  if (Array.isArray(cookiesString)) {
+    return cookiesString;
+  }
+  if (typeof cookiesString !== "string") {
+    return [];
+  }
+  var cookiesStrings = [];
+  var pos = 0;
+  var start;
+  var ch;
+  var lastComma;
+  var nextStart;
+  var cookiesSeparatorFound;
+  function skipWhitespace() {
+    while (pos < cookiesString.length && /\s/.test(cookiesString.charAt(pos))) {
+      pos += 1;
+    }
+    return pos < cookiesString.length;
+  }
+  function notSpecialChar() {
+    ch = cookiesString.charAt(pos);
+    return ch !== "=" && ch !== ";" && ch !== ",";
+  }
+  while (pos < cookiesString.length) {
+    start = pos;
+    cookiesSeparatorFound = false;
+    while (skipWhitespace()) {
+      ch = cookiesString.charAt(pos);
+      if (ch === ",") {
+        lastComma = pos;
+        pos += 1;
+        skipWhitespace();
+        nextStart = pos;
+        while (pos < cookiesString.length && notSpecialChar()) {
+          pos += 1;
+        }
+        if (pos < cookiesString.length && cookiesString.charAt(pos) === "=") {
+          cookiesSeparatorFound = true;
+          pos = nextStart;
+          cookiesStrings.push(cookiesString.substring(start, lastComma));
+          start = pos;
+        } else {
+          pos = lastComma + 1;
+        }
+      } else {
+        pos += 1;
+      }
+    }
+    if (!cookiesSeparatorFound || pos >= cookiesString.length) {
+      cookiesStrings.push(cookiesString.substring(start, cookiesString.length));
+    }
+  }
+  return cookiesStrings;
+}
+setCookie.exports = parse;
+exports.setCookieExports.parse = parse;
+exports.setCookieExports.parseString = parseString;
+exports.setCookieExports.splitCookiesString = splitCookiesString;
 /*!
  * vuex v4.1.0
  * (c) 2022 Evan You

@@ -66,14 +66,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
-        a: "64bd3aa6-0-" + i0,
-        b: common_vendor.p({
+        a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
+        b: "64bd3aa6-0-" + i0,
+        c: common_vendor.p({
           task: item,
           editable: false,
-          mode: $options.mode(item),
-          ["capture-catch:tap"]: "toDetails(item.id)"
+          mode: $options.mode(item)
         }),
-        c: item.id
+        d: item.id
       };
     })
   };

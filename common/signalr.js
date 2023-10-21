@@ -1,6 +1,4 @@
-	// #ifdef MP-WEIXIN
-	const cookieManager = require("../common/weapp-cookie.js");
-	// #endif
+import {cookieManager} from "/common/weapp-cookie.js";
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :

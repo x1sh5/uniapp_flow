@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "浏览历史",
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "cardinfo": "../../components/cardinfo/cardinfo"
+  }
+}

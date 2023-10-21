@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
+require("./common/signalr.js");
 const store_index = require("./store/index.js");
+require("./common/weapp-cookie.js");
 require("./common/storageKeys.js");
 require("./store/messages.js");
 require("./store/reference.js");
@@ -39,8 +41,6 @@ if (!Math) {
   "./pages/order/order.js";
   "./pages/userCenter/about/about.js";
 }
-const UniCookie = require("../common/weapp-cookie.js");
-UniCookie.cookieManager.default.getCookie("accesstoken", "www.liusha-gy.com");
 const _sfc_main = {
   async beforeCreate() {
     let hasLogin = this.$store.commit("loginTest");

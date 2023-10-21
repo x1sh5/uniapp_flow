@@ -1,0 +1,1 @@
+.newtaskbox{display:flex;flex-direction:row;justify-content:center;//align-content: stretch;//flex-wrap: wrap}.editbutton{border:1px solid bisque;color:#a9a9a9}.pay-container{display:flex;flex-direction:row;margin-top:10px;justify-content:center;align-items:center}.balance{margin-left:30px}

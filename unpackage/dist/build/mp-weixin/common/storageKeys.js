@@ -1,0 +1,1 @@
+"use strict";class s{}s.hasLogin="_hasLogin",s.userName="_userName",s.cookies="__cookie_store__",s.taskContent="_task_content",s.uuid="__DC_STAT_UUID",s.userAvatar="_userAvatar",s.searchs="_searchs",exports.StorageKeys=s;

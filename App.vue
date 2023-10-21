@@ -1,9 +1,7 @@
 <script>
-	// #ifdef MP-WEIXIN
-	const UniCookie = require("../common/weapp-cookie.js");
-	// #endif
+	import * as signalR from "/common/signalr.js"
 	
-	let c = cookieManager.default.getCookie("accesstoken","www.liusha-gy.com");
+	
 	export default {
 		async beforeCreate() {
 			let hasLogin = this.$store.commit("loginTest");
