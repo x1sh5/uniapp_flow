@@ -1,7 +1,7 @@
 <template>
 	<view class="ch-wrapper" @click="jump" @longpress="showDelete">
 		<view style="box-sizing: border-box;">
-			<view class="user-avatar"><image class="user-avatar-img"></image></view>
+			<view class="user-avatar"><image :src="imgsrc" class="user-avatar-img"></image></view>
 		</view>
 		
 		<view>
@@ -35,7 +35,25 @@
 				// lastmessage:"你好",
 				// time:"22:41",
 				// unreadcount:2
+				
 			}
+		},
+		computed:{
+			imgsrc(){
+				let src = "";
+				uni.requestWithCookie({
+					url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.cc.cid,
+					success: (res) => {
+						src = res.data
+					}
+				})
+				return src;
+			}
+		},
+		onLoad() {
+
+		},
+		onShow() {
 		},
 		methods:{
 			jump(){

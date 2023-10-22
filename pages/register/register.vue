@@ -53,7 +53,7 @@
 					this.nameCheckTip = "姓名不能为空";
 					return
 				}
-				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/namecheck?username="+encodeURI(name);
+				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/namecheck?username="+encodeURIComponent(name);
 				uni.request({
 					url:checkUrl,
 					success:(res)=> {
@@ -113,7 +113,7 @@
 					this.emailCheckTip = "邮箱格式不正确";
 					return
 				}
-				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/emailcheck?email="+encodeURI(email) ;
+				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/emailcheck?email="+encodeURIComponent(email) ;
 				uni.request({
 					url:checkUrl,
 					success:(res)=> {
@@ -129,7 +129,7 @@
 			phoneCheckEvent(event){
 				console.log(event)
 				let phone = event.detail.value;
-				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/phonecheck?phoneNo="+encodeURI(phone);
+				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/phonecheck?phoneNo="+encodeURIComponent(phone);
 				uni.request({
 					url:checkUrl,
 					success:(res)=> {

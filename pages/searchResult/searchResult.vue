@@ -74,7 +74,7 @@
 			search(e){
 				this.searchWord = e.value;
 				uni.requestWithCookie({
-					url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURI(this.searchWord)+"?count=10&offset="+this.maxid,
+					url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURIComponent(this.searchWord)+"?count=10&offset="+this.maxid,
 					success:(res)=>{
 						if(res.statusCode === 200){
 							this.tasks = res.data;
@@ -125,7 +125,7 @@
 		onReachBottom() {
 			this.status = "loading";
 			uni.requestWithCookie({
-				url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURI(this.searchWord)+"?count=10&offset="+this.maxid,
+				url:this.$store.state.apiBaseUrl+"/api/Assignment/search/"+encodeURIComponent(this.searchWord)+"?count=10&offset="+this.maxid,
 				success:(res)=>{
 					if(res.statusCode === 200){
 						this.tasks = res.data;

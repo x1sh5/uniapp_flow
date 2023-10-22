@@ -79,7 +79,6 @@
 	export default {
 		data() {
 			return {
-				imgsrc:"",
 				login: false
 			};
 		},
@@ -95,6 +94,9 @@
 			},
 			userName(){
 				return this.$store.state.$userName;
+			},
+			imgsrc(){
+				return this.$store.state.useravatar
 			}
 		},
 		methods:{

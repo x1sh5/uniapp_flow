@@ -122,13 +122,15 @@ const store = createStore({
 			uni.setStorageSync(StorageKeys.userName,payload);
 		},
 		setUserAvatar(state,payload){
-			state.useravatar = state.apiBaseUrl+payload;
-			uni.setStorageSync(StorageKeys.userAvatar,state.apiBaseUrl+payload);
+			state.useravatar = payload;
+			uni.setStorageSync(StorageKeys.userAvatar,payload);
 		},
 		initUserInfo:(state)=>{
 			try{
 				const userName = uni.getStorageSync(StorageKeys.userName);
 				state.$userName = userName;
+				const useravatar = uni.getStorageSync(StorageKeys.userAvatar);
+				state.useravatar = useravatar;
 			}catch(e){
 				console.error(e)
 			}
@@ -143,23 +145,6 @@ const store = createStore({
 				console.error(e);
 			}
 			state.$hasLogin = hasLogin;
-		},
-		//判断是否登录
-		loginTest:(state)=>{
-			let login = false;
-			uni.requestWithCookie({
-				url:state.apiBaseUrl+"/api/Account/loginTest",
-				method:"HEAD",
-				success:(res)=>{
-					if(res.statusCode === 200){
-						uni.setStorageSync(StorageKeys.hasLogin,true);
-					}else{
-						uni.setStorageSync(StorageKeys.hasLogin,false);
-					}
-				}
-			 });
-			
-			return login;
 		},
 		//设置正在编辑的任务中的description
 		setEditContent(state,payload){
@@ -181,10 +166,10 @@ const store = createStore({
 		  
 		},
 		clearStorageInfo(state){
-			uni.removeStorageSync(StorageKeys._hasLogin);
-			uni.removeStorageSync(StorageKeys._userName);
-			uni.removeStorageSync(StorageKeys.__cookie_store__);
-			uni.removeStorageSync(StorageKeys._task_content);
+			uni.removeStorageSync(StorageKeys.hasLogin);
+			uni.removeStorageSync(StorageKeys.userName);
+			uni.removeStorageSync(StorageKeys.cookies);
+			uni.removeStorageSync(StorageKeys.taskContent);
 		},
 		disconnect(state){
 			state.workSocket.stop();
@@ -386,6 +371,26 @@ const store = createStore({
 			
 			    await reconnect();
 	    },
+		//判断是否登录
+		loginTest({state}){
+			return new Promise((resolve,reject)=> {
+				uni.requestWithCookie({
+					url:state.apiBaseUrl+"/api/Account/loginTest",
+					method:"HEAD",
+					success:(res)=>{
+						console.log(res)
+						if(res.statusCode === 200){
+							resolve()
+						}else{
+							reject()
+						}
+					},
+					fail:(err)=>{
+						reject()
+					}
+				 });
+			});
+		},
 		genHistory({state},id){
 			let qurl = state.apiBaseUrl + "/api/History";
 			uni.uploadFileWithCookie({  

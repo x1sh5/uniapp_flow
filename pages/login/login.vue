@@ -29,7 +29,7 @@
 				console.log(e)
 				const that = this;
 				const url = this.$store.state.apiBaseUrl+"/api/Account/login"
-				uni.requestWithCookie({
+				uni.request({
 					url:url,
 					method:"POST",
 					data:JSON.stringify(e.detail.value),
@@ -41,7 +41,7 @@
 							cookieManager.default.setResponseCookies(res.data.refreshToken,domain);
 							that.$store.commit("login");
 							that.$store.commit("setUserName", res.data.userName);
-							that.$store.commit("setUserAvatar",res.data.Avatar);
+							that.$store.commit("setUserAvatar",res.data.avatar);
 							// uni.navigateBack({
 							// 	delta:that.depth
 							// })

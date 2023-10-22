@@ -69,15 +69,52 @@
 										filePath: e.tempFilePaths[0],
 										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
 										success:(res)=>{
-											if(res.statusCode===201)
-												this.$store.commit("setUserAvatar",res.data[0].url);
+											console.log(res)
+											if(res.statusCode===201){
+												let data = JSON.parse(res.data);
+												let imgurl = this.$store.state.apiBaseUrl+data[0].url;
+												this.$store.commit("setUserAvatar",imgurl);
+												uni.requestWithCookie({
+													url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
+													method:"POST",
+													success: () => {
+														
+													}
+												})
+												
+											}
 										}
 									})
 								}
 							})
 						}
 						if(e.tapIndex===1){
-							
+							const ctx = uni.createCameraContext();
+							ctx.takePhoto({
+								
+								success:(res)=>{
+									console.log(res)
+									uni.uploadFile({
+										name: "user-avatar",
+										filePath: res.tempImagePath,
+										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
+										success:(res)=>{
+											if(res.statusCode===201){
+												let data = JSON.parse(res.data);
+												let imgurl = this.$store.state.apiBaseUrl+data[0].url; 
+												this.$store.commit("setUserAvatar",imgurl);
+												uni.request({
+													url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
+													method:"POST",
+													success: () => {
+														
+													}
+												})
+											}
+										}
+									})
+								}
+							})
 						}
 					}
 				})

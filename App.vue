@@ -1,24 +1,34 @@
 <script>
+	import {StorageKeys} from "./common/storageKeys.js";
 	import * as signalR from "/common/signalr.js"
 	
 	
 	export default {
 		async beforeCreate() {
-			let hasLogin = this.$store.commit("loginTest");
-			if(!hasLogin){
-				this.$store.commit("clearStorageInfo");
-			}
+			console.log("before Create")
+			this.$store.dispatch("loginTest").then(()=>{
+				this.$store.state.$hasLogin = true;
+				console.log(this.$store.state.$hasLogin);
+				uni.setStorageSync(StorageKeys.hasLogin,true);
+			},
+				()=>{
+					this.$store.state.$hasLogin = false;
+					console.log(this.$store.state.$hasLogin);
+					uni.setStorageSync(StorageKeys.hasLogin,false);
+					this.$store.commit("clearStorageInfo");
+				}
+			).catch((err)=>{
+				
+					this.$store.state.$hasLogin = false;
+					console.log(this.$store.state.$hasLogin);
+					uni.setStorageSync(StorageKeys.hasLogin,false);
+					this.$store.commit("clearStorageInfo");
+				
+			})
 			
-			//连接socket服务器
-			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
-				console.log("receiveMessage",user,message);
-				this.$store.dispatch("receiveMsg",{user:user,message:message})
-			}); 
-			this.$store.dispatch("connect");
-			
-			this.$store.commit("Msgs/initChatChannels");
-			let originQuest = {};
-			let hasRefresh = false;
+
+			//let originQuest = {};
+			//let hasRefresh = false;
 			// uni.addInterceptor('request', {
 			//   invoke(args) {
 			//   	console.log(args);
@@ -63,7 +73,7 @@
 			// });
 		},
 		async onLaunch() {
-			console.log("before Create")
+			
 			await this.$store.dispatch('fetchBranchs');
 			this.$store.dispatch('fetchTaskTypes')
 			.then(data=>{
@@ -79,6 +89,16 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
+		},
+		mounted() {
+			//连接socket服务器
+			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
+				console.log("receiveMessage",user,message);
+				this.$store.dispatch("receiveMsg",{user:user,message:message})
+			}); 
+			this.$store.dispatch("connect");
+			
+			this.$store.commit("Msgs/initChatChannels");
 		}
 	}
 </script>

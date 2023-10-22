@@ -19,7 +19,7 @@
 			</uni-data-select>
 		  </view>
 		<!-- <button v-for="item in taskTypes" :key="item.id" @click="editTask(`${item.id}`)">{{item.name}}</button> -->
-		<button @click="createTask" :disabled="!Boolean(selected)">创建</button>
+		<button class="create-button" @click="createTask" :disabled="!Boolean(selected)">创建</button>
 	</view>
 </template>
 
