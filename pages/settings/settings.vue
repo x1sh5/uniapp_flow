@@ -12,11 +12,11 @@
 			<view style="position: absolute;right: 0;">></view>
 		</view>
 		
-		<view class="driver"></view>
+<!-- 		<view class="driver"></view>
 		<view @click="unregister" class="setting-view" style="display: flex;flex-direction: row; position: relative">
 			<view  >账号注销</view>
 			<view style="position: absolute;right: 0;">></view>
-		</view>
+		</view> -->
 		
 	</view>
 </template>

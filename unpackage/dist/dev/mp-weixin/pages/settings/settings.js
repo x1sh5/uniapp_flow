@@ -45,15 +45,49 @@ const _sfc_main = {
                   filePath: e3.tempFilePaths[0],
                   url: this.$store.state.apiBaseUrl + "/api/Image/upload",
                   success: (res) => {
-                    if (res.statusCode === 201)
-                      this.$store.commit("setUserAvatar", res.data[0].url);
+                    console.log(res);
+                    if (res.statusCode === 201) {
+                      let data = JSON.parse(res.data);
+                      let imgurl = this.$store.state.apiBaseUrl + data[0].url;
+                      this.$store.commit("setUserAvatar", imgurl);
+                      common_vendor.index.requestWithCookie({
+                        url: this.$store.state.apiBaseUrl + "/api/AuthUser/setavatar?avatar=" + encodeURIComponent(imgurl),
+                        method: "POST",
+                        success: () => {
+                        }
+                      });
+                    }
                   }
                 });
               }
             });
           }
-          if (e2.tapIndex === 1)
-            ;
+          if (e2.tapIndex === 1) {
+            const ctx = common_vendor.index.createCameraContext();
+            ctx.takePhoto({
+              success: (res) => {
+                console.log(res);
+                common_vendor.index.uploadFile({
+                  name: "user-avatar",
+                  filePath: res.tempImagePath,
+                  url: this.$store.state.apiBaseUrl + "/api/Image/upload",
+                  success: (res2) => {
+                    if (res2.statusCode === 201) {
+                      let data = JSON.parse(res2.data);
+                      let imgurl = this.$store.state.apiBaseUrl + data[0].url;
+                      this.$store.commit("setUserAvatar", imgurl);
+                      common_vendor.index.request({
+                        url: this.$store.state.apiBaseUrl + "/api/AuthUser/setavatar?avatar=" + encodeURIComponent(imgurl),
+                        method: "POST",
+                        success: () => {
+                        }
+                      });
+                    }
+                  }
+                });
+              }
+            });
+          }
         }
       });
     }
@@ -67,5 +101,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o((...args) => $options.unregister && $options.unregister(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/settings/settings.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/settings/settings.vue"]]);
 wx.createPage(MiniProgramPage);

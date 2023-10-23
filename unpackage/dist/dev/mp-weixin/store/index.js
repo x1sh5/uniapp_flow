@@ -102,13 +102,15 @@ const store = common_vendor.createStore({
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userName, payload);
     },
     setUserAvatar(state2, payload) {
-      state2.useravatar = state2.apiBaseUrl + payload;
-      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userAvatar, state2.apiBaseUrl + payload);
+      state2.useravatar = payload;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userAvatar, payload);
     },
     initUserInfo: (state2) => {
       try {
         const userName = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userName);
         state2.$userName = userName;
+        const useravatar = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userAvatar);
+        state2.useravatar = useravatar;
       } catch (e) {
         console.error(e);
       }
@@ -123,22 +125,6 @@ const store = common_vendor.createStore({
         console.error(e);
       }
       state2.$hasLogin = hasLogin;
-    },
-    //判断是否登录
-    loginTest: (state2) => {
-      let login = false;
-      common_vendor.index.requestWithCookie({
-        url: state2.apiBaseUrl + "/api/Account/loginTest",
-        method: "HEAD",
-        success: (res) => {
-          if (res.statusCode === 200) {
-            common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
-          } else {
-            common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, false);
-          }
-        }
-      });
-      return login;
     },
     //设置正在编辑的任务中的description
     setEditContent(state2, payload) {
@@ -158,10 +144,10 @@ const store = common_vendor.createStore({
       }
     },
     clearStorageInfo(state2) {
-      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._hasLogin);
-      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._userName);
-      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.__cookie_store__);
-      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys._task_content);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.hasLogin);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.userName);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.cookies);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.taskContent);
     },
     disconnect(state2) {
       state2.workSocket.stop();
@@ -335,6 +321,26 @@ const store = common_vendor.createStore({
         }
       }
       await reconnect();
+    },
+    //判断是否登录
+    loginTest({ state: state2 }) {
+      return new Promise((resolve, reject) => {
+        common_vendor.index.requestWithCookie({
+          url: state2.apiBaseUrl + "/api/Account/loginTest",
+          method: "HEAD",
+          success: (res) => {
+            console.log(res);
+            if (res.statusCode === 200) {
+              resolve();
+            } else {
+              reject();
+            }
+          },
+          fail: (err) => {
+            reject();
+          }
+        });
+      });
     },
     genHistory({ state: state2 }, id2) {
       let qurl = state2.apiBaseUrl + "/api/History";

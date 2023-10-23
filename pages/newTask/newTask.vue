@@ -1,9 +1,12 @@
 <template>
-	<view style="width: 100%;height: 60px;"></view>
 	<!-- left-icon的值为uni组件中uniicons下uniicons.css中的类名去掉前缀uniui-后得到的值 -->
-	<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
-	 @clickLeft="backEvent" @clickRight="submitEvent"></uni-nav-bar>
-	<view data-denpend="">
+	
+	<view style="width: 100%;height: 115px;background-color: aliceblue;position: fixed;top: 0px;z-index: 9;">
+		<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
+		 @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
+	</view>
+	 
+	<view data-denpend="" style="margin-top: 120px;">
 		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
 		@check-Result="checkResult" @remove-task="removeTask" style="margin: 2px 3px;"></taskCard>
 	</view>
@@ -21,24 +24,7 @@
 			return {
 				counter:1,
 				results: [],
-				tasks:[{
-					  "id": 0,
-					  "branchid": 1,
-					  "description": "",
-					  "finishtime": "",
-					  "deadline": new Date().toISOString().slice(0, 10),
-					  "publishtime": "0001-01-01T00:00:00",
-					  "fixedReward": 0,
-					  "percentReward": 10000,
-					  "rewardtype": RewardType.Percent,
-					  "status": TaskStatus.WaitForAccept,
-					  "title": "",
-					  "canTake": 0,
-					  "tag": "",
-					  "verify": 0,
-					  "main": 1,
-					  "tag":""
-					  }],
+				tasks:[],
 				reffer:"",
 				$mode: ''
 			}
@@ -61,9 +47,25 @@
 			let branchType = op.branchid;
 			this.$data.$mode = op.mode;
 			
-			console.log("reffer",reffer);
-			console.log("branchType",branchType);
-			this.tasks[0].branchid= branchType;
+			let t = {
+					  "id": 0,
+					  "branchid": branchType,
+					  "description": "",
+					  "finishtime": "",
+					  "deadline": new Date().toISOString().slice(0, 10),
+					  "publishtime": "0001-01-01T00:00:00",
+					  "fixedReward": 0,
+					  "percentReward": 10000,
+					  "rewardtype": op.mode==="single"?RewardType.Fiexd:RewardType.Percent,
+					  "status": TaskStatus.WaitForAccept,
+					  "title": "",
+					  "canTake": 0,
+					  "tag": "",
+					  "verify": 0,
+					  "main": 1,
+					  "tag":""
+					  };
+			this.tasks.push(t);
 
 		},
 		methods:{

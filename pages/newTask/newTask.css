@@ -6,6 +6,12 @@
 		//flex-wrap: wrap;
 		
 	}
+	.uni-navbar{
+		position: fixed;
+		top: 60px;
+		width: 100%;
+		z-index: 99;
+	}
 	
 	.editbutton{
 		border: 1px solid bisque;

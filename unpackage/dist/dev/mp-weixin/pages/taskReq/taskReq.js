@@ -30,7 +30,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($data.reqs, (item, k0, i0) => {
       return {
-        a: "2039dbcc-0-" + i0,
+        a: "6c2b4804-0-" + i0,
         b: common_vendor.p({
           simpleInfo: item
         }),
@@ -39,5 +39,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/taskReq/taskReq.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/taskReq/taskReq.vue"]]);
 wx.createPage(MiniProgramPage);

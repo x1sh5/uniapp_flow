@@ -16,7 +16,7 @@
 		<view v-for="item in tasks" :key="item.id" class="custom-margin">
 		  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'waitfor'" style="margin-top:5px;"/>
 		</view>
-		<uni-load-more iconType="auto" :contentText="contentText" :status="status"></uni-load-more>
+		<uni-load-more v-show="showmore" iconType="auto" :contentText="contentText" :status="status"></uni-load-more>
 		
 		<view id="top" class="totop" @click="backtotop">
 			<view class="topicon"></view>
@@ -77,6 +77,9 @@
 					return this.tasks[this.tasks.length-1].id
 				}
 				return 0;
+			},
+			showmore(){
+				return this.tasks.length>0
 			}
 		},
 		methods:{

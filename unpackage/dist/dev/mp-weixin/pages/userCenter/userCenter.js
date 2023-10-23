@@ -4,7 +4,6 @@ const common_storageKeys = require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
-      imgsrc: "",
       login: false
     };
   },
@@ -20,6 +19,9 @@ const _sfc_main = {
     },
     userName() {
       return this.$store.state.$userName;
+    },
+    imgsrc() {
+      return this.$store.state.useravatar;
     }
   },
   methods: {
@@ -115,7 +117,7 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: $data.imgsrc,
+    a: $options.imgsrc,
     b: common_vendor.t($options.userName),
     c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
     d: common_vendor.o((...args) => $options.history && $options.history(...args)),
@@ -135,5 +137,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     r: !$options.hasLogin
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userCenter/userCenter.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -27,7 +27,7 @@ const _sfc_main = {
         this.nameCheckTip = "姓名不能为空";
         return;
       }
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/namecheck?username=" + encodeURI(name);
+      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/namecheck?username=" + encodeURIComponent(name);
       common_vendor.index.request({
         url: checkUrl,
         success: (res) => {
@@ -81,7 +81,7 @@ const _sfc_main = {
         this.emailCheckTip = "邮箱格式不正确";
         return;
       }
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/emailcheck?email=" + encodeURI(email);
+      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/emailcheck?email=" + encodeURIComponent(email);
       common_vendor.index.request({
         url: checkUrl,
         success: (res) => {
@@ -97,7 +97,7 @@ const _sfc_main = {
     phoneCheckEvent(event) {
       console.log(event);
       let phone = event.detail.value;
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/phonecheck?phoneNo=" + encodeURI(phone);
+      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/phonecheck?phoneNo=" + encodeURIComponent(phone);
       common_vendor.index.request({
         url: checkUrl,
         success: (res) => {
@@ -162,5 +162,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     l: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/register/register.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/register/register.vue"]]);
 wx.createPage(MiniProgramPage);

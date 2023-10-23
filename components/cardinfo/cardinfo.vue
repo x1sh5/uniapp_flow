@@ -3,14 +3,14 @@
 	<!-- 任务卡片 -->
 	<!-- 任务卡片 -->
 	<view @click.stop="detail">
-		<view :class="`task${Id%3}`">
+		<view :class="`task${branchid}`">
 			<!-- 编号 标题 -->
 			<!-- 第一行，第一列起横跨2列 -->
 			<view class="r12c13">
 				<view class="columnlayout" style="width: 100%;height: 100%;">
 					<!-- 第一层：需求内容 编号 -->
 					  <view class="rowlayout">
-						<view :class="`fontcolor${Id%3} poster`" >需求内容</view>
+						<view :class="`bid${branchid} poster`" >需求内容</view>
 						<!-- 序列号 -->
 						<view class="serialNo">k8963245{{Id}}</view>
 					  </view>
@@ -24,7 +24,7 @@
 		
 		  <!-- 预计工时 第二行第一列 -->
 			  <view class="presumedtime">
-				<view :class="`fontcolor${Id%3}`">截止日期</view>
+				<view :class="`bid${branchid}`">截止日期</view>
 				<view class="rowlayout">
 <!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
@@ -41,7 +41,7 @@
 			  
 			  <!-- 回馈值 第二行第二列 -->
 			  <view class="rewardbox">
-				<view :class="`fontcolor${Id%3}`">回馈值</view>
+				<view :class="`bid${branchid}`">回馈值</view>
 				<view class="rowlayout">
 				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
 				  v-model="reward" /> <!-- @blur="updateReward" -->
@@ -70,12 +70,12 @@
 			:value="branchOrder" :class="`fontcolor${Id%3}`" @change="branchChange" class="department">
 			{{ depart?depart["name"]:'' }}</picker> -->
 			
-			<view :class="`fontcolor${Id%3}`" class="department">{{ branch }}卡</view>
+			<view :class="`bid${branchid}`" class="department">{{ branch }}卡</view>
 			
 			<!-- 发起人 -->
 			<view class="organigerpart" :style="editable?'display:none':'display:flex;flex-direction: column;'">
 			  <view>{{userName}}</view>
-			  <view :class="`fontcolor${Id%3}`" >发起人</view>
+			  <view :class="`bid${branchid}`" >发起人</view>
 			</view>
 			<!-- 状态 -->
 			<view class="status" :style="editable?'display:none':'display:flex'">
@@ -177,6 +177,9 @@ import { RewardType } from '../../common/Task'
 				get(){
 					return this.$store.getters.getBranch(this.task.branchid)
 				},
+			},
+			branchid(){
+				return this.task.branchid
 			},
 			depart(){
 				let d;
@@ -532,11 +535,33 @@ import { RewardType } from '../../common/Task'
 	.fontcolor0{
 	  .colorset(rgb(30, 30, 245));
 	}
-	.fontcolor1{
-	  color: rgb(20, 226, 226);
+	.bid1{
+		// ”信息“ #54cfa5
+	  color: #54cfa5;
 	}
-	.fontcolor2{
-	  color: rgb(45, 145, 238);
+	.bid2{
+		//”审核“ 
+	  color: #000000;
+	}
+	.bid3{
+		//”建设“ #5656cb
+		color: #5656cb;
+	}
+	.bid4{
+		//”技术“ #42c9dd
+		color: #42c9dd;
+	}
+	.bid5{
+		//”制作“ #509cf5
+		color: #509cf5;
+	}
+	.bid6{
+		//”分发“ #e0ba46
+		color: #e0ba46;
+	}
+	.bid7{
+		//”资金“ #d169cd
+		color: #d169cd;
 	}
 	
 	.task(){
@@ -579,32 +604,44 @@ import { RewardType } from '../../common/Task'
 		margin-bottom: 15rpx;
 	}
 	
-	.task0{
-	  .task();
-	}
-	
-	.task0:before{
-	  .taskbefore();
-	  background-color: rgb(30, 30, 245);
-	
-	}
-	
-	.task1{
+	.task1,.task2,.task3,.task4,.task5,.task6,.task7{
 	  .task();
 	}
 	
 	.task1:before{
+		//信息
 	  .taskbefore();
-	  background-color: rgb(20, 226, 226);
+	  background-color: #54cfa5;
 	}
-	
-	.task2{
-	  .task();
-	}
-	
 	.task2:before{
+		//审核
 	  .taskbefore();
-	  background-color: rgb(45, 145, 238);
+	  background-color: #000000;
+	}
+	.task3:before{
+		//建设
+	  .taskbefore();
+	  background-color:  #5656cb;
+	}
+	.task4:before{
+		//技术
+	  .taskbefore();
+	  background-color: #42c9dd;
+	}
+	.task5:before{
+		//制作
+	  .taskbefore();
+	  background-color: #509cf5;
+	}
+	.task6:before{
+		//分发
+	  .taskbefore();
+	  background-color: #e0ba46;
+	}
+	.task7:before{
+		//资金
+	  .taskbefore();
+	  background-color:  #d169cd;
 	}
 	
 	.tasktype{

@@ -12,7 +12,7 @@ const _sfc_main = {
       console.log(e);
       const that = this;
       const url = this.$store.state.apiBaseUrl + "/api/Account/login";
-      common_vendor.index.requestWithCookie({
+      common_vendor.index.request({
         url,
         method: "POST",
         data: JSON.stringify(e.detail.value),
@@ -24,7 +24,7 @@ const _sfc_main = {
             common_weappCookie.cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
             that.$store.commit("login");
             that.$store.commit("setUserName", res.data.userName);
-            that.$store.commit("setUserAvatar", res.data.Avatar);
+            that.$store.commit("setUserAvatar", res.data.avatar);
             if (this.refer === "order") {
               common_vendor.index.redirectTo({
                 url: "/pages/order/order"
@@ -69,5 +69,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/login/login.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/login/login.vue"]]);
 wx.createPage(MiniProgramPage);
