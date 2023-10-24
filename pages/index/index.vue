@@ -79,7 +79,7 @@
 				return 0;
 			},
 			showmore(){
-				return this.tasks.length>0
+				return this.tasks&&this.tasks.length>0
 			}
 		},
 		methods:{
@@ -94,22 +94,7 @@
 			searchByTpe(id, name){
 				this.curBranchid = id;
 				this.taskTypeName = name;
-				let url = this.$store.state.apiBaseUrl+"/api/Assignment/type/"+id;
-				
-				uni.requestWithCookie({
-					url:url,
-					success:(res)=>{
-						console.log(res)
-						if(res.statusCode === 200){
-							this.tasks = res.data
-						}else{
-							uni.showToast({
-								title:"网络出错了！"
-							})
-						}
-					}
-				});
-				
+				this.updateData();
 				
 			},
 			inputEvent(e){
@@ -132,22 +117,25 @@
 				// 	console.log(res)
 
 				// }).exec()
+			},
+			updateData(){
+				let maxIndex = this.maxIndex;
+				this.status = "loading";
+				this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, branchid:this.curBranchid})
+				.then(data => {
+					 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data});
+					 // 在这里处理获取到的数据
+					 this.status = "more";
+				  })
+				  .catch(error => {
+					 console.error('获取数据失败：', error);
+					 // 在这里处理错误情况
+				  });
 			}
 		},
 		//上拉更新数据
 		 onReachBottom() {
-			let maxIndex = this.maxIndex;
-			this.status = "loading";
-			this.$store.dispatch('fetchTasks',{count:10,offset:maxIndex, branchid:this.curBranchid})
-			.then(data => {
-				 this.$store.commit('updateTasks', {taskTypeName: this.taskTypeName, data: data});
-				 // 在这里处理获取到的数据
-				 this.status = "more";
-			  })
-			  .catch(error => {
-				 console.error('获取数据失败：', error);
-				 // 在这里处理错误情况
-			  });
+			this.updateData()
 		},
 		//下拉刷新页面
 		async onPullDownRefresh() {

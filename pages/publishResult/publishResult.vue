@@ -1,6 +1,8 @@
 <template>
 	<view>
-		<view v-for="item in results" :key="item" style="height: 40px;">{{ item }}</view>
+		<view v-for="item in results" :key="item" style="height: 40px;">
+			{{ item.message }}
+		</view>
 	</view>
 </template>
 
@@ -14,7 +16,7 @@
 		mounted() {
 			setTimeout(()=> {
 			  uni.navigateTo({
-			  	url: "/pages/myTaskDetail/myTaskDetail?id="+this.results[0].id
+			  	url: "/pages/myTaskDetail/myTaskDetail?refer=newtask&id="+this.results[0].id
 			  })
 			}, 1000); // 延时 1 秒执行
 		},

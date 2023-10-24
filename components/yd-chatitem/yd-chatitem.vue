@@ -3,20 +3,20 @@
 		<view v-if="isLeft" class="leftitem" :style="{backgroundColor: bgColor}">
 			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
 			<view class="info">
-				<text class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</text>
-				<text class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
+				<view class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
 					<view class="angle" :style="{borderRightColor: bubbleColor}"></view>
 					{{ message }}
-				</text>
+				</view>
 			</view>
 		</view>
 		<view v-else class="rightitem">
 			<view class="info">
-				<text class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</text>
-				<text class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
+				<view class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
 					<view class="angle" :style="{borderLeftColor: bubbleColor}"></view>
 					{{ message }}
-				</text>
+				</view>
 			</view>
 			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
 		</view>
@@ -88,7 +88,7 @@
 		border-radius: 12rpx;
 	}
 	.chatitem {
-		background-color: #ededed;
+		background-color: #f7f7f7;
 		.leftitem {
 			display: flex;
 			.icon {

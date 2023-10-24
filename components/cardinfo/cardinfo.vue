@@ -12,11 +12,11 @@
 					  <view class="rowlayout">
 						<view :class="`bid${branchid} poster`" >需求内容</view>
 						<!-- 序列号 -->
-						<view class="serialNo">k8963245{{Id}}</view>
+						<view class="serialNo">k{{branchid}}{{Id}}</view>
 					  </view>
 					  <!-- 第二层：标题 -->
 					  <view class="title">
-						<textarea :disabled="!editable" class="brief" :value="title" placeholder="一句话简述任务内容" @blur="updateBrief">
+						<textarea :disabled="titleditable" class="brief" :value="title" placeholder="一句话简述任务内容" @blur="updateBrief">
 						</textarea>
 					  </view>
 			  </view>
@@ -43,7 +43,7 @@
 			  <view class="rewardbox">
 				<view :class="`bid${branchid}`">回馈值</view>
 				<view class="rowlayout">
-				  <input maxlength="6" :disabled="!editable" type="digit" class="reward" 
+				  <input maxlength="6" :disabled="rewardEditable" type="digit" class="reward" 
 				  v-model="reward" /> <!-- @blur="updateReward" -->
 				  <view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
 				  <uni-data-select :disabled="task.main===1" :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
@@ -106,7 +106,8 @@ import { RewardType } from '../../common/Task'
 		    colorid:Number,
 		    //可编辑组件（input,textarea等）是否能编辑，默认不能编辑
 		    editable:Boolean,
-			mode:String
+			//模式：单卡："single",多卡："mutiple"
+			mode:String,
 		},
 		created() {
 			console.log("task is:",this.task)
@@ -173,6 +174,9 @@ import { RewardType } from '../../common/Task'
 				}
 				return ''
 			},
+			rewardEditable(){
+				return !this.editable||(this.task.main===1&&this.rewardtype===2)
+			},
 			branch:{
 				get(){
 					return this.$store.getters.getBranch(this.task.branchid)
@@ -237,6 +241,9 @@ import { RewardType } from '../../common/Task'
 				set(value) {
 					this.task.title = value
 				}
+			},
+			titleditable(){
+				return !this.editable
 			},
 			rewardtypeSymbol(){
 				return {
@@ -487,6 +494,7 @@ import { RewardType } from '../../common/Task'
 		word-wrap: break-word;
 		writing-mode: vertical-lr;
 		color: red;
+		z-index: 99;
 	}
 	
 	.popup {

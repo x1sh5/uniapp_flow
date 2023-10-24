@@ -116,22 +116,25 @@
 			  });
 			},
 			async submitEvent(){
-				let sum = this.tasks.reduce((a,b)=>{
-					  if (b.rewardtype === RewardType.Percent&&b.main===0) {
-						return a + b.percentReward;
-					  }
-					  return a;
-					}, 0);
-				if(sum!==10000){
-					try {
-					    await this.showModal(); // 等待 showModal 执行完成
-						return
-					    // 这里可以执行模态弹窗成功后的后续代码
-					  } catch (error) {
-					    // 这里可以处理模态弹窗操作失败的情况
-					  }
-					  
+				if(this.mode==="mutiple"){
+					let sum = this.tasks.reduce((a,b)=>{
+						  if (b.rewardtype === RewardType.Percent&&b.main===0) {
+							return a + b.percentReward;
+						  }
+						  return a;
+						}, 0);
+					if(sum!==10000){
+						try {
+						    await this.showModal(); // 等待 showModal 执行完成
+							return
+						    // 这里可以执行模态弹窗成功后的后续代码
+						  } catch (error) {
+						    // 这里可以处理模态弹窗操作失败的情况
+						  }
+						  
+					}
 				}
+
 				this.$store.commit("setPublishResults",[]);
 				for(let item of this.tasks){
 					this.$refs['id'+item.id][0].check();
@@ -160,6 +163,7 @@
 						url:"/pages/publishResult/publishResult"
 					})
 				}
+				this.results = [];
 			},
 			rewardType(tasktype){
 				let t =  this.$store.getters.getTaskType(tasktype)

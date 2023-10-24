@@ -7,15 +7,10 @@
 			</view>
 			
 			<view v-if="mode=='waitfor'">
-				<button @click="edit">编辑</button>
 				<button @click="del">删除</button>
 			</view>
 			
 			<view v-if="mode=='undone'">
-			</view>
-			
-			<view v-if="mode=='done'">
-				<button @click="del">删除</button>
 			</view>
 			
 			<view v-if="task.canTake==0&&task.main==1&&task.payed==0" class="pay-container">
@@ -77,6 +72,8 @@
 		onLoad(op) {
 		  console.log("options:",op)
 		  this.id = op.id;
+		  //来源自哪，重定向回原路
+		  this.refer = op.refer;
 		  
 		  let task = this.$store.getters.getTaskById(this.id);
 		  if(task!==undefined){
@@ -100,12 +97,6 @@
 		  // }
 		},
 		methods:{
-			edit(e){
-				
-				uni.navigateTo({
-					url:"/pages/editTask/editTask"
-				})
-			},
 			del(e){
 				let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/delete/"+this.task.id;
 				uni.requestWithCookie({
@@ -162,11 +153,22 @@
 										signType: 'RSA',
 										paySign: praypay.paySign,
 										success:(res)=>{
-											uni.showToast({
-												title: "支付成功"
-											});
+
 											this.task.payed = 1;
 											this.$store.commit("updateLocalTaskById",this.task) 
+											uni.showModal({
+												title: "支付成功",
+												showCancel:false,
+												success: (res) => {
+													if(res.confirm){
+														if(this.refer==="newtask"){
+															uni.reLaunch({
+																url: '/pages/addtask/addtask'
+															})
+														}
+													}
+												}
+											});
 										},
 										fail: (err)=>{
 											
