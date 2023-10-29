@@ -452,7 +452,7 @@
 </script>
 
 <style lang="scss">
-	$uni-primary: #2979ff !default;
+	$uni-primary: #6c4ad1 !default;
 	$border-color: #DCDFE6;
 	$disable:0.4;
 
@@ -492,7 +492,7 @@
 				align-items: center;
 				position: relative;
 				margin: 5px 0;
-				margin-right: 25px;
+				margin-right: 1px;
 
 				.hidden {
 					position: absolute;
@@ -654,11 +654,14 @@
 
 				// 按钮样式
 				&.is--button {
-					margin-right: 10px;
+					margin-right: 24rpx;// 修改之间的间距
 					padding: 5px 10px;
 					border: 1px $border-color solid;
 					border-radius: 3px;
 					transition: border-color 0.2s;
+					  /* border: none; 移除原来的边框 */
+					  border-radius: 10rpx; /* 设置边框圆角为200 */
+					  /* background-color: #6c4ad1; 修改背景颜色为紫色 */
 
 					// 禁用
 					&.is-disable {

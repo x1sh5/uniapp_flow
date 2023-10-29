@@ -1,14 +1,23 @@
 <template>
 	<view>
 		  <!-- 2. 改变“请选择创建类型”字体颜色为灰色、大小30px，页面居中，上边距70px <view class="title">请选择创建类型</view>  -->
-		  
+		
 		  <view class="title1">*即时回报</view> 
 		  <view class="title2">*后续收入</view> 
 		   <!-- 1. 添加居中灰色分割线 -->
-		  <view class="horizontal-line"></view>
+		   <view class="horizontal-line"></view>
 		  <view class="horizontal-line-a"></view>
-		  <view class="horizontal-line-b"></view> 
 		  <view class="horizontal-line-c"></view>
+		  <view class="horizontal-line-b"></view> 
+		  <view class="horizontal-line-d"></view> 
+		  <view class="container" style="background-image: url('/static/addtask.png');">
+		    <!-- 页面内容 -->
+		  </view>
+		  <!--  
+		  
+		  
+		   -->
+		  
 		  <!-- 3. uni-data-checkbox 内容页面居中，上边距70px -->
 		  <view class="checkbox-container">
 			<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
