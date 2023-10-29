@@ -1,1 +1,1 @@
-<view><refer wx:if="{{a}}" u-i="a6bf989e-0" bind:__l="__l" u-p="{{a}}"></refer></view>
+<view><refer wx:if="{{a}}" u-i="4bc5dc72-0" bind:__l="__l" u-p="{{a}}"></refer></view>

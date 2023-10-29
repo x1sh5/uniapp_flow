@@ -48,6 +48,7 @@ const _sfc_main = {
   onLoad(op) {
     console.log("options:", op);
     this.id = op.id;
+    this.refer = op.refer;
     let task = this.$store.getters.getTaskById(this.id);
     if (task !== void 0) {
       this.task = task;
@@ -65,11 +66,6 @@ const _sfc_main = {
     this.mode = this.status[this.task.status];
   },
   methods: {
-    edit(e) {
-      common_vendor.index.navigateTo({
-        url: "/pages/editTask/editTask"
-      });
-    },
     del(e) {
       let qurl = this.$store.state.apiBaseUrl + "/api/Assignment/delete/" + this.task.id;
       common_vendor.index.requestWithCookie({
@@ -129,11 +125,21 @@ const _sfc_main = {
                     signType: "RSA",
                     paySign: praypay.paySign,
                     success: (res2) => {
-                      common_vendor.index.showToast({
-                        title: "支付成功"
-                      });
                       this.task.payed = 1;
                       this.$store.commit("updateLocalTaskById", this.task);
+                      common_vendor.index.showModal({
+                        title: "支付成功",
+                        showCancel: false,
+                        success: (res3) => {
+                          if (res3.confirm) {
+                            if (this.refer === "newtask") {
+                              common_vendor.index.reLaunch({
+                                url: "/pages/addtask/addtask"
+                              });
+                            }
+                          }
+                        }
+                      });
                     },
                     fail: (err) => {
                     }
@@ -168,21 +174,16 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: $options.html,
     c: $data.mode == "waitfor"
   }, $data.mode == "waitfor" ? {
-    d: common_vendor.o((...args) => $options.edit && $options.edit(...args)),
-    e: common_vendor.o((...args) => $options.del && $options.del(...args))
+    d: common_vendor.o((...args) => $options.del && $options.del(...args))
   } : {}, {
-    f: $data.mode == "undone"
+    e: $data.mode == "undone"
   }, $data.mode == "undone" ? {} : {}, {
-    g: $data.mode == "done"
-  }, $data.mode == "done" ? {
-    h: common_vendor.o((...args) => $options.del && $options.del(...args))
-  } : {}, {
-    i: $data.task.canTake == 0 && $data.task.main == 1 && $data.task.payed == 0
+    f: $data.task.canTake == 0 && $data.task.main == 1 && $data.task.payed == 0
   }, $data.task.canTake == 0 && $data.task.main == 1 && $data.task.payed == 0 ? {
-    j: common_vendor.t($options.balance),
-    k: $options.balance * 100 > 0,
-    l: common_vendor.o((...args) => $options.pay && $options.pay(...args))
+    g: common_vendor.t($options.balance),
+    h: $options.balance * 100 > 0,
+    i: common_vendor.o((...args) => $options.pay && $options.pay(...args))
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/myTaskDetail/myTaskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/myTaskDetail/myTaskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

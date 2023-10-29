@@ -15,10 +15,6 @@ uniapp
 
 
 微信小程序：
-	1. 修改store/index.js 添加const signalR = require("../common/signalr.js");
-	2. 修改pages/editor/editor.js 
-		line16 source: 'url("../../static/Pacifico.ttf")'
-		line35 const newTask = pages[pages.length - 1];
 	
 	3. 修改commen/weapp-cookie.js 注释到exports.cookieManager = void 0;
 	

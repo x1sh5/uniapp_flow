@@ -361,7 +361,7 @@ const store = common_vendor.createStore({
     upload({ state: state2 }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.showActionSheet({
-          itemList: ["从相册选择", "拍照"],
+          itemList: ["选择文件"],
           success: (e) => {
             console.log(e);
             if (e.tapIndex === 0) {
@@ -395,8 +395,6 @@ const store = common_vendor.createStore({
                 }
               });
             }
-            if (e.tapIndex === 1)
-              ;
           }
         });
       });

@@ -407,7 +407,7 @@ const store = createStore({
 		upload({state}){
 			return new Promise((resolve,reject)=>{
 				uni.showActionSheet({
-					itemList: ["从相册选择","拍照"],
+					itemList: ["选择文件"],
 					success: (e) => {
 						console.log(e)
 						if(e.tapIndex===0){
@@ -442,9 +442,7 @@ const store = createStore({
 								}
 							})
 						}
-						if(e.tapIndex===1){
-							
-						}
+
 					}
 				})
 			})

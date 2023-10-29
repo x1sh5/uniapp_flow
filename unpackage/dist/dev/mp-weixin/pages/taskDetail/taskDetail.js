@@ -190,7 +190,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     m: common_vendor.f($data.ctasks, (c, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.reloadTask(c), c.id),
-        b: "2d5c3560-2-" + i0,
+        b: "83597234-2-" + i0,
         c: common_vendor.p({
           task: c,
           editable: false
@@ -200,5 +200,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/taskDetail/taskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/taskDetail/taskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

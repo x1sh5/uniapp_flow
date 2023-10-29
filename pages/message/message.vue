@@ -27,6 +27,9 @@
 		},
 		onLoad(e) {
 
+		},
+		onShow() {
+			
 		}
 	}
 </script>

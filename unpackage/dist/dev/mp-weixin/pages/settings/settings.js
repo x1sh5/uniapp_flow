@@ -22,7 +22,7 @@ const _sfc_main = {
     },
     avataSet(e) {
       common_vendor.index.showActionSheet({
-        itemList: ["从相册选择", "拍照"],
+        itemList: ["选择文件"],
         success: (e2) => {
           console.log(e2);
           if (e2.tapIndex === 0) {
@@ -62,32 +62,6 @@ const _sfc_main = {
               }
             });
           }
-          if (e2.tapIndex === 1) {
-            const ctx = common_vendor.index.createCameraContext();
-            ctx.takePhoto({
-              success: (res) => {
-                console.log(res);
-                common_vendor.index.uploadFile({
-                  name: "user-avatar",
-                  filePath: res.tempImagePath,
-                  url: this.$store.state.apiBaseUrl + "/api/Image/upload",
-                  success: (res2) => {
-                    if (res2.statusCode === 201) {
-                      let data = JSON.parse(res2.data);
-                      let imgurl = this.$store.state.apiBaseUrl + data[0].url;
-                      this.$store.commit("setUserAvatar", imgurl);
-                      common_vendor.index.request({
-                        url: this.$store.state.apiBaseUrl + "/api/AuthUser/setavatar?avatar=" + encodeURIComponent(imgurl),
-                        method: "POST",
-                        success: () => {
-                        }
-                      });
-                    }
-                  }
-                });
-              }
-            });
-          }
         }
       });
     }
@@ -97,9 +71,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: $options.imgsrc,
     b: common_vendor.o((...args) => $options.avataSet && $options.avataSet(...args)),
-    c: common_vendor.o((...args) => $options.identityCheck && $options.identityCheck(...args)),
-    d: common_vendor.o((...args) => $options.unregister && $options.unregister(...args))
+    c: common_vendor.o((...args) => $options.identityCheck && $options.identityCheck(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/settings/settings.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/settings/settings.vue"]]);
 wx.createPage(MiniProgramPage);

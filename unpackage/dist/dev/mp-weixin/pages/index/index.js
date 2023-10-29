@@ -41,6 +41,9 @@ const _sfc_main = {
         return this.tasks[this.tasks.length - 1].id;
       }
       return 0;
+    },
+    showmore() {
+      return this.tasks && this.tasks.length > 0;
     }
   },
   methods: {
@@ -55,20 +58,7 @@ const _sfc_main = {
     searchByTpe(id, name) {
       this.curBranchid = id;
       this.taskTypeName = name;
-      let url = this.$store.state.apiBaseUrl + "/api/Assignment/type/" + id;
-      common_vendor.index.requestWithCookie({
-        url,
-        success: (res) => {
-          console.log(res);
-          if (res.statusCode === 200) {
-            this.tasks = res.data;
-          } else {
-            common_vendor.index.showToast({
-              title: "网络出错了！"
-            });
-          }
-        }
-      });
+      this.updateData();
     },
     inputEvent(e) {
       console.log(e);
@@ -84,18 +74,21 @@ const _sfc_main = {
         selector: "#app",
         scrollTop: 0
       });
+    },
+    updateData() {
+      let maxIndex = this.maxIndex;
+      this.status = "loading";
+      this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, branchid: this.curBranchid }).then((data) => {
+        this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data });
+        this.status = "more";
+      }).catch((error) => {
+        console.error("获取数据失败：", error);
+      });
     }
   },
   //上拉更新数据
   onReachBottom() {
-    let maxIndex = this.maxIndex;
-    this.status = "loading";
-    this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, branchid: this.curBranchid }).then((data) => {
-      this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data });
-      this.status = "more";
-    }).catch((error) => {
-      console.error("获取数据失败：", error);
-    });
+    this.updateData();
   },
   //下拉刷新页面
   async onPullDownRefresh() {
@@ -138,7 +131,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
       return {
-        a: "4d84c736-1-" + i0,
+        a: "0c9de768-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -147,13 +140,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         c: item.id
       };
     }),
-    e: common_vendor.p({
+    e: $options.showmore,
+    f: common_vendor.p({
       iconType: "auto",
       contentText: $data.contentText,
       status: $data.status
     }),
-    f: common_vendor.o((...args) => $options.backtotop && $options.backtotop(...args))
+    g: common_vendor.o((...args) => $options.backtotop && $options.backtotop(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

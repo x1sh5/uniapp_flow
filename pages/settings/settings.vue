@@ -46,7 +46,7 @@
 			},
 			avataSet(e){
 				uni.showActionSheet({
-					itemList: ["从相册选择","拍照"],
+					itemList: ["选择文件"],
 					success: (e) => {
 						console.log(e)
 						if(e.tapIndex===0){
@@ -88,34 +88,7 @@
 								}
 							})
 						}
-						if(e.tapIndex===1){
-							const ctx = uni.createCameraContext();
-							ctx.takePhoto({
-								
-								success:(res)=>{
-									console.log(res)
-									uni.uploadFile({
-										name: "user-avatar",
-										filePath: res.tempImagePath,
-										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
-										success:(res)=>{
-											if(res.statusCode===201){
-												let data = JSON.parse(res.data);
-												let imgurl = this.$store.state.apiBaseUrl+data[0].url; 
-												this.$store.commit("setUserAvatar",imgurl);
-												uni.request({
-													url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
-													method:"POST",
-													success: () => {
-														
-													}
-												})
-											}
-										}
-									})
-								}
-							})
-						}
+
 					}
 				})
 			}

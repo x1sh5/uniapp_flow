@@ -1,5 +1,5 @@
 .chatitem.data-v-e72a33f9 {
-  background-color: #ededed;
+  background-color: #f7f7f7;
 }
 .chatitem .leftitem.data-v-e72a33f9 {
   display: flex;

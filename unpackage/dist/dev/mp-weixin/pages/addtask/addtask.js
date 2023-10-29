@@ -77,7 +77,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       localdata: $data.ctype,
       modelValue: $data.defaultT
     }),
-    d: common_vendor.sr("dataSelect", "adab10c4-1"),
+    d: common_vendor.sr("dataSelect", "2ce241b4-1"),
     e: common_vendor.o($options.receiveDataFromChild),
     f: common_vendor.p({
       localdata: $options.branchTypes,
@@ -87,5 +87,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: !Boolean($data.selected)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/addtask/addtask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/addtask/addtask.vue"]]);
 wx.createPage(MiniProgramPage);

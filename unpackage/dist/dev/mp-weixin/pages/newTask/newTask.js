@@ -6,31 +6,14 @@ const _sfc_main = {
     return {
       counter: 1,
       results: [],
-      tasks: [{
-        "id": 0,
-        "branchid": 1,
-        "description": "",
-        "finishtime": "",
-        "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
-        "publishtime": "0001-01-01T00:00:00",
-        "fixedReward": 0,
-        "percentReward": 1e4,
-        "rewardtype": common_Task.RewardType.Percent,
-        "status": common_Task.TaskStatus.WaitForAccept,
-        "title": "",
-        "canTake": 0,
-        "tag": "",
-        "verify": 0,
-        "main": 1,
-        "tag": ""
-      }],
+      tasks: [],
       reffer: "",
       $mode: ""
     };
   },
   computed: {
     taskTypes() {
-      return this.$store.state.taskTypes;
+      return this.$store.state.taskTypes.filter((i) => ["制作", "资金", "分发"].includes(i.name));
     },
     mode() {
       return this.$data.$mode;
@@ -42,12 +25,28 @@ const _sfc_main = {
   },
   onLoad(op) {
     console.log("onload");
-    let reffer = op.createType;
+    op.createType;
     let branchType = op.branchid;
     this.$data.$mode = op.mode;
-    console.log("reffer", reffer);
-    console.log("branchType", branchType);
-    this.tasks[0].branchid = branchType;
+    let t = {
+      "id": 0,
+      "branchid": branchType,
+      "description": "",
+      "finishtime": "",
+      "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
+      "publishtime": "0001-01-01T00:00:00",
+      "fixedReward": 0,
+      "percentReward": 1e4,
+      "rewardtype": op.mode === "single" ? common_Task.RewardType.Fiexd : common_Task.RewardType.Percent,
+      "status": common_Task.TaskStatus.WaitForAccept,
+      "title": "",
+      "canTake": 0,
+      "tag": "",
+      "verify": 0,
+      "main": 1,
+      "tag": ""
+    };
+    this.tasks.push(t);
   },
   methods: {
     getUuid() {
@@ -95,17 +94,19 @@ const _sfc_main = {
       });
     },
     async submitEvent() {
-      let sum = this.tasks.reduce((a, b) => {
-        if (b.rewardtype === common_Task.RewardType.Percent && b.main === 0) {
-          return a + b.percentReward;
-        }
-        return a;
-      }, 0);
-      if (sum !== 1e4) {
-        try {
-          await this.showModal();
-          return;
-        } catch (error) {
+      if (this.mode === "mutiple") {
+        let sum = this.tasks.reduce((a, b) => {
+          if (b.rewardtype === common_Task.RewardType.Percent && b.main === 0) {
+            return a + b.percentReward;
+          }
+          return a;
+        }, 0);
+        if (sum !== 1e4) {
+          try {
+            await this.showModal();
+            return;
+          } catch (error) {
+          }
         }
       }
       this.$store.commit("setPublishResults", []);
@@ -133,6 +134,7 @@ const _sfc_main = {
           url: "/pages/publishResult/publishResult"
         });
       }
+      this.results = [];
     },
     rewardType(tasktype) {
       let t = this.$store.getters.getTaskType(tasktype);
@@ -216,14 +218,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($data.tasks, (item, index, i0) => {
       return {
-        a: common_vendor.sr("id" + item.id, "329834dc-1-" + i0, {
+        a: common_vendor.sr("id" + item.id, "9360021c-1-" + i0, {
           "f": 1
         }),
         b: item.id,
         c: "id" + item.id,
         d: common_vendor.o($options.checkResult, item.id),
         e: common_vendor.o($options.removeTask, item.id),
-        f: "329834dc-1-" + i0,
+        f: "9360021c-1-" + i0,
         g: common_vendor.p({
           task: item,
           editable: true
@@ -240,5 +242,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "D:/流沙任务系统uniapp/uniapp_flow/pages/newTask/newTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);

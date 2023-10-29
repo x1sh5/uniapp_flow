@@ -31,7 +31,7 @@
 		},
 		computed:{
 			taskTypes(){
-				return this.$store.state.taskTypes
+				return this.$store.state.taskTypes.filter(i=>["制作","资金","分发"].includes(i.name))
 			}
 			,mode(){
 				return this.$data.$mode

@@ -59,7 +59,7 @@
 			}
 		},
 		mounted() {
-			let qurl = this.$store.state.apiBaseUrl+"/api/Bill";
+			let qurl = this.$store.state.apiBaseUrl+"/api/Bill?count=10&offset="+this.maxid;
 			uni.request({
 				url: qurl,
 				success: (res) => {
