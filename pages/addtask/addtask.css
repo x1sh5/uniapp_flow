@@ -15,12 +15,22 @@
   background-color: #6c4ad1;
 }
 */
-
+.horizontal-line-0 {
+  position: absolute; /* 启用绝对定位 */
+  z-index: 2;
+  transform: translate(0rpx,0rpx) scale(1);
+  width: 800rpx;
+  height: 80rpx; /* 设置线的厚度 */
+  background-color: #6c4ad1;
+  margin-top: 0rpx; /* 控制线与上方内容的距离 */
+  background-image: -webkit-linear-gradient(0deg, #886cdb 0%, #886cdb 100%);
+  background-color: #acd126; 
+}
 .horizontal-line {
   position: absolute; /* 启用绝对定位 */
   z-index: 2;
   transform: translate(230rpx,0rpx) scale(1);
-  width: 32rpx;
+  width: 30rpx;
   height: 310rpx; /* 设置线的厚度 */
   background-color: #6c4ad1;
   margin-top: 0rpx; /* 控制线与上方内容的距离 */
@@ -65,7 +75,7 @@
   position: absolute; /* 启用绝对定位 */
   z-index: 2;
   transform: translate(230rpx,430rpx) scale(1);
-  width: 32rpx;
+  width: 30rpx;
   height: 150rpx; 
   background-color: #6c4ad1;
   margin-top: 0rpx; /* 控制线与上方内容的距离 */
@@ -79,7 +89,7 @@
   z-index: 2;
   transform: translate(230rpx,550rpx) scale(1);
   width: 160rpx;
-  height: 32rpx; /* 设置线的厚度 */
+  height: 30rpx; /* 设置线的厚度 */
   background-color: #6c4ad1;
   margin-top: 20rpx; /* 控制线与上方内容的距离 */
   background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
@@ -89,9 +99,9 @@
 .horizontal-line-c {
   position: absolute; 
   z-index: 2;
-  transform: translate(616rpx,550rpx) scale(1);
+  transform: translate(610rpx,550rpx) scale(1);
   width: 60rpx;
-  height: 32rpx; /* 设置线的厚度 */
+  height: 30rpx; /* 设置线的厚度 */
   background-color: #6c4ad1;
   margin-top: 20rpx; /* 控制线与上方内容的距离 */
   background-image: -webkit-linear-gradient(0deg, #886cdb 0%, #4d1ae4 60%);
@@ -99,9 +109,9 @@
 .horizontal-line-d {
   position: absolute; 
   z-index: 2;
-  transform: translate(644rpx,582rpx) scale(1);
-  width: 32rpx;
-  height: 550rpx; /* 设置线的厚度 */
+  transform: translate(640rpx,580rpx) scale(1);
+  width: 30rpx;
+  height: 680rpx; /* 设置线的厚度 */
   background-color: #6c4ad1;
   margin-top: 20rpx; /* 控制线与上方内容的距离 */
   background-image: -webkit-linear-gradient(90deg, #886cdb 0%, #4d1ae4 100%);
@@ -167,16 +177,16 @@
 
   
 .create-button{
-  transform: translate(130rpx,320rpx) scale(1);
+  transform: translate(0rpx,420rpx) scale(1);
 
-  border: 1px solid  #6c4ad1;
-  border-radius: 40rpx; /*设置按钮边框为圆角 */
+  border: 10px solid  #6c4ad1;
+  border-radius: 0rpx; /*设置按钮边框为圆角 */
   border: none;
-  width: 300rpx;
-  height: 70rpx;
+  width: 800rpx;
+  height: 150rpx;
   color: rgb(255, 255, 255); 
-  background-color: #6c4ad1; 
-  font-size: 40rpx;
+  background-color: #4d1ae4; 
+  font-size: 60rpx;
   text-align: center;
 /* top: calc(150vh - 350rpx);
    */

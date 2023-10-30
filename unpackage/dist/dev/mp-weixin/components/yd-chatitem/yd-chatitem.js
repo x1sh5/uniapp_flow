@@ -81,5 +81,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     y: $props.iconSize
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/yd-chatitem/yd-chatitem.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/components/yd-chatitem/yd-chatitem.vue"]]);
 wx.createComponent(Component);

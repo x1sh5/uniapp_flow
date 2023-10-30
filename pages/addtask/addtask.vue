@@ -5,6 +5,7 @@
 		  <view class="title1">*即时回报</view> 
 		  <view class="title2">*后续收入</view> 
 		   <!-- 1. 添加居中灰色分割线 -->
+		   <view class="horizontal-line-0"></view>
 		   <view class="horizontal-line"></view>
 		  <view class="horizontal-line-a"></view>
 		  <view class="horizontal-line-c"></view>

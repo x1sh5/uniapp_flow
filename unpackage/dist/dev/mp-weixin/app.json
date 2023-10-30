@@ -36,14 +36,14 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#efefef"
   },
   "tabBar": {
     "borderStyle": "black",
-    "backgroundColor": "#333",
+    "backgroundColor": "#ffffff",
     "color": "#8F8F94",
-    "selectedColor": "#f33e54",
+    "selectedColor": "#6c4ad1",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -53,13 +53,14 @@
       },
       {
         "pagePath": "pages/addtask/addtask",
-        "iconPath": "static/icons/section.png",
-        "selectedIconPath": "static/icons/drawer.png",
-        "text": "添加"
+        "iconPath": "static/add.png",
+        "selectedIconPath": "static/addactive.png",
+        "text": "发布任务"
       },
       {
         "pagePath": "pages/message/message",
-        "iconPath": "static/icons/badge.png",
+        "iconPath": "static/talk.png",
+        "selectedIconPath": "static/talkctive.png",
         "text": "聊天"
       },
       {

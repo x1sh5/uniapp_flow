@@ -3,7 +3,7 @@
 	  <!-- 页面内容 -->
 	</view>
 	
-	<view class="text"><text>您还未登录~
+	<view class="text"><text>您还未登录~<br>
 	注册进入社区，共创理想生活！</text>
 	<view @click="login" class="lgtip-up-button">登录</view>
 	<view @click="register" class="lgtip-button">注册</view>

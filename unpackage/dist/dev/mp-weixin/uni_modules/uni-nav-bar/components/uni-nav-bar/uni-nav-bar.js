@@ -190,5 +190,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     H: $props.fixed ? 1 : ""
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-26544265"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-26544265"], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue"]]);
 wx.createComponent(Component);

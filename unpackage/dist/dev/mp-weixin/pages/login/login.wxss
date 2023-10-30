@@ -80,7 +80,7 @@ text-align: center;
 .container {
   background-size:contain; /* 根据需要设置背景大小 */
   /* 其他背景样式属性，如背景颜色、位置等 */
-  height: 100vh; /* 设置容器的高度，这里假设为屏幕高度 */
+  height: 80vh; /* 设置容器的高度，这里假设为屏幕高度 */
   width: 100%; /* 设置容器的宽度 */
   background-repeat: no-repeat;
   z-index: -1;

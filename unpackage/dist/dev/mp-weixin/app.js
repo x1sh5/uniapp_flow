@@ -86,7 +86,7 @@ const _sfc_main = {
     this.$store.commit("Msgs/initChatChannels");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/x/Documents/HBuilderProjects/flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);

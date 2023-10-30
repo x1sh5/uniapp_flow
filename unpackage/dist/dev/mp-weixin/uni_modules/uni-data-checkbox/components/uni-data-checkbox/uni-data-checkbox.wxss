@@ -51,7 +51,7 @@
   align-items: center;
   position: relative;
   margin: 5px 0;
-  margin-right: 25px;
+  margin-right: 1px;
 }
 .uni-data-checklist .checklist-group .checklist-box .hidden {
   position: absolute;
@@ -143,22 +143,22 @@
   color: #999;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked .checkbox__inner {
-  border-color: #2979ff;
-  background-color: #2979ff;
+  border-color: #6c4ad1;
+  background-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked .checkbox__inner .checkbox__inner-icon {
   opacity: 1;
   transform: rotate(45deg);
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked .radio__inner {
-  border-color: #2979ff;
+  border-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked .radio__inner .radio__inner-icon {
   opacity: 1;
-  background-color: #2979ff;
+  background-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked .checklist-text {
-  color: #2979ff;
+  color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--default.is-checked.is-disable .checkbox__inner {
   opacity: 0.4;
@@ -170,11 +170,15 @@
   opacity: 0.4;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button {
-  margin-right: 10px;
+  margin-right: 24rpx;
   padding: 5px 10px;
   border: 1px #DCDFE6 solid;
   border-radius: 3px;
   transition: border-color 0.2s;
+  /* border: none; 移除原来的边框 */
+  border-radius: 10rpx;
+  /* 设置边框圆角为200 */
+  /* background-color: #6c4ad1; 修改背景颜色为紫色 */
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-disable {
   border: 1px #eee solid;
@@ -192,25 +196,25 @@
   color: #999;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked {
-  border-color: #2979ff;
+  border-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked .checkbox__inner {
-  border-color: #2979ff;
-  background-color: #2979ff;
+  border-color: #6c4ad1;
+  background-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked .checkbox__inner .checkbox__inner-icon {
   opacity: 1;
   transform: rotate(45deg);
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked .radio__inner {
-  border-color: #2979ff;
+  border-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked .radio__inner .radio__inner-icon {
   opacity: 1;
-  background-color: #2979ff;
+  background-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked .checklist-text {
-  color: #2979ff;
+  color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--button.is-checked.is-disable {
   opacity: 0.4;
@@ -230,8 +234,8 @@
   opacity: 0.4;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--tag.is-checked {
-  background-color: #2979ff;
-  border-color: #2979ff;
+  background-color: #6c4ad1;
+  border-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--tag.is-checked .checklist-text {
   color: #fff;
@@ -253,8 +257,8 @@
   color: #999;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--list.is-checked .checkbox__inner {
-  border-color: #2979ff;
-  background-color: #2979ff;
+  border-color: #6c4ad1;
+  background-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--list.is-checked .checkbox__inner .checkbox__inner-icon {
   opacity: 1;
@@ -264,11 +268,11 @@
   opacity: 1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--list.is-checked .checklist-text {
-  color: #2979ff;
+  color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--list.is-checked .checklist-content .checkobx__list {
   opacity: 1;
-  border-color: #2979ff;
+  border-color: #6c4ad1;
 }
 .uni-data-checklist .checklist-group .checklist-box.is--list.is-checked.is-disable .checkbox__inner {
   opacity: 0.4;
