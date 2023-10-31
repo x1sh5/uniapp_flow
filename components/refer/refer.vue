@@ -528,7 +528,7 @@ text-align: center;
 /* top: calc(150vh - 350rpx);
    */
    margin-top:0;
- display: flex;  /* 使用Flex布局 */ 
+ display: flex;  
    justify-content: center;  /* 水平居中 */
    align-items: center; /* 垂直居中 */
    margin-top: 100rpx;
@@ -545,8 +545,7 @@ text-align: center;
   color: rgb(223, 47, 99); /* 新增：设置按钮文字颜色为白色 */
   background-color: #ffffff; /* 新增：设置按钮背景颜色为绿色 */
 text-align: center;
-/* top: calc(150vh - 350rpx);
-   */
+/* top: calc(150vh - 350rpx); */
    margin-top:0;
  display: flex;  
    justify-content: center;  /* 水平居中 */
