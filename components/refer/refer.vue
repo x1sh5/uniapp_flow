@@ -125,6 +125,7 @@
 		},
 		computed: {
 
+
 		},
 		beforeMount() {
 			console.log("beforeMount");
