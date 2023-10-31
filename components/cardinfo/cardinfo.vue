@@ -759,8 +759,7 @@ height: 165rpx;
 	  grid-column-end: 1;
 	  margin-top: -40rpx;
 	margin-bottom: 0rpx;
-	    		background-color: #ff5500;   /*设置背景颜色 */
-
+	    		
 	}
 
 
@@ -776,7 +775,7 @@ height: 165rpx;
 		
 		height:40rpx;
 		width: 160rpx;
-	    		background-color: #ff0000;   /*设置背景颜色 */
+	    		
 	  }
 	  
 /*回馈值*/
