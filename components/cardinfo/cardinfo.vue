@@ -483,7 +483,8 @@ import { RewardType } from '../../common/Task'
 	}
 	
 	.popupbutton{
-		display: block;
+
+	 display: block;
 		position: absolute;
 		width: 40px;
 		height: 40px;
@@ -499,8 +500,8 @@ import { RewardType } from '../../common/Task'
 	}
 	
 	.popup {
-		// display: block;
-		// position: absolute;
+	display: block;
+	 position: absolute;
 		// width: 100%;
 		// height: 100%;
 		// top: 0;
@@ -528,6 +529,7 @@ import { RewardType } from '../../common/Task'
 	}
 	
 	.delbtn{
+			 display: block;
 		position: absolute;
 		left: 40%;
 		top: 40%;
@@ -575,6 +577,8 @@ import { RewardType } from '../../common/Task'
 	}
 	
 	.task(){
+		 display: block;
+		position: absolute;
 	  	z-index: 2;
 	  	display: grid;
 	  	grid-template-rows: 1.5fr 4fr 0.5fr 0.5fr 3fr;
@@ -590,6 +594,8 @@ import { RewardType } from '../../common/Task'
 	  	box-shadow: 5rpx 16rpx 20rpx rgba(161, 161, 161, 0.5);
 	}
 	.taskbefore(){
+		 display: block;
+		position: absolute;
 	  top: 0;
 	  left: 0;
 	  right: 0;
@@ -606,6 +612,8 @@ import { RewardType } from '../../common/Task'
 	
 	
 	.r12c13{
+		 display: block;
+		position: absolute;
   z-index:1;
   grid-row-start: 1;
   grid-row-end:5;
@@ -661,6 +669,8 @@ height: 165rpx;
 	}
 		
 	.tasktype{
+		 display: block;
+		position: absolute;
 	  bottom: 0px;
 	  right: 0px;
 	  font-size: 2cm;
@@ -677,15 +687,41 @@ height: 165rpx;
 	   z-index: 3;
 	  height: 62%;
 	  width: 80%;
-	    		background-color: #ff0000;   /*设置背景颜色 */
+	
 	} /**/
+	/*编号*/
+	.serialNo{
+		z-index: 1;
+		display: flex;
+		position: absolute;
+	 /* display: flex;
+	  position: absolute;
+	  flex-direction: column;
+	  align-self: flex-end;
+	  
+	  */	
+	 margin-left: 80px;
+	 font-size: x-small;
+			
+	}
+	/*需求内容 */
+	.poster{
+		 display: block;
+		position: absolute;
+	  //.italic();
+	  margin-right: 0rpx;
+	  height:40rpx;
+	  width: 160rpx;
 
+	}
 
 	/*一句话*/
 	.brief {
+		 display: block;
+		position: absolute;
 		z-index: 3;
 		color: rgb(129, 129, 129);
-		margin-top: 00rpx;
+		margin-top: 40rpx;
 		height:130rpx;
 		width: 400rpx;
 		white-space: pre-wrap;
@@ -698,28 +734,39 @@ height: 165rpx;
 	  
 	  
 	.margin-top5{
+		 display: block;
+		position: absolute;
 	  margin-top: 6rpx;
+	  
 	}
 	
 	//预计用时量
 	.spendtime{
+		 display: block;
+		position: absolute;
 	  width: 20%;
-	  margin-right: 5px;
+	  margin-right: 10rpx;
+	  
 	}
 	/*预计工时   margin-bottom: 15rpx;*/
 	.presumedtime {
+		 display: block;
+		position: absolute;
 	  z-index: 2;
 	  grid-row-start:3;
 	  grid-row-end: 3;
 	  grid-column-start: 1;
 	  grid-column-end: 1;
-	  margin-top: 100rpx;
+	  margin-top: -40rpx;
 	margin-bottom: 0rpx;
+	    		background-color: #ff5500;   /*设置背景颜色 */
 
 	}
 
 
 	.rowlayout-y {
+		 display: block;
+		position: absolute;
 		z-index: 2;
 		grid-row-start:1;
 		grid-row-end:1;
@@ -729,22 +776,26 @@ height: 165rpx;
 		
 		height:40rpx;
 		width: 160rpx;
-
+	    		background-color: #ff0000;   /*设置背景颜色 */
 	  }
 	  
 /*回馈值*/
 .rewardbox {
+	 display: block;
+	position: absolute;
 	z-index: 2;
 	grid-row-start:3;
 	grid-row-end: 3;
 	grid-column-start: 2;
 	grid-column-end: 2;
 	margin-left: -10px;
-	margin-top: 100rpx;
+	margin-top: -40rpx;
 	width: 130rpx;
 /*	margin-bottom: 0rpx;*/
   }
 	.rowlayout-h {
+		 display: block;
+		position: absolute;
 			z-index: 2;
 			grid-row-start:4;
 			grid-row-end:4;
@@ -759,6 +810,8 @@ height: 165rpx;
 	}
   /*回馈值选择框*/
   .reward {
+		 display: block;
+	  position: absolute;
 	z-index: 2;
 	border-bottom: 1px dashed gray;
 	flex-basis: 20rpx;
@@ -775,20 +828,25 @@ height: 165rpx;
 
 
   }
+  
   /*大标题*/
   .bigtype {
+	 display: block;
+	  position: absolute;
 	z-index: 2;
 	grid-row-start:1;
 	grid-row-end:4;
 	grid-column-start: 3;
 	grid-column-end: 5;
-	margin-left: 20px;
+	margin-left: 30px;
 
-	 
+	 	    		
 	
   }
 /* /*卡片类型文字样式*/
 .tasktype {
+	 display: block;
+	position: absolute;
   z-index: 3;
   bottom: 1rpx;
   right: 1rpx;
@@ -800,39 +858,35 @@ height: 165rpx;
 } 
 
 	.margin-right10{
+	 display: block;
+		position: absolute;
 	  margin-right:1px;
 	  
 
 	 
 	}
 	
-	/*编号*/
-	.serialNo{
-	  display: flex;
-	  flex-direction: column;
-	  align-self: flex-end;
-	  font-size: x-small;
-	  margin-left: 2px;
 
-	}
-	/*需求内容 */
-	.poster{
-	  //.italic();
-	  margin-right: 2px;
-
-	}
 	/*卡片类型*/
 	.department{
 	  .margin-right10();
+ display: block;
+	  position: absolute;
 	position:relative;margin: 0 8rpx;
 	    z-index: 1;
 	  font-size: 74rpx;
  height: 100rpx;
   width: 230rpx;
+	  grid-row-start:5;
+	grid-row-end: 5;
+	grid-column-start: 1;
+	grid-column-end: 1;
 
 	}
 	/*发起人*/
 	.organigerpart{
+	 display: block;
+		position: absolute;
 	  	    z-index: 3;
 	  padding-bottom: 0rpx;
 	grid-row-start:5;
@@ -852,19 +906,28 @@ height: 165rpx;
 	
 	/*圈*/
 	.status{
+			 display:flex;
+		position: absolute;
 	  z-index: 2;
   .margin-right10();
-  padding-bottom: 5px;
+  padding-bottom: 10rpx;
   grid-row:4/ 5;
   grid-column:1/ 5;
 	    margin-right: 0px;
 		
 	  height:90rpx;
 	  width: 90rpx;
+	  
+	  grid-row-start:5;
+	  grid-row-end: 5;
+	  grid-column-start: 4;
+	  grid-column-end: 4;
 
 	}
 	 /*圈样式*/
 	.statuscontent{
+			 display:flex;
+		position: absolute;
   z-index: 1;
   display: flex;
     justify-content: center; /* 水平居中 */
@@ -893,6 +956,8 @@ height: 165rpx;
 	} */
 
 	.input{
+		 display: block;
+		position: absolute;
 	z-index: 2;
 	width: 100%;
 	text-align: center;
@@ -901,6 +966,8 @@ height: 165rpx;
 	}
 	
 	.uni-textarea-compute{
+		 display: block;
+		position: absolute;
 		visibility: visible;
 	}
 
