@@ -126,6 +126,7 @@
 		computed: {
 
 
+
 		},
 		beforeMount() {
 			console.log("beforeMount");
@@ -138,6 +139,8 @@
 				}
 				this.lines = l; 
 			}
+		
+		
 			
 		},
 		mounted() {
@@ -171,6 +174,7 @@
 			remarkChange(id){
 				
 			}
+			
 			
 		},
 		beforeCreate() {
@@ -544,7 +548,7 @@ text-align: center;
 /* top: calc(150vh - 350rpx);
    */
    margin-top:0;
- display: flex;  /* 使用Flex布局 */ 
+ display: flex;  
    justify-content: center;  /* 水平居中 */
    align-items: center; /* 垂直居中 */
    margin-top: 100rpx;
