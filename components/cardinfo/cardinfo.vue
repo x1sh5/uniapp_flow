@@ -3,7 +3,7 @@
 	<!-- 任务卡片 -->
 	<!--<view class="container" style="position:relative;margin: 0 10rpx;" ></view>-->
 	<!-- 任务卡片 -->
-	<view @click.stop="detail" style="z-index: 98;" >
+	<view @click.stop="detail"  >
 		<view :class="`task${branchid}`">
 			<!-- 编号 标题 -->
 			<!-- 第一行，第一列起横跨2列 -->
