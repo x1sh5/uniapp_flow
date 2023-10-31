@@ -517,13 +517,12 @@
 }
 
  
- 
 .addLine{
   border: 1px solid  #6c4ad1;
   border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
   width: 450rpx;
   height: 70rpx;
-  color: rgb(255, 255, 255); 
+  color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
   background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
 text-align: center;
 /* top: calc(150vh - 350rpx);
