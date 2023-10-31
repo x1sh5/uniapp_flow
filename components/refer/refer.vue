@@ -77,22 +77,22 @@
 				<view>
 				   <view  class="td">
 						<view class="stitle">
-							<textarea :disabled="!editable" :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="rate">
-							<textarea :disabled="!editable" :ref="'rate'+`${t.id}`" @blur="rateChange(t.id)" v-model="refer.content.get(t.id).rate" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="brief">
-							<textarea :disabled="!editable" :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="detail">
-							<textarea :disabled="!editable" :ref="'detail'+`${t.id}`" @blur="detailChange(t.id)" v-model="refer.content.get(t.id).detail" maxlength="400" auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable"  maxlength="400" auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="remark">
-							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="refer.content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
+							<textarea :disabled="!editable"   auto-height="true" rows="3" inputmode="text"/>
 						</view>
 						<view class="del" v-show="editable">
-							<button @click="delLine(t.id)" style="color: red;">x</button>
+							<button  style="color: red;">x</button>
 						</view>
 					</view>
 				</view>
