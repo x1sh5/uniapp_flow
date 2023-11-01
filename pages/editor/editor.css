@@ -1,5 +1,8 @@
 	@import "./editor-icon.css";
 	
+.container{
+		margin-top: 120px;
+	}
 	.status_bar {
 		height: var(--tab-bar-height);
 		width: 100%;
@@ -23,6 +26,7 @@
 	}
 
 	.editor-wrapper {
+		margin-top: 240px;
 		height: calc(100vh - var(--window-top) - var(--status-bar-height) - 140px);
 		background: #fff;
 	}
@@ -37,8 +41,10 @@
 	}
 
 	.toolbar {
+		position: fixed;
 		left: 0;
-		top: 0;
+		top: 120px;
+		z-index: 9;
 		margin-top: 5px;
 		box-sizing: border-box;
 		border-bottom: 1px solid yellowgreen;

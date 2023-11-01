@@ -630,6 +630,7 @@ height: 165rpx;
 	
 	.task1,.task2,.task3,.task4,.task5,.task6,.task7{
 	  .task();
+	    z-index: -1;
 	}
 
 	.task1:before{
@@ -680,7 +681,7 @@ height: 165rpx;
 	  // align-self: flex-end;
 	  // align-content: flex-end;
 	}
-	标题	.title{
+		.title{
 	  .blackcolor();
 	  .margin-top5();
 	  
