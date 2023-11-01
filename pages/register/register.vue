@@ -1,27 +1,27 @@
 <template>
 	<view>
-		<form @submit="register" style="display: flex;flex-direction: column;">
-			<view style="display: flex;flex-direction: row;">
-				<text>姓名：</text><input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15"/>
+		<form class="usercenter" @submit="register">
+			<view>
+				<text class="a">真实姓名：</text><input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15"/>
 				<view>{{nameCheckTip}}</view>
 			</view>
-			<view style="display: flex;flex-direction: row;">
-				<text>密码：</text><input class="rg-input" name="password" type="safe-password" @blur="pwdCheckEvent" maxlength="20"/>
+			<view >
+				<text class="a">密码：</text><input class="rg-input" name="password" type="safe-password" @blur="pwdCheckEvent" maxlength="20"/>
 				<view>{{pwdCheckTip}}</view>
 			</view>
-			<view style="display: flex;flex-direction: row;">
-				<text>确认密码：</text><input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"/>
+			<view>
+				<text class="a">确认密码：</text><input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"/>
 				<view>{{pwdVerifyTip}}</view>
 			</view>
-			<view style="display: flex;flex-direction: row;">
-				<text>邮件：</text><input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="20"/>
+			<view>
+				<text class="a">邮箱：</text><input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="20"/>
 				<view>{{emailCheckTip}}</view>
 			</view>
-			<view style="display: flex;flex-direction: row;">
-				<text>电话：</text><input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12"/>
+			<view>
+				<text class="a">手机号：</text><input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12"/>
 				<view>{{phoneCheckTip}}</view>
 			</view>
-			<button form-type="submit">注册</button>
+			<button  class="lgtip-button" form-type="submit">注册</button>
 			<view style="height: 20px;">{{logintips}}</view>
 		</form>
 	</view>

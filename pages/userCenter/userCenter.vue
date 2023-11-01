@@ -7,10 +7,10 @@
 			<view>{{ userName }}</view>
 		</view>
 		
-		<view class="driver"></view>
+	
 		
 		<view class="taskinfobox">
-			<view style="position: relative;margin-left: 10rpx;">我发布的</view>
+			<view class="t" style="position: relative;margin-left: 10rpx;">我发布的</view>
 			<view class="taskinfo">
 				<view class="my-icons icon-huangguan" @click="myPublishs"><view class="item_title">历史发布</view></view>
 				<view class="my-icons icon-liebiaomoshi" @click="history"><view class="item_title">浏览记录</view></view>
@@ -18,9 +18,9 @@
 			</view>
 		</view>
 		
-		<view class="driver" @click="holds"></view>
+		
 		<view class="taskinfobox">
-			<view style="position: relative;margin-left: 10rpx;">已经接取任务</view>
+			<view class="t" style="position: relative;margin-left: 10rpx;">我接受的</view>
 			<view class="taskinfo">
 				<view class="my-icons icon-tianxie" @click="holds(0)"><view class="item_title">待完成</view></view>
 				<view class="my-icons icon-duigou" @click="holds(1)"><view class="item_title">完成项目</view></view>
@@ -28,38 +28,38 @@
 			</view>
 		</view>
 		
-		<view class="driver"></view>
+		
 		
 		<view class="misc">
 			<view @click="toReference" class="user-view" style="display: flex;flex-direction: row; position: relative">
-				<view  >审核区间参考</view>
-				<view style="position: absolute;right: 0;">></view>
-			</view>
-			<view class="driver"></view>
-			<view class="user-view">帮助中心</view>
-			<view class="driver"></view>
-			<view @click="toOrder" class="user-view" style="display: flex;flex-direction: row; position: relative">
-				<view >我的支付</view>
-				<view style="position: absolute;right: 0;">></view>
-			</view>
-			<view class="driver"></view>
-			<view class="user-view">技能互助文档</view>
-			<view class="driver"></view>
-			<view class="user-view">收益来源</view>
-			<view class="driver"></view>
-			<view @click="toAbout" class="user-view" style="display: flex;flex-direction: row; position: relative">
-				<view >服务协议</view>
-				<view style="position: absolute;right: 0;">></view>
-			</view>
-			<view class="driver"></view>
-			<view @click="toSetting" class="user-view" style="display: flex;flex-direction: row; position: relative">
-				<view >用户设置</view>
+				<view  >审核区间</view>
 				<view style="position: absolute;right: 0;">></view>
 			</view>
 			
+			<view class="user-view">帮助中心</view>
+			
+			<view @click="toOrder" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+				<view >我的支付</view>
+				<view style="position: absolute;right: 0;">></view>
+			</view>
+		
+			<view class="user-view2">技能互助文档</view>
+		
+			<view class="user-view2">收益来源</view>
+		
+			<view @click="toAbout" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+				<view >服务协议</view>
+				<view style="position: absolute;right: 0;">></view>
+			</view>
+		
+			<view @click="toSetting" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+				<view >用户设置</view>
+				<view style="position: absolute;right: 0;">></view>
+			</view>
+			<view class="driver"></view>
 		</view>
 		
-		<view class="driver"></view>
+
 		<view v-show="hasLogin">
 			<button @click="signout">退出</button>
 		</view>

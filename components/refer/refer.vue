@@ -45,65 +45,71 @@
  		</view>
  		
  	
- </view>-->
+ </view>
+
+ -->
  -------------
 <template>
-	<view class="table">
-		  <view class="table-row" >
-		    <view class="table-cell a">建立新审核区间</view>
-		    <view class="table-cell b">总比例</view>
-		    <view class="table-cell c">修改时间</view>
-		    <view class="table-cell d">修改人</view>
-		  </view>
-		  
+<view class="th">
+  <!-- 第一行的各个标题-->
+  <view class="table-row" >
+    <view class="table-cell a">建立新审核区间</view>
+    <view class="table-cell b">总比例</view>
+    <view class="table-cell c">修改时间</view>
+    <view class="table-cell d">修改人</view>
+  </view>
+  <!-- 第一行各个标题搭配的输入框 -->
+  <view class="table-row">
+    <view class="table-cell aa">
+      <input  type="text" auto-height class="textarea-field-aa"  placeholder="*填写您设立项目的总名称"  />
+    </view>
+    <view class="table-cell-bb">100%</view>
+    <view class="table-cell-cc">
+      <textarea auto-height class="textarea-field-cc" placeholder="*修改时间"></textarea>
+    </view>
+    <view class="table-cell-dd">
+      <textarea auto-height class="textarea-field-dd" placeholder="*修改人"></textarea>
+    </view>
+  </view>
 
-			<view class="table-cell aa">
-				<input :disabled="!editable" v-model="refer.title" type="text" placeholder="*填写您设立项目的总名称"/>
-			</view>
-			<view class="table-cell-bb">100%</view>
-			
-	
-			
-			<view class="table-row" style="position: relative; margin: 0 40rpx;">
-				
-				<view class="table-cell">
-					<view class="table-cell-e"><textarea auto-height="true" rows="1" value="区间分配项" disabled /></view>
-					<view class="table-cell-f"><textarea auto-height="true" rows="1" value="分配比例区间" disabled /></view>
-					<view class="table-cell-g"><textarea  auto-height="true" rows="1" value="设立来源" disabled /></view>
-					<view class="detail"><textarea auto-height="true" rows="1" value="分配理由" disabled /></view>
-					<view class="remark"><textarea auto-height="true" rows="1" value="备注" disabled /></view>
-					<view ></view>
-				</view>
-				<view>
-				   <view  class="td">
-						<view class="stitle">
-							<textarea :disabled="!editable" :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle" auto-height="true" rows="3" inputmode="text"/>
-						</view>
-						<view class="rate">
-							<textarea :disabled="!editable" :ref="'rate'+`${t.id}`" @blur="rateChange(t.id)" v-model="refer.content.get(t.id).rate" auto-height="true" rows="3" inputmode="text"/>
-						</view>
-						<view class="brief">
-							<textarea :disabled="!editable" :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" auto-height="true" rows="3" inputmode="text"/>
-						</view>
-						<view class="detail">
-							<textarea :disabled="!editable" :ref="'detail'+`${t.id}`" @blur="detailChange(t.id)" v-model="refer.content.get(t.id).detail" maxlength="400" auto-height="true" rows="3" inputmode="text"/>
-						</view>
-						<view class="remark">
-							<textarea :disabled="!editable" :ref="'remark'+`${t.id}`" @blur="remarkChange(t.id)" v-model="refer.content.get(t.id).remark"  auto-height="true" rows="3" inputmode="text"/>
-						</view>
-						<view class="del" v-show="editable">
-							<button @click="delLine(t.id)" style="color: red;">x</button>
-						</view>
-					</view>
-				</view>
 
-			</view>
-			<view v-show="editable"  class="addLine" @click="addLine">
-				<view style="margin-top: auto;margin-bottom:auto;text-align: center;">+</view>
-			</view>
-			
+ <!-- 区间添加模块 ，其中包括标题，和对应的输入框。输入框可根据输入内容调整大小。-->
+  <view v-for="t in lines" :key="t.id" class="td" style="position: relative; margin: 0 40rpx;">
+  <view class="table-cell">
+    <view class="stitle">区间分配项</view>
+    <textarea  :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle"  rows="3" inputmode="text"  auto-height class="textarea-field-ee" placeholder="*填写为达成总目标而拆解出的单个任务名称" maxlength="1000"></textarea>
+  </view>
+  <view class="table-cell">
+    <view class="rate">分配比例区间</view>
+    <textarea :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).rate"  rows="3" inputmode="text"  auto-height class="textarea-field-ff" placeholder="*填写当前任务占总项目预估劳动量的百分比" maxlength="1000"></textarea>
+  </view>
+  <view class="table-cell">
+    <view class="brief">设立来源</view>
+    <textarea :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" rows="3" inputmode="text"  auto-height class="textarea-field-gg" placeholder="*阐明在现实需求中的设立来源" maxlength="1000"></textarea>
+  </view>
+  <view class="table-cell">
+    <view class="detail">分配理由</view>
+    <textarea  :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).detail"  rows="3" inputmode="text"  auto-height class="textarea-field-hh" placeholder="*给出这样分配报酬比例的理由" maxlength="1000"></textarea>
+  </view>
+  
+   <!-- 一段空白位置，起一个间隔作用 -->
+<view class="blank" style="width: 730rpx; height: 78rpx;   background-color: #ffffff; " ></view>
+
+</view>
+ <!-- 添加删除 -->
+<view  v-show="editable">
+ 						<button class="del" @click="delLine(t.id)" >-</button>
+ 					</view>
+
+ <!-- 添加按钮可在当前页面重复添加区间添加模块 -->
+ 		<view v-show="editable"  class="addLine" @click="addLine">
+ 			<view >+添加一个新分配项</view>
+ 		</view>
+ 		
+ 	
+ </view>
+
 		
-	</view>
 </template>
 
 <script>
@@ -125,8 +131,6 @@
 		},
 		computed: {
 
-
-
 		},
 		beforeMount() {
 			console.log("beforeMount");
@@ -139,8 +143,6 @@
 				}
 				this.lines = l; 
 			}
-		
-		
 			
 		},
 		mounted() {
@@ -175,7 +177,6 @@
 				
 			}
 			
-			
 		},
 		beforeCreate() {
 			console.log("beforeCreate");
@@ -194,7 +195,7 @@
 
 <style>
 
-	.td, .th{
+	/*.td, .th{
 		border: 1px solid black;
 		display: flex;
 		flex-direction: row;
@@ -244,6 +245,8 @@
 		border: 1px solid black;
 	}
 	
+	*/
+	
 	.a {
   z-index: -1;
   display: table-cell;
@@ -266,6 +269,7 @@
   justify-content: center;/*主轴上水平居中对齐 */
   align-items: center;/*垂直居中对齐 */
   background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+
 }
 
  .b {
@@ -281,6 +285,7 @@
   justify-content: center;/*主轴上水平居中对齐 */
   align-items: center;/*垂直居中对齐 */
   color: #472d97; 
+
 }
 
 
@@ -370,7 +375,7 @@
   color: #f0f0f0; 
 }
 
-.table-cell-e {
+.stitle {
 
   z-index: 4;
   display: table-cell;
@@ -404,9 +409,11 @@
 
   font-size: 26rpx;
   color: #f0f0f0; 
+
+  
  }
 
- .table-cell-f {
+ .rate {
   z-index: 5;
   transform: translate(0rpx,-360rpx) scale(1);
   background-color: #ffffff;   /*设置背景颜色 */
@@ -435,7 +442,7 @@
  }
 
 
- .table-cell-g {
+ .brief{
   z-index: 6;
   transform: translate(0rpx,-360rpx) scale(1);
   background-color: #ffffff;   /*设置背景颜色 */
@@ -464,7 +471,7 @@
  }
 
 
- .table-cell-h {
+ .detail {
   z-index: 7;
   transform: translate(0rpx,-360rpx) scale(1);
   background-color: #ffffff;   /*设置背景颜色 */
@@ -504,56 +511,49 @@
   border-radius: 10px;
 }
 
-.del{
-  
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
-  color:red;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid rgb(179, 20, 20);
-  border-radius: 10px;
-}
 
+.del{
+	z-index: 20;
+ display: flex;  /* 使用Flex布局 */
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+  border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
+  width: 150rpx;
+  height: 70rpx;
+  color:#6c4ad1; 
+ border: 1px solid  #6c4ad1; 
+text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+   margin-top:0rpx;
+margin-left: 280px;
+ background-color: #ffffff;   /*设置背景颜色 */
+ 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}
+	
  
 .addLine{
+	z-index: 30;
   border: 1px solid  #6c4ad1;
   border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
   width: 450rpx;
   height: 70rpx;
   color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
-  background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
+  background-color: #6c4ad1;
 text-align: center;
 /* top: calc(150vh - 350rpx);
    */
-   margin-top:0;
- display: flex;  
-   justify-content: center;  /* 水平居中 */
-   align-items: center; /* 垂直居中 */
-   margin-top: 100rpx;
-   box-shadow:0ch;
- 
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
-}
-.deel{
 
- 
-  border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
-  width: 450rpx;
-  height: 70rpx;
-  color: rgb(223, 47, 99); /* 新增：设置按钮文字颜色为白色 */
-  background-color: #ffffff; /* 新增：设置按钮背景颜色为绿色 */
-text-align: center;
-/* top: calc(150vh - 350rpx); */
-   margin-top:0;
- display: flex;  
+  
+ display: flex;  /* 使用Flex布局 */ 
    justify-content: center;  /* 水平居中 */
    align-items: center; /* 垂直居中 */
-   margin-top: 100rpx;
+   margin-top: -70rpx;
+   margin-left: 20px;
    box-shadow:0ch;
  
    box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
-	
+
 </style>

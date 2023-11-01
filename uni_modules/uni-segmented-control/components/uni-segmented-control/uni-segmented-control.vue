@@ -123,7 +123,7 @@
 	.segmented-control__item--button--first {
 		border-left-width: 1px;
 		border-top-left-radius: 5px;
-		border-bottom-left-radius: 50px;
+		border-bottom-left-radius: 5px;
 	}
 
 	.segmented-control__item--button--last {

@@ -1,4 +1,3 @@
-
 .usercenter{
   display: flex;
   justify-content: center; 
@@ -11,7 +10,8 @@
 .a{
   display:flex;
  margin-bottom: 1px !important; 
- margin-top: 80rpx;
+ margin-top: 100rpx;
+
 }
 
 .rg-input {
@@ -27,6 +27,7 @@
     outline: none; /* 移除默认的焦点边框 */
     background: transparent; /* 设置背景为透明，以便底部边框显示 */
     padding: 0; /* 移除默认内边距，可以根据需要设置 */
+
 }
 
 .lgtip-button{
@@ -42,4 +43,5 @@
    color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
    background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
    box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+
 }

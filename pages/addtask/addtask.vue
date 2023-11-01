@@ -2,10 +2,10 @@
 	<view>
 		  <!-- 2. 改变“请选择创建类型”字体颜色为灰色、大小30px，页面居中，上边距70px <view class="title">请选择创建类型</view>  -->
 		
-		  <view class="title1">*即时回报</view> 
-		  <view class="title2">*后续收入</view> 
+		  <view class="title1">*即时回报的<br>单次任务</view> 
+		  <view class="title2">*后续收入的多项任务</view> 
 		   <!-- 1. 添加居中灰色分割线 -->
-		   <view class="horizontal-line-0"></view>
+		   <!-- <view class="horizontal-line-0"></view>-->
 		   <view class="horizontal-line"></view>
 		  <view class="horizontal-line-a"></view>
 		  <view class="horizontal-line-c"></view>
@@ -41,7 +41,7 @@
 				selected:undefined,
 				$branchTypes: [],
 				ctype: [
-					{text: '单卡', value: 0}, {text: '多卡', value: 1}
+					{text: '单次', value: 0}, {text: '多项', value: 1}
 				],
 				defaultT:0,
 				mode: ''

@@ -293,7 +293,7 @@
 				"pagePath": "pages/index/index",
 				"iconPath": "static/home.png",
 				"selectedIconPath": "static/homeactive.png",
-				"text": "首页"
+				"text": "任务卡池"
 			},
 			{
 				        "pagePath": "pages/addtask/addtask",
@@ -305,7 +305,7 @@
 				"pagePath": "pages/message/message",
 				"iconPath": "static/talk.png",
 				"selectedIconPath": "static/talkctive.png",
-				"text": "聊天"
+				"text": "沟通记录"
 			}
 			,{
 				"pagePath": "pages/userCenter/userCenter",

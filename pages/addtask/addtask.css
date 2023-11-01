@@ -31,18 +31,19 @@
   z-index: 2;
   transform: translate(230rpx,0rpx) scale(1);
   width: 30rpx;
-  height: 310rpx; /* 设置线的厚度 */
+  height: 290rpx; 
   background-color: #6c4ad1;
   margin-top: 0rpx; /* 控制线与上方内容的距离 */
   background-image: -webkit-linear-gradient(90deg, #886cdb 0%, #886cdb 100%);
 }
+/* 配图 */
 .container {
 	position: absolute; /* 启用绝对定位 */
 	display: flex;
 	justify-content: center;  /* 水平居中 */
 	align-items: center; /* 垂直居中 */
 	
-	 transform: translate(20rpx, 150rpx) scale(1);
+	 transform: translate(110rpx, 170rpx) scale(1.6);
   background-size:contain; 
   	background-repeat: no-repeat; /* 禁止背景平铺 *//* 根据需要设置背景大小 */
   /* 其他背景样式属性，如背景颜色、位置等 */
@@ -60,7 +61,7 @@
   justify-content: center;  /* 水平居中 */
   align-items: center; /* 垂直居中 */
 
-  transform: translate(110rpx, 350rpx) scale(1.2);
+  transform: translate(140rpx, 370rpx) scale(1.2);
 
   width: 500rpx;
   height: 40rpx;
@@ -74,9 +75,9 @@
 .horizontal-line-a {
   position: absolute; /* 启用绝对定位 */
   z-index: 2;
-  transform: translate(230rpx,430rpx) scale(1);
+  transform: translate(230rpx,480rpx) scale(1);
   width: 30rpx;
-  height: 150rpx; 
+  height: 90rpx; 
   background-color: #6c4ad1;
   margin-top: 0rpx; /* 控制线与上方内容的距离 */
   background-image: -webkit-linear-gradient(90deg, #4d1ae4 0%, #886cdb 100%);
@@ -97,6 +98,7 @@
 }
 
 .horizontal-line-c {
+	 position: absolute; /* 启用绝对定位 */
   position: absolute; 
   z-index: 2;
   transform: translate(610rpx,550rpx) scale(1);
@@ -107,6 +109,7 @@
   background-image: -webkit-linear-gradient(0deg, #886cdb 0%, #4d1ae4 60%);
 }
 .horizontal-line-d {
+	
   position: absolute; 
   z-index: 2;
   transform: translate(640rpx,580rpx) scale(1);
@@ -119,7 +122,8 @@
 
 
 .select-container{
-  transform: translate(370rpx,470rpx) scale(0.8);
+	 position: absolute; /* 启用绝对定位 */
+  transform: translate(420rpx,555rpx) scale(0.8);
 
 }
 
@@ -135,7 +139,7 @@
 }
 .title1 {
   z-index: 3;
-  transform: translate(36rpx,460rpx) scale(1);
+  transform: translate(10rpx,70rpx) scale(1);
   float: left;
   text-align: left;
   padding-left: 30rpx; 
@@ -150,7 +154,7 @@
 
 .title2 {
   z-index: 3;
-  transform: translate(-310rpx,80rpx) scale(1);
+  transform: translate(-140rpx,-50rpx) scale(1);
   float: right;
   text-align: right;
   padding-right: 30rpx; 
@@ -177,7 +181,8 @@
 
   
 .create-button{
-  transform: translate(0rpx,420rpx) scale(1);
+	 z-index: 10;
+  transform: translate(0rpx,1150rpx) scale(1);
 
   border: 10px solid  #6c4ad1;
   border-radius: 0rpx; /*设置按钮边框为圆角 */
@@ -186,17 +191,17 @@
   height: 150rpx;
   color: rgb(255, 255, 255); 
   background-color: #4d1ae4; 
-  font-size: 60rpx;
+  font-size: 80rpx;
   text-align: center;
 /* top: calc(150vh - 350rpx);
    */
  
  display: flex;  /* 使用Flex布局 */ 
-   justify-content: center;  /* 水平居中 */
-   align-items: center; /* 垂直居中 */
-   margin-top: 700rpx;
+    justify-content: center;  /* 水平居中 */
+ align-items: center;   /* 垂直居中 */
+   margin-top: 0rpx;
    box-shadow:0ch;
- 
+ padding-left: 500rpx; 
    box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
 

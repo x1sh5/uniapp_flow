@@ -39,6 +39,7 @@
 	</view>
 </template>
 
+
 <script>
 	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
