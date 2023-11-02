@@ -3,17 +3,19 @@
 	<!--style="width: 100%;height: 115px;background-color: aliceblue;position: fixed;top: 0px;z-index: 9;"-->
 	
 	<view>
-		<uni-nav-bar left-icon="left" leftText="返回" rightText="发布" title="内容编辑" backgroundColor="#f8f8f8"
+		<uni-nav-bar left-icon="left" leftText="放弃编辑" rightText="提交发布" 
 		 @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
 	</view>
-	 
-	<view data-denpend="" style="margin-top: 120px;">
-		<taskCard v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
-		@check-Result="checkResult" @remove-task="removeTask" style="margin: 2px 3px;"></taskCard>
+
+	<view class="u" data-denpend="" >
+		<taskCard class="u" v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
+		@check-Result="checkResult" @remove-task="removeTask" ></taskCard>
 	</view>
-	<view v-if="mode=='mutiple'">
+		
+	<view class="w" v-if="mode=='mutiple'">
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>
 	</view>
+
 </template>
 
 <script>

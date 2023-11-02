@@ -1,5 +1,5 @@
 <template>
-	<view v-for="item in reqs" :key="item.id">
+	<view class="a" v-for="item in reqs" :key="item.id">
 		<simpleCard :simpleInfo="item"></simpleCard>
 	</view>
 </template>
@@ -27,5 +27,13 @@
 </script>
 
 <style lang="less">
+.a{
+	  background-color: #6c4ad1; 
+}
+
+.b{
+	  background-color: #00aaff; 
+}
+
 
 </style>

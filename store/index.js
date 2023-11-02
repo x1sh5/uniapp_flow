@@ -25,7 +25,7 @@ const store = createStore({
 		workSocket : markRaw( new signalR.HubConnectionBuilder()
         .withUrl(baseUrl+"/chathub") //, { accessTokenFactory: () => this.loginToken }
 		.withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Error)
+        .configureLogging(signalR.LogLevel.Critical)
         .build() ),
 		messages:new Map(), //对话消息
 		$currentContent:{}, //当前正在编辑的task.description

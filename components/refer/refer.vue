@@ -48,7 +48,7 @@
  </view>
 
  -->
- -------------
+
 <template>
 <view class="th">
   <!-- 第一行的各个标题-->
@@ -71,6 +71,48 @@
       <textarea auto-height class="textarea-field-dd" placeholder="*修改人"></textarea>
     </view>
   </view>
+
+
+
+			<view class="table-cell aa">
+				<input :disabled="!editable" v-model="refer.title" type="text" placeholder="*填写您设立项目的总名称"/>
+			</view>
+			<view class="table-cell-bb">100%</view>
+			
+	
+			
+			<view class="table-row" style="position: relative; margin: 0 40rpx;">
+				
+				<view class="table-cell">
+					<view class="table-cell-e"><textarea auto-height="true" rows="1" value="区间分配项" disabled /></view>
+					<view class="table-cell-f"><textarea auto-height="true" rows="1" value="分配比例区间" disabled /></view>
+					<view class="table-cell-g"><textarea  auto-height="true" rows="1" value="设立来源" disabled /></view>
+					<view class="detail"><textarea auto-height="true" rows="1" value="分配理由" disabled /></view>
+					<view class="remark"><textarea auto-height="true" rows="1" value="备注" disabled /></view>
+					<view ></view>
+				</view>
+				<view>
+				   <view  class="td">
+						<view class="stitle">
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
+						</view>
+						<view class="rate">
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
+						</view>
+						<view class="brief">
+							<textarea :disabled="!editable"  auto-height="true" rows="3" inputmode="text"/>
+						</view>
+						<view class="detail">
+							<textarea :disabled="!editable"  maxlength="400" auto-height="true" rows="3" inputmode="text"/>
+						</view>
+						<view class="remark">
+							<textarea :disabled="!editable"   auto-height="true" rows="3" inputmode="text"/>
+						</view>
+						<view class="del" v-show="editable">
+							<button  style="color: red;">x</button>
+						</view>
+					</view>
+				</view>
 
 
  <!-- 区间添加模块 ，其中包括标题，和对应的输入框。输入框可根据输入内容调整大小。-->

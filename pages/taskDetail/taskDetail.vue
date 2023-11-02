@@ -1,26 +1,28 @@
 <template>
-	<view  class="newtaskbox">
+	<view>
 		<view >
-			<taskCard :task="task" :editable="false"></taskCard>
+			<taskCard :task="task" :editable="false" class="task"></taskCard>
 			
-			<view v-if="mode=='waitfor'">
-				<button class="detail-btn" @click="contact">联系发布人</button>
-				<button class="detail-btn" @click="gain">申请接取任务</button>
+			<view class="detail-btn1" v-if="mode=='waitfor'">
+				<button class="detail-btn1" @click="contact">联系发卡人</button>
+				<button class="detail-btn2" @click="gain">申请接取任务</button>
 			</view>
 			
 			<view v-if="mode=='undone'">
-				<button class="detail-btn" @click="contact">联系发布人</button>
-				<button class="detail-btn" @click="abandon" :disabled="enable">放弃任务</button>
+				<button class="detail-btn3" @click="contact">联系发卡人</button>
+				<button class="detail-btn4" @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 			
 			<view v-else>
 			</view>
 			
 		</view>
+			<view class="tasktype">任务说明</view>
 		
 		<view class="driver"></view>
-		<view class="relate">
-			<view style="color: orangered;margin-bottom: 10px;">相关任务:</view>
+		<view >
+			<view class="tasktype2" >相关任务:</view>
+				<view class="driver"></view>
 			<view>
 				<view v-if="ptask">
 					<cardinfo @click="reloadTask(ptask)" :task="ptask" :editable="false"></cardinfo>
@@ -29,7 +31,7 @@
 			<view>
 				<view v-if="ctasks">
 					<view v-for="c in ctasks" :key="c.id">
-						<cardinfo @click="reloadTask(c)" style="margin-top:5px;" :task="c" :editable="false"></cardinfo>
+						<cardinfo @click="reloadTask(c)"  :task="c" :editable="false"></cardinfo>
 					</view>
 				</view>
 				

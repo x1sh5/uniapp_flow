@@ -1,12 +1,15 @@
 <template>
+	
+	
 	<view  class="newtaskbox" @check-Result="checkResult">
-		<view style="width: 90%;">
+		<view >
 			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode" 
 			@check-Result="checkResult" @remove-task="removeTask" ></cardinfo>
 			<view class="ql-container">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
-			<button v-if="editable" class="editbutton" @click="editEvent">编辑内容...</button>
+	
+			<button v-if="editable" class="editbutton" @click="editEvent">点此为任务添加制作说明...</button>
 		</view>
 	</view>
 </template>

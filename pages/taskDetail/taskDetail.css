@@ -5,30 +5,118 @@
 		align-content: flex-start;
 		flex-wrap: wrap;
 		align-items: flex-start;
-		margin-left: 30px;
+		margin-left: 0px;
 		
+	
+		
+	}
+	.task{
+		z-index: 1;
+		
+	
+	}
+	.task::before {
+		display: flex;
+	  content: "";
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 370rpx;
+	  background: linear-gradient(to bottom, transparent 80%, rgba(-0.4, 0, 0.2, 0.4) 100%);
+	  z-index: 3; /* 确保在元素之上 */
 	}
 	
 	.editbutton{
 		border: 1px solid bisque;
 		color: darkgray;
+	
 	}
 	
-	.relate{
+		
+		.tasktype{
+		 
+			z-index: 1;
 		display: flex;
-		flex-direction: column;
-	}
 	
-	.detail-btn{
-		box-sizing: content-box;
-		min-width: 90px;
-		width: 120px;
-	}
-	
+			  justify-content: center;  
+			  align-items: center; 
+			  
+			  z-index: 3;
+			  bottom: 1rpx;
+			  right: 1rpx;
+			  font-size: 39rpx;
+			  /*font-style: italic; 斜体 */
+				   margin-top: 8rpx;
+			  font-weight: 900;
+			  color: #6c4ad1;
+			  text-decoration: underline; /* 添加下划线 */
+			  text-decoration-thickness: 15rpx; /* 设置下划线的粗细 */
+			  
+		}
+
+	/* 分割线*/
 	.driver{
+		z-index: 1;
+		display: flex;
+		position: absolute;
 		display: block;
-		height: 1rpx;
+		height: 2rpx;
 		width: 100%;
-		background-color: #a8a8a8;
-		margin: 10rpx 0;
+		background-color: #6c4ad1;
+		
+		margin-top: 10rpx;
+	
 	}
+	
+	/* 相关任务 */
+	.tasktyp2{
+	z-index: 1;
+		display: flex;
+	
+			  justify-content: center;  
+			  align-items: center; 
+			  
+			  z-index: 3;
+			  bottom: 1rpx;
+			  right: 1rpx;
+			  font-size: 39rpx;
+			  /*font-style: italic; 斜体 */
+				   margin-top: 8rpx;
+			  font-weight: 900;
+			  color: #4d1ae4;
+			  text-decoration: underline; /* 添加下划线 */
+			  text-decoration-thickness: 15rpx; /* 设置下划线的粗细 */
+		  
+	}
+	
+	.detail-btn1 {
+			position: fixed;
+			top: 0px;
+	  transform: translate(0rpx, 0rpx) scale(1);	
+		
+			z-index: 99;
+			
+	border: 1px solid  #6c4ad1;
+	  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+	  width: 350px;
+	  height: 335px;
+	  color: rgb(255, 255, 255); 
+	  background-color: #6c4ad1; 
+	text-align: center;
+	/* top: calc(150vh - 350rpx);
+	   */
+	
+	 display: flex;  /* 使用Flex布局 */ 
+	   justify-content: center;  /* 水平居中 */
+	   align-items: center; /* 垂直居中 */
+	   margin-top: 0rpx;
+	   box-shadow:0ch;
+	 
+	   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+			
+			  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+			
+		}
+		
+

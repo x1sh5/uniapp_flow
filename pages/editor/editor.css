@@ -12,9 +12,31 @@
 	
 	.uni-navbar{
 		position: fixed;
-		top: 60px;
-		width: 100%;
+		top: 600px;
+	
+	
 		z-index: 99;
+		
+border: 1px solid  #6c4ad1;
+  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  width: 350px;
+  height: 35px;
+  color: rgb(255, 255, 255); 
+  background-color: #6c4ad1; 
+text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+
+ display: flex;  /* 使用Flex布局 */ 
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+   margin-top: 0rpx;
+   box-shadow:0ch;
+ 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+		
+		  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+		
 	}
 
 	.page-body {

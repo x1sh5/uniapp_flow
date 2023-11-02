@@ -1,5 +1,5 @@
 <template>
- 	<view style="width: 100%;height: 115px;background-color: aliceblue;position: fixed;top: 0px;z-index: 9;">
+ 	<view >
  		<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" title="内容编辑" backgroundColor="#f8f8f8"
  		 @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
  	</view>
