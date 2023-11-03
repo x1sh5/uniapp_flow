@@ -1,7 +1,7 @@
 <template>
-	<view class="wrapper">
+	<view class="wrapper" >
 		
-		<view class="userinfo">
+		<view class="userinfo" >
 			<!-- avatar -->
 			<view class="user-avatar"><image :src="imgsrc" class="user-avatar-img"></image></view>
 			<view>{{ userName }}</view>

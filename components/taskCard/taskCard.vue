@@ -18,7 +18,7 @@
 			</view>
 	
 			<!--输入按钮-->
-			<button v-if="editable" class="editbutton" @click="editEvent">+添加制作说明...</button>
+			<button v-if="editable" class="editbutton" @click="editEvent">+编辑制作说明...</button>
 		</view>
 	</view>
 </template>

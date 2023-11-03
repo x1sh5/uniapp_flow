@@ -153,6 +153,46 @@
             }
             
         }
+		
+		,{
+		    "path" : "pages/pay-result/pay-result",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "支付结果",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/taskresult/completed/completed",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "提交结果",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		,{
+		    "path" : "pages/taskresult/failed/failed",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "失败提示",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		
+		,{
+		    "path" : "pages/userhomepage/userhomepage",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "展示页面",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		
+		
         ,{
             "path" : "pages/settings/settings",
             "style" :                                                                                    
@@ -273,7 +313,11 @@
                 "navigationBarTitleText": "服务协议",
                 "enablePullDownRefresh": false
             }
-            
+          
+			  
+
+
+
         }
     ],
 	"globalStyle": {
