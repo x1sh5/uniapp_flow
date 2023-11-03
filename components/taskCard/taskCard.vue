@@ -5,11 +5,20 @@
 		<view >
 			<cardinfo :task="task" :editable="editable" ref="cardinfo" :mode="mode" 
 			@check-Result="checkResult" @remove-task="removeTask" ></cardinfo>
-			<view class="ql-container">  
+			<!--空白<view class="blank" style="width: 100%; height: 68rpx; border: 3px solid  #6c4ad1;  background-color: #ffffff; " ></view>-->
+			<!--文字-->
+			<view class="tasktype">任务说明</view>
+			<!--分割线-->
+			<view class="driver" style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #6c4ad1;margin-top: 10rpx;" ></view>
+			
+			
+			<!--输入结果的显示区域-->
+			<view class="ql-container" style="position: relative; margin: 0 40rpx;">  
 			    <rich-text class="ql-editor" :nodes="html"></rich-text>  
 			</view>
 	
-			<button v-if="editable" class="editbutton" @click="editEvent">点此为任务添加制作说明...</button>
+			<!--输入按钮-->
+			<button v-if="editable" class="editbutton" @click="editEvent">+添加制作说明...</button>
 		</view>
 	</view>
 </template>

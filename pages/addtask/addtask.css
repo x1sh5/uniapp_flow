@@ -15,8 +15,9 @@
   background-color: #6c4ad1;
 }
 */
+
 .horizontal-line-0 {
-  position: absolute; /* 启用绝对定位 */
+  position: absolute; 
   z-index: 2;
   transform: translate(0rpx,0rpx) scale(1);
   width: 800rpx;

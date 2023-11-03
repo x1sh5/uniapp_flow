@@ -152,7 +152,7 @@
 					if (this.backgroundColor) {
 						return this.backgroundColor
 					} else {
-						return this.dark ? '#333' : '#FFF'
+						return this.dark ? '#4d1ae4' : '#FFF'
 					}
 				}
 				return this.backgroundColor || '#FFF'
@@ -163,10 +163,10 @@
 					if (this.color) {
 						return this.color
 					} else {
-						return this.dark ? '#fff' : '#333'
+						return this.dark ? '#fff' : '#4d1ae4'
 					}
 				}
-				return this.color || '#333'
+				return this.color || '#4d1ae4'
 			},
 			navbarHeight() {
 				return getVal(this.height)
@@ -198,50 +198,31 @@
 </script>
 
 <style lang="scss" scoped>
-	$nav-height: 44px;
+	$nav-height: 100rpx;
 
 	.uni-nvue-fixed {
 		/* #ifdef APP-NVUE */
 		position: sticky;
 		/* #endif */
+		
 	}
 	.uni-navbar {
 		// box-sizing: border-box;
+		
 	}
-
-	.uni-nav-bar-text {
-		/* #ifdef APP-PLUS */
-		font-size: 34rpx;
-		/* #endif */
-		/* #ifndef APP-PLUS */
-		font-size: 14px;
-		/* #endif */
-	}
-
-	.uni-nav-bar-right-text {
-		font-size: 12px;
-	}
-
+	
 	.uni-navbar__content {
 		position: relative;
 		// background-color: #fff;
 		// box-sizing: border-box;
 		background-color: transparent;
+		
 	}
 
 	.uni-navbar__content_view {
 		// box-sizing: border-box;
 	}
-
-	.uni-navbar-btn-text {
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		line-height: 12px;
-	}
+	
 
 	.uni-navbar__header {
 		/* #ifndef APP-NVUE */
@@ -250,9 +231,10 @@
 		padding: 0 10px;
 		flex-direction: row;
 		height: $nav-height;
-		font-size: 12px;
+		font-size: 32rpx;
 	}
 
+//按钮左右区域
 	.uni-navbar__header-btns {
 		/* #ifndef APP-NVUE */
 		overflow: hidden;
@@ -260,7 +242,7 @@
 		/* #endif */
 		flex-wrap: nowrap;
 		flex-direction: row;
-		width: 120rpx;
+	
 		// padding: 0 6px;
 		justify-content: center;
 		align-items: center;
@@ -268,16 +250,39 @@
 		cursor: pointer;
 		/* #endif */
 	}
+	
 
+//左按钮区域
 	.uni-navbar__header-btns-left {
 		/* #ifndef APP-NVUE */
 		display: flex;
 		/* #endif */
-		width: 120rpx;
+	
 		justify-content: flex-start;
 		align-items: center;
+		border-top-left-radius: 10px; /* 右上角圆角 */
+		border-bottom-left-radius: 10px; /* 右下角圆角 */
+		border: 1px solid #6c4ad1;
+	}
+//按钮左右文字
+	.uni-navbar-btn-text {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		line-height: 36rpx; 
 	}
 
+//右按钮文字
+	.uni-nav-bar-right-text {
+
+		font-size: 26rpx;
+		
+		
+	}
+//右按钮区域
 	.uni-navbar__header-btns-right {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -287,8 +292,12 @@
 		// padding-right: 30rpx;
 		justify-content: flex-end;
 		align-items: center;
+		border-top-right-radius: 10px; /* 右上角圆角 */
+		border-bottom-right-radius: 10px; /* 右下角圆角 */
+		border: 1px solid #6c4ad1;
 	}
-
+	
+// 按钮间隔
 	.uni-navbar__header-container {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -296,8 +305,21 @@
 		flex: 1;
 		padding: 0 10px;
 		overflow: hidden;
+		width: 450rpx;
 	}
-
+	
+//中间区域
+	.uni-nav-bar-text {
+		/* #ifdef APP-PLUS */
+		font-size: 34rpx;
+		/* #endif */
+		/* #ifndef APP-PLUS */
+		font-size: 14px;
+		/* #endif */
+		
+	}	
+	
+//中间区域
 	.uni-navbar__header-container-inner {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -308,12 +330,24 @@
 		justify-content: center;
 		font-size: 12px;
 		overflow: hidden;
+		
 		// box-sizing: border-box;
 	}
-
+//中间文字区域
+	.uni-ellipsis-1 {
+		overflow: hidden;
+		/* #ifndef APP-NVUE */
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		/* #endif */
+		/* #ifdef APP-NVUE */
+		lines: 1;
+		text-overflow: ellipsis;
+		/* #endif */
 
 	.uni-navbar__placeholder-view {
 		height: $nav-height;
+		
 	}
 
 	.uni-navbar--fixed {
@@ -333,23 +367,14 @@
 	.uni-navbar--shadow {
 		box-shadow: 0 1px 6px #ccc;
 	}
-
+	
+// 下划线
 	.uni-navbar--border {
-		border-bottom-width: 1rpx;
+		border-bottom-width: 0rpx;
 		border-bottom-style: solid;
 		border-bottom-color: #eee;
 	}
 
-	.uni-ellipsis-1 {
-		overflow: hidden;
-		/* #ifndef APP-NVUE */
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		/* #endif */
-		/* #ifdef APP-NVUE */
-		lines: 1;
-		text-overflow: ellipsis;
-		/* #endif */
 	}
 
 	// 暗主题配置

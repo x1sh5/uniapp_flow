@@ -1,10 +1,14 @@
 <template>
+	
+	<view class="blank" style="width: 100%; height: 80rpx; border: 0px solid  #6c4ad1;  background-color: #ffffff; " ></view>
+    <view class="text">内容编辑</view>
+	
  	<view >
- 		<uni-nav-bar left-icon="left" leftText="返回" rightText="确认" title="内容编辑" backgroundColor="#f8f8f8"
+ 		<uni-nav-bar left-icon="left" leftText="返回" rightText="确认"  backgroundColor="#f8f8f8"
  		 @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
  	</view>
 	
-			
+	
 	<view class="container">
 		<view class="page-body">
 			<view class='wrapper'>
@@ -56,7 +60,7 @@
 				</view>
 				
 				<view class="editor-wrapper">
-					<editor id="editor" class="ql-container" placeholder="开始输入..." show-img-size show-img-toolbar
+					<editor id="editor" class="ql-container" placeholder="*要求任务需求、制作方法明确，步骤条理清晰。验收核对皆以任务说明与后续沟通为准..." show-img-size show-img-toolbar
 						show-img-resize @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady" >
 					</editor>
 				</view>

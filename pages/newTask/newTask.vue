@@ -1,12 +1,15 @@
 <template>
 	<!-- left-icon的值为uni组件中uniicons下uniicons.css中的类名去掉前缀uniui-后得到的值 -->
 	<!--style="width: 100%;height: 115px;background-color: aliceblue;position: fixed;top: 0px;z-index: 9;"-->
-	
-	<view>
-		<uni-nav-bar left-icon="left" leftText="放弃编辑" rightText="提交发布" 
-		 @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
-	</view>
-
+	<!--<view class="blank" style="width: 100%; height: 68rpx; border: 3px solid  #6c4ad1;  background-color: #ffffff; " ></view>-->
+    <!--空白-->
+	<view class="blank" style="width: 100%; height: 80rpx; border: 0px solid  #6c4ad1;  background-color: #ffffff; " ></view>
+<view>
+	<view class="text">编辑任务卡</view>
+	<!--导航栏-->
+	<uni-nav-bar left-icon="left" leftText="返回"  rightText="下一步"    backgroundColor="#f8f8f8" @clickLeft="backEvent" @clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
+</view>
+<!--卡片主体-->
 	<view class="u" data-denpend="" >
 		<taskCard class="u" v-for="(item,index) in tasks" :key="item.id" :task="item" :editable="true" :ref="'id'+item.id" 
 		@check-Result="checkResult" @remove-task="removeTask" ></taskCard>
@@ -15,7 +18,7 @@
 	<view class="w" v-if="mode=='mutiple'">
 		<uni-fab :horizontal="'right'" :content="taskTypes" :showProp="'name'" @trigger="createTask"></uni-fab>
 	</view>
-
+	
 </template>
 
 <script>

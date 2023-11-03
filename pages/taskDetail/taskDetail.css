@@ -62,12 +62,14 @@
 		position: absolute;
 		display: block;
 		height: 2rpx;
-		width: 100%;
+		width: 90%;
 		background-color: #6c4ad1;
 		
 		margin-top: 10rpx;
+		
 	
 	}
+	
 	
 	/* 相关任务 */
 	.tasktyp2{

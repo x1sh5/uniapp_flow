@@ -40,10 +40,20 @@
 		  font-size: 39rpx;
 		  /*font-style: italic; 斜体 */
 		
-		  font-weight: 900rpx;
+		  font-weight: 900;
 		  color: #4d1ae4;
 		  text-decoration: underline; /* 添加下划线 */
 		  text-decoration-thickness: 15rpx; /* 设置下划线的粗细 */
 		  
+	}
+
+	
+	/* 分割线*/
+	.driver{
+		z-index: 1;
+		display: flex;
+
+		
+	
 	}
 	

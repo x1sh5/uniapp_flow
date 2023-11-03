@@ -57,5 +57,180 @@
 </script>
 
 <style>
+.simplecard{
+		display: flex;
+		flex-direction: column;
+		height: 700px;
+		margin-left: 50px;
+		margin-bottom: 10px;
+		  background-color: #ffffff; 
+	}
+	.title{
+		 z-index:3;
+	display: flex;
+		margin-left: 50rpx;
+		margin-top: 30rpx;
+		 transform: translate(0rpx,0rpx) scale(1);
+	padding-left:0px;/* 右缩进 */
+	border: 0px solid #6c4ad1;
+	 font-weight: 900;
 
+	color: #4723b3;
+	font-size: 36rpx;
+	}
+	
+	.proposer{
+		 z-index:5;
+	display: flex;
+		margin-left: 50rpx;
+		 transform: translate(400rpx,-180rpx) scale(1);
+	  background-color: #ffffff; 
+
+	  padding-left: 15px;/* 右缩进 */
+	  border: 1px solid #6c4ad1;
+	  background-color: rgb(255, 255, 255);
+	  color: #4723b3;
+	  font-size: 10px;
+	}
+
+
+	.name{
+		 z-index:10;
+	display: flex;
+		margin-left:0rpx;
+		 transform: translate(450rpx,-150rpx) scale(1);
+		 margin-top: -30rpx;
+	padding-left: 15px;/* 右缩进 */
+	border: 1px solid #6c4ad1;
+	background-color: rgb(255, 255, 255);
+	color: #4723b3;
+	font-size: 10px;
+	}
+	.sc-comment:empty::before{
+		
+		display: flex;
+		content: attr(placeholder);
+	
+		  background-color: #ffffff; 
+	}
+	.sc-comment{
+		 z-index:1;
+		height: 100rpx;
+		width: 700rpx;
+		
+		margin-top: 30rpx;
+		margin-left: 50rpx;
+		border: 1px solid black;
+		
+	display: flex;
+		margin-left: 50rpx;
+		 transform: translate(0rpx,0rpx) scale(1);
+	padding-left: 15px;/* 右缩进 */
+	border: 1px solid #6c4ad1;
+	background-color: rgb(255, 255, 255);
+	color: #4723b3;
+	font-size: 10px;
+		  
+	}
+	
+	 /* 联系 */
+	.contact{
+	 z-index: 10;
+	 
+	 display: flex;  /* 使用Flex布局 */
+	    justify-content: center;  /* 水平居中 */
+	 align-items: center;   /* 垂直居中 */
+	 
+  transform: translate(0rpx,0rpx) scale(1);
+
+  border: 10px solid  #6c4ad1;
+  border-radius: 80rpx; /*设置按钮边框为圆角 */
+  border: none;
+  
+  width: 700rpx;
+  height: 150rpx;
+  
+  color: rgb(255, 255, 255); 
+  background-color: #4d1ae4; 
+  font-size: 80rpx;
+  text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+ 
+
+ margin-left: -120px;
+   margin-top: 0rpx;
+   box-shadow:0ch;
+ padding-left: 500rpx; 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+ background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+	}
+	
+	
+	.agree{
+	 display: flex;  /* 使用Flex布局 */ 
+	 z-index: 10;
+	 
+	  transform: translate(300rpx,100rpx) scale(1);
+	  
+	    border: 1px solid  #6c4ad1;
+	    border-radius:670rpx; /* 新增：设置按钮边框为圆角 */
+		
+	    width: 700rpx;
+	    height: 90rpx;
+		
+	   color: rgb(255, 255, 255); 
+	    background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
+		/*text-align: center;
+		 top: calc(150vh - 350rpx);
+	     */
+		    margin-top: 00rpx;
+		 padding-left: -100rpx; 
+		      margin-left: 00px;
+	 
+
+	     align-items: center; /* 垂直居中 */
+	 
+	     box-shadow:0ch;
+	
+	     box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+		  background-image: -webkit-linear-gradient(0deg, #886cdb%, #4d1ae4 100%);
+	}
+	
+	.disagree{
+		 display: flex; 
+	
+		 align-items: center; /* 垂直居中 */
+		 z-index: 10;
+	  transform: translate(450rpx,120rpx) scale(1);
+	  border: 1px solid  #6c4ad1;
+	  border-radius: 60px; /* 新增：设置按钮边框为圆角 */
+	  
+	  width: 700rpx;
+	  height: 90rpx;
+	  
+	  margin-top: 0rpx;
+	   padding-left: -500rpx; 
+	      margin-left: 00rpx;
+	
+	
+	
+	   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+	   background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
+	   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+	}
+	.reply{
+		 z-index: 1;
+	display: flex;
+		margin-left: 50rpx;
+		  margin-top: -190rpx;
+		 transform: translate(0rpx,0rpx) scale(1);
+	  background-color: #ffffff; 
+	
+	  padding-left: 15px;/* 右缩进 */
+	  border: 1px solid #6c4ad1;
+	  background-color: rgb(255, 255, 255);
+	  color: #4723b3;
+	  font-size: 10px;
+	}
 </style>

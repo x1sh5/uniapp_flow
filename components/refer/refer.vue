@@ -119,19 +119,19 @@
   <view v-for="t in lines" :key="t.id" class="td" style="position: relative; margin: 0 40rpx;">
   <view class="table-cell">
     <view class="stitle">区间分配项</view>
-    <textarea  :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle"  rows="3" inputmode="text"  auto-height class="textarea-field-ee" placeholder="*填写为达成总目标而拆解出的单个任务名称" maxlength="1000"></textarea>
+    <textarea rows="3" inputmode="text"  auto-height class="textarea-field-ee" placeholder="*填写为达成总目标而拆解出的单个任务名称" maxlength="1000"></textarea>
   </view>
   <view class="table-cell">
     <view class="rate">分配比例区间</view>
-    <textarea :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).rate"  rows="3" inputmode="text"  auto-height class="textarea-field-ff" placeholder="*填写当前任务占总项目预估劳动量的百分比" maxlength="1000"></textarea>
+    <textarea rows="3" inputmode="text"  auto-height class="textarea-field-ff" placeholder="*填写当前任务占总项目预估劳动量的百分比" maxlength="1000"></textarea>
   </view>
   <view class="table-cell">
     <view class="brief">设立来源</view>
-    <textarea :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" rows="3" inputmode="text"  auto-height class="textarea-field-gg" placeholder="*阐明在现实需求中的设立来源" maxlength="1000"></textarea>
+    <textarea  rows="3" inputmode="text"  auto-height class="textarea-field-gg" placeholder="*阐明在现实需求中的设立来源" maxlength="1000"></textarea>
   </view>
   <view class="table-cell">
     <view class="detail">分配理由</view>
-    <textarea  :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).detail"  rows="3" inputmode="text"  auto-height class="textarea-field-hh" placeholder="*给出这样分配报酬比例的理由" maxlength="1000"></textarea>
+    <textarea  rows="3" inputmode="text"  auto-height class="textarea-field-hh" placeholder="*给出这样分配报酬比例的理由" maxlength="1000"></textarea>
   </view>
   
    <!-- 一段空白位置，起一个间隔作用 -->
@@ -149,7 +149,7 @@
  		</view>
  		
  	
- </view>
+ </view> </view>
 
 		
 </template>
