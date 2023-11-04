@@ -34,7 +34,7 @@
 	  display: flex;
 	  flex-direction: column;
 	
-	  width: 100%;/* 水平居中 */
+	  width: 100%;/* 水 平居中 */
 	   
 	}
 	

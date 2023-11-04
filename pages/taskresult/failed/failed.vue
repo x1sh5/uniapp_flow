@@ -72,7 +72,7 @@
 	}
 	
 	.pay-result .btn-wrapper .status-btn {
-	  height: 88rpx;
+	  height:88rpx;
 	  width: 334rpx;
 	  border-radius: 44rpx;
 	  border: 2rpx solid #6c4ad1;

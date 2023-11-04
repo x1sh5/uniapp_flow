@@ -18,7 +18,7 @@
 	
 	z-index: 10;
   white-space: nowrap; /* 防止按钮换行 */
-  overflow-x: scroll; /* 开启水平滚动条 */
+  overflow-x: scroll; /* 开启水 平滚动条 */
   display: flex; /* 水平布局 */
     white-space: nowrap;
     
