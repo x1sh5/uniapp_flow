@@ -144,7 +144,7 @@ import { TaskStatus } from '../../common/Task';
 	align-items: center;
 	 color: #4d1ae4;
 	  font-size: 29rpx;
-	   letter-spacing: 6rpx; /* 设置文字 间 隔 */
+	   letter-spacing: 6rpx; /* 设置文 字 间 隔 */
   transform: translate(-180rpx,-60rpx) scale(1);
   
   text-decoration: underline; /* 添加下划线 */

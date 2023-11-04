@@ -81,7 +81,7 @@
 	  font-size: 28rpx;
 	  font-weight: bold;
 	  line-height: 88rpx;
-	  text-align: center;/* 水平居中 */
+	  text-align: center;/* 水平居 中 */
 	}
 
 </style>

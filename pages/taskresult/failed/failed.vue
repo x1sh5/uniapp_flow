@@ -80,6 +80,6 @@
 	  font-size: 28rpx;
 	  font-weight: bold;
 	  line-height: 88rpx;
-	  text-align: center;
+	  text-align: center;/* 水  平居中 */
 	}
 </style>

@@ -47,7 +47,7 @@
 		mounted() {
 			
 			
-			    // 获取容器元素
+			    // 获取容 器元素
 			    const container = document.querySelector('.button-container');
 			    
 			    // 添加滚动监听
