@@ -3,14 +3,14 @@
 		<view >
 			<taskCard :task="task" :editable="false" class="task"></taskCard>
 			
-			<view class="detail-btn1" v-if="mode=='waitfor'">
+			<view class="detail-btn" v-if="mode=='waitfor'">
 				<button class="detail-btn1" @click="contact">联系发卡人</button>
-				<button class="detail-btn1" @click="gain">申请接取任务</button>
+				<button class="detail-btn2" @click="gain">申请接取任务</button>
 			</view>
 			
 			<view v-if="mode=='undone'">
-				<button class="detail-btn1" @click="contact">联系发卡人</button>
-				<button class="detail-btn1" @click="abandon" :disabled="enable">放弃任务</button>
+				<button class="detail-btn3" @click="contact">联系发卡人</button>
+				<button class="detail-btn4" @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 			
 			<view v-else></view>

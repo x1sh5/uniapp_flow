@@ -9,8 +9,8 @@
 			<swiper-item><view class="swiper-item uni-bg-blue">C</view></swiper-item>
 		</swiper>
 		
-		<view style="display: flex;flex-direction: row;height: 80px;">
-			<button v-for="item in branchTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
+		<view class="button-container" >
+			<button class="button" v-for="item in branchTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
 		</view>
 		
 		<view v-for="item in tasks" :key="item.id" class="custom-margin">
@@ -44,6 +44,33 @@
 			
 		},
 		mounted() {
+			
+			
+			    // 获取容器元素
+			    const container = document.querySelector('.button-container');
+			    
+			    // 添加滚动监听
+			    container.addEventListener('scroll', (event) => {
+			      // 获取滚动位置
+			      const scrollLeft = event.target.scrollLeft;
+			
+			      // 判断是否需要隐藏或显示按钮
+			      const buttons = document.querySelectorAll('.button');
+			      buttons.forEach((button) => {
+			        const buttonLeft = button.offsetLeft;
+			        const buttonWidth = button.offsetWidth;
+			
+			        // 判断按钮是否在可视区域内，你可以根据滚动位置和按钮位置来判断
+			        if (buttonLeft < scrollLeft || buttonLeft > scrollLeft + container.offsetWidth) {
+			          button.style.display = 'none';
+			        } else {
+			          button.style.display = 'block';
+			        }
+			      });
+			    });
+			    
+			
+			
 			this.$store.dispatch('fetchTasks',{count:10,offset:0, branchid:""})
 			.then(data => {
 					this.$store.commit('setTasks', {taskTypeName: "全部", data: data});
@@ -83,6 +110,15 @@
 			}
 		},
 		methods:{
+			
+			  // 计算每个按钮的宽度
+			  calculateButtonWidth() {
+			    const containerWidth = 1500; // 容器的固定宽度
+			    const buttonCount = this.branchTypes.length; // 按钮数量
+			    return `${containerWidth / buttonCount}px`;
+			  },
+			
+			
 			search(e){
 				console.log("confirm:",e)
 				let searchWord = e.value;
@@ -150,6 +186,7 @@
 				 console.error('获取数据失败：', error);
 				 // 在这里处理错误情况
 			   });
+
 
 		}
 	}

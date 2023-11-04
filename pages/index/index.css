@@ -14,6 +14,36 @@
 		margin-bottom: 50rpx;
 	}
 
+.button-container {
+	
+	z-index: 10;
+  white-space: nowrap; /* 防止按钮换行 */
+  overflow-x: scroll; /* 开启水平滚动条 */
+  display: flex; /* 水平布局 */
+    white-space: nowrap;
+    
+    overflow-x: scroll;
+	 width: 1500rpx;
+}
+
+
+
+.button{
+		z-index: 10;
+	
+		display: flex;
+		justify-content: center;
+			background-color: #0055ff;
+			border: 1px solid  #6c4ad1;
+			border-radius: 20rpx; 
+			 margin: 5rpx; 
+	
+			 height: 50rpx;
+			 
+			 width: calc(100% / {{ calculateButtonWidth() }});
+	}
+
+
 	.text-area {
 		display: flex;
 		justify-content: center;
