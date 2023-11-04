@@ -23,8 +23,9 @@
 			<view>顶部</view>
 		</view>
 		<!-- <uni-pagination prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
-			@update:modelValue="modelChange"></uni-pagination> -->
+			@update:modelValue="modelChange"></uni-pagination>  -->
 	</view>
+	
 </template>
 
 <script>
