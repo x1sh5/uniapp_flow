@@ -50,19 +50,20 @@
  -->
 
 <template>
-	<view class="th">
+	<view class="th" >
 		<!-- 第一行的各个标题-->
-		<view class="table-row">
+		<view class="table-row" >
 			<view class="table-cell a">建立新审核区间</view>
 			<view class="table-cell b">总比例</view>
 			<view class="table-cell c">修改时间</view>
 			<view class="table-cell d">修改人</view>
 		</view>
 		<!-- 第一行各个标题搭配的输入框 -->
+
 		<view class="table-row">
-			<view class="table-cell aa">
-				<input type="text" auto-height class="textarea-field-aa" placeholder="*填写您设立项目的总名称" />
-			</view>
+			
+	<view class="table-cell aa">
+		<input :disabled="!editable" v-model="refer.title" type="text"  auto-height class="textarea-field-aa" placeholder="*填写您设立项目的总名称" /></view>	
 			<view class="table-cell-bb">100%</view>
 			<view class="table-cell-cc">
 				<textarea auto-height class="textarea-field-cc" placeholder="*修改时间"></textarea>
@@ -72,69 +73,27 @@
 			</view>
 		</view>
 
-
-
-		<view class="table-cell aa">
-			<input :disabled="!editable" v-model="refer.title" type="text" placeholder="*填写您设立项目的总名称" />
-		</view>
-		<view class="table-cell-bb">100%</view>
-
-
-
-		<view class="table-row" style="position: relative; margin: 0 40rpx;">
-
-			<view class="table-cell">
-				<view class="table-cell-e"><textarea auto-height="true" rows="1" value="区间分配项" disabled /></view>
-				<view class="table-cell-f"><textarea auto-height="true" rows="1" value="分配比例区间" disabled /></view>
-				<view class="table-cell-g"><textarea auto-height="true" rows="1" value="设立来源" disabled /></view>
-				<view class="detail"><textarea auto-height="true" rows="1" value="分配理由" disabled /></view>
-				<view class="remark"><textarea auto-height="true" rows="1" value="备注" disabled /></view>
-				<view></view>
-			</view>
-			<view>
-				<view class="td">
-					<view class="stitle">
-						<textarea :disabled="!editable" auto-height="true" rows="3" inputmode="text" />
-					</view>
-					<view class="rate">
-						<textarea :disabled="!editable" auto-height="true" rows="3" inputmode="text" />
-					</view>
-					<view class="brief">
-						<textarea :disabled="!editable" auto-height="true" rows="3" inputmode="text" />
-					</view>
-					<view class="detail">
-						<textarea :disabled="!editable" maxlength="400" auto-height="true" rows="3" inputmode="text" />
-					</view>
-					<view class="remark">
-						<textarea :disabled="!editable" auto-height="true" rows="3" inputmode="text" />
-					</view>
-					<view class="del" v-show="editable">
-						<button style="color: red;">x</button>
-					</view>
-				</view>
-			</view>
-
-
+		<view class="table-cell" style="position: relative; margin: 0 40rpx;">
 			<!-- 区间添加模块 ，其中包括标题，和对应的输入框。输入框可根据输入内容调整大小。-->
 			<view v-for="t in lines" :key="t.id" class="td" style="position: relative; margin: 0 40rpx;">
 				<view class="table-cell">
 					<view class="stitle">区间分配项</view>
-					<textarea rows="3" inputmode="text" auto-height class="textarea-field-ee"
+					<textarea  :disabled="!editable" :ref="'stitle'+`${t.id}`" @blur="stitleChange(t.id)" v-model="refer.content.get(t.id).stitle" rows="3" inputmode="text" auto-height class="textarea-field-ee"
 						placeholder="*填写为达成总目标而拆解出的单个任务名称" maxlength="1000"></textarea>
 				</view>
 				<view class="table-cell">
 					<view class="rate">分配比例区间</view>
-					<textarea rows="3" inputmode="text" auto-height class="textarea-field-ff"
+					<textarea :disabled="!editable" :ref="'rate'+`${t.id}`" @blur="rateChange(t.id)" v-model="refer.content.get(t.id).rate"  rows="3" inputmode="text" auto-height class="textarea-field-ff"
 						placeholder="*填写当前任务占总项目预估劳动量的百分比" maxlength="1000"></textarea>
 				</view>
 				<view class="table-cell">
 					<view class="brief">设立来源</view>
-					<textarea rows="3" inputmode="text" auto-height class="textarea-field-gg"
+					<textarea :disabled="!editable" :ref="'brief'+`${t.id}`" @blur="briefChange(t.id)" v-model="refer.content.get(t.id).brief" rows="3" inputmode="text" auto-height class="textarea-field-gg"
 						placeholder="*阐明在现实需求中的设立来源" maxlength="1000"></textarea>
 				</view>
 				<view class="table-cell">
 					<view class="detail">分配理由</view>
-					<textarea rows="3" inputmode="text" auto-height class="textarea-field-hh"
+					<textarea :disabled="!editable" :ref="'detail'+`${t.id}`" @blur="detailChange(t.id)" v-model="refer.content.get(t.id).detail"   rows="3" inputmode="text" auto-height class="textarea-field-hh"
 						placeholder="*给出这样分配报酬比例的理由" maxlength="1000"></textarea>
 				</view>
 
@@ -144,7 +103,7 @@
 			</view>
 			<!-- 添加删除 -->
 			<view v-show="editable">
-				<button class="del" @click="delLine(t.id)">-</button>
+				<button class="deLine" @click="delLine(t.id)">-</button>
 			</view>
 
 			<!-- 添加按钮可在当前页面重复添加区间添加模块 -->
@@ -251,19 +210,8 @@
 </script>
 
 <style>
-	/*.td, .th{
-		border: 1px solid black;
-		display: flex;
-		flex-direction: row;
-		min-height: 30px;
-		
-		width: 100%;
-	}
+	/*
 	
-	.th{
-		text-align: center;
-		height: 30px;
-	}
 	
 	.th > textarea{
 		height: 30px;
@@ -302,6 +250,8 @@
 	}
 	
 	*/
+
+	
 
 	.a {
 		z-index: -1;
@@ -414,7 +364,7 @@
 		height: 60rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 	.table-cell-bb {
@@ -434,7 +384,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
+		color: #ffffff;
 	}
 
 	.table-cell-cc {
@@ -455,7 +405,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 	.table-cell-dd {
@@ -476,7 +426,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 	.stitle {
@@ -523,7 +473,7 @@
 		height: 60rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 
 
 	}
@@ -557,7 +507,7 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 
@@ -590,7 +540,7 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 
@@ -623,7 +573,7 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 	}
 
 	/*添加步骤按钮*/
@@ -639,7 +589,7 @@
 	}
 
 
-	.del {
+	.deLine {
 		z-index: 20;
 		display: flex;
 		/* 使用Flex布局 */
@@ -657,7 +607,7 @@
 		/* top: calc(150vh - 350rpx);
    */
 		margin-top: 0rpx;
-		margin-left: 280px;
+		margin-left: 300px;
 		background-color: #ffffff;
 		/*设置背景颜色 */
 
