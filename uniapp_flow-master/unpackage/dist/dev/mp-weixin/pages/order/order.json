@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的支付",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 50,
+  "usingComponents": {
+    "uni-segmented-control": "../../uni_modules/uni-segmented-control/components/uni-segmented-control/uni-segmented-control",
+    "bill": "../../components/bill/bill"
+  }
+}

@@ -1,0 +1,28 @@
+
+.newtaskbox{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		//align-content: stretch;
+		//flex-wrap: wrap;
+}
+.uni-navbar{
+		position: fixed;
+		top: 60px;
+		width: 100%;
+		z-index: 99;
+}
+.editbutton{
+		border: 1px solid bisque;
+		color: darkgray;
+}
+.pay-container{
+		display: flex;
+		flex-direction: row;
+		margin-top: 10px;
+		justify-content: center;
+		align-items: center;
+}
+.balance{
+		margin-left: 0px;
+}

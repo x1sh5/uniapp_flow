@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "详细",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "refer": "../../../../components/refer/refer"
+  }
+}

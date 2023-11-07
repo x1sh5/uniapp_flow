@@ -1,0 +1,105 @@
+
+.content {
+		display: flex;
+		flex-direction: column;
+		//align-items: center;
+		//justify-content: center;
+}
+.logo {
+		height: 200rpx;
+		width: 200rpx;
+		margin-top: 200rpx;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 50rpx;
+}
+.text-area {
+		display: flex;
+		justify-content: center;
+}
+.title {
+		font-size: 36rpx;
+		color: #8f8f94;
+}
+.uni-mt-10 {
+		margin-top: 10px;
+		display: block;
+}
+.swiper {
+			height: 300rpx;
+}
+.swiper-item {
+		display: block;
+		height: 300rpx;
+		line-height: 300rpx;
+		text-align: center;
+}
+.uni-bg-red{
+		background-color: red;
+}
+.uni-bg-green{
+		background-color: green;
+}
+.uni-bg-blue{
+		background-color: blue;
+}
+.totop{
+		display: flex;
+		flex-direction: column;
+		position: fixed;
+		right: 20px;
+		bottom: 70px;
+		width: 50px;
+		height: 50px;
+		z-index: 99;
+}
+.topicon{
+		width: 40px;
+		height: 40px;
+		background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsElEQVR4nO3QuwoCMRCF4RlfdS0W7M9Jl1JbhS0E8U0VCaQU8ZJkEzwfBKaa4Y+ZiIiIiIiIdM0BHEju02wDR5xJ3tNL84gxTnLJETuSWwA3kpcY48ZGjLBstBh/FjFajL+KGCXG34noPcY/ieg1xr+J6C3Gf4noJcZLRKwd4yUj1orxGhGtY7xmRLMYAKcUEUKYrbIQwpw/7Fh8OckrgMkaATClm63uiYiIiIiI/L0HhkTGfxOKXmQAAAAASUVORK5CYII=");
+}
+.rowlayout{
+  display: flex;
+  flex-direction: row;
+}
+.columnlayout{
+  display: flex;
+  flex-direction: column;
+}
+.bluecolor{
+  color: blue;
+}
+.blackcolor{
+  color: black;
+}
+.italic{
+  font-size: large;
+  font-style: italic;
+}
+.custom-margin{
+	margin:5px 10px;
+}
+.user-avatar{
+	width: 48px;
+	height: 48px;
+    display: block;
+    position: relative;
+    background-image: url("../../static/avs.png");
+    background-size: cover;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+}
+.user-avatar-img{
+	border-radius: 50%;
+	border: none;
+	display: block;
+	object-fit: cover;
+	image-rendering: -webkit-optimize-contrast;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,1 @@
+<view><view style="width:90%;height:100%"><view>账号注销后，有关账号的一切信息与资料均会被删除，且无法恢复。</view><checkbox-group bindchange="{{a}}"><checkbox value="true"></checkbox><view>我已知晓</view></checkbox-group><button disabled="{{b}}" bindtap="{{c}}">注销账号</button></view></view>

@@ -1,0 +1,1 @@
+<view><view wx:for="{{a}}" wx:for-item="item" wx:key="c" class="custom-margin"><cardinfo wx:if="{{item.b}}" style="margin-top:5px" u-i="{{item.a}}" bind:__l="__l" u-p="{{item.b}}"/></view></view>

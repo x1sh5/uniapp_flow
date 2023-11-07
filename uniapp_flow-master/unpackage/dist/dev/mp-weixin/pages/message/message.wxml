@@ -1,0 +1,1 @@
+<view><channel-style wx:for="{{a}}" wx:for-item="channel" wx:key="a" binddeleteCc="{{channel.b}}" u-i="{{channel.c}}" bind:__l="__l" u-p="{{channel.d}}"></channel-style></view>

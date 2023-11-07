@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "任务详情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "task-card": "../../components/taskCard/taskCard",
+    "cardinfo": "../../components/cardinfo/cardinfo"
+  }
+}

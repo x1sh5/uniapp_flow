@@ -1,0 +1,1 @@
+"use strict";const e={namespaced:!0,state:{datas:new Array},getters:{refers:e=>e.datas,getReferById:e=>t=>{let s=e.datas.find((e=>e.id===parseInt(t)));if(void 0!==s)return s}},mutations:{updateRefers(e,t){t&&(e.datas=t)}},actions:{}};exports.References=e;

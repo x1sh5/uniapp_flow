@@ -1,0 +1,1 @@
+<view><view wx:for="{{a}}" wx:for-item="d" wx:key="c" bindtap="{{d.d}}" class="title">{{d.a}} -- {{d.b}} 修改 </view></view>

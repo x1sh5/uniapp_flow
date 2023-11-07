@@ -1,0 +1,1 @@
+"use strict";const e=require("../../../../common/vendor.js"),r={data:()=>({refer:{}}),methods:{},onLoad(e){this.refer=JSON.parse(e.refer)}};if(!Array){e.resolveComponent("refer")()}Math;const t=e._export_sfc(r,[["render",function(r,t,o,n,a,s){return{a:e.p({editable:!1,refer:a.refer})}}]]);wx.createPage(t);

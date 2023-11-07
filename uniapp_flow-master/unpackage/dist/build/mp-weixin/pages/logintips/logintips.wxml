@@ -1,0 +1,1 @@
+<view class="container" style="background-image:url('/static/beijing.png')"></view><view class="text"><text>您还未登录~ 注册进入社区，共创理想生活！</text><view bindtap="{{a}}" class="lgtip-up-button">登录</view><view bindtap="{{b}}" class="lgtip-button">注册</view></view>

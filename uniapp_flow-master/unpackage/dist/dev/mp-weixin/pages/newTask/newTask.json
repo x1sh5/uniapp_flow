@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "创建任务",
+  "usingComponents": {
+    "uni-nav-bar": "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
+    "task-card": "../../components/taskCard/taskCard",
+    "uni-fab": "../../uni_modules/uni-fab/components/uni-fab/uni-fab"
+  }
+}
