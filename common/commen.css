@@ -30,7 +30,7 @@
 	height: 48px;
     display: block;
     position: relative;
-    background-image: url("../static/avs.png");
+    //background-image: url("../static/avs.png");
     -webkit-background-size: cover;
     background-size: cover;
     border-radius: 50%;
@@ -42,6 +42,8 @@
 	border-radius: 50%;
 	border: none;
 	display: block;
+	width: 48px;
+	height: 48px;
 	-o-object-fit: cover;
 	object-fit: cover;
 	image-rendering: -webkit-optimize-contrast;

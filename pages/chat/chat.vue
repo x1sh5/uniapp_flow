@@ -10,7 +10,7 @@
 				<scroll-view :style="`height:${calcHeight}px`" class="chat-messages" scroll-y="true" :scroll-top="0"
 				 @scrolltoupper="receiveOld" @scrolltolower="scrollDown">
 					<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content"
-					 :isLeft="m.isLeft" :bgColor="'#f7f7f7'"></yd-chatitem>
+					 :isLeft="m.isLeft" :icon="m.isLeft?imgsrc:me_avatar" :bgColor="'#f7f7f7'"></yd-chatitem>
 				</scroll-view>
 			<!-- </view> -->
 
@@ -37,9 +37,20 @@
 				userName:"",
 				userId:NaN,//发卡人id
 				calcHeight:NaN, //
+				avatar:"",
+				imgsrc:""
 				//messages:[],
 
 			}
+		},
+		beforeMount() {
+			uni.requestWithCookie({
+				url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.userId,
+				success: (res) => {
+					console.log(res.data)
+					this.imgsrc = res.data
+				}
+			})
 		},
 		computed:{
 			messages(){
@@ -50,6 +61,9 @@
 					return false;
 				}
 				return true;
+			},
+			me_avatar(){
+				return this.$store.state.useravatar
 			}
 		},
 		methods: {

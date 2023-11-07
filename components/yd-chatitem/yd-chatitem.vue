@@ -1,7 +1,7 @@
 <template>
 	<view class="chatitem">
 		<view v-if="isLeft" class="leftitem" :style="{backgroundColor: bgColor}">
-			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
+			<image class="icon" :src="icon" alt="Local Image"></image>
 			<view class="info">
 				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
 				<view class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
@@ -18,7 +18,7 @@
 					{{ message }}
 				</view>
 			</view>
-			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
+			<image class="icon" :src="icon" alt="Local Image"></image>
 		</view>
 	</view>
 </template>
@@ -83,8 +83,8 @@
 
 	.iconStyle() {
 		display: inline-block;
-		width: 90rpx;
-		height: 90rpx;
+		width: 60rpx;
+		height: 60rpx;
 		border-radius: 12rpx;
 	}
 	.chatitem {

@@ -79,10 +79,12 @@
 			this.getByStatus(1)
 				.then((res)=>this.$data.$incompletes = res)
 				.catch((err)=>console.log(err));
-				
-			this.getByStatus(2)
-				.then((res)=>this.$data.$completes = res)
-				.catch((err)=>console.log(err));
+			setTimeout(()=>{
+				this.getByStatus(2)
+					.then((res)=>this.$data.$completes = res)
+					.catch((err)=>console.log(err));
+			},2000)
+
 		}
 	}
 </script>

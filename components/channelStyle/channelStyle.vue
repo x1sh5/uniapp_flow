@@ -32,6 +32,7 @@
 		},
 		data() {
 			return {
+				imgsrc: ""
 				// lastmessage:"你好",
 				// time:"22:41",
 				// unreadcount:2
@@ -39,16 +40,16 @@
 			}
 		},
 		computed:{
-			imgsrc(){
-				let src = "";
-				uni.requestWithCookie({
-					url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.cc.cid,
-					success: (res) => {
-						src = res.data
-					}
-				})
-				return src;
-			}
+
+		},
+		beforeMount() {
+			uni.requestWithCookie({
+				url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.cc.cid,
+				success: (res) => {
+					console.log(res.data)
+					this.imgsrc = res.data
+				}
+			})
 		},
 		onLoad() {
 

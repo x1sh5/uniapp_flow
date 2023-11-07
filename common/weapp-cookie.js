@@ -3,7 +3,8 @@ import cookieParser from 'set-cookie-parser';
 /**
  * Util 类
  */
-var host = "https://www.liusha-gy.com"
+//var host = "https://www.liusha-gy.com"
+var host = "https://localhost:7221"
 class Util {
   /**
    * 根据域名获取该域名的 cookie 作用域范围列表
@@ -591,10 +592,11 @@ const cookieStore = new CookieStore();
         let successCallback = options.success;
         options.success = function (u) {
             //self add
-            if (!hasRefresh) {
+			let cookiestr = cookieStore.getRequestQueries(domain, "/");
+            if (!hasRefresh&&cookiestr) {
                 if (u.statusCode === 401) {
                     uni.request({
-                        url: host+"/api/Account/refresh-token?" + cookieStore.getRequestQueries(domain, "/"),
+                        url: host+"/api/Account/refresh-token?" + cookiestr,
                         success(res) {
                             hasRefresh = true;
                             if (res.statusCode !== 200) {
@@ -607,14 +609,20 @@ const cookieStore = new CookieStore();
                                 });
                             }
                             else {
-                                hasRefresh = false;
-                                cookieRequestProxy(options);
+								cookieStore.setResponseCookies(res.data.accessToken,domain);
+								cookieStore.setResponseCookies(res.data.refreshToken,domain);
+                                //hasRefresh = false;
+								setTimeout(()=>{
+									cookieRequestProxy(options);
+								},1000)
+                                
                             }
                         }
                     });
                 }
 
             }
+			hasRefresh = false;
             //end
 
             successCallback && successCallback(u);
