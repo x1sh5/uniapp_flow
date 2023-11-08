@@ -3,8 +3,8 @@ import cookieParser from 'set-cookie-parser';
 /**
  * Util 类
  */
-//var host = "https://www.liusha-gy.com"
-var host = "https://localhost:7221"
+var host = "https://www.liusha-gy.com"
+//var host = "https://localhost:7221"
 class Util {
   /**
    * 根据域名获取该域名的 cookie 作用域范围列表
