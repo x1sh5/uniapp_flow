@@ -56,13 +56,13 @@
 		text-align: center;
 		margin-top: auto;
 		margin-bottom: auto;
-		border: 1px solid #6c4ad1;
+		border: 0px solid #6c4ad1;
 		border-radius: 20rpx;
 		/* line-height 应与height一致才能使文字竖直居中 */
 		line-height: 70rpx;
 		margin: 5rpx;
 		height: 70rpx;
-		width: 120px;
+		width: 100px;
 	}
 
 

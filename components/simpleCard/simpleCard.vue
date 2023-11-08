@@ -3,7 +3,7 @@
 		<view class="simplecard">
 			<view class="title" style="width: 75%;height: 40px;">{{title}}</view>
 			<view class="sc-comment" placeholder="留言...">{{comment}}</view>
-			<view class="proposer">申请人：</view>
+			<view class="proposer">申请人</view>
 			<view >
 				<view class="name">{{simpleInfo.userName}}</view>
 				<button class="contact" @click="contact">联系</button>
@@ -135,10 +135,11 @@
 	.simplecard{
 		display: flex;
 		flex-direction: column;
-		height: 700px;
+		height: 530rpx;
 		margin-left: 50px;
 		margin-bottom: 10px;
 		  background-color: #ffffff; 
+		  border: 1px solid #6c4ad1;
 	}
 	.title{
 		 z-index:3;
@@ -153,15 +154,15 @@
 	color: #4723b3;
 	font-size: 36rpx;
 	}
-	
+	/* 申请人 */
 	.proposer{
 		 z-index:5;
 	display: flex;
 		margin-left: 50rpx;
-		 transform: translate(400rpx,-180rpx) scale(1);
+		 transform: translate(500rpx,30rpx) scale(1);
 	  background-color: #ffffff; 
 
-	  padding-left: 15px;/* 右缩进 */
+	  padding-left: 15px;
 	  border: 1px solid #6c4ad1;
 	  background-color: rgb(255, 255, 255);
 	  color: #4723b3;
@@ -173,13 +174,13 @@
 		 z-index:10;
 	display: flex;
 		margin-left:0rpx;
-		 transform: translate(450rpx,-150rpx) scale(1);
+		 transform: translate(480rpx,50rpx) scale(1);
 		 margin-top: -30rpx;
 	padding-left: 15px;/* 右缩进 */
 	border: 1px solid #6c4ad1;
 	background-color: rgb(255, 255, 255);
 	color: #4723b3;
-	font-size: 10px;
+	font-size: 26px;
 	}
 	.sc-comment:empty::before{
 		
@@ -216,7 +217,7 @@
 	    justify-content: center;  /* 水平居中 */
 	 align-items: center;   /* 垂直居中 */
 	 
-  transform: translate(0rpx,0rpx) scale(1);
+  transform: translate(0rpx,-60rpx) scale(1);
 
   border: 10px solid  #6c4ad1;
   border-radius: 80rpx; /*设置按钮边框为圆角 */
@@ -237,7 +238,7 @@
    margin-top: 0rpx;
    box-shadow:0ch;
  padding-left: 500rpx; 
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+   box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 	}
 	
@@ -268,7 +269,7 @@
 	 
 	     box-shadow:0ch;
 	
-	     box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+	       box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
 		  background-image: -webkit-linear-gradient(0deg, #886cdb%, #4d1ae4 100%);
 	}
 	
@@ -292,20 +293,22 @@
 	
 	   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
 	   background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
-	   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+	     box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
 	}
+	
+	/* 回复 */
 	.reply{
 		 z-index: 1;
 	display: flex;
-		margin-left: 50rpx;
-		  margin-top: -190rpx;
-		 transform: translate(0rpx,0rpx) scale(1);
+		margin-left: 0rpx;
+		  margin-top: 0rpx;
+		 transform: translate(480rpx,-90rpx) scale(1);
 	  background-color: #ffffff; 
 	
 	  padding-left: 15px;/* 右缩进 */
 	  border: 1px solid #6c4ad1;
-	  background-color: rgb(255, 255, 255);
-	  color: #4723b3;
+	  background-color:#6c4ad1;
+	  color: #ffffff;
 	  font-size: 10px;
 	}
 </style>

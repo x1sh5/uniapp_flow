@@ -21,7 +21,7 @@
 
 		<view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<view :style="{color:currentTab==index ? '#fb6583' : ''}" :data-current="index"
+				<view :style="{color:currentTab==index ? '#6c4ad1' : '#8d8aa1'}" :data-current="index"
 					v-for="(item,index) in branchTypes" :key="index" class="sc-button"
 					@click="searchByTpe(item.id,item.name)">{{ item.name }}</view>
 			</scroll-view>
