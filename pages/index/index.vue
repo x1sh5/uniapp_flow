@@ -15,7 +15,7 @@
 			</swiper-item>
 		</swiper>
 
-		<!-- 		<view class="button-container" >
+		<!-- 	 	<view class="button-container" >
 			<button class="button" v-for="item in branchTypes" :key="item.id" @click="searchByTpe(item.id,item.name)">{{ item.name }}</button>
 		</view> -->
 
