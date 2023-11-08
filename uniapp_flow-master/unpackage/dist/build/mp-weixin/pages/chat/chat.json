@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "",
-  "enablePullDownRefresh": false,
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "uni-nav-bar": "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar",
-    "yd-chatitem": "../../components/yd-chatitem/yd-chatitem"
-  }
-}

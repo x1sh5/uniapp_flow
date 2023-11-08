@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "聊天",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "channel-style": "../../components/channelStyle/channelStyle"
-  }
-}

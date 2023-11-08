@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "任务请求",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "simple-card": "../../components/simpleCard/simpleCard"
-  }
-}

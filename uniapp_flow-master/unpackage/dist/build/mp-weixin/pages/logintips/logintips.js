@@ -1,1 +1,0 @@
-"use strict";const e=require("../../common/vendor.js"),r={data:()=>({}),methods:{login(){e.index.navigateTo({url:"/pages/login/login"})},register(){e.index.navigateTo({url:"/pages/register/register"})}}};const i=e._export_sfc(r,[["render",function(r,i,n,o,t,g){return{a:e.o(((...e)=>g.login&&g.login(...e))),b:e.o(((...e)=>g.register&&g.register(...e)))}}]]);wx.createPage(i);

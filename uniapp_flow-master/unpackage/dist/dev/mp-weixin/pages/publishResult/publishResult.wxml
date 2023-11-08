@@ -1,1 +1,0 @@
-<view><view wx:for="{{a}}" wx:for-item="item" wx:key="b" style="height:40px">{{item.a}}</view></view>

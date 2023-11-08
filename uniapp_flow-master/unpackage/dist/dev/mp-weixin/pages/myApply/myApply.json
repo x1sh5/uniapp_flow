@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我的申请",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "simple-card": "../../components/simpleCard/simpleCard"
-  }
-}

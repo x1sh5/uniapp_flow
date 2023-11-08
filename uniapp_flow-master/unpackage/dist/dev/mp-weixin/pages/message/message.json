@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "沟通",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "channel-style": "../../components/channelStyle/channelStyle"
-  }
-}

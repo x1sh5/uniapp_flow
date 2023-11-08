@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "以发布任务详情",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "cardinfo": "../../components/cardinfo/cardinfo"
-  }
-}

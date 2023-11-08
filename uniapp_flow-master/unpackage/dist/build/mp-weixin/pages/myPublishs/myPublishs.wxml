@@ -1,1 +1,0 @@
-<view><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="custom-margin"><cardinfo wx:if="{{item.c}}" capture-bind:click="{{item.a}}" style="margin-top:5px" u-i="{{item.b}}" bind:__l="__l" u-p="{{item.c}}"/></view></view>

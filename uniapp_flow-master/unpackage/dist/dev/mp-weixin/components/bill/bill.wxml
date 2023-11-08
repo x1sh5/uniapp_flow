@@ -1,1 +1,0 @@
-<view bindtap="{{e}}" style="background-color:azure"><view style="display:flex;flex-direction:row"><view style="width:75%"><view>{{a}}</view><view>日期: {{b}}</view><view>金额: {{c}}</view></view><view>{{d}}</view></view></view>

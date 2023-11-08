@@ -1,1 +1,0 @@
-<view><view wx:for="{{a}}" wx:for-item="d" wx:key="b" bindtap="{{d.c}}" class="title">{{d.a}}</view><view class="addcontainer" bindtap="{{b}}"><text class="add-icon icon-jiahao"></text></view></view>

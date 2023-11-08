@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "我发布的",
-  "onReachBottomDistance": 50,
-  "usingComponents": {
-    "cardinfo": "../../components/cardinfo/cardinfo"
-  }
-}
