@@ -7,18 +7,20 @@
 				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;  background-color: #4d1ae4; ">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'undone'" style="margin-top:5px;"/>
 				</view>
+				<p v-show="$incompletes.length === 0" style="color:#696969; text-align:center; margin-top: 50%;">
+					这里空空如也哦~<br/>去大胆实践吧,勇敢的行动者!  
+				</p>
 			</view>
 			
 			<view v-if="current === 1">
 				<view v-for="item in $completes" :key="item.id" style="margin-top:5px;">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'done'" style="margin-top:5px;"/>
 				</view>
+				<p v-show="$completes.length === 0" style="color:#696969; text-align:center; margin-top: 50%;">
+					这里空空如也哦~<br/>去大胆实践吧,勇敢的行动者!  
+				</p>
 			</view>
-
 		</view>
-	</view>
-	<view v-if="res === undefined">
-		<p style="color:#696969; text-align:center; margin-top: 50%;">这里空空如也哦~<br/>去大胆实践吧，勇敢的行动者！</p>
 	</view>
 </template>
 
@@ -48,7 +50,9 @@
 						success: (res) => {
 							if(res.statusCode === 200){
 								if(res.data){
-									resolve(res.data)
+									resolve(res.data);
+									console.log(res.data)
+									return res.data
 								}
 								
 							}else{
@@ -71,9 +75,11 @@
 		computed:{
 			incompletes(){
 				return this.$data.$incompletes;
+				console.log(items in $incompletes);
 			},
 			completes(){
 				return this.$data.$completes;
+				console.log(items in $completes);
 			}
 		},
 		onLoad(op) {
