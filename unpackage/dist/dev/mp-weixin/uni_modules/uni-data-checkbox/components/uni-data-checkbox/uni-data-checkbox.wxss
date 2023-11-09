@@ -118,7 +118,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 16px;
+  width: 106px;
   height: 16px;
   border: 1px solid #DCDFE6;
   border-radius: 16px;

@@ -122,20 +122,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
     d: common_vendor.o((...args) => $options.history && $options.history(...args)),
     e: common_vendor.o((...args) => $options.taskReq && $options.taskReq(...args)),
-    f: common_vendor.o((...args) => $options.holds && $options.holds(...args)),
-    g: common_vendor.o(($event) => $options.holds(0)),
-    h: common_vendor.o(($event) => $options.holds(1)),
-    i: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
-    j: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
-    k: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
-    l: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
-    m: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    n: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
-    o: $options.hasLogin,
-    p: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    q: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
-    r: !$options.hasLogin
+    f: common_vendor.o(($event) => $options.holds(0)),
+    g: common_vendor.o(($event) => $options.holds(1)),
+    h: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
+    i: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
+    j: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
+    k: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
+    l: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    m: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
+    n: $options.hasLogin,
+    o: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
+    p: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
+    q: !$options.hasLogin
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/pages/userCenter/userCenter.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

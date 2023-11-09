@@ -1506,8 +1506,8 @@ function populateParameters(fromRes, toRes) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.95",
-    uniRuntimeVersion: "3.95",
+    uniCompileVersion: "3.96",
+    uniRuntimeVersion: "3.96",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -8049,6 +8049,34 @@ const pages = [
     }
   },
   {
+    path: "pages/pay-result/pay-result",
+    style: {
+      navigationBarTitleText: "支付结果",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/taskresult/completed/completed",
+    style: {
+      navigationBarTitleText: "提交结果",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/taskresult/failed/failed",
+    style: {
+      navigationBarTitleText: "失败提示",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/userhomepage/userhomepage",
+    style: {
+      navigationBarTitleText: "展示页面",
+      enablePullDownRefresh: false
+    }
+  },
+  {
     path: "pages/settings/settings",
     style: {
       navigationBarTitleText: "账户设置",
@@ -8166,7 +8194,7 @@ const tabBar = {
       pagePath: "pages/index/index",
       iconPath: "static/home.png",
       selectedIconPath: "static/homeactive.png",
-      text: "首页"
+      text: "任务卡池"
     },
     {
       pagePath: "pages/addtask/addtask",
@@ -8178,7 +8206,7 @@ const tabBar = {
       pagePath: "pages/message/message",
       iconPath: "static/talk.png",
       selectedIconPath: "static/talkctive.png",
-      text: "聊天"
+      text: "沟通记录"
     },
     {
       pagePath: "pages/userCenter/userCenter",

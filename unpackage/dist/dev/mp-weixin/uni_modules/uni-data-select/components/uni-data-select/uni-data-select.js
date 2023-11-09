@@ -309,5 +309,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     r: $data.current ? 1 : ""
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
 wx.createComponent(Component);

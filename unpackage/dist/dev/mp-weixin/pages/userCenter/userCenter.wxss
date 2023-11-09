@@ -24,7 +24,7 @@
 	height: 48px;
     display: block;
     position: relative;
-    background-image: url("../../static/avs.png");
+    //background-image: url("../../static/avs.png");
     background-size: cover;
     border-radius: 50%;
     margin: 0;
@@ -34,6 +34,8 @@
 	border-radius: 50%;
 	border: none;
 	display: block;
+	width: 48px;
+	height: 48px;
 	object-fit: cover;
 	image-rendering: -webkit-optimize-contrast;
     position: absolute;
@@ -83,6 +85,24 @@
 }
 .icon-jiahao:before {
   content: "\e619";
+}
+.t {
+  /* font-family: uniicons;*/
+  text-decoration: none;
+  padding-left: 15px;
+  /* 右缩进 */
+  font-size: 15px;
+  /* 尺寸 */
+  letter-spacing: 3px;
+  line-height: 40rpx;
+  /* 文本上下位置 */
+  height: 50rpx;
+  /* 背景高度 */
+  color: #ffffff;
+  /* 字体颜色 */
+  margin: rpx 0;
+  /* 上下位置 */
+  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 }
 .user-avatar {
   width: 48px;

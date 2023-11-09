@@ -6,8 +6,8 @@
 }
 .chatitem .leftitem .icon.data-v-e72a33f9 {
   display: inline-block;
-  width: 90rpx;
-  height: 90rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 12rpx;
 }
 .chatitem .leftitem .info.data-v-e72a33f9 {
@@ -44,8 +44,8 @@
 }
 .chatitem .rightitem .icon.data-v-e72a33f9 {
   display: inline-block;
-  width: 90rpx;
-  height: 90rpx;
+  width: 60rpx;
+  height: 60rpx;
   border-radius: 12rpx;
 }
 .chatitem .rightitem .info.data-v-e72a33f9 {

@@ -43,11 +43,30 @@ form > view > button {
     width: 80px;
     height: 35px;
 }
+.weixin-login-button{
+  border: 1px solid  rgb(74, 209, 83);
+  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  width: 150px;
+  height: 40px;
+  color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
+  background-color: rgb(74, 209, 83); /* 新增：设置按钮背景颜色为绿色 */
+text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+   margin-top:0;
+ display: flex;  /* 使用Flex布局 */ 
+   justify-content: center;  /* 水平居中 */
+   align-items: center; /* 垂直居中 */
+   margin-top: 40rpx;
+   box-shadow:0ch;
+ 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}
 .login-button{
   border: 1px solid  #6c4ad1;
   border-radius: 20px; /* 新增：设置按钮边框为圆角 */
   width: 150px;
-  height: 35px;
+  height: 40px;
   color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
   background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
 text-align: center;
@@ -57,18 +76,17 @@ text-align: center;
  display: flex;  /* 使用Flex布局 */ 
    justify-content: center;  /* 水平居中 */
    align-items: center; /* 垂直居中 */
-   margin-top: 400rpx;
+   margin-top: 100rpx;
    box-shadow:0ch;
  
    box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
 .register-button{
-  border: 0px solid  #6c4ad1;
+  border: solid transparent;
   font-size: 13px;
-  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
   width: 100px;
   height: 35px;
-  margin-top: -400rpx;
+  margin-top: -170rpx;
  display: flex;  /* 使用Flex布局 */ 
    justify-content: center;  /* 水平居中 */
    align-items: center; /* 垂直居中 */

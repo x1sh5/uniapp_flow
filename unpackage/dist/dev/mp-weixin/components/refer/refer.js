@@ -23,7 +23,9 @@ const _sfc_main = {
     if (this.curr > 0) {
       let l = [];
       for (let i of Array.from(this.refer.content.keys())) {
-        l.push({ id: i });
+        l.push({
+          id: i
+        });
       }
       this.lines = l;
     }
@@ -33,8 +35,16 @@ const _sfc_main = {
   },
   methods: {
     addLine(e) {
-      this.refer.content.set(this.curr, { stitle: "", rate: "", brief: "", detail: "", remark: "" });
-      this.lines.push({ id: this.curr++ });
+      this.refer.content.set(this.curr, {
+        stitle: "",
+        rate: "",
+        brief: "",
+        detail: "",
+        remark: ""
+      });
+      this.lines.push({
+        id: this.curr++
+      });
     },
     delLine(id) {
       let index = this.lines.find((item) => item.id === id);
@@ -74,35 +84,21 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: $props.refer.title,
     c: common_vendor.o(($event) => $props.refer.title = $event.detail.value),
     d: !$props.editable,
-    e: `stitle${_ctx.t.id}`,
-    f: common_vendor.o(($event) => $options.stitleChange(_ctx.t.id)),
-    g: $props.refer.content.get(_ctx.t.id).stitle,
-    h: common_vendor.o(($event) => $props.refer.content.get(_ctx.t.id).stitle = $event.detail.value),
-    i: !$props.editable,
-    j: `rate${_ctx.t.id}`,
-    k: common_vendor.o(($event) => $options.rateChange(_ctx.t.id)),
-    l: $props.refer.content.get(_ctx.t.id).rate,
-    m: common_vendor.o(($event) => $props.refer.content.get(_ctx.t.id).rate = $event.detail.value),
-    n: !$props.editable,
-    o: `brief${_ctx.t.id}`,
-    p: common_vendor.o(($event) => $options.briefChange(_ctx.t.id)),
-    q: $props.refer.content.get(_ctx.t.id).brief,
-    r: common_vendor.o(($event) => $props.refer.content.get(_ctx.t.id).brief = $event.detail.value),
-    s: !$props.editable,
-    t: `detail${_ctx.t.id}`,
-    v: common_vendor.o(($event) => $options.detailChange(_ctx.t.id)),
-    w: $props.refer.content.get(_ctx.t.id).detail,
-    x: common_vendor.o(($event) => $props.refer.content.get(_ctx.t.id).detail = $event.detail.value),
-    y: !$props.editable,
-    z: `remark${_ctx.t.id}`,
-    A: common_vendor.o(($event) => $options.remarkChange(_ctx.t.id)),
-    B: $props.refer.content.get(_ctx.t.id).remark,
-    C: common_vendor.o(($event) => $props.refer.content.get(_ctx.t.id).remark = $event.detail.value),
-    D: common_vendor.o(($event) => $options.delLine(_ctx.t.id)),
-    E: $props.editable,
-    F: $props.editable,
-    G: common_vendor.o((...args) => $options.addLine && $options.addLine(...args))
+    e: !$props.editable,
+    f: !$props.editable,
+    g: !$props.editable,
+    h: !$props.editable,
+    i: $props.editable,
+    j: common_vendor.f($data.lines, (t, k0, i0) => {
+      return {
+        a: t.id
+      };
+    }),
+    k: common_vendor.o(($event) => $options.delLine(_ctx.t.id)),
+    l: $props.editable,
+    m: $props.editable,
+    n: common_vendor.o((...args) => $options.addLine && $options.addLine(...args))
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/components/refer/refer.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/refer/refer.vue"]]);
 wx.createComponent(Component);

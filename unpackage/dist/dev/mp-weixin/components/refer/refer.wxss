@@ -1,31 +1,37 @@
 
-.td, .th{
+	/*.td, .th{
 		border: 1px solid black;
 		display: flex;
 		flex-direction: row;
 		min-height: 30px;
 		
 		width: 100%;
-}
-.th{
+	}
+	
+	.th{
 		text-align: center;
 		height: 30px;
-}
-.th > textarea{
+	}
+	
+	.th > textarea{
 		height: 30px;
-}
-.td{
+	}
+	
+	.td{
 		
 		height: auto;
-}
-.stitle, .rate, .brief, .detail, .remark{
+	}
+	
+	.stitle, .rate, .brief, .detail, .remark{
 		border: 1px solid black;
 		box-sizing: border-box;
-}
-from > view {
+	}
+	
+	from > view {
 		text-align: center;
-}
-.addLine{
+	}
+	
+	.addLine{
 		margin-top: 5px;
 		margin-bottom: 5px;
 		width: 40px;
@@ -34,305 +40,373 @@ from > view {
 		margin-right: auto;
 		border: 1px solid black;
 		border-radius: 10px;
-}
-.del{
+	}
+	
+	.del{
 		width: 40px;
 		margin-top: auto;
 		margin-bottom: auto;
 		border: 1px solid black;
-}
+	}
+	
+	*/
 .a {
-  z-index: -1;
-  display: table-cell;
-  padding: 20rpx;/* 内边距 */
-  
-  width: 100%;
-  height: 40rpx;
+		z-index: -1;
+		display: table-cell;
+		padding: 20rpx;
+		/* 内边距 */
 
-  text-decoration: none;
-  font-size:40rpx; /* 尺寸 */
-  letter-spacing: 6rpx;/* 字母之间的间距 */
-  line-height:50rpx;/* 文本上下位置 */
-  height: 70rpx;/* 背景高度 */
-  color: #ffffff;/* 字体颜色 */
-  margin: rpx 0;/* 上下位置 */
-  padding-left: 20rpx;/* 右缩进 */
+		width: 100%;
+		height: 40rpx;
 
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+		text-decoration: none;
+		font-size: 40rpx;
+		/* 尺寸 */
+		letter-spacing: 6rpx;
+		/* 字母之间的间距 */
+		line-height: 50rpx;
+		/* 文本上下位置 */
+		height: 70rpx;
+		/* 背景高度 */
+		color: #ffffff;
+		/* 字体颜色 */
+		margin: rpx 0;
+		/* 上下位置 */
+		padding-left: 20rpx;
+		/* 右缩进 */
+
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 }
 .b {
-  z-index: 2;
-  transform: translate(440rpx,20rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
- 
-  width: 13%;
-  height: 110rpx;
- 
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #472d97;
+		z-index: 2;
+		transform: translate(440rpx, 20rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
+
+		width: 13%;
+		height: 110rpx;
+
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #472d97;
 }
 .c {
-  z-index: 2;
-  transform: translate(550rpx,-90rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
+		z-index: 2;
+		transform: translate(550rpx, -90rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
-  width: 14%;
-  height:110rpx;
+		width: 14%;
+		height: 110rpx;
 
-  font-size: 26rpx;
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #472d97;
+		font-size: 26rpx;
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #472d97;
 }
 .d {
-  z-index: 2;
-  transform: translate(652rpx,-200rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
+		z-index: 2;
+		transform: translate(652rpx, -200rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
-  width: 13%;
-  height: 110rpx;
+		width: 13%;
+		height: 110rpx;
 
-  font-size: 26rpx;
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #472d97;
+		font-size: 26rpx;
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #472d97;
 }
 .textarea-field-aa {
-  z-index: 3;
-  transform: translate(2rpx, -220rpx) scale(1);
-  border: 2rpx solid #886cdb;/* 边框颜色 */
+		z-index: 3;
+		transform: translate(2rpx, -220rpx) scale(1);
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
 
-  width:428rpx;
-  height:60rpx;
+		width: 428rpx;
+		height: 60rpx;
 
-  font-size: 26rpx;
-  color: #f0f0f0;
+		font-size: 26rpx;
+		color: #f0f0f0;
 }
 .table-cell-bb {
-  z-index: 3; 
-  background-color: #886cdb;   /*设置背景颜色 */
-  transform: translate(440rpx, -280rpx) scale(1);
- 
-  width: 13%;
-  height: 60rpx;
+		z-index: 3;
+		background-color: #886cdb;
+		/*设置背景颜色 */
+		transform: translate(440rpx, -280rpx) scale(1);
 
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #f0f0f0;
+		width: 13%;
+		height: 60rpx;
+
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #f0f0f0;
 }
 .table-cell-cc {
-  z-index:3;
-  border: 2rpx solid #886cdb;/* 边框颜色 */
-  transform: translate(544rpx,-342rpx) scale(1);
+		z-index: 3;
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
+		transform: translate(544rpx, -342rpx) scale(1);
 
-  width: 14%;
-  height: 60rpx;
+		width: 14%;
+		height: 60rpx;
 
-  font-size: 20rpx;
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #f0f0f0;
+		font-size: 20rpx;
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #f0f0f0;
 }
 .table-cell-dd {
-  z-index: 3;
-  border: 2rpx solid #886cdb;/* 边框颜色 */
-  transform: translate(660rpx,-406rpx) scale(1);
+		z-index: 3;
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
+		transform: translate(660rpx, -406rpx) scale(1);
 
-  width: 11%;
-  height: 60rpx;
+		width: 11%;
+		height: 60rpx;
 
-  font-size: 20rpx;
-  text-align: center; /*水平居中对齐 */
-  display: flex;/*变为弹性容器 */
-  justify-content: center;/*主轴上水平居中对齐 */
-  align-items: center;/*垂直居中对齐 */
-  color: #f0f0f0;
+		font-size: 20rpx;
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #f0f0f0;
 }
-.table-cell-e {
+.stitle {
 
-  z-index: 4;
-  display: table-cell;
-  padding: 0rpx;/* 内边距 */
-  transform: translate(0rpx,-380rpx) scale(1);
+		z-index: 4;
+		display: table-cell;
+		padding: 0rpx;
+		/* 内边距 */
+		transform: translate(0rpx, -380rpx) scale(1);
 
-  width: 100%;
-  height:70rpx;
+		width: 100%;
+		height: 70rpx;
 
-  display: flex;/*变为弹性容器 */
-  align-items: center;/*垂直居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		align-items: center;
+		/*垂直居中对齐 */
 
-  text-decoration: none;
-  padding-left: 8rpx;/* 右缩进 */
-  font-size:36rpx; /* 尺寸 */
-  letter-spacing: 6rpx;/* 字母之间的间距 */
-  line-height:00rpx;/* 文本上下位置 */
- 
-  color: #ffffff;/* 字体颜色 */
-  margin: rpx 0;/* 上下位置 */
+		text-decoration: none;
+		padding-left: 8rpx;
+		/* 右缩进 */
+		font-size: 36rpx;
+		/* 尺寸 */
+		letter-spacing: 6rpx;
+		/* 字母之间的间距 */
+		line-height: 00rpx;
+		/* 文本上下位置 */
 
-  background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+		color: #ffffff;
+		/* 字体颜色 */
+		margin: rpx 0;
+		/* 上下位置 */
+
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 }
 .textarea-field-ee {
-  z-index: 4;
-  transform: translate(0rpx, -380rpx) scale(1);
-  border: 2rpx solid #886cdb;/* 边框颜色 */
+		z-index: 4;
+		transform: translate(0rpx, -380rpx) scale(1);
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
 
-  width:100%;
-  height:60rpx;
+		width: 100%;
+		height: 60rpx;
 
-  font-size: 26rpx;
-  color: #f0f0f0;
+		font-size: 26rpx;
+		color: #f0f0f0;
 }
-.table-cell-f {
-  z-index: 5;
-  transform: translate(0rpx,-360rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
+.rate {
+		z-index: 5;
+		transform: translate(0rpx, -360rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
-  width: 30%;
-  height: 80rpx;
+		width: 30%;
+		height: 80rpx;
 
-  font-size: 26rpx;
+		font-size: 26rpx;
 
-  display: flex;/*变为弹性容器 */
-  align-items: center;/*垂直居中对齐 */
-  color: #4a1cd3;
+		display: flex;
+		/*变为弹性容器 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #4a1cd3;
 }
 .textarea-field-ff {
-  z-index: 5;
-  transform: translate(0rpx, -380rpx) scale(1);
-  border: 2rpx solid #886cdb;/* 边框颜色 */
+		z-index: 5;
+		transform: translate(0rpx, -380rpx) scale(1);
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
 
-  width:100%;
-  height:120rpx;
+		width: 100%;
+		height: 120rpx;
 
-  font-size: 26rpx;
-  color: #f0f0f0;
+		font-size: 26rpx;
+		color: #f0f0f0;
 }
-.table-cell-g {
-  z-index: 6;
-  transform: translate(0rpx,-360rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
+.brief {
+		z-index: 6;
+		transform: translate(0rpx, -360rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
-  width: 30%;
-  height: 80rpx;
+		width: 30%;
+		height: 80rpx;
 
-  font-size: 26rpx;
+		font-size: 26rpx;
 
-  display: flex;/*变为弹性容器 */
-  align-items: center;/*垂直居中对齐 */
-  color: #4a1cd3;
+		display: flex;
+		/*变为弹性容器 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #4a1cd3;
 }
 .textarea-field-gg {
-  z-index:6;
-  transform: translate(0rpx, -380rpx) scale(1);
-  border: 2rpx solid #886cdb;/* 边框颜色 */
+		z-index: 6;
+		transform: translate(0rpx, -380rpx) scale(1);
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
 
-  width:100%;
-  height:120rpx;
+		width: 100%;
+		height: 120rpx;
 
-  font-size: 26rpx;
-  color: #f0f0f0;
+		font-size: 26rpx;
+		color: #f0f0f0;
 }
-.table-cell-h {
-  z-index: 7;
-  transform: translate(0rpx,-360rpx) scale(1);
-  background-color: #ffffff;   /*设置背景颜色 */
+.detail {
+		z-index: 7;
+		transform: translate(0rpx, -360rpx) scale(1);
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
-  width: 30%;
-  height: 80rpx;
+		width: 30%;
+		height: 80rpx;
 
-  font-size: 26rpx;
+		font-size: 26rpx;
 
-  display: flex;/*变为弹性容器 */
-  align-items: center;/*垂直居中对齐 */
-  color: #4a1cd3;
+		display: flex;
+		/*变为弹性容器 */
+		align-items: center;
+		/*垂直居中对齐 */
+		color: #4a1cd3;
 }
 .textarea-field-hh {
-  z-index: 7;
-  transform: translate(0rpx, -380rpx) scale(1);
-  border: 2rpx solid #886cdb;/* 边框颜色 */
+		z-index: 7;
+		transform: translate(0rpx, -380rpx) scale(1);
+		border: 2rpx solid #886cdb;
+		/* 边框颜色 */
 
-  width:100%;
-  height:120rpx;
+		width: 100%;
+		height: 120rpx;
 
-  font-size: 26rpx;
-  color: #f0f0f0;
+		font-size: 26rpx;
+		color: #f0f0f0;
 }
 
- /*添加步骤按钮*/
-.addLine{
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
- 
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid black;
-  border-radius: 10px;
+	/*添加步骤按钮*/
+.addLine {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		width: 100%;
+
+		margin-left: auto;
+		margin-right: auto;
+		border: 1px solid black;
+		border-radius: 10px;
 }
-.del{
-  
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
-  color:red;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid rgb(179, 20, 20);
-  border-radius: 10px;
-}
-.addLine{
-  border: 1px solid  #6c4ad1;
-  border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
-  width: 450rpx;
-  height: 70rpx;
-  color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
-  background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
-text-align: center;
-/* top: calc(150vh - 350rpx);
+.del {
+		z-index: 20;
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+		border-radius: 40rpx;
+		/* 新增：设置按钮边框为圆角 */
+		width: 150rpx;
+		height: 70rpx;
+		color: #6c4ad1;
+		border: 1px solid #6c4ad1;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
    */
-   margin-top:0;
- display: flex;  /* 使用Flex布局 */ 
-   justify-content: center;  /* 水平居中 */
-   align-items: center; /* 垂直居中 */
-   margin-top: 100rpx;
-   box-shadow:0ch;
- 
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
-}
-.deel{
+		margin-top: 0rpx;
+		margin-left: 280px;
+		background-color: #ffffff;
+		/*设置背景颜色 */
 
- 
-  border-radius: 40rpx; /* 新增：设置按钮边框为圆角 */
-  width: 450rpx;
-  height: 70rpx;
-  color: rgb(223, 47, 99); /* 新增：设置按钮文字颜色为白色 */
-  background-color: #ffffff; /* 新增：设置按钮背景颜色为绿色 */
-text-align: center;
-/* top: calc(150vh - 350rpx);
-   */
-   margin-top:0;
- display: flex;  /* 使用Flex布局 */ 
-   justify-content: center;  /* 水平居中 */
-   align-items: center; /* 垂直居中 */
-   margin-top: 100rpx;
-   box-shadow:0ch;
- 
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
-	
+.addLine {
+		z-index: 30;
+		border: 1px solid #6c4ad1;
+		border-radius: 40rpx;
+		/* 新增：设置按钮边框为圆角 */
+		width: 450rpx;
+		height: 70rpx;
+		color: rgb(255, 255, 255);
+		/* 新增：设置按钮文字颜色为白色 */
+		background-color: #6c4ad1;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+   */
+
+
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+		margin-top: -70rpx;
+		margin-left: 20px;
+		box-shadow: 0ch;
+
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}

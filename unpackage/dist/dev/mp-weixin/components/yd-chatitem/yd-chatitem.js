@@ -56,30 +56,26 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     a: $props.isLeft
   }, $props.isLeft ? {
     b: $props.icon,
-    c: $props.iconSize,
-    d: $props.iconSize,
-    e: common_vendor.t($props.nickname),
-    f: $props.nameSize,
-    g: $props.nameColor,
+    c: common_vendor.t($props.nickname),
+    d: $props.nameSize,
+    e: $props.nameColor,
+    f: $props.bubbleColor,
+    g: common_vendor.t($props.message),
     h: $props.bubbleColor,
-    i: common_vendor.t($props.message),
-    j: $props.bubbleColor,
-    k: $props.messageSize,
-    l: $props.messageColor,
-    m: $props.bgColor
+    i: $props.messageSize,
+    j: $props.messageColor,
+    k: $props.bgColor
   } : {
-    n: common_vendor.t($props.nickname),
-    o: $props.nameSize,
-    p: $props.nameColor,
+    l: common_vendor.t($props.nickname),
+    m: $props.nameSize,
+    n: $props.nameColor,
+    o: $props.bubbleColor,
+    p: common_vendor.t($props.message),
     q: $props.bubbleColor,
-    r: common_vendor.t($props.message),
-    s: $props.bubbleColor,
-    t: $props.messageSize,
-    v: $props.messageColor,
-    w: $props.icon,
-    x: $props.iconSize,
-    y: $props.iconSize
+    r: $props.messageSize,
+    s: $props.messageColor,
+    t: $props.icon
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/components/yd-chatitem/yd-chatitem.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "E:/uniapp_flow/components/yd-chatitem/yd-chatitem.vue"]]);
 wx.createComponent(Component);

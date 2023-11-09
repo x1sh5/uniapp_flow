@@ -11,6 +11,7 @@
 			<input name="password" class="lg-input" password value="" />
 			<button class="login-button" form-type="submit">登录</button>
 		</form>
+		<!-- <button class="weixin-login-button" @click="weixin_login">使用微信登录</button> -->
 		<button class="register-button" @click="register">还未注册？</button>
 
 	</view>
@@ -70,6 +71,27 @@
 					}
 				})
 			},
+			// weixin_login(){
+			// 	uni.login({
+ 			// 		success (res) {
+			// 			console.log(res.code)
+    		// 			if (res.code) {
+   			// 	   		//发起网络请求
+    		// 		 		 uni.request({
+			// 					url: url,
+			// 					method: 'POST',
+      		// 		  			data: {
+     		// 		     			code: res.code,
+			// 						appSecret: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+            //              			appId: 'wxbef31cb0acc4e14c'
+    		// 		    		}
+    		// 		  		})
+    		// 			} else {
+      		// 			console.log('登录失败！' + res.errMsg)
+   			// 			}
+ 			// 		}
+			// 	})
+			// },
 			register() {
 				uni.navigateTo({
 					url: "/pages/register/register"

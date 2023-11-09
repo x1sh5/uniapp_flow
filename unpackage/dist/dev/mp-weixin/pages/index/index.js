@@ -4,18 +4,34 @@ const _sfc_main = {
   data() {
     return {
       title: "Hello",
+      currentTab: 0,
       curBranchid: "",
       taskTypeName: "全部",
       status: "more",
-      contentText: { contentdown: "上拉显示更多", contentrefresh: "正在加载...", contentnomore: "没有更多数据了" }
+      contentText: {
+        contentdown: "上拉显示更多",
+        contentrefresh: "正在加载...",
+        contentnomore: "没有更多数据了"
+      },
+      scrollTop: 0,
+      old: {
+        scrollTop: 0
+      }
     };
   },
   onLoad() {
     console.log("page index onload");
   },
   mounted() {
-    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, branchid: "" }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: "全部", data });
+    this.$store.dispatch("fetchTasks", {
+      count: 10,
+      offset: 0,
+      branchid: ""
+    }).then((data) => {
+      this.$store.commit("setTasks", {
+        taskTypeName: "全部",
+        data
+      });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
@@ -26,12 +42,24 @@ const _sfc_main = {
         return this.$store.getters.getTasks(this.taskTypeName);
       },
       set(value) {
-        this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data: value });
+        this.$store.commit("setTasks", {
+          taskTypeName: this.taskTypeName,
+          data: value
+        });
       }
+    },
+    allTasks() {
+      return this.$store.state.tasks.values();
     },
     branchTypes() {
       let ts = this.$store.state.branchs;
-      return [{ id: "", name: "全部" }, ...ts];
+      return [{
+        id: "",
+        name: "全部"
+      }, ...ts];
+    },
+    branchs() {
+      return this.$store.state.branchs;
     },
     total() {
       return this.$data.$total;
@@ -47,6 +75,12 @@ const _sfc_main = {
     }
   },
   methods: {
+    // 计算每个按钮的宽度
+    calculateButtonWidth() {
+      const containerWidth = 1500;
+      const buttonCount = this.branchTypes.length;
+      return `${containerWidth / buttonCount}px`;
+    },
     search(e) {
       console.log("confirm:", e);
       e.value;
@@ -56,6 +90,11 @@ const _sfc_main = {
     },
     //requestWithCookie
     searchByTpe(id, name) {
+      if (id === "") {
+        this.currentTab = 0;
+      } else {
+        this.currentTab = id;
+      }
       this.curBranchid = id;
       this.taskTypeName = name;
       this.updateData();
@@ -78,8 +117,15 @@ const _sfc_main = {
     updateData() {
       let maxIndex = this.maxIndex;
       this.status = "loading";
-      this.$store.dispatch("fetchTasks", { count: 10, offset: maxIndex, branchid: this.curBranchid }).then((data) => {
-        this.$store.commit("updateTasks", { taskTypeName: this.taskTypeName, data });
+      this.$store.dispatch("fetchTasks", {
+        count: 10,
+        offset: maxIndex,
+        branchid: this.curBranchid
+      }).then((data) => {
+        this.$store.commit("updateTasks", {
+          taskTypeName: this.taskTypeName,
+          data
+        });
         this.status = "more";
       }).catch((error) => {
         console.error("获取数据失败：", error);
@@ -94,8 +140,15 @@ const _sfc_main = {
   async onPullDownRefresh() {
     await this.$store.dispatch("fetchBranchs");
     await this.$store.dispatch("fetchTaskTypes");
-    this.$store.dispatch("fetchTasks", { count: 10, offset: 0, branchid: this.curBranchid }).then((data) => {
-      this.$store.commit("setTasks", { taskTypeName: this.taskTypeName, data });
+    this.$store.dispatch("fetchTasks", {
+      count: 10,
+      offset: 0,
+      branchid: this.curBranchid
+    }).then((data) => {
+      this.$store.commit("setTasks", {
+        taskTypeName: this.taskTypeName,
+        data
+      });
     }).catch((error) => {
       console.error("获取数据失败：", error);
     });
@@ -122,16 +175,18 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       clearButton: "auto",
       cancelButton: "none"
     }),
-    c: common_vendor.f($options.branchTypes, (item, k0, i0) => {
+    c: common_vendor.f($options.branchTypes, (item, index, i0) => {
       return {
         a: common_vendor.t(item.name),
-        b: item.id,
-        c: common_vendor.o(($event) => $options.searchByTpe(item.id, item.name), item.id)
+        b: $data.currentTab == index ? "#fb6583" : "",
+        c: index,
+        d: index,
+        e: common_vendor.o(($event) => $options.searchByTpe(item.id, item.name), index)
       };
     }),
     d: common_vendor.f($options.tasks, (item, k0, i0) => {
       return {
-        a: "427cab31-1-" + i0,
+        a: "df9d7a6a-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false,
@@ -149,5 +204,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.o((...args) => $options.backtotop && $options.backtotop(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

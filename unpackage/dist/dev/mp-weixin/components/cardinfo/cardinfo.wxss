@@ -33,6 +33,7 @@
   z-index: 99;
 }
 .popup {
+  display: block;
   position: absolute;
   z-index: 9;
   top: 0;
@@ -46,9 +47,12 @@
   transition: all 0.5s ease;
 }
 .delbtn {
+  display: block;
   position: absolute;
   left: 40%;
   top: 40%;
+  background-color: #ff0000;
+  /*设置背景颜色 */
 }
 .example1 {
   width: 200px;
@@ -58,39 +62,35 @@
   color: #1e1ef5;
 }
 .bid1 {
-  color: #54cfa5;
+  color: #31c695;
 }
 .bid2 {
   color: #000000;
 }
 .bid3 {
-  color: #5656cb;
+  color: #3734c1;
 }
 .bid4 {
-  color: #42c9dd;
+  color: #1ebdd7;
 }
 .bid5 {
-  color: #509cf5;
+  color: #046ef1;
 }
 .bid6 {
-  color: #e0ba46;
+  color: #e0bb45;
 }
 .bid7 {
   color: #d169cd;
 }
 .r12c13 {
-  z-index: 2;
+  display: block;
+  position: absolute;
+  z-index: 1;
   grid-row-start: 1;
   grid-row-end: 5;
   grid-column-start: 1;
-  grid-column-end: 4;
-}
-.presumedtime {
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  margin-bottom: 15rpx;
+  grid-column-end: 5;
+  height: 165rpx;
 }
 .task1,
 .task2,
@@ -99,21 +99,22 @@
 .task5,
 .task6,
 .task7 {
+  display: block;
+  position: absolute;
   z-index: 2;
   display: grid;
   grid-template-rows: 1.5fr 4fr 0.5fr 0.5fr 3fr;
   grid-template-columns: 0.8fr 0.3fr 0.8fr 1fr;
   position: relative;
-  background-color: #00ff00;
-  /*设置背景颜色 */
   width: 730rpx;
   height: 365rpx;
   border-radius: 10rpx;
-  background-color: #d5e8ff;
+  background-color: #ffffff;
   /*设置背景颜色 */
   box-shadow: 5rpx 16rpx 20rpx rgba(161, 161, 161, 0.5);
 }
 .task1:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -124,9 +125,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #54cfa5;
+  background-image: -webkit-linear-gradient(-90deg, #53cfa5 0%, #62d3a0 100%);
 }
 .task2:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -137,9 +139,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #000000;
+  background-image: -webkit-linear-gradient(-90deg, #000000 0%, #242121 100%);
 }
 .task3:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -150,9 +153,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #5656cb;
+  background-image: -webkit-linear-gradient(-90deg, #5654ca 0%, #6a77d1 100%);
 }
 .task4:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -163,9 +167,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #42c9dd;
+  background-image: -webkit-linear-gradient(-90deg, #42c8dd 0%, #58e1e0 100%);
 }
 .task5:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -176,9 +181,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #509cf5;
+  background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
 }
 .task6:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -189,9 +195,10 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #e0ba46;
+  background-image: -webkit-linear-gradient(-90deg, #e0bb45 0%, #daaf22 100%);
 }
 .task7:before {
+  display: block;
   top: 0;
   left: 0;
   right: 0;
@@ -202,29 +209,56 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-color: #d169cd;
+  background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
 }
 .tasktype {
+  display: block;
+  position: absolute;
   bottom: 0px;
   right: 0px;
   font-size: 2cm;
   font-style: italic;
   color: #ff0000;
 }
-/*标题	.title{
-	  .blackcolor();
-	  .margin-top5();
+.title {
+  color: black;
+  display: block;
+  position: absolute;
+  margin-top: 6rpx;
+  z-index: 3;
+  height: 62%;
+  width: 80%;
+}
+/**/
+/*编号*/
+.serialNo {
+  z-index: 1;
+  display: flex;
+  position: absolute;
+  /* display: flex;
+	  position: absolute;
+	  flex-direction: column;
+	  align-self: flex-end;
 	  
-	   z-index: 3;
-	  height: 62%;
-	  width: 80%;
-	    		background-color: #ff0000;   /*设置背景颜色 
-	} */
+	  */
+  margin-left: 80px;
+  font-size: x-small;
+}
+/*需求内容 */
+.poster {
+  display: block;
+  position: absolute;
+  margin-right: 0rpx;
+  height: 40rpx;
+  width: 160rpx;
+}
 /*一句话*/
 .brief {
+  display: block;
+  position: absolute;
   z-index: 3;
   color: #818181;
-  margin-top: 00rpx;
+  margin-top: 40rpx;
   height: 130rpx;
   width: 400rpx;
   white-space: pre-wrap;
@@ -232,49 +266,59 @@
   grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 1;
-  /*background-color: #ffffff;   设置背景颜色 */
 }
 .margin-top5 {
+  display: block;
+  position: absolute;
   margin-top: 6rpx;
 }
 .spendtime {
+  display: block;
+  position: absolute;
   width: 20%;
-  margin-right: 5px;
+  margin-right: 10rpx;
 }
 /*预计工时   margin-bottom: 15rpx;*/
 .presumedtime {
+  display: block;
+  position: absolute;
   z-index: 2;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 1;
-  margin-top: 100rpx;
+  margin-top: -40rpx;
+  margin-bottom: 0rpx;
 }
 .rowlayout-y {
+  display: block;
+  position: absolute;
   z-index: 2;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 1;
   grid-column-start: 1;
   grid-column-end: 1;
   font-size: 20rpx;
   height: 40rpx;
-  width: 130rpx;
-  background-color: #b9d328;
-  /*设置背景颜色 */
+  width: 160rpx;
 }
 /*回馈值*/
 .rewardbox {
+  display: block;
+  position: absolute;
   z-index: 2;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 2;
   grid-column-end: 2;
-  margin-left: 20px;
-  margin-top: 100rpx;
+  margin-left: -10px;
+  margin-top: -40rpx;
   width: 130rpx;
   /*	margin-bottom: 0rpx;*/
 }
 .rowlayout-h {
+  display: block;
+  position: absolute;
   z-index: 2;
   grid-row-start: 4;
   grid-row-end: 4;
@@ -283,11 +327,11 @@
   font-size: 24rpx;
   height: 40rpx;
   width: 130rpx;
-  background-color: #0000ff;
-  /*设置背景颜色 */
 }
 /*回馈值选择框*/
 .reward {
+  display: block;
+  position: absolute;
   z-index: 2;
   border-bottom: 1px dashed gray;
   flex-basis: 20rpx;
@@ -300,19 +344,22 @@
   grid-column-end: 3;
   height: 40rpx;
   width: 60rpx;
-  background-color: #b9d328;
-  /*设置背景颜色 */
 }
+/*大标题*/
 .bigtype {
-  z-index: 4;
+  display: block;
+  position: absolute;
+  z-index: 2;
   grid-row-start: 1;
-  grid-row-end: 3;
+  grid-row-end: 4;
   grid-column-start: 3;
   grid-column-end: 5;
-  margin-left: 20px;
+  margin-left: 30px;
 }
 /* /*卡片类型文字样式*/
 .tasktype {
+  display: block;
+  position: absolute;
   z-index: 3;
   bottom: 1rpx;
   right: 1rpx;
@@ -321,71 +368,90 @@
   color: #ffffff;
 }
 .margin-right10 {
+  display: block;
+  position: absolute;
   margin-right: 1px;
 }
-.serialNo {
-  display: flex;
-  flex-direction: column;
-  align-self: flex-end;
-  font-size: x-small;
-  margin-left: 2px;
-}
-.poster {
-  margin-right: 2px;
-}
+/*卡片类型*/
 .department {
   margin-right: 1px;
-  font-size: 1cm;
-  grid-row: 0.5;
-  grid-column: 0.5;
+  display: block;
+  position: absolute;
+  position: relative;
+  margin: 0 8rpx;
+  z-index: 1;
+  font-size: 74rpx;
+  height: 100rpx;
+  width: 230rpx;
+  grid-row-start: 5;
+  grid-row-end: 5;
+  grid-column-start: 1;
+  grid-column-end: 1;
 }
 /*发起人*/
 .organigerpart {
+  display: block;
+  position: absolute;
+  z-index: 3;
   padding-bottom: 0rpx;
   grid-row-start: 5;
   grid-row-end: 5;
-  grid-column-start: 3;
-  grid-column-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 4;
   margin-left: 10px;
-  height: 30rpx;
-  width: 70rpx;
-  font-size: 15rpx;
-  background-color: #55aaff;
-  /*设置背景颜色 */
+  height: 40rpx;
+  width: 80rpx;
+  margin-top: 30rpx;
+  font-size: 18rpx;
 }
 /*圈*/
 .status {
+  display: flex;
   z-index: 2;
+  display: block;
+  position: absolute;
   margin-right: 1px;
-  padding-bottom: 5px;
-  grid-row: 0.6;
-  grid-column: 0.75;
+  padding-bottom: 10rpx;
+  grid-row: 0.8;
+  grid-column: 0.2;
   margin-right: 0px;
   height: 90rpx;
   width: 90rpx;
-  background-color: #0000ff;
-  /*设置背景颜色 */
+  grid-row-start: 5;
+  grid-row-end: 5;
+  grid-column-start: 4;
+  grid-column-end: 4;
 }
 /*圈样式*/
 .statuscontent {
-  z-index: 2;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  /* 水平居中 */
+  /* 垂直居中 */
+  opacity: 0.6;
+  /* 默认完全不透明 */
+  transition: opacity 1s;
+  /* 添加过渡效果 */
   margin-left: 0rpx;
-  height: 60rpx;
-  width: 60rpx;
-  font-size: 19rpx;
-  border: 8rpx solid #f15b04;
+  height: 80rpx;
+  width: 80rpx;
+  margin-top: -10rpx;
+  font-size: 24rpx;
+  border: 6rpx solid #f15b04;
   border-radius: 50%;
   color: white;
   align-items: center;
   text-align: center;
-  background-color: #000000;
-  /*设置背景颜色 */
 }
 /*.timeandreward{
 	  .rowlayout();
 	  .margin-top5();
 	} */
 .input {
+  display: block;
+  position: absolute;
   z-index: 2;
   width: 100%;
   text-align: center;
@@ -393,5 +459,7 @@
   margin-top: 1px;
 }
 .uni-textarea-compute {
+  display: block;
+  position: absolute;
   visibility: visible;
 }

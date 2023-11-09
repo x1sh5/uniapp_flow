@@ -6,8 +6,8 @@ const _sfc_main = {
       selected: void 0,
       $branchTypes: [],
       ctype: [
-        { text: "单卡", value: 0 },
-        { text: "多卡", value: 1 }
+        { text: "单次", value: 0 },
+        { text: "多项", value: 1 }
       ],
       defaultT: 0,
       mode: ""
@@ -77,7 +77,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       localdata: $data.ctype,
       modelValue: $data.defaultT
     }),
-    d: common_vendor.sr("dataSelect", "516c33ce-1"),
+    d: common_vendor.sr("dataSelect", "f955be9a-1"),
     e: common_vendor.o($options.receiveDataFromChild),
     f: common_vendor.p({
       localdata: $options.branchTypes,
@@ -87,5 +87,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: !Boolean($data.selected)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/pages/addtask/addtask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/addtask/addtask.vue"]]);
 wx.createPage(MiniProgramPage);

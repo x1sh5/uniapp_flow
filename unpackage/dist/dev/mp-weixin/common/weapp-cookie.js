@@ -439,10 +439,11 @@ const cookieStore = new CookieStore();
       }
       let successCallback = options.success;
       options.success = function(u) {
-        if (!hasRefresh) {
+        let cookiestr = cookieStore2.getRequestQueries(domain, "/");
+        if (!hasRefresh && cookiestr) {
           if (u.statusCode === 401) {
             common_vendor.index.request({
-              url: host + "/api/Account/refresh-token?" + cookieStore2.getRequestQueries(domain, "/"),
+              url: host + "/api/Account/refresh-token?" + cookiestr,
               success(res) {
                 hasRefresh = true;
                 if (res.statusCode !== 200) {
@@ -454,13 +455,17 @@ const cookieStore = new CookieStore();
                     url: "/pages/login/login"
                   });
                 } else {
-                  hasRefresh = false;
-                  cookieRequestProxy(options);
+                  cookieStore2.setResponseCookies(res.data.accessToken, domain);
+                  cookieStore2.setResponseCookies(res.data.refreshToken, domain);
+                  setTimeout(() => {
+                    cookieRequestProxy(options);
+                  }, 1e3);
                 }
               }
             });
           }
         }
+        hasRefresh = false;
         successCallback && successCallback(u);
       };
     } else if (api.platform !== "h5" && options.cookie) {

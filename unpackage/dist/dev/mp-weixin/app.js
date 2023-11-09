@@ -26,6 +26,10 @@ if (!Math) {
   "./pages/taskDetail/taskDetail.js";
   "./pages/searchResult/searchResult.js";
   "./pages/publishResult/publishResult.js";
+  "./pages/pay-result/pay-result.js";
+  "./pages/taskresult/completed/completed.js";
+  "./pages/taskresult/failed/failed.js";
+  "./pages/userhomepage/userhomepage.js";
   "./pages/settings/settings.js";
   "./pages/myTaskDetail/myTaskDetail.js";
   "./pages/editTask/editTask.js";
@@ -86,7 +90,7 @@ const _sfc_main = {
     this.$store.commit("Msgs/initChatChannels");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/uniapp_flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);

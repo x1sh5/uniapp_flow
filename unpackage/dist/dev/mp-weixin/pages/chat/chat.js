@@ -9,10 +9,21 @@ const _sfc_main = {
       userName: "",
       userId: NaN,
       //发卡人id
-      calcHeight: NaN
+      calcHeight: NaN,
       //
+      avatar: "",
+      imgsrc: ""
       //messages:[],
     };
+  },
+  beforeMount() {
+    common_vendor.index.requestWithCookie({
+      url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.userId,
+      success: (res) => {
+        console.log(res.data);
+        this.imgsrc = res.data;
+      }
+    });
   },
   computed: {
     messages() {
@@ -23,6 +34,9 @@ const _sfc_main = {
         return false;
       }
       return true;
+    },
+    me_avatar() {
+      return this.$store.state.useravatar;
     }
   },
   methods: {
@@ -113,10 +127,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.f($options.messages, (m, k0, i0) => {
       return {
         a: m.id,
-        b: "f644f4ea-1-" + i0,
+        b: "03b188b6-1-" + i0,
         c: common_vendor.p({
           message: m.content,
           isLeft: m.isLeft,
+          icon: m.isLeft ? $data.imgsrc : $options.me_avatar,
           bgColor: "#f7f7f7"
         })
       };
@@ -130,5 +145,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     j: common_vendor.o((...args) => $options.send && $options.send(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/pages/chat/chat.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/chat/chat.vue"]]);
 wx.createPage(MiniProgramPage);

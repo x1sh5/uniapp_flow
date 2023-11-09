@@ -15,22 +15,21 @@ const _sfc_main = {
   },
   data() {
     return {
+      imgsrc: ""
       // lastmessage:"你好",
       // time:"22:41",
       // unreadcount:2
     };
   },
-  computed: {
-    imgsrc() {
-      let src = "";
-      common_vendor.index.requestWithCookie({
-        url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.cc.cid,
-        success: (res) => {
-          src = res.data;
-        }
-      });
-      return src;
-    }
+  computed: {},
+  beforeMount() {
+    common_vendor.index.requestWithCookie({
+      url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.cc.cid,
+      success: (res) => {
+        console.log(res.data);
+        this.imgsrc = res.data;
+      }
+    });
   },
   onLoad() {
   },
@@ -53,7 +52,7 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: $options.imgsrc,
+    a: $data.imgsrc,
     b: common_vendor.t($props.cc.title),
     c: common_vendor.t($props.cc.message),
     d: common_vendor.t($props.cc.lasttime),
@@ -62,5 +61,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.o((...args) => $options.showDelete && $options.showDelete(...args))
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/components/channelStyle/channelStyle.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/channelStyle/channelStyle.vue"]]);
 wx.createComponent(Component);

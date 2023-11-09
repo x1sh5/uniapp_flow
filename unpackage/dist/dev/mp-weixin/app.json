@@ -18,6 +18,10 @@
     "pages/taskDetail/taskDetail",
     "pages/searchResult/searchResult",
     "pages/publishResult/publishResult",
+    "pages/pay-result/pay-result",
+    "pages/taskresult/completed/completed",
+    "pages/taskresult/failed/failed",
+    "pages/userhomepage/userhomepage",
     "pages/settings/settings",
     "pages/myTaskDetail/myTaskDetail",
     "pages/editTask/editTask",
@@ -49,14 +53,14 @@
         "pagePath": "pages/index/index",
         "iconPath": "static/home.png",
         "selectedIconPath": "static/homeactive.png",
-        "text": "首页"
+        "text": "任务卡池"
       },
       {
         "pagePath": "pages/addtask/addtask",
         "iconPath": "static/add.png",
         "selectedIconPath": "static/addactive.png",
         "text": "发布任务"
-      }, 
+      },
       {
         "pagePath": "pages/message/message",
         "iconPath": "static/talk.png",

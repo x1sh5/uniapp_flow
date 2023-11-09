@@ -18,7 +18,7 @@
 	<view class="text" :style="{textDecoration: curIndex===0?'underline':'',color:curIndex===0?'#4d1ae4':''}" @click="HisPublish">历史发布</view>
 
 	<view class="text2" :style="{textDecoration: curIndex===1?'underline':'',color:curIndex===1?'#4d1ae4':''}" @click="HisAccipt">历史接受</view>
-	<view v-show="curIndex==0">
+	<view v-if="curIndex==0">
 		<view v-for="item in publishs" :key="item.id" class="custom-margin">
 			<!-- #ifdef H5 -->
 			<cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)"
@@ -70,14 +70,14 @@
 			hispubs(){
 				if(this.$data.$hispubs.length===0){
 					uni.request({
-						url:
+						url:""
 					})
 				}
 			},
 			hisacpt(){
 				if(this.$data.$hisacpt.length===0){
 					uni.request({
-						url:
+						url:""
 					})
 				}
 			},
@@ -186,13 +186,13 @@
 		margin-top: 0px;
 		justify-content: center;
 		align-items: center;
-		//color: #4d1ae4;
+		color: #4d1ae4;
 		font-size: 29rpx;
 		letter-spacing: 6rpx;
 		/* 设置文 字 间 隔 */
 		transform: translate(-180rpx, -60rpx) scale(1);
 
-		//text-decoration: underline;
+		text-decoration: underline;
 		/* 添加下划线 */
 		text-decoration-thickness: 4rpx;
 		/* 设 置下划线的粗细 */
@@ -205,13 +205,13 @@
 		margin-top: 0px;
 		justify-content: center;
 		align-items: center;
-		//color: #4d1ae4;
+		color: #4d1ae4;
 		font-size: 29rpx;
 		letter-spacing: 7rpx;
 		/* 设置文字间隔 */
 		transform: translate(180rpx, -100rpx) scale(1);
 
-		//text-decoration: underline;
+		text-decoration: underline;
 		/* 添加下划线 */
 		text-decoration-thickness: 4rpx;
 		/* 设置下划线的  粗细 */

@@ -2,7 +2,7 @@
 	<view>
 		<uni-segmented-control :current="current" :values="items" style-type="text" 
 			active-color="#4cd964" @clickItem="onClickItem" ></uni-segmented-control>
-		<view style="width: 96%;margin-left: auto;margin-right: auto; ">
+		<view style="width:96%; margin-lef:auto;margin-right:auto;">
 			<view v-if="current === 0">
 				<view v-for="item in $incompletes" :key="item.id" style="margin-top:5px;  background-color: #4d1ae4; ">
 				  <cardinfo v-bind:task="item" v-bind:editable="false" :mode="'undone'" style="margin-top:5px;"/>
@@ -16,6 +16,9 @@
 			</view>
 
 		</view>
+	</view>
+	<view v-if="res === undefined">
+		<p style="color:#696969; text-align:center; margin-top: 50%;">这里空空如也哦~<br/>去大胆实践吧，勇敢的行动者！</p>
 	</view>
 </template>
 

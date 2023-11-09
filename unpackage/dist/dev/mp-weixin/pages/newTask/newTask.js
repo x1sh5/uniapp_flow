@@ -212,20 +212,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.p({
       ["left-icon"]: "left",
       leftText: "返回",
-      rightText: "发布",
-      title: "内容编辑",
+      rightText: "下一步",
       backgroundColor: "#f8f8f8"
     }),
     d: common_vendor.f($data.tasks, (item, index, i0) => {
       return {
-        a: common_vendor.sr("id" + item.id, "60b7a357-1-" + i0, {
+        a: common_vendor.sr("id" + item.id, "0cc2ddf1-1-" + i0, {
           "f": 1
         }),
         b: item.id,
         c: "id" + item.id,
         d: common_vendor.o($options.checkResult, item.id),
         e: common_vendor.o($options.removeTask, item.id),
-        f: "60b7a357-1-" + i0,
+        f: "0cc2ddf1-1-" + i0,
         g: common_vendor.p({
           task: item,
           editable: true
@@ -242,5 +241,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/Beifen/20230512流沙小程序开发/新建文件夹 (7)/uniapp_flow/pages/newTask/newTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);
