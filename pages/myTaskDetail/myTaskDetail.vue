@@ -137,7 +137,7 @@
 				wx.login({
 				  success: (res)=> {
 				    if (res.code) {
-						uni.request({
+						uni.requestWithCookie({
 							url: qurl,
 							method: "POST",
 							data: {OutTradeNo:"1",Description:"任务"+this.task.id+"的固定预支付费用",Total:this.balance*100,

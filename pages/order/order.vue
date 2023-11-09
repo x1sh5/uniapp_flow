@@ -60,7 +60,7 @@
 		},
 		mounted() {
 			let qurl = this.$store.state.apiBaseUrl+"/api/Bill?count=10&offset="+this.maxid;
-			uni.request({
+			uni.requestWithCookie({
 				url: qurl,
 				success: (res) => {
 					if(res.statusCode===200){
@@ -87,7 +87,7 @@
 			let maxIndex = this.maxIndex;
 			this.status = "loading";
 			let qurl = this.$store.state.apiBaseUrl+"/api/Bill?count=10&offset="+this.maxid;
-			uni.request({
+			uni.requestWithCookie({
 				url: qurl,
 				success: (res) => {
 					if(res.statusCode===200){

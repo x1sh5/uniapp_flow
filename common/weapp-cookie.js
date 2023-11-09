@@ -3,8 +3,8 @@ import cookieParser from 'set-cookie-parser';
 /**
  * Util 类
  */
-//var host = "https://www.liusha-gy.com"
 var host = "https://www.liusha-gy.com"
+//var host = "https://localhost:7221"
 class Util {
   /**
    * 根据域名获取该域名的 cookie 作用域范围列表
@@ -542,8 +542,6 @@ const cookieStore = new CookieStore();
 
 (function (cookieStore) {
 
-    //self add
-    let hasRefresh = false;
   /**
    * 定义请求 cookie 代理函数
    * @param  {Object} options 请求参数
@@ -566,8 +564,6 @@ const cookieStore = new CookieStore();
     // 判断在小程序环境是否启用 cookie
     if (wx) {
 
-            //l = i.url.split(o).pop(), 
-            //h = a.getRequestCookies(o, "/");
         let cookieQuery = cookieStore.getCookie("accesstoken", domain);
 		let cookieqstr = cookieQuery?cookieQuery.toString():"";
         let index = parameters.indexOf("?");
@@ -593,12 +589,11 @@ const cookieStore = new CookieStore();
         options.success = function (u) {
             //self add
 			let cookiestr = cookieStore.getRequestQueries(domain, "/");
-            if (!hasRefresh&&cookiestr) {
+            if (cookiestr) {
                 if (u.statusCode === 401) {
                     uni.request({
                         url: host+"/api/Account/refresh-token?" + cookiestr,
                         success(res) {
-                            hasRefresh = true;
                             if (res.statusCode !== 200) {
                                 uni.showToast({
                                     title: "登录过期！",
@@ -611,7 +606,7 @@ const cookieStore = new CookieStore();
                             else {
 								cookieStore.setResponseCookies(res.data.accessToken,domain);
 								cookieStore.setResponseCookies(res.data.refreshToken,domain);
-                                //hasRefresh = false;
+
 								setTimeout(()=>{
 									cookieRequestProxy(options);
 								},1000)
@@ -622,7 +617,16 @@ const cookieStore = new CookieStore();
                 }
 
             }
-			hasRefresh = false;
+			else{
+					uni.showToast({
+					    title: "登录过期！",
+					    duration: 1000
+					});
+					uni.reLaunch({
+					    url: "/pages/login/login"
+					});
+				}
+
             //end
 
             successCallback && successCallback(u);
@@ -685,9 +689,9 @@ const cookieStore = new CookieStore();
     // 使用 requestProxy 覆盖微信原生 request、uploadFile、downloadFile 接口
     Object.defineProperties(api, {
       // request
-      request: {
-        value: requestProxy,
-      },
+      // request: {
+      //   value: requestProxy,
+      // },
       // uploadFile
       uploadFile: {
         value: uploadFileProxy,
