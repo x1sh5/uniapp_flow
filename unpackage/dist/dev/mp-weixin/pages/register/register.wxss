@@ -8,7 +8,7 @@
 }
 .tips{
   color: red;
-  font-size: xx-small;
+  font-size: small;
 }
 .rg-input {
   margin-top:100rpx;
@@ -30,10 +30,10 @@
   width: 150px;
   height: 35px;
   margin-top: 30rpx;
- display: flex;  /* 使用Flex布局 */ 
-   justify-content: center;  /* 水平居中 */
-   align-items: center; /* 垂直居中 */
-   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
-   background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+  display: flex;  /* 使用Flex布局 */ 
+  justify-content: center;  /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+  background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
+  box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
