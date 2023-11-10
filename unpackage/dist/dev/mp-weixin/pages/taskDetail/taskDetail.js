@@ -33,7 +33,7 @@ const _sfc_main = {
     let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.task.id;
     let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.task.id;
     if (!this.ptask) {
-      common_vendor.index.request({
+      common_vendor.index.requestWithCookie({
         url: curl,
         success: (res) => {
           if (res.statusCode === 200) {
@@ -43,7 +43,7 @@ const _sfc_main = {
       });
     }
     if (!this.ctasks) {
-      common_vendor.index.request({
+      common_vendor.index.requestWithCookie({
         url: purl,
         success: (res) => {
           if (res.statusCode === 200) {

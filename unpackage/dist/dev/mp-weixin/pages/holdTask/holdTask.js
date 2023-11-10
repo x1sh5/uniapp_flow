@@ -27,6 +27,8 @@ const _sfc_main = {
             if (res.statusCode === 200) {
               if (res.data) {
                 resolve(res.data);
+                console.log(res.data);
+                return res.data;
               }
             } else {
               reject();
@@ -92,11 +94,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         c: item.id
       };
-    })
+    }),
+    e: $data.$incompletes.length === 0
   } : {}, {
-    e: $data.current === 1
+    f: $data.current === 1
   }, $data.current === 1 ? {
-    f: common_vendor.f($data.$completes, (item, k0, i0) => {
+    g: common_vendor.f($data.$completes, (item, k0, i0) => {
       return {
         a: "1621b7a5-2-" + i0,
         b: common_vendor.p({
@@ -106,10 +109,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         c: item.id
       };
-    })
-  } : {}, {
-    g: _ctx.res === void 0
-  }, _ctx.res === void 0 ? {} : {});
+    }),
+    h: $data.$completes.length === 0
+  } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/holdTask/holdTask.vue"]]);
 wx.createPage(MiniProgramPage);

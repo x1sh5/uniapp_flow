@@ -2,35 +2,32 @@
 	<view>
 		<form class="usercenter" @submit="register">
 			<view>
-				<text class="a">真实姓名：</text><input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15"/>
-				<view>{{nameCheckTip}}</view>
+				<input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15" placeholder="真实姓名："/>
+				<view class="tips">{{nameCheckTip}}</view>
 			</view>
 			<view >
-				<text class="a">密码：</text><input class="rg-input" name="password" type="safe-password" @blur="pwdCheckEvent" maxlength="20"/>
-				<view>{{pwdCheckTip}}</view>
+				<input class="rg-input" name="password" type="safe-password" @blur="pwdCheckEvent" maxlength="20" placeholder="密码："/>
+				<view class="tips">{{pwdCheckTip}}</view>
 			</view>
 			<view>
-				<text class="a">确认密码：</text>
-				<input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"/>
-				<view>{{pwdVerifyTip}}</view>
+				<input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20" placeholder="确认密码："/>
+				<view class="tips">{{pwdVerifyTip}}</view>
 			</view>
 			<view>
-				<text class="a">邮箱：</text>
-				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25"/>
-				<view>{{emailCheckTip}}</view>
+				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25" placeholder="邮箱："/>
+				<view class="tips">{{emailCheckTip}}</view>
 			</view>
 			<view>
-				<text class="a">手机号：</text>
-				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12"/>
-				<view>{{phoneCheckTip}}</view>
+				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12" placeholder="手机号码："/>
+				<view class="tips">{{phoneCheckTip}}</view>
 			</view>
 			<view>
-				<input type="checkbox" name="agreement" v-model="agreementCheckEvent"/>
-				<label for="checkbox">我已阅读并同意《流沙系统用户协议》</label>
-				<view>{{aggrementCheckTip}}</view>
+				<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent" style="transform:scale(0.7); margin-top: 5%;"/> 
+				<label for="checkbox" style="font-size: smaller;">我已阅读并同意《流沙系统用户协议》</label>
+				<view class="tips">{{aggrementCheckTip}}</view>
 			</view>
 			<button  class="lgtip-button" form-type="submit">注册</button>
-			<view style="height: 20px;">{{logintips}}</view>
+			<view class="tips" style="height: 20px;">{{logintips}}</view>
 		</form>
 	</view>
 </template>
@@ -50,7 +47,9 @@
 				emailCheckTip: "",
 				emailVerify: false,
 				phoneCheckTip: "",
-				phoneVerify: false
+				phoneVerify: false,
+				aggrementCheckTip: "",
+				isChecked: false
 			}
 		},
 		methods: {
@@ -137,6 +136,7 @@
 			phoneCheckEvent(event){
 				console.log(event)
 				let phone = event.detail.value;
+				console.log(phone)
 				let checkUrl = this.$store.state.apiBaseUrl+"/api/Account/phonecheck?phoneNo="+encodeURIComponent(phone);
 				uni.request({
 					url:checkUrl,
@@ -149,13 +149,16 @@
 				});
 			},
 			agreementCheckEvent(event){
-				console.log(event)
-				const checked = event.value
-				if(checked = false){
+				this.isChecked = !this.isChecked
+				console.log(this.isChecked)
+				if(this.isChecked == false){
 					this.aggrementCheckTip = "请勾选同意《用户协议》";
 					return
 				}
-				this.checked = true;
+				if(this.isChecked == true){
+					this.aggrementCheckTip = "";
+					return
+				}
 			},
 			register(e){
 				console.log(e)

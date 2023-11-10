@@ -32,7 +32,7 @@ const _sfc_main = {
   },
   mounted() {
     let qurl = this.$store.state.apiBaseUrl + "/api/Bill?count=10&offset=" + this.maxid;
-    common_vendor.index.request({
+    common_vendor.index.requestWithCookie({
       url: qurl,
       success: (res) => {
         if (res.statusCode === 200) {
@@ -59,7 +59,7 @@ const _sfc_main = {
     this.maxIndex;
     this.status = "loading";
     let qurl = this.$store.state.apiBaseUrl + "/api/Bill?count=10&offset=" + this.maxid;
-    common_vendor.index.request({
+    common_vendor.index.requestWithCookie({
       url: qurl,
       success: (res) => {
         if (res.statusCode === 200) {

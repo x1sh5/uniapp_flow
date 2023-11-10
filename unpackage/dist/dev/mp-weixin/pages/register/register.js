@@ -16,7 +16,9 @@ const _sfc_main = {
       emailCheckTip: "",
       emailVerify: false,
       phoneCheckTip: "",
-      phoneVerify: false
+      phoneVerify: false,
+      aggrementCheckTip: "",
+      isChecked: false
     };
   },
   methods: {
@@ -97,6 +99,7 @@ const _sfc_main = {
     phoneCheckEvent(event) {
       console.log(event);
       let phone = event.detail.value;
+      console.log(phone);
       let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/phonecheck?phoneNo=" + encodeURIComponent(phone);
       common_vendor.index.request({
         url: checkUrl,
@@ -107,6 +110,18 @@ const _sfc_main = {
           }
         }
       });
+    },
+    agreementCheckEvent(event) {
+      this.isChecked = !this.isChecked;
+      console.log(this.isChecked);
+      if (this.isChecked == false) {
+        this.aggrementCheckTip = "请勾选同意《用户协议》";
+        return;
+      }
+      if (this.isChecked == true) {
+        this.aggrementCheckTip = "";
+        return;
+      }
     },
     register(e) {
       console.log(e);
@@ -158,8 +173,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.t($data.emailCheckTip),
     i: common_vendor.o((...args) => $options.phoneCheckEvent && $options.phoneCheckEvent(...args)),
     j: common_vendor.t($data.phoneCheckTip),
-    k: common_vendor.t($data.logintips),
-    l: common_vendor.o((...args) => $options.register && $options.register(...args))
+    k: $data.isChecked,
+    l: common_vendor.o((...args) => $options.agreementCheckEvent && $options.agreementCheckEvent(...args)),
+    m: common_vendor.t($data.aggrementCheckTip),
+    n: common_vendor.t($data.logintips),
+    o: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/register/register.vue"]]);

@@ -407,7 +407,6 @@ class CookieStore {
 }
 const cookieStore = new CookieStore();
 (function(cookieStore2) {
-  let hasRefresh = false;
   function cookieRequestProxy(options) {
     options.cookie = options.cookie === void 0 || !!options.cookie;
     options.dataType = options.dataType || "json";
@@ -440,12 +439,11 @@ const cookieStore = new CookieStore();
       let successCallback = options.success;
       options.success = function(u) {
         let cookiestr = cookieStore2.getRequestQueries(domain, "/");
-        if (!hasRefresh && cookiestr) {
+        if (cookiestr) {
           if (u.statusCode === 401) {
             common_vendor.index.request({
               url: host + "/api/Account/refresh-token?" + cookiestr,
               success(res) {
-                hasRefresh = true;
                 if (res.statusCode !== 200) {
                   common_vendor.index.showToast({
                     title: "登录过期！",
@@ -464,8 +462,15 @@ const cookieStore = new CookieStore();
               }
             });
           }
+        } else {
+          common_vendor.index.showToast({
+            title: "登录过期！",
+            duration: 1e3
+          });
+          common_vendor.index.reLaunch({
+            url: "/pages/login/login"
+          });
         }
-        hasRefresh = false;
         successCallback && successCallback(u);
       };
     } else if (api.platform !== "h5" && options.cookie) {
@@ -505,9 +510,9 @@ const cookieStore = new CookieStore();
     });
     Object.defineProperties(api, {
       // request
-      request: {
-        value: requestProxy
-      },
+      // request: {
+      //   value: requestProxy,
+      // },
       // uploadFile
       uploadFile: {
         value: uploadFileProxy

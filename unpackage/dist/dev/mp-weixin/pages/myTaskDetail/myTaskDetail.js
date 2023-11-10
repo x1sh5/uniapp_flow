@@ -103,7 +103,7 @@ const _sfc_main = {
       common_vendor.wx$1.login({
         success: (res) => {
           if (res.code) {
-            common_vendor.index.request({
+            common_vendor.index.requestWithCookie({
               url: qurl,
               method: "POST",
               data: {
