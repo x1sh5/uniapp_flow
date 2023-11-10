@@ -10,16 +10,24 @@
 				<view>{{pwdCheckTip}}</view>
 			</view>
 			<view>
-				<text class="a">确认密码：</text><input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"/>
+				<text class="a">确认密码：</text>
+				<input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"/>
 				<view>{{pwdVerifyTip}}</view>
 			</view>
 			<view>
-				<text class="a">邮箱：</text><input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="20"/>
+				<text class="a">邮箱：</text>
+				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25"/>
 				<view>{{emailCheckTip}}</view>
 			</view>
 			<view>
-				<text class="a">手机号：</text><input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12"/>
+				<text class="a">手机号：</text>
+				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12"/>
 				<view>{{phoneCheckTip}}</view>
+			</view>
+			<view>
+				<input type="checkbox" name="agreement" v-model="agreementCheckEvent"/>
+				<label for="checkbox">我已阅读并同意《流沙系统用户协议》</label>
+				<view>{{aggrementCheckTip}}</view>
 			</view>
 			<button  class="lgtip-button" form-type="submit">注册</button>
 			<view style="height: 20px;">{{logintips}}</view>
@@ -139,6 +147,15 @@
 						}
 					}
 				});
+			},
+			agreementCheckEvent(event){
+				console.log(event)
+				const checked = event.value
+				if(checked = false){
+					this.aggrementCheckTip = "请勾选同意《用户协议》";
+					return
+				}
+				this.checked = true;
 			},
 			register(e){
 				console.log(e)
