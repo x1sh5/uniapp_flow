@@ -17,13 +17,15 @@
 .user-avatar{
 	width: 48px;
 	height: 48px;
-    display: block;
-    position: relative;
-    background-image: url('/static/meactive.png');
-    background-size: cover;
-    border-radius: 100%;
-    margin: 0;
-    padding: 0;
+  display: block;
+  position: relative;
+  background-image: url('/static/meactive.png');
+  background-size: cover;
+  border-radius: 100%;
+  margin-left: 5%;
+  margin-top: 5%;
+  padding: 0;
+  display:flex;
 }
 .user-avatar-img{
 	border-radius: 50%;
@@ -51,7 +53,7 @@
   color: #ffffff;/* 字体颜色 */
   margin: rpx 0;/* 上下位置 */
   background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
-
+  border-radius: 3rem;
 }
 .my-icons{
     font-family: myicon;
@@ -106,8 +108,9 @@
   box-sizing: content-box;
   padding-left: 15px;/* 右缩进 */
   border: 1px solid #6c4ad1;
-  background-color: rgb(255, 255, 255);
-  color: #4723b3;
+  border-radius: 3rem;
+  background-color: #6c4ad1;
+  color: #ffffff;
   font-size: 20px;
   margin-bottom: 10px;
   padding-top: 10px; /* 上内边距设置为 10px */
@@ -116,9 +119,9 @@
 }
 .user-view2 {
   
-  margin-left: 5px;
-  margin-top: 0px;
-  margin-bottom: 2px;
+  // margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border-radius: 5px;
   padding-left: 15px;/* 右缩进 */
   box-sizing: content-box;
@@ -127,7 +130,7 @@
   color: #6c4ad1;
   font-size: 15px;
   
-  padding-top: 0px; /* 上内边距设置为 10px */
+  padding-top: 10px; /* 上内边距设置为 10px */
   padding-bottom: 10px; /* 下内边距设置为 10px */
   /* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
 }
@@ -136,6 +139,31 @@
   color: #5655cb;
   line-height: 52rpx;
   
+}
+
+.logparent {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.logview {
+  display: flex;
+  
+}
+
+.log {
+  background-color: #6c4ad1;
+  color: #ffffff;
+  display: inline;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 40%;
+  padding-right: 40%;
+  border-color: transparent;
+  border-radius: 3rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .icon-huangguan,

@@ -3,8 +3,8 @@
 		
 		<view class="userinfo" >
 			<!-- avatar -->
-			<view class="user-avatar"><image :src="imgsrc" class="user-avatar-img"></image></view>
-			<view>{{ userName }}</view>
+			<view @click="toSetting" class="user-avatar"><image :src="imgsrc" class="user-avatar-img"></image></view>
+			<view style="margin-left:3%; margin-top:7%; font-size:larger;">{{ userName }}</view>
 		</view>
 		
 	
@@ -23,7 +23,7 @@
 			<view class="t" style="position: relative;margin-left: 10rpx;">我接受的</view>
 			<view class="taskinfo">
 				<view class="my-icons icon-tianxie" @click="holds(0)"><view class="item_title">待完成</view></view>
-				<view class="my-icons icon-duigou" @click="holds(1)"><view class="item_title">完成项目</view></view>
+				<view class="my-icons icon-duigou" @click="toOrder"><view class="item_title">我的支付</view></view>
 				<view class="my-icons icon-fuwuqingqiu" @click="myApply"><view class="item_title">任务申请</view></view>
 			</view>
 		</view>
@@ -32,16 +32,11 @@
 		
 		<view class="misc">
 			<view @click="toReference" class="user-view" style="display: flex;flex-direction: row; position: relative">
-				<view  >审核区间</view>
-				<view style="position: absolute;right: 0;">></view>
+				<view>审核区间</view>
+				<view style="position: absolute;right: 20px;">></view>
 			</view>
 			
 			<view class="user-view">帮助中心</view>
-			
-			<view @click="toOrder" class="user-view2" style="display: flex;flex-direction: row; position: relative">
-				<view >我的支付</view>
-				<view style="position: absolute;right: 0;">></view>
-			</view>
 		
 			<view class="user-view2">技能互助文档</view>
 		
@@ -59,17 +54,18 @@
 			<view class="driver"></view>
 		</view>
 		
-
-		<view v-show="hasLogin">
-			<button @click="signout">退出</button>
+		<div class="logparent">
+			<view v-show="hasLogin" class="logview">
+			<button class="log" @click="signout">退出登录</button>
+			</view>
+		
+			<view v-show="!hasLogin" class="logview">
+			<button class="log" @click="signin">登录</button>
 		</view>
-		
-		<view v-show="!hasLogin">
-			<button  @click="signin">登录</button>
-			<button  @click="signup">注册</button>
+		<view v-show="!hasLogin" class="logview">
+			<button class="log" @click="signup">注册</button>
 		</view>
-		
-		
+		</div>
 	</view>
 </template>
 

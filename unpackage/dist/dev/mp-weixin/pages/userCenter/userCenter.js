@@ -118,22 +118,23 @@ const _sfc_main = {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: $options.imgsrc,
-    b: common_vendor.t($options.userName),
-    c: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
-    d: common_vendor.o((...args) => $options.history && $options.history(...args)),
-    e: common_vendor.o((...args) => $options.taskReq && $options.taskReq(...args)),
-    f: common_vendor.o(($event) => $options.holds(0)),
-    g: common_vendor.o(($event) => $options.holds(1)),
-    h: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
-    i: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
-    j: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
+    b: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    c: common_vendor.t($options.userName),
+    d: common_vendor.o((...args) => $options.myPublishs && $options.myPublishs(...args)),
+    e: common_vendor.o((...args) => $options.history && $options.history(...args)),
+    f: common_vendor.o((...args) => $options.taskReq && $options.taskReq(...args)),
+    g: common_vendor.o(($event) => $options.holds(0)),
+    h: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
+    i: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
+    j: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
     k: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
     l: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
     m: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
     n: $options.hasLogin,
     o: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    p: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
-    q: !$options.hasLogin
+    p: !$options.hasLogin,
+    q: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
+    r: !$options.hasLogin
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/userCenter/userCenter.vue"]]);
