@@ -23,7 +23,7 @@
 			</view>
 			<view>
 				<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent" style="transform:scale(0.7); margin-top: 5%;"/> 
-				<label for="checkbox" style="font-size: smaller;">我已阅读并同意《流沙系统用户协议》</label>
+				<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout" style="color: #6c4ad1;">《流沙系统用户协议》</label></label>
 				<view class="tips">{{aggrementCheckTip}}</view>
 			</view>
 			<button  class="lgtip-button" form-type="submit">注册</button>
@@ -98,7 +98,7 @@
 				    this.pwdCheckTip = "密码中必须要有特殊字母";
 					return
 				  }
-				  this.pwdCheckTip = "";
+				  this.pwdCheckTip = "密码可用";
 				  this.pwd = password;
 				  this.pwdVerify = true;
 			},
@@ -106,10 +106,11 @@
 				console.log(event)
 				let affirmPwd = event.detail.value;
 				if(affirmPwd !== this.pwd){
-					this.pwdVerifyTip = "必须跟密码保持一致。";
+					this.pwdVerifyTip = "必须跟密码保持一致";
 					return
 				}
 				this.pwdAffirm = true;
+				this.pwdVerifyTip = "密码确认成功";
 			},
 			emailCheckEvent(event){
 				console.log(event)
@@ -160,6 +161,11 @@
 					return
 				}
 			},
+			toAbout(e){
+				uni.navigateTo({
+					url:"/pages/userCenter/about/about"
+				});
+			},
 			register(e){
 				console.log(e)
 				let registerView = {
@@ -169,7 +175,8 @@
 					email: e.detail.value.email
 				}
 				let url = this.$store.state.apiBaseUrl+"/api/Account/register";
-				uni.request({
+				if(this.isChecked == true){
+					uni.request({
 					url:url,
 					method:"POST",
 					data: registerView,
@@ -190,12 +197,20 @@
 									}
 								}
 							});
-							
 						}else{
 							this.logintips = res.data.message;
 						}
 					}
 				})
+				}
+				else{
+					uni.showModal({
+								title: '',
+								content: '请先勾选同意《用户协议》',
+								showCancel: false,
+								confirmText: '返回',
+					});
+				}
 			}
 		}
 	}

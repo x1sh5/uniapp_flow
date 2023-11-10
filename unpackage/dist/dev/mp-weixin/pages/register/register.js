@@ -61,7 +61,7 @@ const _sfc_main = {
         this.pwdCheckTip = "密码中必须要有特殊字母";
         return;
       }
-      this.pwdCheckTip = "";
+      this.pwdCheckTip = "密码可用";
       this.pwd = password;
       this.pwdVerify = true;
     },
@@ -69,10 +69,11 @@ const _sfc_main = {
       console.log(event);
       let affirmPwd = event.detail.value;
       if (affirmPwd !== this.pwd) {
-        this.pwdVerifyTip = "必须跟密码保持一致。";
+        this.pwdVerifyTip = "必须跟密码保持一致";
         return;
       }
       this.pwdAffirm = true;
+      this.pwdVerifyTip = "密码确认成功";
     },
     emailCheckEvent(event) {
       console.log(event);
@@ -123,6 +124,11 @@ const _sfc_main = {
         return;
       }
     },
+    toAbout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/about/about"
+      });
+    },
     register(e) {
       console.log(e);
       let registerView = {
@@ -132,32 +138,41 @@ const _sfc_main = {
         email: e.detail.value.email
       };
       let url = this.$store.state.apiBaseUrl + "/api/Account/register";
-      common_vendor.index.request({
-        url,
-        method: "POST",
-        data: registerView,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            common_vendor.index.showModal({
-              title: "",
-              content: "注册成功",
-              cancelText: "返回",
-              confirmText: "去登录",
-              success: function(res2) {
-                if (res2.confirm) {
-                  common_vendor.index.switchTab({
-                    url: "/pages/userCenter/userCenter"
-                  });
-                } else if (res2.cancel) {
-                  console.log("用户点击取消");
+      if (this.isChecked == true) {
+        common_vendor.index.request({
+          url,
+          method: "POST",
+          data: registerView,
+          success: (res) => {
+            if (res.statusCode === 200) {
+              common_vendor.index.showModal({
+                title: "",
+                content: "注册成功",
+                cancelText: "返回",
+                confirmText: "去登录",
+                success: function(res2) {
+                  if (res2.confirm) {
+                    common_vendor.index.switchTab({
+                      url: "/pages/userCenter/userCenter"
+                    });
+                  } else if (res2.cancel) {
+                    console.log("用户点击取消");
+                  }
                 }
-              }
-            });
-          } else {
-            this.logintips = res.data.message;
+              });
+            } else {
+              this.logintips = res.data.message;
+            }
           }
-        }
-      });
+        });
+      } else {
+        common_vendor.index.showModal({
+          title: "",
+          content: "请先勾选同意《用户协议》",
+          showCancel: false,
+          confirmText: "返回"
+        });
+      }
     }
   }
 };
@@ -175,9 +190,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     j: common_vendor.t($data.phoneCheckTip),
     k: $data.isChecked,
     l: common_vendor.o((...args) => $options.agreementCheckEvent && $options.agreementCheckEvent(...args)),
-    m: common_vendor.t($data.aggrementCheckTip),
-    n: common_vendor.t($data.logintips),
-    o: common_vendor.o((...args) => $options.register && $options.register(...args))
+    m: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
+    n: common_vendor.t($data.aggrementCheckTip),
+    o: common_vendor.t($data.logintips),
+    p: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/register/register.vue"]]);
