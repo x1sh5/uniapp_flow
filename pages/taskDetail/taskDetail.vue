@@ -40,7 +40,7 @@
 </template>
 
 <script>
-
+	import { ChatChannel } from "../../common/customTypes.js";
 	export default {
 		data() {
 			return {
@@ -130,7 +130,7 @@
 			},
 			contact(e){
 				uni.navigateTo({
-					url:"/pages/message/chat/chat?cid="+this.task.id+"&userName="+this.task.username+"&userId="+this.task.userId,
+					url:"/pages/chat/chat?cid="+this.task.id+"&userName="+this.task.username+"&userId="+this.task.userId,
 				})
 			},
 			gain(e){

@@ -58,9 +58,9 @@
 		methods:{
 			jump(){
 				let userId = this.cc.cid;
-				let userName = this.cc.senderName;
+				let userName = this.cc.title;
 				uni.navigateTo({
-					url:"/pages/message/chat/chat?userId="+userId+"&userName="+userName,
+					url:"/pages/chat/chat?userId="+userId+"&userName="+userName,
 				})
 			},
 			showDelete(e){

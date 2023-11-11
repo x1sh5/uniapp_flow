@@ -325,10 +325,10 @@ const store = createStore({
 			        console.error("fetch tasks error:",error);
 			    }
 		},
-		async sendMsg({commit,state},{user,message,contentType}){
+		async sendMsg({commit,state},{user,message}){
 			//SendToUser为后端api处理消息的函数，位于ChatHub中
 			//state.workSocket.invoke("SendMessage", [user, message]);
-			await state.workSocket.invoke("SendToUser", user, message,contentType);
+			await state.workSocket.invoke("SendToUser", user, message);
 			console.log("sendMsg")
 			let userId = parseInt(user);
 			let chat = state.messages.get(userId)
@@ -346,7 +346,6 @@ const store = createStore({
 			if(typeof(chat) === 'undefined'){
 				state.messages.set(userId,new Array())
 			}
-			//接收的消息显示在左边 
 			message.isLeft = true;
 			state.messages.get(userId).push(message);
 			dispatch('Msgs/updateAsync', message)
@@ -420,9 +419,9 @@ const store = createStore({
 								},
 								success: (e) => {
 									console.log(e);
-									if(e.tempFiles[0].size>5*1024*1024){
+									if(e.tempFiles[0].size>2*1024*1024){
 										uni.showToast({
-											title: "图片大小超过5M,请重新选择。"
+											title: "图片大小超过2M,请重新选择。"
 										})
 										return
 									}

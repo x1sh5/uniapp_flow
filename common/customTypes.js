@@ -1,6 +1,4 @@
-/**
- * 聊天对象入口
- */
+
 export class ChatChannel{
 	cid;
 	unread;
