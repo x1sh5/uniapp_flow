@@ -541,8 +541,13 @@ const cookieStore = new CookieStore();
 
 (function (cookieStore) {
 
+<<<<<<< Updated upstream
     //self add
     let hasRefresh = false;
+=======
+
+	let loginRdirect = false;
+>>>>>>> Stashed changes
   /**
    * 定义请求 cookie 代理函数
    * @param  {Object} options 请求参数
@@ -598,23 +603,52 @@ const cookieStore = new CookieStore();
                         success(res) {
                             hasRefresh = true;
                             if (res.statusCode !== 200) {
-                                uni.showToast({
-                                    title: "登录过期！",
-                                    duration: 1000
-                                });
-                                uni.reLaunch({
-                                    url: "/pages/login/login"
-                                });
+								if(!loginRdirect){
+									uni.showToast({
+									    title: "登录过期！",
+									    duration: 1000
+									});
+									uni.reLaunch({
+									    url: "/pages/login/login"
+									});
+									loginRdirect = true;
+								}
+
                             }
                             else {
+<<<<<<< Updated upstream
                                 hasRefresh = false;
                                 cookieRequestProxy(options);
+=======
+								cookieStore.setResponseCookies(res.data.accessToken,domain);
+								cookieStore.setResponseCookies(res.data.refreshToken,domain);
+
+								cookieRequestProxy(options);
+								
+                                
+>>>>>>> Stashed changes
                             }
                         }
                     });
                 }
 
             }
+<<<<<<< Updated upstream
+=======
+			else{
+				if(!loginRdirect){
+					uni.showToast({
+						title: "登录过期！",
+						duration: 1000
+					});
+					uni.reLaunch({
+						url: "/pages/login/login"
+					});
+					loginRdirect = true;
+				}
+			}
+
+>>>>>>> Stashed changes
             //end
 
             successCallback && successCallback(u);

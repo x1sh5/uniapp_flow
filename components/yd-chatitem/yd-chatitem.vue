@@ -4,18 +4,26 @@
 			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
 			<view class="info">
 				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
-				<view class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+				<view v-if="message.contentType=='string'" class="message"
+					:style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
 					<view class="angle" :style="{borderRightColor: bubbleColor}"></view>
-					{{ message }}
+					{{ message.content }}
+				</view>
+				<view v-if="message.contentType=='img'">
+					<image @click="preview" :style="{width:imgWidth,height:imgHeight}" :src="imgsrc"></image>
 				</view>
 			</view>
 		</view>
 		<view v-else class="rightitem">
 			<view class="info">
 				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
-				<view class="message" :style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+				<view v-if="message.contentType=='string'" class="message"
+					:style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
 					<view class="angle" :style="{borderLeftColor: bubbleColor}"></view>
-					{{ message }}
+					{{ message.content }}
+				</view>
+				<view v-if="message.contentType=='img'">
+					<image @click="preview" :style="{width:imgWidth,height:imgHeight}" :src="imgsrc"></image>
 				</view>
 			</view>
 			<image class="icon" :src="icon" :style="{height: iconSize, width: iconSize}" alt="Local Image"></image>
@@ -34,10 +42,7 @@
 				type: String,
 				default: ""
 			},
-			message: {
-				type: String,
-				default: ""
-			},
+			message: Object,
 			icon: {
 				type: String,
 				default: "../../static/logo.png"
@@ -73,34 +78,74 @@
 		},
 		data() {
 			return {
-				
+				$imgWidth: 0,
+				$imgHeight: 0
 			};
+		},
+		computed: {
+			imgsrc() {
+				return this.$store.state.apiBaseUrl + this.message.content
+			},
+			imgHeight() {
+				if (this.$data.$imgWidth > 350) return 350;
+				return this.$data.$imgWidth;
+			},
+			imgWidth() {
+				if (this.$data.$imgWidth > 400) return 400;
+				return this.$data.$imgWidth;
+			}
+
+		},
+		methods: {
+			preview(e) {
+				uni.previewImage({
+					urls: [this.imgsrc],
+				});
+			}
+		},
+		
+		beforeMount() {
+			console.log("onload")
+			if (this.message.contentType == 'img') {
+				uni.getImageInfo({
+					src: this.imgsrc,
+					success: (img) => {
+						this.$data.$imgWidth = img.width;
+						this.$data.$imgHeight = img.height
+					}
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-
 	.iconStyle() {
 		display: inline-block;
 		width: 90rpx;
 		height: 90rpx;
 		border-radius: 12rpx;
 	}
+
 	.chatitem {
 		background-color: #f7f7f7;
+
 		.leftitem {
 			display: flex;
+
 			.icon {
 				.iconStyle;
 			}
+
 			.info {
 				margin: 6rpx 20rpx;
+
 				.nickname {
 					font-size: 9px;
 					color: #9b9b9b;
 					display: block;
 				}
+
 				.message {
 					display: block;
 					position: relative;
@@ -111,7 +156,7 @@
 					padding: 20rpx 20rpx;
 					background-color: #fff;
 					border-radius: 10rpx;
-					
+
 					.angle {
 						position: absolute;
 						left: -23rpx;
@@ -124,20 +169,25 @@
 				}
 			}
 		}
+
 		.rightitem {
 			display: flex;
 			justify-content: flex-end;
+
 			.icon {
 				.iconStyle;
 			}
+
 			.info {
 				margin: 6rpx 20rpx;
 				text-align: right;
+
 				.nickname {
 					font-size: 9px;
 					color: #9b9b9b;
 					display: block;
 				}
+
 				.message {
 					display: block;
 					position: relative;
@@ -148,7 +198,7 @@
 					padding: 20rpx 20rpx;
 					background-color: #fff;
 					border-radius: 10rpx;
-					
+
 					.angle {
 						position: absolute;
 						right: -23rpx;

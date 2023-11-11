@@ -6,11 +6,11 @@
 			</view> -->
 			<text>上传身份证信息</text>
 			<view>
-				<image :draggable="false" style="width: 800px;height: 800px;" :src="pos"></image>
+				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="pos"></image>
 				<button style="width: 180px;" @click="uploadPos">上传正面照</button>
 			</view>
 			<view>
-				<image :draggable="false" style="width: 800px;height: 800px;" :src="neg"></image>
+				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="neg"></image>
 				<button style="width: 180px;" @click="uploadNeg">上传反面照</button>
 			</view>
 		</view>
@@ -34,7 +34,9 @@
 						this.pos = this.$store.state.apiBaseUrl+ o[0].url;
 				})
 					.catch((err)=>{
-						
+						uni.showToast({
+							title:err.message
+						})
 					})
 			},
 			uploadNeg(e){
@@ -44,7 +46,9 @@
 					this.neg = this.$store.state.apiBaseUrl+ o[0].url;
 				})
 					.catch((err)=>{
-						
+						uni.showToast({
+							title:err.message
+						})
 					})
 			},
 			check(e){

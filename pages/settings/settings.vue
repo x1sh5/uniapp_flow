@@ -58,9 +58,9 @@
 								},
 								success: (e) => {
 									console.log(e);
-									if(e.tempFiles[0].size>2*1024*1024){
+									if(e.tempFiles[0].size>5*1024*1024){
 										uni.showToast({
-											title: "图片大小超过2M,请重新选择。"
+											title: "图片大小超过5M,请重新选择。"
 										})
 										return
 									}
