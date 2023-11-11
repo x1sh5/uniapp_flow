@@ -38,12 +38,12 @@
 			
 			<view class="user-view">帮助中心</view>
 			
-			<view @click="toOrder" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+			<view @click="toOrder" class="user-view2" style="display: flex; flex-direction: row;">
 				<view >我的支付</view>
 				<view style="position: absolute;right: 0;">></view>
 			</view>
 		
-			<view class="user-view2">技能互助文档</view>
+			<view class="user-view2" @click="showDevelopmentTip">技能互助文档</view>
 		
 			<view class="user-view2">收益来源</view>
 		
@@ -100,6 +100,15 @@
 			}
 		},
 		methods:{
+			 
+			   showDevelopmentTip() {
+			         uni.showToast({
+			           title: '正在开发中',
+			           icon: 'none', // 不显示图标
+			           duration: 4000 ,// 提示持续时间，单位为毫秒
+				
+			         });
+			       },
 			toReference(e){
 				uni.navigateTo({
 					url: "/pages/reference/reference"

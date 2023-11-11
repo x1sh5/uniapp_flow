@@ -5,6 +5,12 @@
 		//justify-content: center;
 	}
 
+/* 轮播图*/
+.swiper-item-image {
+  width: 100%;
+  height:100%;
+}
+
 	.logo {
 		height: 200rpx;
 		width: 200rpx;

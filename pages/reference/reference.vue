@@ -1,4 +1,13 @@
 <template>
+	
+	<view class="content">
+		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索审核区间" clearButton="auto" cancelButton="none"
+			@focus="search" />
+		<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
+			
+		</swiper></view>
+		
+		
 	<view>
 		<view v-for="d in datas" :key="d.id" @click="detail(d.id)" class="title">
 			{{d.title}}

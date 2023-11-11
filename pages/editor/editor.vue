@@ -60,7 +60,7 @@
 				</view>
 				
 				<view class="editor-wrapper">
-					<editor id="editor" class="ql-container" placeholder="*要求任务需求、制作方法明确，步骤条理清晰。验收核对皆以任务说明与后续沟通为准..." show-img-size show-img-toolbar
+					<editor id="editor" class="ql-container" placeholder="*编写要求:任务需求、制作方法明确，步骤条理清晰。验收核对皆以任务说明与后续沟通为准..." show-img-size show-img-toolbar
 						show-img-resize @statuschange="onStatusChange" :read-only="readOnly" @ready="onEditorReady" >
 					</editor>
 				</view>

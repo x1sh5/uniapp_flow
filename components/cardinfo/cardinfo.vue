@@ -16,7 +16,7 @@
 						<view class="serialNo">k{{branchid}}{{Id}}</view>
 					  </view>
 					  <!-- 第二层：标题 -->
-					  <view class="title">
+					  <view class="title" >
 						<textarea :disabled="titleditable" class="brief" :value="title" placeholder="一句话简述任务内容" @blur="updateBrief">
 						</textarea>
 					  </view>
@@ -41,13 +41,13 @@
 			  </view>
 			  
 			  <!-- 回馈值 第二行第二列style="z-index: 2;width: auto;min-width: 10px;margin-left: 5rpx;margin-bottom: 5rpx;" -->
-			  <view class="rewardbox">
-				<view :class="`bid${branchid}`">回馈值</view>
-				<view class="rowlayout-h">
-				  <input maxlength="6" :disabled="rewardEditable" type="digit" class="reward" 
+			  <view class="rewardbox" >
+				<view :class="`bid${branchid}`" >回馈值</view>
+				<view class="rowlayout-h" >
+				  <input maxlength="6" :disabled="rewardEditable" type="digit" class="reward"  
 				  v-model="reward" /> <!-- @blur="updateReward" -->
 				  <view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
-				  <uni-data-select :disabled="task.main===1" :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
+				  <uni-data-select class="s" :disabled="task.main===1" :localdata="rewardtypeSymbol.options" :clear="false" :modelValue="rewardtype" 
 				    placeholder="类型" @change="rewardTypeChange" 
 				    
 				   v-if="editable">
@@ -783,7 +783,7 @@ height: 165rpx;
 .rewardbox {
 	 display: block;
 	position: absolute;
-	z-index: 2;
+	z-index: 1;
 	grid-row-start:3;
 	grid-row-end: 3;
 	grid-column-start: 2;
@@ -791,6 +791,7 @@ height: 165rpx;
 	margin-left: -10px;
 	margin-top: -40rpx;
 	width: 130rpx;
+	
 /*	margin-bottom: 0rpx;*/
   }
 	.rowlayout-h {
@@ -802,7 +803,7 @@ height: 165rpx;
 			grid-column-start: 1;
 			grid-column-end: 1;
 			
-			
+			margin-left: 70rpx;
 			font-size: 24rpx;
 			height:40rpx;
 			width: 130rpx;
@@ -817,7 +818,7 @@ height: 165rpx;
 	flex-basis: 20rpx;
 	text-align: center;
 	
-	margin-left: 0px;
+	margin-left: -40px;
 	font-size: 20rpx;
 	grid-row-start:3;
 	grid-row-end: 3;
@@ -829,6 +830,28 @@ height: 165rpx;
 
   }
   
+  /*回馈值选择框*/
+  .s {
+  		 display: block;
+  	  position: absolute;
+  	z-index: 2;
+  	border-bottom: 1px dashed gray;
+  	flex-basis: 20rpx;
+  	text-align: center;
+  	
+	margin-top: 30rpx;
+  	margin-left:-50rpx;
+  	font-size: 20rpx;
+  	grid-row-start:3;
+  	grid-row-end: 3;
+  	grid-column-start: 3;
+  	grid-column-end: 3;
+  	height:40rpx;
+  	width: 60rpx;
+  
+  background-color: #2d87f3;
+  }
+  
   /*大标题*/
   .bigtype {
 	 display: block;
@@ -838,7 +861,7 @@ height: 165rpx;
 	grid-row-end:4;
 	grid-column-start: 3;
 	grid-column-end: 5;
-	margin-left: 30px;
+	margin-left: 70rpx;
 
 	 	    		
 	
@@ -853,6 +876,7 @@ height: 165rpx;
   font-size: 170rpx;
   font-style: italic;
   color: rgb(255, 255, 255);
+  margin-left: 60rpx;
   
   
 } 
