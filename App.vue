@@ -46,7 +46,7 @@
 			console.log('App Hide')
 		},
 		mounted() {
-			//连接socket服务器
+			//连接socket服务器,ReceiveMessage的名称由后端api里ChatHub中指定
 			this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
 				console.log("receiveMessage",user,message);
 				this.$store.dispatch("receiveMsg",{user:user,message:message})

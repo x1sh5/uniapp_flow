@@ -9,14 +9,20 @@
 			<!-- <view style="height: 96%;"> -->
 				<scroll-view :style="`height:${calcHeight}px`" class="chat-messages" scroll-y="true" :scroll-top="0"
 				 @scrolltoupper="receiveOld" @scrolltolower="scrollDown">
+<<<<<<< Updated upstream:pages/chat/chat.vue
 					<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content"
+					 :isLeft="m.isLeft" :bgColor="'#f7f7f7'"></yd-chatitem>
+=======
+					<yd-chatitem v-for="m in messages" :key="m.id" :message="m"
 					 :isLeft="m.isLeft" :icon="m.isLeft?imgsrc:me_avatar" :bgColor="'#f7f7f7'"></yd-chatitem>
+>>>>>>> Stashed changes:pages/message/chat/chat.vue
 				</scroll-view>
 			<!-- </view> -->
 
 			<view class="chat-input-container">
 			      <input type="text" class="chat-input" v-model="text1" ref="input">
-			      <button class="send-button" :disabled="canSend" @click="send">发送</button>
+				  <button v-show="canSend" @click="sendImg">+</button>
+			      <button v-show="!canSend" class="send-button" :disabled="canSend" @click="send">发送</button>
 			</view>
 			
 <!-- 			<view class="transmit">
@@ -29,7 +35,7 @@
 </template>
 
 <script>
-	import { ChatChannel } from "../../common/customTypes.js";
+	import { ChatChannel } from "/common/customTypes.js";
 	export default {
 		data() {
 			return {
@@ -37,20 +43,9 @@
 				userName:"",
 				userId:NaN,//发卡人id
 				calcHeight:NaN, //
-				avatar:"",
-				imgsrc:""
 				//messages:[],
 
 			}
-		},
-		beforeMount() {
-			uni.requestWithCookie({
-				url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.userId,
-				success: (res) => {
-					console.log(res.data)
-					this.imgsrc = res.data
-				}
-			})
 		},
 		computed:{
 			messages(){
@@ -61,9 +56,6 @@
 					return false;
 				}
 				return true;
-			},
-			me_avatar(){
-				return this.$store.state.useravatar
 			}
 		},
 		methods: {
@@ -76,9 +68,21 @@
 					await this.$store.dispatch("Msgs/addChatAsync",ncc);
 				}
 				
-				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1});
+				this.$store.dispatch("sendMsg",{user:this.userId,message:this.text1,contentType:'string'});
 				
 				this.text1 = "";
+			},
+			sendImg(e){
+				this.$store.dispatch("upload")
+					.then((res)=>{
+					let o = JSON.parse(res.data)
+					this.$store.dispatch("sendMsg",{user:this.userId,message:o[0].url,contentType:'img'});
+				})
+					.catch((err)=>{
+						uni.showToast({
+							title:err.message
+						})
+					})
 			},
 			back(e){
 				uni.navigateBack()

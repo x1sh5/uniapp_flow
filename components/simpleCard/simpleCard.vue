@@ -33,6 +33,17 @@
 			};
 		},
 		props:{
+			/**
+			 * @type {object} simpleInfo
+			 * @type {number} simpleInfo.id 
+			 * @type {number} simpleInfo.agree 是否同意接取，2：未读，1：同意，0：不同意
+			 * @type {number} simpleInfo.taskId 任务id
+			 * @type {string} simpleInfo.userName 申请人姓名
+			 * @type {string} simpleInfo.title 要申请的任务的标题
+			 * @type {number} simpleInfo.userId 申请人ID
+			 * @type {string} simpleInfo.comment 留言
+			 * @type {string} simpleInfo.tag 任务类型
+			 */
 			simpleInfo:Object,
 			showbutton:true
 		},
@@ -102,7 +113,7 @@
 			contact(e){
 				
 				uni.navigateTo({
-					url:"/pages/chat/chat?cid="+this.simpleInfo.taskId+
+					url:"/pages/message/chat/chat?cid="+this.simpleInfo.taskId+
 						"&userName="+this.simpleInfo.userName+"&userId="+this.simpleInfo.userId,
 				})
 			}
