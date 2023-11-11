@@ -10,7 +10,7 @@
 			<scroll-view :style="`height:${calcHeight}px`" class="chat-messages" scroll-y="true" :scroll-top="0"
 				@scrolltoupper="receiveOld" @scrolltolower="scrollDown">
 
-				<yd-chatitem v-for="m in messages" :key="m.id" :message="m.content" :isLeft="m.isLeft"
+				<yd-chatitem v-for="m in messages" :key="m.id" :message="m" :isLeft="m.isLeft"
 					:bgColor="'#f7f7f7'"></yd-chatitem>
 
 				<yd-chatitem v-for="m in messages" :key="m.id" :message="m" :isLeft="m.isLeft"
