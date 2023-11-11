@@ -201,9 +201,9 @@
 						console.log(res)
 						let file = res.tempFiles[0];//文件
 						this.files.push(file)
-						if(file.size>2097152){
+						if(file.size>5*1024*1024){
 							uni.showModal({
-								content:"文件大于2Mb"
+								content:"文件大于5Mb"
 							})
 						}else{
 							this.editorCtx.insertImage({
