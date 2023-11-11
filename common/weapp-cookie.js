@@ -602,32 +602,34 @@ const cookieStore = new CookieStore();
 			let successCallback = options.success;
 			options.success = function(u) {
 				//self add
-				if (u.statusCode === 401) {
-					uni.request({
-						url: host + "/api/Account/refresh-token?" + cookieStore.getRequestQueries(
-							domain, "/"),
-						success(res) {
-							if (res.statusCode !== 200) {
-								if (!loginRdirect) {
-									uni.showToast({
-										title: "登录过期！",
-										duration: 1000
-									});
-									uni.reLaunch({
-										url: "/pages/login/login"
-									});
-									loginRdirect = true;
+				let cookiestr = cookieStore.getRequestQueries(domain, "/");
+				if (cookiestr) {
+					if (u.statusCode === 401) {
+						uni.request({
+							url: host + "/api/Account/refresh-token?" + cookiestr,
+							success(res) {
+								if (res.statusCode !== 200) {
+									if (!loginRdirect) {
+										uni.showToast({
+											title: "登录过期！",
+											duration: 1000
+										});
+										uni.reLaunch({
+											url: "/pages/login/login"
+										});
+										loginRdirect = true;
+									}
+
+								} else {
+									cookieStore.setResponseCookies(res.data.accessToken, domain);
+									cookieStore.setResponseCookies(res.data.refreshToken, domain);
+
+									cookieRequestProxy(options);
+
 								}
-
-							} else {
-								cookieStore.setResponseCookies(res.data.accessToken, domain);
-								cookieStore.setResponseCookies(res.data.refreshToken, domain);
-
-								cookieRequestProxy(options);
-
 							}
-						}
-					});
+						});
+					}
 				} else {
 					if (!loginRdirect) {
 						uni.showToast({
