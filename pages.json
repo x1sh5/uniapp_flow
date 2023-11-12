@@ -107,7 +107,7 @@
             
         }
         ,{
-            "path" : "pages/chat/chat",
+            "path" : "pages/message/chat/chat",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -314,10 +314,6 @@
                 "enablePullDownRefresh": false
             }
           
-			  
-
-
-
         }
     ],
 	"globalStyle": {
