@@ -307,6 +307,15 @@
             
         }
         ,{
+			"path" : "pages/userCenter/instructions/instructions",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "使用说明",
+			        "enablePullDownRefresh": false
+			    }
+			    
+			}
+			,{
             "path" : "pages/userCenter/about/about",
             "style" :                                                                                    
             {
@@ -314,10 +323,6 @@
                 "enablePullDownRefresh": false
             }
           
-			  
-
-
-
         }
     ],
 	"globalStyle": {
