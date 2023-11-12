@@ -86,13 +86,17 @@
 			imgsrc() {
 				return this.$store.state.apiBaseUrl + this.message.content
 			},
+			//图像动态高度
 			imgHeight() {
-				if (this.$data.$imgWidth > 350) return 350;
-				return this.$data.$imgWidth;
+				if (this.$data.$imgWidth > 200) return '200px';
+				return this.$data.$imgWidth+'px';
+				
 			},
+			//图像动态长度
 			imgWidth() {
-				if (this.$data.$imgWidth > 400) return 400;
-				return this.$data.$imgWidth;
+				if (this.$data.$imgWidth > 200) return '200px';
+				return this.$data.$imgWidth+'px';
+				
 			}
 
 		},
