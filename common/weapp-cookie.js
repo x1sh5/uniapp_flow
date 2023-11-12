@@ -706,9 +706,9 @@ const cookieStore = new CookieStore();
 		// 使用 requestProxy 覆盖微信原生 request、uploadFile、downloadFile 接口
 		Object.defineProperties(api, {
 			// request
-			request: {
-				value: requestProxy,
-			},
+			// request: {
+			// 	value: requestProxy,
+			// },
 			// uploadFile
 			uploadFile: {
 				value: uploadFileProxy,

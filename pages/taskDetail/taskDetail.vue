@@ -75,7 +75,7 @@
 			let purl = this.$store.state.apiBaseUrl+"/api/Assignment/parent/"+this.task.id;
 			
 			if(!this.ptask){
-				uni.request({
+				uni.requestWithCookie({
 					url: curl,
 					success:(res)=> {
 						if(res.statusCode === 200){
@@ -86,7 +86,7 @@
 			}
 			
 			if(!this.ctasks){
-				uni.request({
+				uni.requestWithCookie({
 					url: purl,
 					success: (res) => {
 						if(res.statusCode === 200){

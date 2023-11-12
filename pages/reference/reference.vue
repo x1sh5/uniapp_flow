@@ -37,7 +37,7 @@
 		onLoad() {
 			let curl = this.$store.state.apiBaseUrl+"/api/Reference/count";
 			
-			let qurl = this.$store.state.apiBaseUrl+"/api/Reference/gets";
+			let qurl = this.$store.state.apiBaseUrl+"/api/Reference/gets?count=10&offset=0";
 			
 			uni.request({
 				url: curl,

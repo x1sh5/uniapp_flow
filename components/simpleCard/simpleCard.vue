@@ -1,3 +1,6 @@
+/**
+ * 任务申请组件
+ */
 <template>
 	<view>
 		<view class="simplecard">
@@ -10,7 +13,7 @@
 			</view>
 			
 			<view v-show="showbutton&&simpleInfo.agree===2" style=" flex-direction: row;">
-				<button class="agree" @click="agree">同意</button>
+				<button class="agree" @click="agree">同意并设置交付期限</button>
 				<button class="disagree" @click="disagree">拒绝</button>
 			</view>
 			<view class="reply" v-if="simpleInfo.agree===0">
@@ -18,6 +21,21 @@
 			</view>
 			<view class="reply" v-if="simpleInfo.agree===1">
 				已同意
+			</view>
+			<view v-if="deadline.isArchive">
+				<view v-if="deadline.finish">任务以完成</view>
+				<view v-else>任务失败</view>
+			</view>
+			<view v-else>
+				<view style="margin-top: 180px;" v-if="simpleInfo.agree===1&&deadline">
+					<uni-countdown :day="deadline.days" :hour="deadline.hours" 
+					 :minute="deadline.minutes" :second="deadline.seconds">
+					</uni-countdown>
+					<view>
+						<button @click="complete">确认完成</button>
+						<button @click="failure">未达到要求</button>
+					</view>
+				</view>
 			</view>
 		</view>
 		
@@ -29,7 +47,7 @@
 		name:"simpleCard",
 		data() {
 			return {
-
+				deadline:""
 			};
 		},
 		props:{
@@ -116,6 +134,45 @@
 					url:"/pages/message/chat/chat?cid="+this.simpleInfo.taskId+
 						"&userName="+this.simpleInfo.userName+"&userId="+this.simpleInfo.userId,
 				})
+			},
+			archive(ensure){
+				uni.showModal({
+					title:"进行‘确认’操作后, 任务将不再能修改。",
+					editable:true,
+					placeholderText:"输入‘确认’完成任务！",
+					success: (res) => {
+						if (res.confirm){
+							if(res.content=='确认'){
+								uni.request({
+									url:this.$store.state.apiBaseUrl+"/api/Assignment/archive/"+this.simpleInfo.taskId,
+									data:{complete:ensure},
+									method:"POST",
+									success:(resl)=>{
+										if(resl.statusCode!==200){
+											uni.showToast({
+												title:"操作失败。"
+											})
+										}
+									}
+								});
+							}else{
+								uni.showToast({
+									title:"内容无效。"
+								})
+							}
+						}
+					}
+				})
+				
+			},
+			complete(e){
+				console.log(e)
+				this.archive('yes');
+
+			},
+			failure(e){
+				this.archive('no')
+				
 			}
 		},
 		computed:{
@@ -132,11 +189,24 @@
 				}
 				return "类型";
 			},
+			//留言
 			comment(){
 				if(this.simpleInfo&&this.simpleInfo.comment){
 					return this.simpleInfo.comment;
 				}
 				return "";
+			}
+		},
+		beforeMount(){
+			if(this.simpleInfo.agree===1){
+				uni.requestWithCookie({
+					url:this.$store.state.apiBaseUrl+"/api/Assignment/deadline/"+this.simpleInfo.taskId,
+					success: (res) => {
+						if(res.statusCode===200){
+							this.deadline = res.data;
+						}
+					}
+				})
 			}
 		}
 	}
