@@ -118,13 +118,13 @@
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							// #ifdef H5
-							const newTask = pages[pages.length - 2]; // 获取页面A的实例
+							this.newTask = pages[pages.length - 2]; // 获取页面A的实例
 							// #endif
 							
 							// #ifdef MP-WEIXIN
-							const newTask = pages[pages.length - 1]; // 获取页面A的实例
+							this.newTask = pages[pages.length - 1]; // 获取页面A的实例
 							// #endif
-							newTask.$vm.updateTask(this.id, {ctx:res, files: lastFiles}); // 修改页面A的属性a1的值
+							this.newTask.$vm.updateTask(this.id, {ctx:res, files: lastFiles}); // 修改页面A的属性a1的值
 						}
 					}
 				})

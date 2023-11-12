@@ -58,17 +58,21 @@ const _sfc_main = {
     backEvent() {
       if (this.tasks.length > 0) {
         common_vendor.index.showModal({
-          content: "返回后以编辑的内容将会消失，是否放弃修改。",
+          content: "返回后已编辑的内容将会消失，是否放弃修改？",
           success: function(res) {
             if (res.confirm) {
-              common_vendor.index.navigateBack();
+              common_vendor.index.navigateBack({
+                url: "/pages/addtask/addtask"
+              });
             } else if (res.cancel) {
               console.log("用户点击取消");
             }
           }
         });
       } else {
-        common_vendor.index.navigateBack();
+        common_vendor.index.navigateBack({
+          url: "/pages/addtask/addtask"
+        });
       }
     },
     checkResult(data) {
