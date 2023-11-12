@@ -33,8 +33,8 @@ const _sfc_main = {
           });
           const pages = getCurrentPages();
           if (pages.length >= 2) {
-            const newTask = pages[pages.length - 1];
-            newTask.$vm.updateTask(this.id, { ctx: res, files: lastFiles });
+            this.newTask = pages[pages.length - 1];
+            this.newTask.$vm.updateTask(this.id, { ctx: res, files: lastFiles });
           }
         }
       });

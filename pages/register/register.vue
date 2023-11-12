@@ -23,7 +23,7 @@
 			</view>
 			<view>
 				<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent" style="transform:scale(0.7); margin-top: 5%;"/> 
-				<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout" style="color: #6c4ad1;">《流沙系统用户协议》</label></label>
+				<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout" style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
 				<view class="tips">{{aggrementCheckTip}}</view>
 			</view>
 			<button  class="lgtip-button" form-type="submit">注册</button>

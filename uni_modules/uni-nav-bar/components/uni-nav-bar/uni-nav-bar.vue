@@ -32,7 +32,7 @@
 							<uni-icons :color="themeColor" :type="rightIcon" size="22" />
 						</view>
 						<view class="uni-navbar-btn-text" v-if="rightText.length && !rightIcon.length">
-							<text class="uni-nav-bar-right-text" :style="{ color: themeColor}">{{ rightText }}</text>
+							<text class="uni-nav-bar-right-text" :style="{ color: themeColor, fontSize: '12px'}">{{ rightText }}</text>
 						</view>
 					</slot>
 				</view>
