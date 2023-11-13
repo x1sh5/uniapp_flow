@@ -48,8 +48,9 @@
 					<input maxlength="6" :disabled="rewardEditable" type="digit" class="reward" v-model="reward" />
 					<!-- @blur="updateReward" -->
 					<view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
-					<uni-data-select :disabled="task.main===1" :localdata="rewardtypeSymbol.options" :clear="false"
-						:modelValue="rewardtype" placeholder="类型" @change="rewardTypeChange" v-if="editable">
+					<uni-data-select class="s" :disabled="task.main===1" :localdata="rewardtypeSymbol.options"
+						:clear="false" :modelValue="rewardtype" placeholder="类型" @change="rewardTypeChange"
+						v-if="editable">
 
 					</uni-data-select>
 				</view>
@@ -609,11 +610,9 @@
 		grid-template-columns: 0.8fr 0.3fr 0.8fr 1fr;
 		position: relative;
 
-
 		width: 730rpx;
 		height: 365rpx;
 		border-radius: 10rpx;
-
 
 		background-color: #ffffff;
 		/*设置背景颜色 */
@@ -636,24 +635,17 @@
 		z-index: -1;
 	}
 
-
-
 	.r12c13 {
 		display: block;
 		position: absolute;
-		z-index:1;
+		z-index: 1;
 		grid-row-start: 1;
 		grid-row-end: 5;
 		grid-column-start: 1;
 		grid-column-end: 5;
-
 		height: 165rpx;
 
 	}
-
-
-
-
 
 	.task1,
 	.task2,
@@ -776,7 +768,6 @@
 
 	}
 
-
 	.margin-top5 {
 		display: block;
 		position: absolute;
@@ -823,11 +814,34 @@
 
 	}
 
+	/*回馈值选择框*/
+	.s {
+		display: block;
+		position: absolute;
+		z-index: 2;
+		border-bottom: 1px dashed gray;
+		flex-basis: 20rpx;
+		text-align: center;
+
+		margin-top: 30rpx;
+		margin-left: -50rpx;
+		font-size: 20rpx;
+		grid-row-start: 3;
+		grid-row-end: 3;
+		grid-column-start: 3;
+		grid-column-end: 3;
+		height: 40rpx;
+		width: 60rpx;
+
+		background-color: #2d87f3;
+	}
+
+
 	/*回馈值*/
 	.rewardbox {
 		display: block;
 		position: absolute;
-		z-index: 2;
+		z-index: 1;
 		grid-row-start: 3;
 		grid-row-end: 3;
 		grid-column-start: 2;
@@ -846,8 +860,8 @@
 		grid-row-end: 4;
 		grid-column-start: 1;
 		grid-column-end: 1;
-
-
+		margin-left: 70rpx;
+		margin-left: -40px;
 		font-size: 24rpx;
 		height: 40rpx;
 		width: 130rpx;
@@ -884,8 +898,7 @@
 		grid-row-end: 4;
 		grid-column-start: 3;
 		grid-column-end: 5;
-		margin-left: 30px;
-
+		margin-left: 70rpx;
 
 
 	}

@@ -3,7 +3,7 @@
 		<refer :refer="refer" :editable="true"></refer>
 	</view>
 	<view>
-		<button style="width: 80px;height: 40px;"  @click="commit">提交</button>
+		<button class="t"  @click="commit">提交</button>
 	</view>
 </template>
 
@@ -59,5 +59,20 @@
 </script>
 
 <style>
-
+ .t{
+	display: flex;
+    height: 70px;
+    width: 100%;
+    background-color:#5500ff;
+    margin-left: auto;
+    margin-right: auto;
+    /* align-content: center; */
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+	margin-bottom: 5px;
+	color: #ffffff;
+	border: 1px solid #5500ff;
+	transform: translate(0rpx, -180rpx) scale(1);
+  }
 </style>

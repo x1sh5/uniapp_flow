@@ -42,7 +42,7 @@
 			},
 			color: {
 				type: String,
-				default: '#333333'
+				default: '#6c4ad1'
 			},
 			size: {
 				type: [Number, String],
