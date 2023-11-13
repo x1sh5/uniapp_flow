@@ -25,7 +25,7 @@
 		
 		  <!-- 预计工时 第二行第一列 -->
 			  <view class="presumedtime" >
-				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">截止日期</view>
+				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">预计用时</view>
 				<view class="rowlayout-y" style="position:relative;margin: 0 8rpx;">
 <!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
