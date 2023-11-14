@@ -9,9 +9,10 @@
 			<input name="userName" class="lg-input" type="text" value="" />
 			<text class="y">密码：</text>
 			<input name="password" class="lg-input" password value="" />
-			<button class="button" form-type="submit">登录</button>
-			<button class="button" @click="register">注册</button>
+			<button class="login-button" form-type="submit">登录</button>
+			
 		</form>
+		<button class="register-button" @click="register">还未注册？</button>
 		<!-- <button class="weixin-login-button" @click="weixin_login">使用微信登录</button> -->
 
 	</view>

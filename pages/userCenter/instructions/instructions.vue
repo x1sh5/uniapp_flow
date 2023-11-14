@@ -776,9 +776,14 @@
 							</view>
 
 							<!-- 折叠面板 -->
-							<view v-if="!isSubPanelCollapsed[6][3]">
+							<view v-if="!isSubPanelCollapsed[6][4]">
 								<text>
-									这是第三个折叠面板中的子面板2的内容。
+									--当公共资金池存在资金时，<br />
+									--首先填充系统运行维护的基础费用的公共支出；<br />
+									--其余额次之用于社员发起的活动经费；<br />
+									--再次之之余额用于无劳动能力的注册用户的补贴规程上。<br /><text>\n\n</text>
+									
+									---公共资金池归零时无需主动填充。<br /><text>\n\n</text>
 								</text>
 							</view>
 						</view>
@@ -801,7 +806,7 @@
 			<view style="position:relative;margin: 0 60rpx;" v-if="!isPanelCollapsed[7]">
 				<text>
 					<text>\n\n</text>
-					特别鸣谢：向先生<br /><text>\n\n</text>
+					<text class="bold">特别鸣谢：向先生</text><br /><br /><text>\n\n</text>
 				</text>
 				<view>
 					<!-- 主面板 -->
