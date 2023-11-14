@@ -30,7 +30,7 @@
 				<view class="rowlayout-y" style="position:relative;margin: 0 8rpx;">
 					<!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
-					<uni-datetime-picker type="datetime" v-model="deadline" @change="biupdatePt">
+					<uni-datetime-picker :disabled="!editable" type="datetime" v-model="deadline" @change="biupdatePt">
 						<view class="uni-input">{{deadline}}</view>
 					</uni-datetime-picker>
 					<!-- <picker class="input" mode="date" :value="deadline" @change="biupdatePt">

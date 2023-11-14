@@ -12,7 +12,7 @@
 				<button class="contact" @click="contact">联系</button>
 			</view>
 
-			<view v-show="showbutton&&simpleInfo.agree===2" style=" flex-direction: row;">
+			<view v-show="simpleInfo.agree===2" style=" flex-direction: row;">
 				<button class="agree" @click="agree">同意并设置交付期限</button>
 				<button class="disagree" @click="disagree">拒绝</button>
 			</view>
@@ -27,7 +27,7 @@
 				<view v-else>任务失败</view>
 			</view>
 			<view v-else>
-				<view style="margin-top: 180px;" v-if="simpleInfo.agree===1&&deadline">
+				<view style="margin-top: 10px;" v-if="simpleInfo.agree===1&&deadline">
 					<uni-countdown :day="deadline.days" :hour="deadline.hours" :minute="deadline.minutes"
 						:second="deadline.seconds">
 					</uni-countdown>
@@ -37,6 +37,13 @@
 					</view>
 				</view>
 			</view>
+
+			<uni-datetime-picker style="width: 0px;height: 0px;" ref="calendar" type="datetime"
+				@deadtime-change="deadtimeChange" v-model="deadtime">
+				<view class="uni-input"></view>
+			</uni-datetime-picker>
+
+
 		</view>
 
 	</view>
@@ -47,7 +54,9 @@
 		name: "simpleCard",
 		data() {
 			return {
-				deadline: ""
+				deadline: "",
+				resetDeadline: false,
+				newDeadtime:undefined
 			};
 		},
 		props: {
@@ -66,37 +75,11 @@
 			showbutton: true
 		},
 		methods: {
+			//重设截止日期
 			agree(e) {
 				console.log("接取任务")
-				let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.simpleInfo.id;
-				uni.requestWithCookie({
-					url: url,
-					success: (res) => {
-						if (res.statusCode === 200) {
-							if (res.data.data.success) {
-								uni.showModal({
-									content: res.data.message
-								});
-								this.simpleInfo.agree = 1;
-							} else {
-								uni.showModal({
-									content: res.data.data.reason
-								})
-							}
-						} else {
-							uni.showModal({
-								content: "网络出错"
-							})
-						}
+				this.$refs.calendar.show();
 
-					},
-					fail: (err) => {
-						console.log("failed")
-						uni.showModal({
-							content: err
-						})
-					}
-				});
 			},
 			disagree(e) {
 				let url = this.$store.state.apiBaseUrl + "/api/TaskRequest/disagree/" + this.simpleInfo.id;
@@ -176,6 +159,46 @@
 			failure(e) {
 				this.archive('no')
 
+			},
+			//接取任务
+			deadtimeChange(e) {
+				if (e == 'cancel') {
+					this.resetDeadline = false;
+					this.newDeadtime= this.oldDeadline
+				}
+				if (e == 'ensure') {
+					this.resetDeadline = true;
+					let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.simpleInfo.id;
+					uni.requestWithCookie({
+						url: url,
+						data:{deadline:this.deadtime},
+						success: (res) => {
+							if (res.statusCode === 200) {
+								if (res.data.data.success) {
+									uni.showModal({
+										content: res.data.message
+									});
+									this.simpleInfo.agree = 1;
+								} else {
+									uni.showModal({
+										content: res.data.data.reason
+									})
+								}
+							} else {
+								uni.showModal({
+									content: "网络出错"
+								})
+							}
+
+						},
+						fail: (err) => {
+							console.log("failed")
+							uni.showModal({
+								content: err
+							})
+						}
+					});
+				}
 			}
 		},
 		computed: {
@@ -198,20 +221,33 @@
 					return this.simpleInfo.comment;
 				}
 				return "";
-			}
+			},
+			deadtime: {
+				get() {
+					if(!this.newDeadtime)return this.oldDeadline;
+					return this.newDeadtime;
+				},
+				set(value) {
+					this.newDeadtime = value;
+				}
+			},
 		},
 		beforeMount() {
+			
 			if (this.simpleInfo.agree === 1) {
+				//获取计时器相关信息
 				uni.requestWithCookie({
 					url: this.$store.state.apiBaseUrl + "/api/Assignment/deadline/" + this.simpleInfo.taskId,
 					success: (res) => {
 						if (res.statusCode === 200) {
 							this.deadline = res.data;
+							this.oldDeadline = res.data.OriDeadline.indexOf("T").substring(0, index);
 						}
 					}
 				})
 			}
-		}
+		},
+		
 	}
 </script>
 

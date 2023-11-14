@@ -1,7 +1,7 @@
 <template>
 	<view class="chatitem">
 		<view v-if="isLeft" class="leftitem" :style="{backgroundColor: bgColor}">
-			<image class="icon" :src="icon" alt="Local Image"></image>
+			<image @click="toUserHome" class="icon" :src="icon" alt="Local Image"></image>
 			<view class="info">
 				<view class="nickname" :style="{fontSize: nameSize, color: nameColor}">{{ nickname }}</view>
 				<view v-if="message.contentType=='string'" class="message"
@@ -74,6 +74,10 @@
 			iconSize: {
 				type: String,
 				default: "90rpx"
+			},
+			userId:{
+				type:Number,
+				default:-1
 			}
 		},
 		data() {
@@ -97,7 +101,7 @@
 				if (this.$data.$imgWidth > 200) return '200px';
 				return this.$data.$imgWidth+'px';
 				
-			}
+			},
 
 		},
 		methods: {
@@ -105,6 +109,11 @@
 				uni.previewImage({
 					urls: [this.imgsrc],
 				});
+			},
+			toUserHome(e){
+				uni.navigateTo({
+					url:"/pages/userhomepage/userhomepage?id="
+				})
 			}
 		},
 		
