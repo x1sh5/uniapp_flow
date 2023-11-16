@@ -1,6 +1,7 @@
 export const References = {
 	namespaced: true,
 	state:{
+		//存储参考区间的竖直对象
 		datas: new Array(),
 	},
 	getters:{

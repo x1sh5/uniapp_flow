@@ -53,6 +53,7 @@
 						return "done"
 					}
 				},
+				task:undefined,
 				status:["waitfor","undone","done","announcement"]
 			}
 		},
@@ -70,12 +71,13 @@
 			},
 		},
 		mounted() {
+		
 			console.log("mounted")//3
-			let curl = this.$store.state.apiBaseUrl+"/api/Assignment/childs/"+this.task.id;
-			let purl = this.$store.state.apiBaseUrl+"/api/Assignment/parent/"+this.task.id;
+			let curl = this.$store.state.apiBaseUrl+"/api/Assignment/childs/"+this.id;
+			let purl = this.$store.state.apiBaseUrl+"/api/Assignment/parent/"+this.id;
 			
 			if(!this.ptask){
-				uni.request({
+				uni.requestWithCookie({
 					url: curl,
 					success:(res)=> {
 						if(res.statusCode === 200){
@@ -86,7 +88,7 @@
 			}
 			
 			if(!this.ctasks){
-				uni.request({
+				uni.requestWithCookie({
 					url: purl,
 					success: (res) => {
 						if(res.statusCode === 200){
@@ -95,6 +97,11 @@
 					}
 				});
 			}
+			
+		},
+		async beforeMount() {
+			console.log("beforeMount")
+
 
 		},
 		onLoad(op) {
@@ -106,17 +113,24 @@
 		  	this.task = task
 		  }else{
 		  	let qurl = this.$store.state.apiBaseUrl+"/api/Assignment/"+this.id;
-		  	uni.requestWithCookie({
-		  		url: qurl,
-		  		success: (res) => {
-		  			if(res.statusCode==200){
-		  				this.task = res.data
+		  	const ps = new Promise((resolve,reject)=>{
+		  		uni.requestWithCookie({
+		  			url: qurl,
+		  			success: (res) => {
+		  				if(res.statusCode==200){
+		  					resolve(res.data)
+		  					
+		  				}
 		  			}
-		  		}
+		  		})
+		  	});
+		  	ps.then((o)=>{
+		  		this.task = o;
+		  		this.mode = this.status[o.status]
 		  	})
+		  	
 		  }
-		  
-		  this.mode = this.status[this.task.status]
+
 		  // let t  = this.$store.getters.getTaskById(id)
 		  // if(t!==undefined && t!==null){
 			 //  this.task  = t

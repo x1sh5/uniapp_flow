@@ -19,7 +19,7 @@
 
 	<view class="text2" :style="{textDecoration: curIndex===1?'underline':'',color:curIndex===1?'#4d1ae4':''}" @click="HisAccipt">历史接受</view>
 	<view v-if="curIndex==0">
-		<view v-for="item in publishs" :key="item.id" class="custom-margin">
+		<view v-for="item in hispubs" :key="item.id" class="custom-margin">
 			<!-- #ifdef H5 -->
 			<cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)"
 				style="margin-top:5px;" />
@@ -32,7 +32,7 @@
 		</view>
 	</view>
 	<view v-else>
-		<view v-for="item in publishs" :key="item.id" class="custom-margin">
+		<view v-for="item in hisacpt" :key="item.id" class="custom-margin">
 			<!-- #ifdef H5 -->
 			<cardinfo v-bind:task="item" v-bind:editable="false" :mode="mode(item)" @click.native="toDetails(item.id)"
 				style="margin-top:5px;" />
@@ -55,46 +55,49 @@
 		data() {
 			return {
 				user:{},
-				$publishs: [],
 				$hispubs:[],
 				$hisacpt:[],
 				curIndex:0
 			}
 		},
 		computed: {
-			publishs() {
-				//必须使用this.$data.$publishs;而不能使用this.$publishs;
-				//because it starts with a reserved character ("$" or "_") and is not proxied on the render context
-				return this.$data.$publishs;
-			},
+			
 			hispubs(){
-				if(this.$data.$hispubs.length===0){
-					uni.request({
-						url:""
-					})
-				}
+
+				return this.$data.$hispubs
 			},
 			hisacpt(){
-				if(this.$data.$hisacpt.length===0){
-					uni.request({
-						url:""
-					})
-				}
+
+				return this.$data.$hisacpt
 			},
-			maxid() {
-				if (this.$data.$publishs.length === 0) {
+			pubMaxid() {
+				if (this.$data.$hispubs.length === 0) {
 					return 0
 				}
-				return this.$data.$publishs[this.$data.$publishs.length - 1].id;
+				return this.$data.$hispubs[this.$data.$hispubs.length - 1].id;
+			},
+			acptMaxid() {
+				if (this.$data.$hisacpt.length === 0) {
+					return 0
+				}
+				return this.$data.$hisacpt[this.$data.$hisacpt.length - 1].id;
 			}
 		},
 		mounted() {
-			if (!this.hasPushlishs) {
-				console.log("get user task")
+			if(this.$data.$hisacpt.length===0){
 				uni.requestWithCookie({
-					url: this.$store.state.apiBaseUrl + "/api/Assignment/byuser?count=10&offset=" + this.maxid+"&id="+this.user.id,
-					success: (res) => { //必须用箭头函数
-						this.$data.$publishs = res.data;
+					url:this.$store.state.apiBaseUrl+"/api/AssignmentUser/holds/"+this.id+"?count=10&offset="+this.pubMaxid,
+					success: (res) => {//必须用箭头函数
+						this.$data.$hisacpt = res.data;
+					}
+				})
+			}
+			
+			if(this.$data.$hispubs.length===0){
+				uni.requestWithCookie({
+					url:this.$store.state.apiBaseUrl+"/api/Assignment/byuser?id="+this.id+"&count=10&offset="+this.pubMaxid,
+					success: (res) => {//必须用箭头函数
+						this.$data.$hispubs = res.data;
 					}
 				})
 			}
@@ -125,7 +128,7 @@
 
 		},
 		onLoad(op) {
-			let id = op.id;
+			this.id = op.id;
 			if(id){
 				uni.requestWithCookie({
 					url: this.$store.state.apiBaseUrl + "/api/AuthUser/" + id,

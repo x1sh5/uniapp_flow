@@ -1,16 +1,19 @@
+/**
+* 任务申请组件
+*/
 <template>
 	<view>
 		<view class="simplecard">
 			<view class="title" style="width: 75%;height: 40px;">{{title}}</view>
 			<view class="sc-comment" placeholder="留言...">{{comment}}</view>
 			<view class="proposer">申请人：</view>
-			<view >
+			<view>
 				<view class="name">{{simpleInfo.userName}}</view>
 				<button class="contact" @click="contact">联系</button>
 			</view>
-			
-			<view v-show="showbutton&&simpleInfo.agree===2" style=" flex-direction: row;">
-				<button class="agree" @click="agree">同意</button>
+
+			<view v-show="simpleInfo.agree===2" style=" flex-direction: row;">
+				<button class="agree" @click="agree">同意并设置交付期限</button>
 				<button class="disagree" @click="disagree">拒绝</button>
 			</view>
 			<view class="reply" v-if="simpleInfo.agree===0">
@@ -19,20 +22,44 @@
 			<view class="reply" v-if="simpleInfo.agree===1">
 				已同意
 			</view>
+			<view v-if="deadline.isArchive">
+				<view v-if="deadline.finish">任务以完成</view>
+				<view v-else>任务失败</view>
+			</view>
+			<view v-else>
+				<view style="margin-top: 10px;" v-if="simpleInfo.agree===1&&deadline">
+					<uni-countdown :day="deadline.days" :hour="deadline.hours" :minute="deadline.minutes"
+						:second="deadline.seconds">
+					</uni-countdown>
+					<view>
+						<button @click="complete">确认完成</button>
+						<button @click="failure">未达到要求</button>
+					</view>
+				</view>
+			</view>
+
+			<uni-datetime-picker style="width: 0px;height: 0px;" ref="calendar" type="datetime"
+				@deadtime-change="deadtimeChange" v-model="deadtime">
+				<view class="uni-input"></view>
+			</uni-datetime-picker>
+
+
 		</view>
-		
+
 	</view>
 </template>
 
 <script>
 	export default {
-		name:"simpleCard",
+		name: "simpleCard",
 		data() {
 			return {
-
+				deadline: "",
+				resetDeadline: false,
+				newDeadtime:undefined
 			};
 		},
-		props:{
+		props: {
 			/**
 			 * @type {object} simpleInfo
 			 * @type {number} simpleInfo.id 
@@ -44,56 +71,30 @@
 			 * @type {string} simpleInfo.comment 留言
 			 * @type {string} simpleInfo.tag 任务类型
 			 */
-			simpleInfo:Object,
-			showbutton:true
+			simpleInfo: Object,
+			showbutton: true
 		},
-		methods:{
-			agree(e){
+		methods: {
+			//重设截止日期
+			agree(e) {
 				console.log("接取任务")
-				let url = this.$store.state.apiBaseUrl+"/api/Assignment/take/"+this.simpleInfo.id;
-				uni.requestWithCookie({
-					url:url,
-					success: (res) => {
-						if(res.statusCode === 200){
-							if(res.data.data.success){
-								uni.showModal({
-									content: res.data.message
-								});
-								this.simpleInfo.agree=1;
-							}else{
-								uni.showModal({
-									content: res.data.data.reason
-								})
-							}
-						}else{
-							uni.showModal({
-								content: "网络出错"
-							})
-						}
-				
-					},
-					fail:(err)=>{
-						console.log("failed")
-						uni.showModal({
-							content: err
-						})
-					}
-				});
+				this.$refs.calendar.show();
+
 			},
-			disagree(e){
-				let url = this.$store.state.apiBaseUrl+"/api/TaskRequest/disagree/"+this.simpleInfo.id;
+			disagree(e) {
+				let url = this.$store.state.apiBaseUrl + "/api/TaskRequest/disagree/" + this.simpleInfo.id;
 				uni.requestWithCookie({
-					url:url,
+					url: url,
 					method: "PUT",
 					data: this.simpleInfo,
 					success: (res) => {
-						if(res.statusCode===200){
+						if (res.statusCode === 200) {
 							uni.showModal({
 								showCancel: false,
 								content: res.data
 							});
-							this.simpleInfo.agree=0;
-						}else{
+							this.simpleInfo.agree = 0;
+						} else {
 							uni.showModal({
 								showCancel: false,
 								content: res.data.title
@@ -102,7 +103,7 @@
 
 
 					},
-					fail:(err)=>{
+					fail: (err) => {
 						console.log("failed")
 						uni.showModal({
 							content: err
@@ -110,213 +111,344 @@
 					}
 				});
 			},
-			contact(e){
-				
+			contact(e) {
+
 				uni.navigateTo({
-					url:"/pages/message/chat/chat?cid="+this.simpleInfo.taskId+
-						"&userName="+this.simpleInfo.userName+"&userId="+this.simpleInfo.userId,
+					url: "/pages/message/chat/chat?cid=" + this.simpleInfo.taskId +
+						"&userName=" + this.simpleInfo.userName + "&userId=" + this.simpleInfo.userId,
 				})
+			},
+			archive(ensure) {
+				uni.showModal({
+					title: "进行‘确认’操作后, 任务将不再能修改。",
+					editable: true,
+					placeholderText: "输入‘确认’完成任务！",
+					success: (res) => {
+						if (res.confirm) {
+							if (res.content == '确认') {
+								uni.request({
+									url: this.$store.state.apiBaseUrl + "/api/Assignment/archive/" +
+										this.simpleInfo.taskId,
+									data: {
+										complete: ensure
+									},
+									method: "POST",
+									success: (resl) => {
+										if (resl.statusCode !== 200) {
+											uni.showToast({
+												title: "操作失败。"
+											})
+										}
+									}
+								});
+							} else {
+								uni.showToast({
+									title: "内容无效。"
+								})
+							}
+						}
+					}
+				})
+
+			},
+			complete(e) {
+				console.log(e)
+				this.archive('yes');
+
+			},
+			failure(e) {
+				this.archive('no')
+
+			},
+			//接取任务
+			deadtimeChange(e) {
+				if (e == 'cancel') {
+					this.resetDeadline = false;
+					this.newDeadtime= this.oldDeadline
+				}
+				if (e == 'ensure') {
+					this.resetDeadline = true;
+					let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.simpleInfo.id;
+					uni.requestWithCookie({
+						url: url,
+						data:{deadline:this.deadtime},
+						success: (res) => {
+							if (res.statusCode === 200) {
+								if (res.data.data.success) {
+									uni.showModal({
+										content: res.data.message
+									});
+									this.simpleInfo.agree = 1;
+								} else {
+									uni.showModal({
+										content: res.data.data.reason
+									})
+								}
+							} else {
+								uni.showModal({
+									content: "网络出错"
+								})
+							}
+
+						},
+						fail: (err) => {
+							console.log("failed")
+							uni.showModal({
+								content: err
+							})
+						}
+					});
+				}
 			}
 		},
-		computed:{
-			title(){
-				if(this.simpleInfo&&this.simpleInfo.title){
+		computed: {
+			title() {
+				if (this.simpleInfo && this.simpleInfo.title) {
 					return this.simpleInfo.title;
 				}
 				return "标题出错";
 			},
-			type(){
-				if(this.simpleInfo&&this.simpleInfo.tag){
+			type() {
+				if (this.simpleInfo && this.simpleInfo.tag) {
 					//return this.$store.getters.getTaskType(this.simpleInfo.typeId).name;
 					return this.simpleInfo.tag
 				}
 				return "类型";
 			},
-			comment(){
-				if(this.simpleInfo&&this.simpleInfo.comment){
+			//留言
+			comment() {
+				if (this.simpleInfo && this.simpleInfo.comment) {
 					return this.simpleInfo.comment;
 				}
 				return "";
+			},
+			deadtime: {
+				get() {
+					if(!this.newDeadtime)return this.oldDeadline;
+					return this.newDeadtime;
+				},
+				set(value) {
+					this.newDeadtime = value;
+				}
+			},
+		},
+		beforeMount() {
+			
+			if (this.simpleInfo.agree === 1) {
+				//获取计时器相关信息
+				uni.requestWithCookie({
+					url: this.$store.state.apiBaseUrl + "/api/Assignment/deadline/" + this.simpleInfo.taskId,
+					success: (res) => {
+						if (res.statusCode === 200) {
+							this.deadline = res.data;
+							this.oldDeadline = res.data.OriDeadline.indexOf("T").substring(0, index);
+						}
+					}
+				})
 			}
-		}
+		},
+		
 	}
 </script>
 
 <style>
-	.simplecard{
+	.simplecard {
 		display: flex;
 		flex-direction: column;
-		height: 700px;
+		height: 530rpx;
 		margin-left: 50px;
 		margin-bottom: 10px;
-		  background-color: #ffffff; 
+		background-color: #ffffff;
+		border: 1px solid #6c4ad1;
 	}
-	.title{
-		 z-index:3;
-	display: flex;
+
+	.title {
+		z-index: 3;
+		display: flex;
 		margin-left: 50rpx;
 		margin-top: 30rpx;
-		 transform: translate(0rpx,0rpx) scale(1);
-	padding-left:0px;/* 右缩进 */
-	border: 0px solid #6c4ad1;
-	 font-weight: 900;
+		transform: translate(0rpx, 0rpx) scale(1);
+		padding-left: 0px;
+		/* 右缩进 */
+		border: 0px solid #6c4ad1;
+		font-weight: 900;
 
-	color: #4723b3;
-	font-size: 36rpx;
+		color: #4723b3;
+		font-size: 36rpx;
 	}
-	
-	.proposer{
-		 z-index:5;
-	display: flex;
+
+	/* 申请人 */
+	.proposer {
+		z-index: 5;
+		display: flex;
 		margin-left: 50rpx;
-		 transform: translate(400rpx,-180rpx) scale(1);
-	  background-color: #ffffff; 
+		transform: translate(500rpx, 30rpx) scale(1);
+		background-color: #ffffff;
 
-	  padding-left: 15px;/* 右缩进 */
-	  border: 1px solid #6c4ad1;
-	  background-color: rgb(255, 255, 255);
-	  color: #4723b3;
-	  font-size: 10px;
+		padding-left: 15px;
+		border: 1px solid #6c4ad1;
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 10px;
 	}
 
 
-	.name{
-		 z-index:10;
-	display: flex;
-		margin-left:0rpx;
-		 transform: translate(450rpx,-150rpx) scale(1);
-		 margin-top: -30rpx;
-	padding-left: 15px;/* 右缩进 */
-	border: 1px solid #6c4ad1;
-	background-color: rgb(255, 255, 255);
-	color: #4723b3;
-	font-size: 10px;
+	.name {
+		z-index: 10;
+		display: flex;
+		margin-left: 0rpx;
+		transform: translate(480rpx, 50rpx) scale(1);
+		margin-top: -30rpx;
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1px solid #6c4ad1;
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 26px;
 	}
-	.sc-comment:empty::before{
-		
+
+	.sc-comment:empty::before {
+
 		display: flex;
 		content: attr(placeholder);
-	
-		  background-color: #ffffff; 
+
+		background-color: #ffffff;
 	}
-	.sc-comment{
-		 z-index:1;
+
+	.sc-comment {
+		z-index: 1;
 		height: 100rpx;
 		width: 700rpx;
-		
+
 		margin-top: 30rpx;
 		margin-left: 50rpx;
 		border: 1px solid black;
-		
-	display: flex;
+
+		display: flex;
 		margin-left: 50rpx;
-		 transform: translate(0rpx,0rpx) scale(1);
-	padding-left: 15px;/* 右缩进 */
-	border: 1px solid #6c4ad1;
-	background-color: rgb(255, 255, 255);
-	color: #4723b3;
-	font-size: 10px;
-		  
-	}
-	
-	 /* 联系 */
-	.contact{
-	 z-index: 10;
-	 
-	 display: flex;  /* 使用Flex布局 */
-	    justify-content: center;  /* 水平居中 */
-	 align-items: center;   /* 垂直居中 */
-	 
-  transform: translate(0rpx,0rpx) scale(1);
+		transform: translate(0rpx, 0rpx) scale(1);
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1px solid #6c4ad1;
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 10px;
 
-  border: 10px solid  #6c4ad1;
-  border-radius: 80rpx; /*设置按钮边框为圆角 */
-  border: none;
-  
-  width: 700rpx;
-  height: 150rpx;
-  
-  color: rgb(255, 255, 255); 
-  background-color: #4d1ae4; 
-  font-size: 80rpx;
-  text-align: center;
-/* top: calc(150vh - 350rpx);
-   */
- 
-
- margin-left: -120px;
-   margin-top: 0rpx;
-   box-shadow:0ch;
- padding-left: 500rpx; 
-   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
- background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 	}
-	
-	
-	.agree{
-	 display: flex;  /* 使用Flex布局 */ 
-	 z-index: 10;
-	 
-	  transform: translate(300rpx,100rpx) scale(1);
-	  
-	    border: 1px solid  #6c4ad1;
-	    border-radius:670rpx; /* 新增：设置按钮边框为圆角 */
-		
-	    width: 700rpx;
-	    height: 90rpx;
-		
-	   color: rgb(255, 255, 255); 
-	    background-color: #6c4ad1; /* 新增：设置按钮背景颜色为绿色 */
+
+	/* 联系 */
+	.contact {
+		z-index: 10;
+
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+
+		transform: translate(0rpx, -60rpx) scale(1);
+
+		border: 10px solid #6c4ad1;
+		border-radius: 80rpx;
+		/*设置按钮边框为圆角 */
+		border: none;
+
+		width: 700rpx;
+		height: 150rpx;
+
+		color: rgb(255, 255, 255);
+		background-color: #4d1ae4;
+		font-size: 80rpx;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+	   */
+
+
+		margin-left: -120px;
+		margin-top: 0rpx;
+		box-shadow: 0ch;
+		padding-left: 500rpx;
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+	}
+
+
+	.agree {
+		display: flex;
+		/* 使用Flex布局 */
+		z-index: 10;
+
+		transform: translate(300rpx, 100rpx) scale(1);
+
+		border: 1px solid #6c4ad1;
+		border-radius: 670rpx;
+		/* 新增：设置按钮边框为圆角 */
+
+		width: 700rpx;
+		height: 90rpx;
+
+		color: rgb(255, 255, 255);
+		background-color: #6c4ad1;
+		/* 新增：设置按钮背景颜色为绿色 */
 		/*text-align: center;
-		 top: calc(150vh - 350rpx);
-	     */
-		    margin-top: 00rpx;
-		 padding-left: -100rpx; 
-		      margin-left: 00px;
-	 
+			 top: calc(150vh - 350rpx);
+		     */
+		margin-top: 00rpx;
+		padding-left: -100rpx;
+		margin-left: 00px;
 
-	     align-items: center; /* 垂直居中 */
-	 
-	     box-shadow:0ch;
-	
-	     box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
-		  background-image: -webkit-linear-gradient(0deg, #886cdb%, #4d1ae4 100%);
+
+		align-items: center;
+		/* 垂直居中 */
+
+		box-shadow: 0ch;
+
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
+		background-image: -webkit-linear-gradient(0deg, #886cdb%, #4d1ae4 100%);
 	}
-	
-	.disagree{
-		 display: flex; 
-	
-		 align-items: center; /* 垂直居中 */
-		 z-index: 10;
-	  transform: translate(450rpx,120rpx) scale(1);
-	  border: 1px solid  #6c4ad1;
-	  border-radius: 60px; /* 新增：设置按钮边框为圆角 */
-	  
-	  width: 700rpx;
-	  height: 90rpx;
-	  
-	  margin-top: 0rpx;
-	   padding-left: -500rpx; 
-	      margin-left: 00rpx;
-	
-	
-	
-	   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
-	   background-color: rgb(255, 255, 255); /* 新增：设置注册按钮背景颜色为白色 */
-	   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+
+	.disagree {
+		display: flex;
+
+		align-items: center;
+		/* 垂直居中 */
+		z-index: 10;
+		transform: translate(450rpx, 120rpx) scale(1);
+		border: 1px solid #6c4ad1;
+		border-radius: 60px;
+		/* 新增：设置按钮边框为圆角 */
+
+		width: 700rpx;
+		height: 90rpx;
+
+		margin-top: 0rpx;
+		padding-left: -500rpx;
+		margin-left: 00rpx;
+
+
+
+		color: #6c4ad1;
+		/* 新增：设置注册按钮文字颜色为绿色 */
+		background-color: rgb(255, 255, 255);
+		/* 新增：设置注册按钮背景颜色为白色 */
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
 	}
-	.reply{
-		 z-index: 1;
-	display: flex;
-		margin-left: 50rpx;
-		  margin-top: -190rpx;
-		 transform: translate(0rpx,0rpx) scale(1);
-	  background-color: #ffffff; 
-	
-	  padding-left: 15px;/* 右缩进 */
-	  border: 1px solid #6c4ad1;
-	  background-color: rgb(255, 255, 255);
-	  color: #4723b3;
-	  font-size: 10px;
+
+	/* 回复 */
+	.reply {
+		z-index: 1;
+		display: flex;
+		margin-left: 0rpx;
+		margin-top: 0rpx;
+		transform: translate(480rpx, -90rpx) scale(1);
+		background-color: #ffffff;
+
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1px solid #6c4ad1;
+		background-color: #6c4ad1;
+		color: #ffffff;
+		font-size: 10px;
 	}
 </style>

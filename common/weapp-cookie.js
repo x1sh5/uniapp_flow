@@ -603,12 +603,14 @@ const cookieStore = new CookieStore();
 			options.success = function(u) {
 				//self add
 				let cookiestr = cookieStore.getRequestQueries(domain, "/");
+				//是否有过登录历史
 				if (cookiestr) {
 					if (u.statusCode === 401) {
 						uni.request({
 							url: host + "/api/Account/refresh-token?" + cookiestr,
 							success(res) {
 								if (res.statusCode !== 200) {
+									//是否已在登录页面
 									if (!loginRdirect) {
 										uni.showToast({
 											title: "登录过期！",
@@ -623,7 +625,7 @@ const cookieStore = new CookieStore();
 								} else {
 									cookieStore.setResponseCookies(res.data.accessToken, domain);
 									cookieStore.setResponseCookies(res.data.refreshToken, domain);
-
+									//执行原来的url
 									cookieRequestProxy(options);
 
 								}
@@ -631,6 +633,7 @@ const cookieStore = new CookieStore();
 						});
 					}
 				} else {
+					//是否已在登录页面
 					if (!loginRdirect) {
 						uni.showToast({
 							title: "登录过期！",
@@ -703,9 +706,9 @@ const cookieStore = new CookieStore();
 		// 使用 requestProxy 覆盖微信原生 request、uploadFile、downloadFile 接口
 		Object.defineProperties(api, {
 			// request
-			request: {
-				value: requestProxy,
-			},
+			// request: {
+			// 	value: requestProxy,
+			// },
 			// uploadFile
 			uploadFile: {
 				value: uploadFileProxy,

@@ -3,15 +3,20 @@
 	<view class="content">
 		<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索任务" clearButton="auto" cancelButton="none"
 			@focus="search" />
-		<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
+		<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500">
 			<swiper-item>
-				<view class="swiper-item uni-bg-red">A</view>
+				<image class="swiper-item-image" src="/static/p1.png">
+				</image>
 			</swiper-item>
+
 			<swiper-item>
-				<view class="swiper-item uni-bg-green">B</view>
+				<image class="swiper-item-image" src="/static/p2.png">
+				</image>
 			</swiper-item>
+
 			<swiper-item>
-				<view class="swiper-item uni-bg-blue">C</view>
+				<image class="swiper-item-image" src="/static/p3.png">
+				</image>
 			</swiper-item>
 		</swiper>
 
@@ -21,7 +26,7 @@
 
 		<view>
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<view :style="{color:currentTab==index ? '#fb6583' : ''}" :data-current="index"
+				<view :style="{color:currentTab==index ? '#6c4ad1' : '#8d8aa1'}" :data-current="index"
 					v-for="(item,index) in branchTypes" :key="index" class="sc-button"
 					@click="searchByTpe(item.id,item.name)">{{ item.name }}</view>
 			</scroll-view>
@@ -152,10 +157,9 @@
 				})
 			}, //requestWithCookie
 			searchByTpe(id, name) {
-				if(id===''){
+				if (id === '') {
 					this.currentTab = 0
-				}
-				else{
+				} else {
 					this.currentTab = id
 				}
 
