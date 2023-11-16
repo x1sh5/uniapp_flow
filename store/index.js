@@ -20,6 +20,8 @@ const store = createStore({
 		branchs:[],
 		currentTask:{},
 		taskTypes:[],
+		//未读信息
+		unread:0,
 		apiBaseUrl: baseUrl, //"https://testsite:7221/api", 
 		tasks:new Map(),
 		workSocket : markRaw( new signalR.HubConnectionBuilder()
@@ -339,6 +341,13 @@ const store = createStore({
 			
 		},
 		receiveMsg({commit,state,dispatch},{user,message}){
+			
+			state.unread+=1;
+			uni.setTabBarBadge({
+				index:2,
+				text:state.unread
+			})
+			
 			console.log("receiveMsg")
 			let userId = parseInt(user);
 			message.cid = userId;
@@ -351,6 +360,13 @@ const store = createStore({
 			state.messages.get(userId).push(message);
 			dispatch('Msgs/updateAsync', message)
 			
+		},
+		unreadChange({state},count){
+			state.unread-=count;
+			uni.setTabBarBadge({
+				index:2,
+				text:state.unread
+			})
 		},
 	    async connect({state,actions}) {
 	        // try {

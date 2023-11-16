@@ -44,7 +44,7 @@
 				text1: "", //输入框消息
 				userName: "",
 				userId: NaN, //发卡人id
-				calcHeight: NaN, //
+				calcHeight: NaN, //计算后的scrollview高度
 				//messages:[],
 
 			}

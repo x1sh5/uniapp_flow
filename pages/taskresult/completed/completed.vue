@@ -17,14 +17,34 @@
 			/>
 		</view>
 		<view class="btn-wrapper">
-			<view class="status-btn" data-type="orderList" bindtap="onTapReturn">查看任务</view>
-			<view class="status-btn" data-type="home" bindtap="onTapReturn">返回首页</view>
+			<view class="status-btn" data-type="orderList" @click="viewTask">查看任务</view>
+			<view class="status-btn" data-type="home" @click="goHome">返回首页</view>
 		</view>
 	</view>
 
 </template>
 
 <script>
+	export default{
+		props:{
+			taskid:Number
+		},
+		methods:{
+			viewTask(e){
+				if(this.taskid){
+					uni.navigateTo({
+						url:"/pages/taskDetail/taskDetail?id="+this.taskid
+					})
+				}
+	
+			},
+			goHome(e){
+				uni.reLaunch({
+					url:"/pages/index/index"
+				})
+			}
+		}
+	}
 </script>
 
 

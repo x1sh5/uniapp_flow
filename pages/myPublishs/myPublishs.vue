@@ -18,7 +18,7 @@
 		data() {
 			return {
 				hasPushlishs:false,
-				$publishs:[],
+				$publishs:[],//以发布任务
 			}
 		},
 		computed:{

@@ -55,9 +55,9 @@
 		data() {
 			return {
 				user:{},
-				$hispubs:[],
-				$hisacpt:[],
-				curIndex:0
+				$hispubs:[], //已发布任务
+				$hisacpt:[], //已接受任务
+				curIndex:0 //界面选项，0：已发布任务，1：已接受任务
 			}
 		},
 		computed: {

@@ -28,9 +28,9 @@
 				items:["历史发布","浏览记录","草稿箱"],
 				current: 0,
 				hasPushlishs:false,
-				$publishs:[],
+				$publishs:[], //已发布任务
 				hasHistorys:false,
-				$historys:[],
+				$historys:[], //历史浏览
 				//$complete:false,//数组，false表示为初始化
 			};
 		},

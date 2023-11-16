@@ -26,11 +26,11 @@
 
 			<!-- 预计工时 第二行第一列 -->
 			<view class="presumedtime">
-				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">预计用时</view>
+				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">截止日期</view>
 				<view class="rowlayout-y" style="position:relative;margin: 0 8rpx;">
 					<!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
-					<uni-datetime-picker type="datetime" v-model="deadline" @change="biupdatePt">
+					<uni-datetime-picker :disabled="!editable" type="datetime" v-model="deadline" @change="biupdatePt">
 						<view class="uni-input">{{deadline}}</view>
 					</uni-datetime-picker>
 					<!-- <picker class="input" mode="date" :value="deadline" @change="biupdatePt">

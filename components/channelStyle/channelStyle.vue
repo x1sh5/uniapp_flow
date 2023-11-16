@@ -58,6 +58,9 @@
 		},
 		methods:{
 			jump(){
+				
+				this.$store.dispatch("unreadChange",this.cc.unread)
+				
 				let userId = this.cc.cid;
 				let userName = this.cc.senderName;
 				uni.navigateTo({

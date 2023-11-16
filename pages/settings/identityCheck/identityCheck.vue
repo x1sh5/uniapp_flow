@@ -22,8 +22,8 @@
 	export default {
 		data() {
 			return {
-				pos:"",
-				neg:""
+				pos:"",//正面照
+				neg:""//反面照
 			}
 		},
 		methods: {

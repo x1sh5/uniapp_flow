@@ -2,7 +2,7 @@
 	<view>
 		<form class="usercenter" @submit="register">
 			<view>
-				<input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15" placeholder="真实姓名："/>
+				<input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15" placeholder="昵称："/>
 				<view class="tips">{{nameCheckTip}}</view>
 			</view>
 			<view >
