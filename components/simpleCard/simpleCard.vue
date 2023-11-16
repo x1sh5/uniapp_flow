@@ -405,7 +405,7 @@
 		box-shadow: 0ch;
 
 		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
-		background-image: -webkit-linear-gradient(0deg, #886cdb%, #4d1ae4 100%);
+		background-image: -webkit-linear-gradient(0deg, #886cdb, #4d1ae4 100%);
 	}
 
 	.disagree {

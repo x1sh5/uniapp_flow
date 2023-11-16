@@ -3,10 +3,10 @@
 
 		<view class="userinfo">
 			<!-- avatar -->
-			<view class="user-avatar">
+			<view @click="toSetting" class="user-avatar">
 				<image :src="imgsrc" class="user-avatar-img"></image>
 			</view>
-			<view>{{ userName }}</view>
+			<view style="margin-left:3%; margin-top:7%; font-size:larger;">{{ userName }}</view>
 		</view>
 
 
@@ -33,8 +33,8 @@
 				<view class="my-icons icon-tianxie" @click="holds(0)">
 					<view class="item_title">待完成</view>
 				</view>
-				<view class="my-icons icon-duigou" @click="holds(1)">
-					<view class="item_title">完成项目</view>
+				<view class="my-icons icon-duigou" @click="toOrder">
+					<view class="item_title">我的支付</view>
 				</view>
 				<view class="my-icons icon-fuwuqingqiu" @click="myApply">
 					<view class="item_title">任务申请</view>
@@ -47,18 +47,12 @@
 		<view class="misc">
 			<view @click="toReference" class="user-view" style="display: flex;flex-direction: row; position: relative">
 				<view>审核区间</view>
-				<view style="position: absolute;right: 0;">></view>
+				<view style="position: absolute;right: 20px;">></view>
 			</view>
 
 
 			<view class="user-view">帮助中心</view>
-			<view style="position: absolute;right: 20rpx;margin-top: -90rpx;">v</view>
-
-
-			<view @click="toOrder" class="user-view2" style="display: flex; flex-direction: row;">
-				<view>我的支付</view>
-				<view style="position: absolute;right: 710rpx;">></view>
-			</view>
+			<view style="position: absolute;right: 20rpx;margin-top: -90rpx;"></view>
 
 			<view class="user-view2" @click="showDevelopmentTip">技能互助文档</view>
 
@@ -67,8 +61,7 @@
 
 			<!-- -->
 
-			<view @click="toinstructions" class="user-view2"
-				style="display: flex;flex-direction: row; position: relative">
+			<view @click="toinstructions" class="user-view2" style="display: flex;flex-direction: row; position: relative">
 				<view>使用说明</view>
 				<view style="position: absolute;right: 710rpx;">></view>
 			</view>
@@ -82,155 +75,159 @@
 		</view>
 
 
-		<view v-show="hasLogin">
-			<button @click="signout">退出</button>
-		</view>
+		<div class="logparent">
+			<view v-show="hasLogin" class="logview">
+				<button class="log" @click="signout">退出登录</button>
+			</view>
 
-		<view v-show="!hasLogin">
-			<button @click="signin">登录</button>
-			<button @click="signup">注册</button>
-		</view>
+			<view v-show="!hasLogin" class="logview">
+				<button class="log" @click="signin">登录</button>
+			</view>
+			<view v-show="!hasLogin" class="logview">
+				<button class="log" @click="signup">注册</button>
+			</view>
+		</div>
 
 
 	</view>
 </template>
 
 <script>
-	import {
-		StorageKeys
-	} from "../../common/storageKeys.js";
+import {
+	StorageKeys
+} from "../../common/storageKeys.js";
 
-	export default {
-		data() {
-			return {
-				login: false,
-				isPanelCollapsed: true, // 默认折叠
-			};
-		},
-		computed: {
-			hasLogin: {
-				get() {
-					return this.$store.state.$hasLogin;
-				},
-				set(value) {
-					this.login = value;
-					this.$store.state.$hasLogin = value;
-				}
+export default {
+	data() {
+		return {
+			login: false,
+			isPanelCollapsed: true, // 默认折叠
+		};
+	},
+	computed: {
+		hasLogin: {
+			get() {
+				return this.$store.state.$hasLogin;
 			},
-			userName() {
-				return this.$store.state.$userName;
-			},
-			imgsrc() {
-				return this.$store.state.useravatar
+			set(value) {
+				this.login = value;
+				this.$store.state.$hasLogin = value;
 			}
 		},
-		methods: {
-
-			showDevelopmentTip() {
-				uni.showToast({
-					title: '正在开发中',
-					icon: 'none', // 不显示图标
-					duration: 4000, // 提示持续时间，单位为毫秒
-
-				});
-			},
-			toReference(e) {
-				uni.navigateTo({
-					url: "/pages/reference/reference"
-				})
-			},
-			myPublishs(e) {
-				uni.navigateTo({
-					url: "/pages/myPublishs/myPublishs"
-				})
-			},
-			history(e) {
-				console.log(e)
-				uni.navigateTo({
-					url: "/pages/history/history"
-				})
-			},
-			holds(t) {
-				//任务接取情况
-				let turl = "/pages/holdTask/holdTask?current=" + t;
-				uni.navigateTo({
-					url: turl
-				})
-			},
-			taskReq(e) {
-				console.log(e);
-				uni.navigateTo({
-					url: "/pages/taskReq/taskReq"
-				});
-			},
-			myApply(e) {
-				console.log(e);
-				uni.navigateTo({
-					url: "/pages/myApply/myApply"
-				});
-			},
-			toOrder(e) {
-				uni.navigateTo({
-					url: "/pages/order/order"
-				});
-			},
-			toinstructions(e) {
-				uni.navigateTo({
-					url: "/pages/userCenter/instructions/instructions"
-				});
-			},
-			signin(e) {
-				uni.navigateTo({
-					url: "/pages/login/login?refer=usercenter"
-				});
-			},
-			signup(e) {
-				uni.navigateTo({
-					url: "/pages/register/register"
-				});
-			},
-			signout(e) {
-				console.log("signout")
-				const lurl = this.$store.state.apiBaseUrl + "/api/Account/logout"
-				uni.requestWithCookie({
-					url: lurl,
-					method: "POST",
-					success: () => {
-						this.$store.commit("loginOut");
-						this.hasLogin = this.$store.getters.hasLogin();
-						this.$nextTick();
-					}
-				});
-				uni.removeStorage({
-					key: StorageKeys.cookies
-				});
-				uni.removeStorage({
-					key: StorageKeys.taskContent
-				});
-				uni.removeStorage({
-					key: StorageKeys.userName
-				});
-
-			},
-			toSetting(e) {
-				uni.navigateTo({
-					url: "/pages/settings/settings"
-				});
-			}
+		userName() {
+			return this.$store.state.$userName;
 		},
-		onLoad() {
-			this.$store.commit("initHasLogin");
-			this.$store.commit("initUserInfo");
-
-		},
-
-		created() {
-			this.hasLogin = this.$store.getters.hasLogin();
+		imgsrc() {
+			return this.$store.state.useravatar
 		}
+	},
+	methods: {
 
+		showDevelopmentTip() {
+			uni.showToast({
+				title: '正在开发中',
+				icon: 'none', // 不显示图标
+				duration: 4000, // 提示持续时间，单位为毫秒
+
+			});
+		},
+		toReference(e) {
+			uni.navigateTo({
+				url: "/pages/reference/reference"
+			})
+		},
+		myPublishs(e) {
+			uni.navigateTo({
+				url: "/pages/myPublishs/myPublishs"
+			})
+		},
+		history(e) {
+			console.log(e)
+			uni.navigateTo({
+				url: "/pages/history/history"
+			})
+		},
+		holds(t) {
+			//任务接取情况
+			let turl = "/pages/holdTask/holdTask?current=" + t;
+			uni.navigateTo({
+				url: turl
+			})
+		},
+		taskReq(e) {
+			console.log(e);
+			uni.navigateTo({
+				url: "/pages/taskReq/taskReq"
+			});
+		},
+		myApply(e) {
+			console.log(e);
+			uni.navigateTo({
+				url: "/pages/myApply/myApply"
+			});
+		},
+		toOrder(e) {
+			uni.navigateTo({
+				url: "/pages/order/order"
+			});
+		},
+		toinstructions(e) {
+			uni.navigateTo({
+				url: "/pages/userCenter/instructions/instructions"
+			});
+		},
+		signin(e) {
+			uni.navigateTo({
+				url: "/pages/login/login?refer=usercenter"
+			});
+		},
+		signup(e) {
+			uni.navigateTo({
+				url: "/pages/register/register"
+			});
+		},
+		signout(e) {
+			console.log("signout")
+			const lurl = this.$store.state.apiBaseUrl + "/api/Account/logout"
+			uni.requestWithCookie({
+				url: lurl,
+				method: "POST",
+				success: () => {
+					this.$store.commit("loginOut");
+					this.hasLogin = this.$store.getters.hasLogin();
+					this.$nextTick();
+				}
+			});
+			uni.removeStorage({
+				key: StorageKeys.cookies
+			});
+			uni.removeStorage({
+				key: StorageKeys.taskContent
+			});
+			uni.removeStorage({
+				key: StorageKeys.userName
+			});
+
+		},
+		toSetting(e) {
+			uni.navigateTo({
+				url: "/pages/settings/settings"
+			});
+		}
+	},
+	onLoad() {
+		this.$store.commit("initHasLogin");
+		this.$store.commit("initUserInfo");
+
+	},
+
+	created() {
+		this.hasLogin = this.$store.getters.hasLogin();
 	}
+
+}
 </script>
 
 <style lang="less">
-	@import url('./userCenter.less');
+@import url('./userCenter.less');
 </style>
