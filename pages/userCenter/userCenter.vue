@@ -74,20 +74,14 @@
 			<view class="driver"></view>
 		</view>
 
+		<view v-show="hasLogin">
+			<button @click="signout">退出登录</button>
+		</view>
 
-		<div class="logparent">
-			<view v-show="hasLogin" class="logview">
-				<button class="log" @click="signout">退出登录</button>
-			</view>
-
-			<view v-show="!hasLogin" class="logview">
-				<button class="log" @click="signin">登录</button>
-			</view>
-			<view v-show="!hasLogin" class="logview">
-				<button class="log" @click="signup">注册</button>
-			</view>
-		</div>
-
+		<view v-show="!hasLogin">
+			<button @click="signin">登录</button>
+			<button @click="signup">注册</button>
+		</view>
 
 	</view>
 </template>
