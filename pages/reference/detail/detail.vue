@@ -10,19 +10,29 @@
 	export default {
 		data() {
 			return {
+				/**
+				 * @type {object} refer 审核区间参考
+				 * @type {Number} refer.id 
+				 * @type {String} refer.title 标题 
+				 * @type {String} refer.createtime 创建时间
+				 * @type {String} refer.content 内容：Map {Id:referItem}序列化后的内容
+				 * @type {String} refer.authid 作者id
+				 * @type {String} refer.version 版本
+				 * @type {String} refer.username 作者用户名
+				 */
 				refer: {},
 				dataLoaded: false
 			}
 		},
 		methods: {
-			edit(e){
+			edit(e) {
 				uni.navigateTo({
-					url: "/pages/reference/edit/edit?id="+this.id
+					url: "/pages/reference/edit/edit?id=" + this.id
 				})
 			},
-			history(e){
+			history(e) {
 				uni.navigateTo({
-					url: "/pages/reference/history/history?id="+this.id
+					url: "/pages/reference/history/history?id=" + this.id
 				})
 			}
 		},
@@ -35,10 +45,10 @@
 		beforeMount() {
 			console.log("beforeMount")
 		},
-		beforeRouteEnter(){
+		beforeRouteEnter() {
 			console.log("beforeRouteEnter")
 		},
-		beforeRouteLeave(){
+		beforeRouteLeave() {
 			console.log("beforeRouteLeave")
 		},
 		mounted() {
@@ -46,36 +56,36 @@
 
 		},
 		computed: {
-			r(){
+			r() {
 				return this.refer;
 			}
 		},
-		onLoad(op){
+		onLoad(op) {
 			console.log("onload");
 			this.id = op.id;
 
 			//setTimeout(() => {
-				// }, 2000); // 假设加载数据需要2秒
-				let kv;
-				let r = this.$store.getters["Refer/getReferById"](this.id);
-				
-				if( !(r.content instanceof Map)){
-					kv = JSON.parse(r.content);
-					let content = new Map();
-					if(typeof kv[Symbol.iterator] === 'function'){
-						for(let e of kv){
-							if(Array.isArray(e)&&e.length===2){
-								content.set(e[0],e[1]);
-							}
+			// }, 2000); // 假设加载数据需要2秒
+			let kv;
+			let r = this.$store.getters["Refer/getReferById"](this.id);
+
+			if (!(r.content instanceof Map)) {
+				kv = JSON.parse(r.content);
+				let content = new Map();
+				if (typeof kv[Symbol.iterator] === 'function') {
+					for (let e of kv) {
+						if (Array.isArray(e) && e.length === 2) {
+							content.set(e[0], e[1]);
 						}
 					}
-					r.content = content;
 				}
-				
+				r.content = content;
+			}
 
-				this.refer = r;
-			      this.dataLoaded = true;
-			   
+
+			this.refer = r;
+			this.dataLoaded = true;
+
 		}
 	}
 </script>

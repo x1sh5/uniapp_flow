@@ -2,7 +2,7 @@
 	<view>
 		<view class="content">
 			<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索审核区间" clearButton="auto" cancelButton="none"
-				@focus="search" />
+				@confirm="search" />
 			<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
 
 			</swiper>
@@ -39,6 +39,9 @@
 				uni.navigateTo({
 					url: "new/new"
 				})
+			},
+			search(e){
+				
 			}
 		},
 		onLoad() {
