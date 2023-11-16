@@ -5,7 +5,7 @@
 		<view class="table-cell" style="position: relative; margin: 0 40rpx;">
 			<view class="table-cell">
 				<view class="stitle">区间分配项</view>
-				<textarea :disabled="!editable" :value="stitle" @blur="stitleChange" rows="3" inputmode="text"
+				<textarea :disabled="!editable" :value="item.stitle" @blur="stitleChange" rows="3" inputmode="text"
 					auto-height class="textarea-field-ee" placeholder="*填写为达成总目标而拆解出的单个任务名称"
 					maxlength="1000"></textarea>
 			</view>
@@ -20,12 +20,12 @@
 			</view>
 			<view class="table-cell">
 				<view class="brief">设立来源</view>
-				<textarea :disabled="!editable" :value="brief" @blur="briefChange" rows="3" inputmode="text"
+				<textarea :disabled="!editable" :value="item.brief" @blur="briefChange" rows="3" inputmode="text"
 					auto-height class="textarea-field-gg" placeholder="*阐明在现实需求中的设立来源" maxlength="1000"></textarea>
 			</view>
 			<view class="table-cell">
 				<view class="detail">分配理由</view>
-				<textarea :disabled="!editable" :value="detail" @blur="detailChange" rows="3" inputmode="text"
+				<textarea :disabled="!editable" :value="item.detail" @blur="detailChange" rows="3" inputmode="text"
 					auto-height class="textarea-field-hh" placeholder="*给出这样分配报酬比例的理由(工作量角度)"
 					maxlength="1000"></textarea>
 			</view>
@@ -45,41 +45,44 @@
 <script>
 	/**
 	 * @property {Number} id 行号
-	 * @property {String} stitle 行标题
-	 * @property {String} rate 分配比例区间
-	 * @property {String} brief 设立来源
-	 * @property {String} detail 分配理由
-	 * @property {String} remark 备注
+	 * @property {Object} item 单条分配情况
+	 * @property {String} item.stitle 行标题
+	 * @property {String} item.rate 分配比例区间
+	 * @property {String} item.brief 设立来源
+	 * @property {String} item.detail 分配理由
+	 * @property {String} item.remark 备注
 	 */
 	export default {
 		name: "referItem",
 		data() {
 			return {
 
+				
 			};
 		},
 		props: {
+			item:Object,
 			id: Number,
-			stitle: {
-				type: String,
-				default: ""
-			},
-			rate: {
-				type: String,
-				default: ""
-			},
-			brief: {
-				type: String,
-				default: ""
-			},
-			detail: {
-				type: String,
-				default: ""
-			},
-			remark: {
-				type: String,
-				default: ""
-			},
+			// stitle: {
+			// 	type: String,
+			// 	default: ""
+			// },
+			// rate: {
+			// 	type: String,
+			// 	default: ""
+			// },
+			// brief: {
+			// 	type: String,
+			// 	default: ""
+			// },
+			// detail: {
+			// 	type: String,
+			// 	default: ""
+			// },
+			// remark: {
+			// 	type: String,
+			// 	default: ""
+			// },
 			//是否能编辑
 			editable: {
 				type: Boolean,
@@ -91,18 +94,27 @@
 		computed:{
 			min:{
 				get(){
-					return this.rate.split("-")[0]
+					let mm = this.item.rate.split("-");
+					if(mm.length==2){
+						return mm[0]
+					}
+					return ""
 				},
 				set(value){
-					this.rate = `${value}-${this.max}`
+					this.item.rate = `${value}-${this.max}`
 				}
 			},
 			max:{
 				get(){
-					return this.rate.split("-")[1]
+					let mm = this.item.rate.split("-");
+					if(mm.length==2){
+						return mm[1]
+					}
+					return ""
 				},
 				set(value){
-					this.rate = `${this.min}-${value}`
+					
+					this.item.rate = `${this.min}-${value}`
 				}
 			}
 		},
@@ -113,19 +125,19 @@
 			stitleChange(e) {
 				console.log(e);
 				//let x = this.$refs['stitle'+e];
-				this.stitle = e.detail.value
+				this.item.stitle = e.detail.value
 			},
 			rateChange(e) {
-				this.rate = e.detail.value
+				this.item.rate = e.detail.value
 			},
 			briefChange(e) {
-				this.brief = e.detail.value
+				this.item.brief = e.detail.value
 			},
 			detailChange(e) {
-				this.detail = e.detail.value
+				this.item.detail = e.detail.value
 			},
 			remarkChange(e) {
-				this.remark = e.detail.value
+				this.item.remark = e.detail.value
 			}
 		}
 

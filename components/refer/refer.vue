@@ -20,8 +20,7 @@
 
 
 		<view v-for="r in referItems" :key="r.id">
-			<referItem @del-Line="delLine" :brief="r.brief" :stitle="r.stitle" :rate="r.rate" :detail="r.detail"
-				:remark="r.remark" :id="r.id" :editable="editable"></referItem>
+			<referItem @del-Line="delLine" :item="r" :id="r.id" :editable="editable"></referItem>
 		</view>
 
 
@@ -421,7 +420,9 @@
 		border: 1px solid #6c4ad1;
 		border-radius: 40rpx;
 
-		transform: translate(-100rpx, -330rpx) scale(1);
+    /* translate 请尽量使用百分比 */
+	/* 	transform: translate(-100rpx, -330rpx) scale(1); */
+	
 		/* 新增：设置按钮边框为圆角 */
 		width: 350rpx;
 		height: 70rpx;
