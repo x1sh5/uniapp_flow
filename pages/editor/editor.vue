@@ -133,7 +133,6 @@
 			submitEvent() {
 				this.editorCtx.getContents({
 					success: (res) => {
-						console.log(res)
 						//uni.setStorageSync(StorageKeys.taskContent,res.html)
 						//res.dalta.ops[x].attributes.alt === "图像"
 						let images = res.delta.ops.filter(item => item.attributes && item.attributes.alt ===
@@ -232,7 +231,6 @@
 
 					sizeType: ['compressed'],
 					success: (res) => {
-						console.log(res)
 						let file = res.tempFiles[0]; //文件
 						this.files.push(file)
 						if (file.size > 5 * 1024 * 1024) {

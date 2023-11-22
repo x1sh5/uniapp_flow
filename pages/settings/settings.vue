@@ -35,9 +35,17 @@
 		},
 		methods: {
 			identityCheck(e){
-				uni.navigateTo({
-					url: "identityCheck/identityCheck"
-				});
+				if(!this.$store.getters.IsActive){
+					uni.navigateTo({
+						url: "identityCheck/identityCheck"
+					});
+				}else{
+					uni.showModal({
+						showCancel:true,
+						content:"已通过验证！"
+					})
+				}
+
 			},
 			unregister(e){
 				uni.navigateTo({
@@ -48,7 +56,7 @@
 				uni.showActionSheet({
 					itemList: ["选择文件"],
 					success: (e) => {
-						console.log(e)
+
 						if(e.tapIndex===0){
 							uni.chooseImage({
 								count:1,
@@ -57,7 +65,7 @@
 									height: 800
 								},
 								success: (e) => {
-									console.log(e);
+
 									if(e.tempFiles[0].size>5*1024*1024){
 										uni.showToast({
 											title: "图片大小超过5M,请重新选择。"
@@ -69,7 +77,7 @@
 										filePath: e.tempFilePaths[0],
 										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
 										success:(res)=>{
-											console.log(res)
+
 											if(res.statusCode===201){
 												let data = JSON.parse(res.data);
 												let imgurl = this.$store.state.apiBaseUrl+data[0].url;

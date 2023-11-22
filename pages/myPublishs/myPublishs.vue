@@ -55,7 +55,7 @@
 		},
 		onLoad() {
 			if(!this.hasPushlishs){
-				console.log("get user task")
+
 				uni.requestWithCookie({
 					url:this.$store.state.apiBaseUrl+"/api/Assignment/user?count=10&offset="+this.maxid,
 					success: (res) => {//必须用箭头函数

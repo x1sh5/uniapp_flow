@@ -77,7 +77,6 @@
 			}
 		},
 		onLoad() {
-			console.log("page index onload");
 
 		},
 		mounted() {
@@ -149,7 +148,6 @@
 
 
 			search(e) {
-				console.log("confirm:", e)
 				let searchWord = e.value;
 				uni.navigateTo({
 					url: "/pages/searchResult/searchResult"
@@ -169,13 +167,13 @@
 
 			},
 			inputEvent(e) {
-				console.log(e)
+
 			},
 			changeEvent(e) {
-				console.log(e)
+
 			},
 			modelChange(e) {
-				console.log(e)
+
 			},
 			backtotop(e) {
 				uni.pageScrollTo({

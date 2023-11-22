@@ -46,7 +46,7 @@
 			uni.requestWithCookie({
 				url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.cc.cid,
 				success: (res) => {
-					console.log(res.data)
+
 					this.imgsrc = res.data
 				}
 			})

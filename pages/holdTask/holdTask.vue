@@ -51,7 +51,7 @@
 							if(res.statusCode === 200){
 								if(res.data){
 									resolve(res.data);
-									console.log(res.data)
+
 									return res.data
 								}
 								
@@ -75,11 +75,9 @@
 		computed:{
 			incompletes(){
 				return this.$data.$incompletes;
-				console.log(items in $incompletes);
 			},
 			completes(){
 				return this.$data.$completes;
-				console.log(items in $completes);
 			}
 		},
 		onLoad(op) {

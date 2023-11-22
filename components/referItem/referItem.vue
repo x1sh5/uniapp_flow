@@ -123,7 +123,6 @@
 				this.$emit("del-Line", this.id)
 			},
 			stitleChange(e) {
-				console.log(e);
 				//let x = this.$refs['stitle'+e];
 				this.item.stitle = e.detail.value
 			},

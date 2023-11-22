@@ -95,7 +95,7 @@ function deepClone(obj) {
 			},
 		},
 		onLoad(op){
-			console.log("onload");
+
 			this.id = op.id;
 		
 			//setTimeout(() => {

@@ -20,7 +20,7 @@
 		},
 		methods: {
 			checkboxChange(e){
-				console.log(e);
+
 				if(e.detail.value[0]){
 					this.known = true;
 				}else{
@@ -36,7 +36,7 @@
 					editable: true,
 					placeholderText: "密码...",
 					success: (res) => {
-						console.log(res);
+
 						if(res.confirm){
 							uni.uploadFileWithCookie({
 							    url: qurl,  
@@ -45,7 +45,7 @@
 							    //header: header, // 可以加access_token等  
 							    formData:{password:res.content}, // 接口参数，json格式，底层自动转为FormData的格式数据  
 							    success: (res)=>{  
-							            console.log(res);  
+
 										if(res.statusCode===200){
 											uni.showModal({
 												content:res.data,

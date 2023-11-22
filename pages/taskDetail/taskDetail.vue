@@ -60,7 +60,7 @@
 			}
 		},
 		created() {
-			console.log("created") //1
+			//1
 		},
 		computed: {
 			enable() {
@@ -74,7 +74,7 @@
 		},
 		mounted() {
 
-			console.log("mounted") //3
+			//3
 			let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.id;
 			let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.id;
 
@@ -101,13 +101,8 @@
 			}
 
 		},
-		async beforeMount() {
-			console.log("beforeMount")
-
-
-		},
 		onLoad(op) {
-			console.log("options:", op) //2
+			//2
 			this.id = op.id;
 
 			let task = this.$store.getters.getTaskById(this.id);
@@ -211,7 +206,7 @@
 				});
 			},
 			reloadTask(task) {
-				console.log(task.id);
+
 				this.$store.commit("setCurrentTask", task);
 				uni.redirectTo({
 					url: "/pages/taskDetail/taskDetail?id=" + task.id

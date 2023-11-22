@@ -72,7 +72,7 @@
 			}
 		},
 		onLoad(op) {
-			console.log("options:", op)
+
 			this.id = op.id;
 			//来源自哪，重定向回原路
 			this.refer = op.refer;

@@ -44,7 +44,7 @@
 		computed:{
 			publishs(){
 				if(!this.hasPushlishs){
-					console.log("get user task")
+
 					uni.requestWithCookie({
 						url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 						success: (res) => {//必须用箭头函数
@@ -62,7 +62,7 @@
 			}
 		},
 		onLoad(options) {
-			console.log("get user task")
+
 			// uni.requestWithCookie({
 			// 	url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 			// 	method: 'GET',

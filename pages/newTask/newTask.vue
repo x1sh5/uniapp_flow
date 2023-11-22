@@ -49,11 +49,10 @@
 			},
 		},
 		created(op) {
-			console.log("created");
-			console.log(op);
+
 		},
 		onLoad(op) {
-			console.log("onload")
+
 			let reffer = op.createType;
 			let branchType = op.branchid;
 			this.$data.$mode = op.mode;
@@ -200,7 +199,7 @@
 				}
 			},
 			createTask(e) {
-				console.log(e);
+
 				//this.$store.commit('publish/createTask',{})
 				this.tasks.push({
 					"id": this.counter++,
@@ -223,10 +222,9 @@
 			},
 			updateTask(id, payload) {
 				//{ctx:res, files: lastFiles}
-				console.log("updateTask triggered", id, payload)
-				console.log(this.tasks)
+
 				let index = this.tasks.findIndex((item) => item.id === parseInt(id));
-				console.log(index)
+
 				if (index !== -1) {
 					this.tasks[index].description = payload.html;
 					this.$refs['id' + id][0].updateT(payload);
@@ -243,10 +241,10 @@
 			},
 		},
 		mounted() {
-			console.log(this.$refs)
+			
 		},
 		onShow() {
-			console.log(this.$refs)
+			
 		}
 	}
 </script>

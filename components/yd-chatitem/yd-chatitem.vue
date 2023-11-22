@@ -118,7 +118,6 @@
 		},
 		
 		beforeMount() {
-			console.log("onload")
 			if (this.message.contentType == 'img') {
 				uni.getImageInfo({
 					src: this.imgsrc,

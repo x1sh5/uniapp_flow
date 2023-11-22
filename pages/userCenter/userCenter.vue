@@ -136,7 +136,7 @@ export default {
 			})
 		},
 		history(e) {
-			console.log(e)
+
 			uni.navigateTo({
 				url: "/pages/history/history"
 			})
@@ -149,13 +149,13 @@ export default {
 			})
 		},
 		taskReq(e) {
-			console.log(e);
+
 			uni.navigateTo({
 				url: "/pages/taskReq/taskReq"
 			});
 		},
 		myApply(e) {
-			console.log(e);
+
 			uni.navigateTo({
 				url: "/pages/myApply/myApply"
 			});
@@ -181,7 +181,7 @@ export default {
 			});
 		},
 		signout(e) {
-			console.log("signout")
+
 			const lurl = this.$store.state.apiBaseUrl + "/api/Account/logout"
 			uni.requestWithCookie({
 				url: lurl,

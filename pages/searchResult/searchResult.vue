@@ -50,7 +50,7 @@
 			}
 		},
 		onLoad() {
-			console.log("page index onload")
+
 		},
 		mounted() {
 			uni.requestWithCookie({

@@ -36,32 +36,12 @@
 				})
 			}
 		},
-		beforeCreate() {
-			console.log("beforeCreate")
-		},
-		created() {
-			console.log("created")
-		},
-		beforeMount() {
-			console.log("beforeMount")
-		},
-		beforeRouteEnter() {
-			console.log("beforeRouteEnter")
-		},
-		beforeRouteLeave() {
-			console.log("beforeRouteLeave")
-		},
-		mounted() {
-			console.log("mounted")
-
-		},
 		computed: {
 			r() {
 				return this.refer;
 			}
 		},
 		onLoad(op) {
-			console.log("onload");
 			this.id = op.id;
 
 			//setTimeout(() => {
