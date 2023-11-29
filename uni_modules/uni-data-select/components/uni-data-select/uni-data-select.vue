@@ -236,7 +236,7 @@
 				}
 			},
 			clearVal() {
-				console.log("clearVal")
+				//console.log("clearVal")
 				this.emit('');
 				this.initDefVal();
 				if (this.collection) {
@@ -244,7 +244,7 @@
 				}
 			},
 			change(item) {
-				console.log(item)
+				//console.log(item)
 				if (!item.disable) {
 					this.showSelector = false
 					this.current = this.formatItemName(item)

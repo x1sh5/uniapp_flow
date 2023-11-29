@@ -44,7 +44,7 @@
 				text1: "", //输入框消息
 				userName: "",
 				userId: NaN, //发卡人id
-				calcHeight: NaN, //
+				calcHeight: NaN, //计算后的scrollview高度
 				//messages:[],
 
 			}
@@ -62,7 +62,6 @@
 		},
 		methods: {
 			async send(e) {
-				console.log(this.text1)
 				//
 				let cc = this.$store.getters["Msgs/getCcById"](this.userId)
 				if (!cc) {
@@ -98,7 +97,7 @@
 				uni.navigateBack()
 			},
 			receiveOld() {
-				console.log("scroll up");
+
 				let lastid = this.messages[0].cid;
 				let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&lastid=" +
 					lastid +
@@ -123,7 +122,7 @@
 				});
 			},
 			scrollDown() {
-				console.log("scroll down");
+
 			}
 		},
 		onLoad(op) {

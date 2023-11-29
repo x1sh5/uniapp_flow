@@ -43,7 +43,6 @@
 			},
 			updateTask(id,payload){
 				//{ctx:res, files: lastFiles}
-				console.log("updateTask triggered",id,payload)
 
 				this.item.description = payload.html;
 				this.$refs['id'+id].updateT(payload);

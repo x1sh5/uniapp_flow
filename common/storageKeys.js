@@ -8,3 +8,4 @@ StorageKeys.taskContent = "_task_content";
 StorageKeys.uuid = "__DC_STAT_UUID";
 StorageKeys.userAvatar = "_userAvatar";
 StorageKeys.searchs="_searchs";
+StorageKeys.isActive="_isActive";

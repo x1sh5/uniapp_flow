@@ -26,11 +26,11 @@
 
 			<!-- 预计工时 第二行第一列 -->
 			<view class="presumedtime">
-				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">预计用时</view>
+				<view :class="`bid${branchid}` " style="position:relative;margin: 0 8rpx;">截止日期</view>
 				<view class="rowlayout-y" style="position:relative;margin: 0 8rpx;">
 					<!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
-					<uni-datetime-picker type="datetime" v-model="deadline" @change="biupdatePt">
+					<uni-datetime-picker :disabled="!editable" type="datetime" v-model="deadline" @change="biupdatePt">
 						<view class="uni-input">{{deadline}}</view>
 					</uni-datetime-picker>
 					<!-- <picker class="input" mode="date" :value="deadline" @change="biupdatePt">
@@ -113,7 +113,7 @@
 			mode: String,
 		},
 		created() {
-			console.log("task is:", this.task)
+
 		},
 		computed: {
 			Id() {
@@ -270,7 +270,7 @@
 		},
 		methods: {
 			branchChange(e) {
-				console.log('picker发送选择改变，携带值为', e)
+
 				let branchIndex = e.detail.value;
 				this.branchIndex = branchIndex;
 				this.task.branchid = branchIndex;
@@ -283,7 +283,7 @@
 				// }
 			},
 			rewardTypeChange(e) {
-				console.log('rewardType 改变，携带值为', e)
+
 				this.task.rewardtype = parseInt(e.value);
 				let pages = getCurrentPages();
 				let current = pages[pages.length - 1]
@@ -300,6 +300,10 @@
 					if (!this.$store.state.$hasLogin) {
 						uni.navigateTo({
 							url: "/pages/logintips/logintips"
+						})
+					} else if (!this.$store.getters.IsActive) {
+						uni.navigateTo({
+							url: "/pages/settings/identityCheck/identityCheck"
 						})
 					} else {
 						const pages = getCurrentPages();
@@ -337,11 +341,11 @@
 				this.task.description = data;
 			},
 			biupdatePt(e) {
-				console.log(e);
+
 				this.task.deadline = e
 			},
 			check() {
-				console.log(this.task);
+
 				if (!this.task.title) {
 					this.$emit("check-Result", false);
 					uni.showModal({
@@ -391,7 +395,7 @@
 
 			},
 			put() {
-				console.log(this.task);
+
 				if (!this.task.title) {
 					uni.showModal({
 						content: "标题不能为空！"
@@ -453,7 +457,7 @@
 				});
 			},
 			removeTask(e) {
-				console.log(e);
+
 				if (this.task.main === 1) {
 					uni.showModal({
 						title: "错误！",
@@ -465,12 +469,12 @@
 				this.$emit('remove-task', this.task.id)
 			},
 			showPopup(e) {
-				console.log("click show");
+
 				//this.vis = 'visible';
 				this.vis = true
 			},
 			exitDel(e) {
-				console.log("exit");
+
 				//this.vis = 'hidden';
 				this.vis = false
 			}

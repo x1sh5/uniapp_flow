@@ -1,23 +1,23 @@
 <template>
-	<t-navbar background="#ffffff" left-icon="slot"  />
+	<!-- <t-navbar background="#ffffff" left-icon="slot"  /> -->
 	<view class="pay-result">
 		<view class="pay-status">
-			<t-icon name="check-circle-filled" size="60rpx" color="#47D368" />
+			<!-- <t-icon name="check-circle-filled" size="60rpx" color="#47D368" /> -->
 			<text>支付成功√</text>
 		</view>
 		<view class="pay-money">
 		已提交审核
-			<price
+<!-- 			<price
 			 wx:if="{{totalPaid}}"
 			 price="{{totalPaid}}"
 			 wr-class="pay-money__price"
 			 decimalSmaller
 			 fill
-			/>
+			/> -->
 		</view>
 		<view class="btn-wrapper">
-			<view class="status-btn" data-type="orderList" bindtap="onTapReturn">查看任务</view>
-			<view class="status-btn" data-type="home" bindtap="onTapReturn">返回首页</view>
+			<view class="status-btn" data-type="orderList" @click="viewTask">查看任务</view>
+			<view class="status-btn" data-type="home" @click="goHome">返回首页</view>
 		</view>
 	</view>
 	
@@ -25,6 +25,26 @@
 </template>
 
 <script>
+	export default{
+		props:{
+			taskid:Number
+		},
+		methods:{
+			viewTask(e){
+				if(this.taskid){
+					uni.navigateTo({
+						url:"/pages/taskDetail/taskDetail?id="+this.taskid
+					})
+				}
+
+			},
+			goHome(e){
+				uni.reLaunch({
+					url:"/pages/index/index"
+				})
+			}
+		}
+	}
 </script>
 
 <style>

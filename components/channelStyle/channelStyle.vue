@@ -46,7 +46,7 @@
 			uni.requestWithCookie({
 				url:this.$store.state.apiBaseUrl+"/api/AuthUser/avatar?id="+this.cc.cid,
 				success: (res) => {
-					console.log(res.data)
+
 					this.imgsrc = res.data
 				}
 			})
@@ -58,6 +58,9 @@
 		},
 		methods:{
 			jump(){
+				
+				this.$store.dispatch("unreadChange",this.cc.unread)
+				
 				let userId = this.cc.cid;
 				let userName = this.cc.senderName;
 				uni.navigateTo({

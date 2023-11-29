@@ -18,7 +18,7 @@
 		data() {
 			return {
 				hasPushlishs:false,
-				$publishs:[],
+				$publishs:[],//以发布任务
 			}
 		},
 		computed:{
@@ -55,7 +55,7 @@
 		},
 		onLoad() {
 			if(!this.hasPushlishs){
-				console.log("get user task")
+
 				uni.requestWithCookie({
 					url:this.$store.state.apiBaseUrl+"/api/Assignment/user?count=10&offset="+this.maxid,
 					success: (res) => {//必须用箭头函数

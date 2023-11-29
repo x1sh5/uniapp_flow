@@ -12,6 +12,18 @@
 			<view style="position: absolute;right: 0;">></view>
 		</view>
 		
+		<view class="driver"></view>
+		<view @click="phoneBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view  >绑定手机号</view>
+			<view style="position: absolute;right: 0;">></view>
+		</view>
+		
+		<view class="driver"></view>
+		<view @click="emailBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view  >绑定邮箱</view>
+			<view style="position: absolute;right: 0;">></view>
+		</view>
+		
 <!-- 		<view class="driver"></view>
 		<view @click="unregister" class="setting-view" style="display: flex;flex-direction: row; position: relative">
 			<view  >账号注销</view>
@@ -35,9 +47,17 @@
 		},
 		methods: {
 			identityCheck(e){
-				uni.navigateTo({
-					url: "identityCheck/identityCheck"
-				});
+				if(!this.$store.getters.IsActive){
+					uni.navigateTo({
+						url: "identityCheck/identityCheck"
+					});
+				}else{
+					uni.showModal({
+						showCancel:true,
+						content:"已通过验证！"
+					})
+				}
+
 			},
 			unregister(e){
 				uni.navigateTo({
@@ -48,7 +68,7 @@
 				uni.showActionSheet({
 					itemList: ["选择文件"],
 					success: (e) => {
-						console.log(e)
+
 						if(e.tapIndex===0){
 							uni.chooseImage({
 								count:1,
@@ -57,7 +77,7 @@
 									height: 800
 								},
 								success: (e) => {
-									console.log(e);
+
 									if(e.tempFiles[0].size>5*1024*1024){
 										uni.showToast({
 											title: "图片大小超过5M,请重新选择。"
@@ -69,7 +89,7 @@
 										filePath: e.tempFilePaths[0],
 										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
 										success:(res)=>{
-											console.log(res)
+
 											if(res.statusCode===201){
 												let data = JSON.parse(res.data);
 												let imgurl = this.$store.state.apiBaseUrl+data[0].url;
@@ -90,6 +110,16 @@
 						}
 
 					}
+				})
+			},
+			phoneBind(e){
+				uni.navigateTo({
+					url:"phoneBind/phoneBind"
+				})
+			},
+			emailBind(e){
+				uni.navigateTo({
+					url:"emailBind/emailBind"
 				})
 			}
 		}

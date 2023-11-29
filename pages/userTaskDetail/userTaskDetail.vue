@@ -28,9 +28,9 @@
 				items:["历史发布","浏览记录","草稿箱"],
 				current: 0,
 				hasPushlishs:false,
-				$publishs:[],
+				$publishs:[], //已发布任务
 				hasHistorys:false,
-				$historys:[],
+				$historys:[], //历史浏览
 				//$complete:false,//数组，false表示为初始化
 			};
 		},
@@ -44,7 +44,7 @@
 		computed:{
 			publishs(){
 				if(!this.hasPushlishs){
-					console.log("get user task")
+
 					uni.requestWithCookie({
 						url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 						success: (res) => {//必须用箭头函数
@@ -62,7 +62,7 @@
 			}
 		},
 		onLoad(options) {
-			console.log("get user task")
+
 			// uni.requestWithCookie({
 			// 	url:this.$store.state.apiBaseUrl+"/api/Assignment/user",
 			// 	method: 'GET',

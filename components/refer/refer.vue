@@ -61,7 +61,6 @@
 
 		},
 		beforeMount() {
-			console.log("beforeMount");
 			this.curr = this.refer.content.size;
 
 			if (this.curr > 0) {
@@ -77,7 +76,7 @@
 
 		},
 		mounted() {
-			console.log("mounted");
+
 		},
 		methods: {
 
@@ -108,18 +107,6 @@
 			},
 
 
-		},
-		beforeCreate() {
-			console.log("beforeCreate");
-		},
-		created() {
-			console.log("created");
-		},
-		beforeRouteEnter() {
-			console.log("beforeRouteEnter");
-		},
-		beforeRouteLeave() {
-			console.log("beforeRouteLeave");
 		}
 	}
 </script>

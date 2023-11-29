@@ -100,11 +100,10 @@
 			}
 		},
 		onLoad(op) {
-			const refer = op.refer
-			console.log(refer)
+			const refer = op.refer;
 			this.refer = refer;
 			if (refer === 'usercenter') {
-				console.log("equal")
+
 				this.depth = 1
 			} else {
 				this.depth = 3

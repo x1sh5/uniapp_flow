@@ -25,7 +25,7 @@
 		},
 		computed:{
 			results(){
-				console.log(this.$store.getters.publishResults);
+
 				return this.$store.getters.publishResults
 			}
 		}

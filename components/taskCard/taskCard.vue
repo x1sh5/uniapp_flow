@@ -81,9 +81,8 @@ export default {
 		},
 	},
 	onLoad(op) {
-		console.log("options:", op)
+
 		this.$data.task.branchid = op.branchid
-		console.log("branchid is ", this.$data.task.branchid)
 	},
 	methods: {
 		editEvent(e) {
@@ -97,7 +96,7 @@ export default {
 		},
 		updateT(payload) {
 			//{ctx:res, files: lastFiles}
-			console.log("updateT trigger", payload)
+
 			for (let file of payload.files) {
 				let index = payload.ctx.delta.ops.indexOf(x => x.attributes && x.attributes["data-local"] === file.path)
 				uni.uploadFileWithCookie({
@@ -109,9 +108,8 @@ export default {
 						if (('' + res.statusCode).startsWith('2')) {
 							let search = "<img src=\"" + file.path + "\" data-local=\"" + file.path + "\" alt=\"图像\">";
 							let replace = "<img src=\"" + this.$store.state.apiBaseUrl + "/flow/static/" + data.$values[0].url + "\">"
-							console.log(search, replace)
+
 							let newHtml = payload.ctx.html.replace(search, replace)
-							console.log(newHtml)
 							this.$refs.cardinfo.updateDes(newHtml)
 						}
 					}

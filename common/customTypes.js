@@ -35,3 +35,5 @@ export class FixedLengthQueue {
         return this.queue.slice(); // 返回存储结构的一个副本
     }
 }
+
+export var TaskStatus = ["waitfor","undone","done","announcement","fail"];
