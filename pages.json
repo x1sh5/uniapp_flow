@@ -322,6 +322,22 @@
         		"navigationBarTitleText" : "使用说明",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/settings/phoneBind/phoneBind",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "绑定手机号",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/settings/emailBind/emailBind",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "绑定邮箱",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {

@@ -16,11 +16,11 @@
 				<view class="tips">{{pwdVerifyTip}}</view>
 			</view>
 			<view>
-				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25" placeholder="邮箱：" />
+				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25" placeholder="邮箱(选填)：" />
 				<view class="tips">{{emailCheckTip}}</view>
 			</view>
 			<view>
-				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12" placeholder="手机号码：" />
+				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12" placeholder="手机号码(选填)：" />
 				<view class="tips">{{phoneCheckTip}}</view>
 			</view>
 			<view>
@@ -204,6 +204,10 @@
 									}
 								});
 							} else {
+								uni.showModal({
+									showCancel:true,
+									content:res.data.message
+								})
 								this.logintips = res.data.message;
 							}
 						}

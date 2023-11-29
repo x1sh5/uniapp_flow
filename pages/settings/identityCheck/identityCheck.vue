@@ -53,7 +53,7 @@
 					})
 					.catch((err) => {
 						uni.showToast({
-							title: err.message
+							title: err.message.errors
 						})
 					})
 			},

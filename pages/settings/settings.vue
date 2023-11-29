@@ -12,6 +12,18 @@
 			<view style="position: absolute;right: 0;">></view>
 		</view>
 		
+		<view class="driver"></view>
+		<view @click="phoneBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view  >绑定手机号</view>
+			<view style="position: absolute;right: 0;">></view>
+		</view>
+		
+		<view class="driver"></view>
+		<view @click="emailBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view  >绑定邮箱</view>
+			<view style="position: absolute;right: 0;">></view>
+		</view>
+		
 <!-- 		<view class="driver"></view>
 		<view @click="unregister" class="setting-view" style="display: flex;flex-direction: row; position: relative">
 			<view  >账号注销</view>
@@ -98,6 +110,16 @@
 						}
 
 					}
+				})
+			},
+			phoneBind(e){
+				uni.navigateTo({
+					url:"phoneBind/phoneBind"
+				})
+			},
+			emailBind(e){
+				uni.navigateTo({
+					url:"emailBind/emailBind"
 				})
 			}
 		}
