@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "审核区间参考",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-search-bar": "../../uni_modules/uni-search-bar/components/uni-search-bar/uni-search-bar"
+  }
 }

@@ -23,7 +23,7 @@
 				已同意
 			</view>
 			<view v-if="deadline.isArchive">
-				<view v-if="deadline.finish">任务以完成</view>
+				<view v-if="deadline.finish">任务已完成</view>
 				<view v-else>任务失败</view>
 			</view>
 			<view v-else>

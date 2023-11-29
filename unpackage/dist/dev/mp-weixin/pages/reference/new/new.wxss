@@ -1,0 +1,50 @@
+
+.commit-btn {
+		display: flex;
+		height: 70px;
+		width: 100%;
+		background-color: #5500ff;
+		margin-left: auto;
+		margin-right: auto;
+		/* align-content: center; */
+		justify-content: center;
+		flex-wrap: nowrap;
+		align-items: center;
+		margin-bottom: 5px;
+		color: #ffffff;
+		border: 1px solid #5500ff;
+		transform: translate(0rpx, -180rpx) scale(1);
+		position: relative;
+		margin-top:300px;
+}
+.a {
+		z-index: -1;
+		padding: 20rpx;
+		/* 内边距 */
+	
+		width: 100%;
+		text-decoration: none;
+		font-size: 40rpx;
+		/* 尺寸 */
+		letter-spacing: 6rpx;
+		/* 字母之间的间距 */
+		line-height: 50rpx;
+		/* 文本上下位置 */
+		height: 70rpx;
+		/* 背景高度 */
+		color: #ffffff;
+		/* 字体颜色 */
+
+		padding-left: 20rpx;
+		/* 右缩进 */
+	
+		text-align: center;
+		/*水平居中对齐 */
+		display: flex;
+		/*变为弹性容器 */
+		justify-content: center;
+		/*主轴上水平居中对齐 */
+		align-items: center;
+		/*垂直居中对齐 */
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+}

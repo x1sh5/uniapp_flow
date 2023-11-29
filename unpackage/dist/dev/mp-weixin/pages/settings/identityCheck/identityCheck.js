@@ -13,6 +13,9 @@ const _sfc_main = {
         let o = JSON.parse(res.data);
         this.pos = this.$store.state.apiBaseUrl + o[0].url;
       }).catch((err) => {
+        common_vendor.index.showToast({
+          title: err.message
+        });
       });
     },
     uploadNeg(e) {
@@ -20,6 +23,9 @@ const _sfc_main = {
         let o = JSON.parse(res.data);
         this.neg = this.$store.state.apiBaseUrl + o[0].url;
       }).catch((err) => {
+        common_vendor.index.showToast({
+          title: err.message
+        });
       });
     },
     check(e) {

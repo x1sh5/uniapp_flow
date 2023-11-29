@@ -288,8 +288,8 @@ const store = common_vendor.createStore({
         console.error("fetch tasks error:", error);
       }
     },
-    async sendMsg({ commit, state: state2 }, { user, message }) {
-      await state2.workSocket.invoke("SendToUser", user, message);
+    async sendMsg({ commit, state: state2 }, { user, message, contentType }) {
+      await state2.workSocket.invoke("SendToUser", user, message, contentType);
       console.log("sendMsg");
       let userId = parseInt(user);
       let chat = state2.messages.get(userId);
@@ -373,9 +373,9 @@ const store = common_vendor.createStore({
                 },
                 success: (e2) => {
                   console.log(e2);
-                  if (e2.tempFiles[0].size > 2 * 1024 * 1024) {
+                  if (e2.tempFiles[0].size > 5 * 1024 * 1024) {
                     common_vendor.index.showToast({
-                      title: "图片大小超过2M,请重新选择。"
+                      title: "图片大小超过5M,请重新选择。"
                     });
                     return;
                   }

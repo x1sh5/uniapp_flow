@@ -1,1 +1,1 @@
-<view><refer wx:if="{{a}}" u-i="defb2e3a-0" bind:__l="__l" u-p="{{a}}"></refer></view><view><button style="width:80px;height:40px" bindtap="{{b}}">提交</button></view>
+<view class="table-row"><view class="table-cell a">建立新审核区间</view></view><view><refer wx:if="{{a}}" u-i="defb2e3a-0" bind:__l="__l" u-p="{{a}}"></refer></view><view><button class="commit-btn" bindtap="{{b}}">提交</button></view>

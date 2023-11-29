@@ -5,44 +5,45 @@ const _sfc_main = {
   data() {
     return {
       user: {},
-      $publishs: [],
       $hispubs: [],
       $hisacpt: [],
       curIndex: 0
     };
   },
   computed: {
-    publishs() {
-      return this.$data.$publishs;
-    },
     hispubs() {
-      if (this.$data.$hispubs.length === 0) {
-        common_vendor.index.request({
-          url: ""
-        });
-      }
+      return this.$data.$hispubs;
     },
     hisacpt() {
-      if (this.$data.$hisacpt.length === 0) {
-        common_vendor.index.request({
-          url: ""
-        });
-      }
+      return this.$data.$hisacpt;
     },
-    maxid() {
-      if (this.$data.$publishs.length === 0) {
+    pubMaxid() {
+      if (this.$data.$hispubs.length === 0) {
         return 0;
       }
-      return this.$data.$publishs[this.$data.$publishs.length - 1].id;
+      return this.$data.$hispubs[this.$data.$hispubs.length - 1].id;
+    },
+    acptMaxid() {
+      if (this.$data.$hisacpt.length === 0) {
+        return 0;
+      }
+      return this.$data.$hisacpt[this.$data.$hisacpt.length - 1].id;
     }
   },
   mounted() {
-    if (!this.hasPushlishs) {
-      console.log("get user task");
+    if (this.$data.$hisacpt.length === 0) {
       common_vendor.index.requestWithCookie({
-        url: this.$store.state.apiBaseUrl + "/api/Assignment/byuser?count=10&offset=" + this.maxid + "&id=" + this.user.id,
+        url: this.$store.state.apiBaseUrl + "/api/AssignmentUser/holds/" + this.id + "?count=10&offset=" + this.pubMaxid,
         success: (res) => {
-          this.$data.$publishs = res.data;
+          this.$data.$hisacpt = res.data;
+        }
+      });
+    }
+    if (this.$data.$hispubs.length === 0) {
+      common_vendor.index.requestWithCookie({
+        url: this.$store.state.apiBaseUrl + "/api/Assignment/byuser?id=" + this.id + "&count=10&offset=" + this.pubMaxid,
+        success: (res) => {
+          this.$data.$hispubs = res.data;
         }
       });
     }
@@ -60,8 +61,8 @@ const _sfc_main = {
         url: "/pages/myTaskDetail/myTaskDetail?id=" + e
       });
     },
-    removeById(id) {
-      let index = this.publishs.findIndex((item) => item.id == id);
+    removeById(id2) {
+      let index = this.publishs.findIndex((item) => item.id == id2);
       if (index != -1) {
         this.publishs.splice(index, 1);
       }
@@ -74,7 +75,7 @@ const _sfc_main = {
     }
   },
   onLoad(op) {
-    let id = op.id;
+    this.id = op.id;
     if (id) {
       common_vendor.index.requestWithCookie({
         url: this.$store.state.apiBaseUrl + "/api/AuthUser/" + id,
@@ -107,7 +108,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.o((...args) => $options.HisAccipt && $options.HisAccipt(...args)),
     i: $data.curIndex == 0
   }, $data.curIndex == 0 ? {
-    j: common_vendor.f($options.publishs, (item, k0, i0) => {
+    j: common_vendor.f($options.hispubs, (item, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
         b: "b0c4a376-0-" + i0,
@@ -120,7 +121,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       };
     })
   } : {
-    k: common_vendor.f($options.publishs, (item, k0, i0) => {
+    k: common_vendor.f($options.hisacpt, (item, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
         b: "b0c4a376-1-" + i0,

@@ -86,5 +86,5 @@
 	/* 添加下划线 */
 	text-decoration-thickness: 15rpx;
 	/* 设置下划线的粗细 */
-	background-color: #ffff00;
+	background-color: #ffffff;
 }

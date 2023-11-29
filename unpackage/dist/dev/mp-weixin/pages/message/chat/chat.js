@@ -1,6 +1,6 @@
 "use strict";
-const common_vendor = require("../../common/vendor.js");
-const common_customTypes = require("../../common/customTypes.js");
+const common_vendor = require("../../../common/vendor.js");
+const common_customTypes = require("../../../common/customTypes.js");
 const _sfc_main = {
   data() {
     return {
@@ -9,21 +9,10 @@ const _sfc_main = {
       userName: "",
       userId: NaN,
       //发卡人id
-      calcHeight: NaN,
+      calcHeight: NaN
       //
-      avatar: "",
-      imgsrc: ""
       //messages:[],
     };
-  },
-  beforeMount() {
-    common_vendor.index.requestWithCookie({
-      url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.userId,
-      success: (res) => {
-        console.log(res.data);
-        this.imgsrc = res.data;
-      }
-    });
   },
   computed: {
     messages() {
@@ -34,9 +23,6 @@ const _sfc_main = {
         return false;
       }
       return true;
-    },
-    me_avatar() {
-      return this.$store.state.useravatar;
     }
   },
   methods: {
@@ -47,8 +33,26 @@ const _sfc_main = {
         let ncc = new common_customTypes.ChatChannel(this.userId, 0, this.userName, (/* @__PURE__ */ new Date()).toLocaleString(), "");
         await this.$store.dispatch("Msgs/addChatAsync", ncc);
       }
-      this.$store.dispatch("sendMsg", { user: this.userId, message: this.text1 });
+      this.$store.dispatch("sendMsg", {
+        user: this.userId,
+        message: this.text1,
+        contentType: "string"
+      });
       this.text1 = "";
+    },
+    sendImg(e) {
+      this.$store.dispatch("upload").then((res) => {
+        let o = JSON.parse(res.data);
+        this.$store.dispatch("sendMsg", {
+          user: this.userId,
+          message: o[0].url,
+          contentType: "img"
+        });
+      }).catch((err) => {
+        common_vendor.index.showToast({
+          title: err.message
+        });
+      });
     },
     back(e) {
       common_vendor.index.navigateBack();
@@ -62,7 +66,10 @@ const _sfc_main = {
         success: (res) => {
           if (res.statusCode === 200) {
             for (let m of res.data) {
-              this.$store.dispatch("receiveMsg", { user: m.from, message: m });
+              this.$store.dispatch("receiveMsg", {
+                user: m.from,
+                message: m
+              });
             }
           }
           if (res.statusCode >= 400) {
@@ -90,7 +97,10 @@ const _sfc_main = {
         success: (res) => {
           if (res.statusCode === 200) {
             for (let m of res.data) {
-              this.$store.dispatch("receiveMsg", { user: m.from, message: m });
+              this.$store.dispatch("receiveMsg", {
+                user: m.from,
+                message: m
+              });
             }
           }
           if (res.statusCode >= 400) {
@@ -112,8 +122,8 @@ if (!Array) {
   const _easycom_yd_chatitem2 = common_vendor.resolveComponent("yd-chatitem");
   (_easycom_uni_nav_bar2 + _easycom_yd_chatitem2)();
 }
-const _easycom_uni_nav_bar = () => "../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.js";
-const _easycom_yd_chatitem = () => "../../components/yd-chatitem/yd-chatitem.js";
+const _easycom_uni_nav_bar = () => "../../../uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.js";
+const _easycom_yd_chatitem = () => "../../../components/yd-chatitem/yd-chatitem.js";
 if (!Math) {
   (_easycom_uni_nav_bar + _easycom_yd_chatitem)();
 }
@@ -127,23 +137,39 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.f($options.messages, (m, k0, i0) => {
       return {
         a: m.id,
-        b: "03b188b6-1-" + i0,
+        b: "c4db2cc6-1-" + i0,
         c: common_vendor.p({
-          message: m.content,
+          message: m,
           isLeft: m.isLeft,
-          icon: m.isLeft ? $data.imgsrc : $options.me_avatar,
-          bgColor: "#f7f7f7"
+          bgColor: "#f7f7f7",
+          userId: m.id
         })
       };
     }),
-    d: common_vendor.s(`height:${$data.calcHeight}px`),
-    e: common_vendor.o((...args) => $options.receiveOld && $options.receiveOld(...args)),
-    f: common_vendor.o((...args) => $options.scrollDown && $options.scrollDown(...args)),
-    g: $data.text1,
-    h: common_vendor.o(($event) => $data.text1 = $event.detail.value),
-    i: $options.canSend,
-    j: common_vendor.o((...args) => $options.send && $options.send(...args))
+    d: common_vendor.f($options.messages, (m, k0, i0) => {
+      return {
+        a: m.id,
+        b: "c4db2cc6-2-" + i0,
+        c: common_vendor.p({
+          message: m,
+          isLeft: m.isLeft,
+          icon: m.isLeft ? _ctx.imgsrc : _ctx.me_avatar,
+          bgColor: "#f7f7f7",
+          userId: m.id
+        })
+      };
+    }),
+    e: common_vendor.s(`height:${$data.calcHeight}px`),
+    f: common_vendor.o((...args) => $options.receiveOld && $options.receiveOld(...args)),
+    g: common_vendor.o((...args) => $options.scrollDown && $options.scrollDown(...args)),
+    h: $data.text1,
+    i: common_vendor.o(($event) => $data.text1 = $event.detail.value),
+    j: $options.canSend,
+    k: common_vendor.o((...args) => $options.sendImg && $options.sendImg(...args)),
+    l: !$options.canSend,
+    m: $options.canSend,
+    n: common_vendor.o((...args) => $options.send && $options.send(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/chat/chat.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/message/chat/chat.vue"]]);
 wx.createPage(MiniProgramPage);

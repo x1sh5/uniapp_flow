@@ -178,7 +178,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.f($options.branchTypes, (item, index, i0) => {
       return {
         a: common_vendor.t(item.name),
-        b: $data.currentTab == index ? "#fb6583" : "",
+        b: $data.currentTab == index ? "#6c4ad1" : "#8d8aa1",
         c: index,
         d: index,
         e: common_vendor.o(($event) => $options.searchByTpe(item.id, item.name), index)
