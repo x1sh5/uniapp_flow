@@ -338,6 +338,14 @@
         		"navigationBarTitleText" : "绑定邮箱",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/settings/nickname/nickname",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "昵称设置",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {
