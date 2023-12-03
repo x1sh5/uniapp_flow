@@ -346,6 +346,14 @@
         		"navigationBarTitleText" : "昵称设置",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/settings/signature/signature",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "个性签名设置",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {

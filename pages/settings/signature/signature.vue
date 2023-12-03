@@ -1,10 +1,9 @@
 <template>
     <view class="rg-input">
-        <input value={{ nickname }} maxlength="10" @blur="nicknameCheckEvent" placeholder="请填写昵称"/>
-        <view>{{ nicknameCheckTip }}</view>
+        <input value={{ signature }} maxlength="10" @blur="signatureCheckEvent" placeholder="请填写个性签名"/>
     </view>
     <view>
-        <button class="lgtip-button" @click="setNickname">保存</button>
+        <button class="lgtip-button" @click="setSignature">保存</button>
     </view>
 </template>
 
@@ -15,40 +14,35 @@ import {
 export default {
     data() {
         return {
-            nickname: "",
-            nicknameCheckTip: "",
-            nicknameVerify: false
+            signature: "",
+            signatureVerify: false
         }
     },
     onLoad() {
-        this.nickname = StorageKeys.userName
+        // this.signature = StorageKeys. 这里需要完善一下
     },
     methods: {
-        nicknameCheckEvent(event) {
-            let nickname = event.detail.value
-            if (/[ !@#$%^&*()+{}\[\]:;<>,.?~\-，。？、《》【】（）]/.test(nickname)) {
-                this.nicknameCheckTip = "昵称不能包含特殊字符"
-                return
-            }
-            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(nickname) //需要后端对接
+        signatureCheckEvent(event) {
+            let signature = event.detail.value
+            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(signature) //需要后端对接
             uni.request({
                 url: checkUrl,
                 success: (res) => {
                     if (res.statusCode === 200) {
-                        this.nicknameCheckTip = res.data.data.msg
+                        this.signatureCheckTip = res.data.data.msg
                     }
                     if (res.data.data.status) {
-                        this.nicknameVerify = true
+                        this.signatureVerify = true
                     }
                 }
             })
         },
-        setNickname(event) {
-            let nickname = this.nickname
+        setSignature(event) {
+            let signature = this.signature
             let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(nickname) //需要后端对接
             uni.request({
                 url: checkUrl,
-                data: nickname,
+                data: signature,
                 success: (res) => {
                     if (res.statusCode === 200) {
                         uni.showToast({
@@ -63,7 +57,7 @@ export default {
 							})
                     }
                     if (res.data.data.status) {
-                        this.nicknameVerify = true
+                        this.signatureVerify = true
                     }
                 }
             })

@@ -8,8 +8,13 @@
 		</view>
 
 		<view @click="nicknameSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view>设置昵称</view>
+			<view>昵称</view>
 			<view style="position: absolute;right: 0;">{{ nickname }}></view>
+		</view>
+
+		<view @click="signatureSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view>个性签名</view>
+			<view style="position: absolute;right: 0;">{{ signature }}></view>
 		</view>
 
 		<view class="driver"></view>
@@ -106,6 +111,11 @@ import { StorageKeys } from '../../common/storageKeys'
 			nicknameSetting(e){
 				uni.navigateTo({
 					url: "nickname/nickname"
+				})
+			},
+			signatureSetting(e){
+				uni.navigateTo({
+					url: "signature/signature"
 				})
 			},
 			identityCheck(e){
