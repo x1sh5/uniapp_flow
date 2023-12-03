@@ -1,6 +1,6 @@
 <template>
     <view class="rg-input">
-        <input  maxlength="10" @blur="nicknameCheckEvent" placeholder="请填写新昵称" placeholder-style=""/>
+        <input value={{ nickname }} maxlength="10" @blur="nicknameCheckEvent" placeholder="请填写新昵称" placeholder-style=""/>
         <view>{{ nicknameCheckTip }}</view>
     </view>
     <view>
