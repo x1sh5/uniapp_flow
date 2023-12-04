@@ -125,9 +125,18 @@ const _sfc_main = {
           data: this.tasks,
           success: (res) => {
             if (res.statusCode === 201) {
-              this.$store.state.$publishResults.push({ success: true, message: "任务发布成功", errMsg: "ok", id: res.data.id });
+              this.$store.state.$publishResults.push({
+                success: true,
+                message: "任务发布成功",
+                errMsg: "ok",
+                id: res.data.id
+              });
             } else {
-              this.$store.state.$publishResults.push({ success: false, message: "任务发布失败", errMsg: "server error" });
+              this.$store.state.$publishResults.push({
+                success: false,
+                message: "任务发布失败",
+                errMsg: "server error"
+              });
             }
           },
           complete() {

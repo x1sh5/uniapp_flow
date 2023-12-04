@@ -297,15 +297,27 @@ const _sfc_main = {
         data: this.task,
         success: (res) => {
           if (res.statusCode === 204) {
-            this.$store.state.$publishResults.push({ success: true, message: "任务：" + this.task.title + "修改成功", errMsg: "ok" });
+            this.$store.state.$publishResults.push({
+              success: true,
+              message: "任务：" + this.task.title + "修改成功",
+              errMsg: "ok"
+            });
             this.$emit("after-publish", this.task.id);
           } else {
-            this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "修改失败", errMsg: "server error" });
+            this.$store.state.$publishResults.push({
+              success: false,
+              message: "任务：" + this.task.title + "修改失败",
+              errMsg: "server error"
+            });
           }
         },
         fail: (err) => {
           console.error(err);
-          this.$store.state.$publishResults.push({ success: false, message: "任务：" + this.task.title + "修改失败", errMsg: "client error" });
+          this.$store.state.$publishResults.push({
+            success: false,
+            message: "任务：" + this.task.title + "修改失败",
+            errMsg: "client error"
+          });
         }
       });
     },

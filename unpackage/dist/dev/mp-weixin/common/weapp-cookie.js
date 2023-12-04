@@ -42,7 +42,9 @@ class Cookie {
    * 设置 cookie, 将 set-cookie 字符串转换为 Cookie 对象
    */
   set(setCookieStr = "") {
-    var cookie = common_vendor.setCookieExports.parse(setCookieStr, { decodeValues: false })[0];
+    var cookie = common_vendor.setCookieExports.parse(setCookieStr, {
+      decodeValues: false
+    })[0];
     if (cookie) {
       Object.assign(this, cookie);
       this.dateTime = /* @__PURE__ */ new Date();
@@ -122,7 +124,9 @@ function getApi() {
     common_vendor.wx$1.platform = typeof window !== "undefined" && typeof location !== "undefined" ? "h5" : "wx";
     return common_vendor.wx$1;
   }
-  return { platform: "none" };
+  return {
+    platform: "none"
+  };
 }
 var api = getApi();
 class LocalStorage {
@@ -132,7 +136,9 @@ class LocalStorage {
    */
   getItem(key) {
     if (api.platform === "my") {
-      return api.getStorageSync({ key }).data;
+      return api.getStorageSync({
+        key
+      }).data;
     }
     return api.getStorageSync(key);
   }
@@ -143,7 +149,10 @@ class LocalStorage {
    */
   setItem(key, value) {
     if (api.platform === "my") {
-      return api.setStorageSync({ key, data: value });
+      return api.setStorageSync({
+        key,
+        data: value
+      });
     }
     return api.setStorageSync(key, value);
   }
@@ -350,7 +359,9 @@ class CookieStore {
    * @return {Array}               Cookie 对象数组
    */
   parse(setCookieStr = "", domain) {
-    var cookies = common_vendor.setCookieExports.parse(common_vendor.setCookieExports.splitCookiesString(setCookieStr), { decodeValues: false });
+    var cookies = common_vendor.setCookieExports.parse(common_vendor.setCookieExports.splitCookiesString(setCookieStr), {
+      decodeValues: false
+    });
     return cookies.map((item) => {
       item.domain = util.normalizeDomain(item.domain) || domain;
       return new Cookie(item);
@@ -407,6 +418,7 @@ class CookieStore {
 }
 const cookieStore = new CookieStore();
 (function(cookieStore2) {
+  let loginRdirect = false;
   function cookieRequestProxy(options) {
     options.cookie = options.cookie === void 0 || !!options.cookie;
     options.dataType = options.dataType || "json";
@@ -445,31 +457,35 @@ const cookieStore = new CookieStore();
               url: host + "/api/Account/refresh-token?" + cookiestr,
               success(res) {
                 if (res.statusCode !== 200) {
-                  common_vendor.index.showToast({
-                    title: "登录过期！",
-                    duration: 1e3
-                  });
-                  common_vendor.index.reLaunch({
-                    url: "/pages/login/login"
-                  });
+                  if (!loginRdirect) {
+                    common_vendor.index.showToast({
+                      title: "登录过期！",
+                      duration: 1e3
+                    });
+                    common_vendor.index.reLaunch({
+                      url: "/pages/login/login"
+                    });
+                    loginRdirect = true;
+                  }
                 } else {
                   cookieStore2.setResponseCookies(res.data.accessToken, domain);
                   cookieStore2.setResponseCookies(res.data.refreshToken, domain);
-                  setTimeout(() => {
-                    cookieRequestProxy(options);
-                  }, 1e3);
+                  cookieRequestProxy(options);
                 }
               }
             });
           }
         } else {
-          common_vendor.index.showToast({
-            title: "登录过期！",
-            duration: 1e3
-          });
-          common_vendor.index.reLaunch({
-            url: "/pages/login/login"
-          });
+          if (!loginRdirect) {
+            common_vendor.index.showToast({
+              title: "登录过期！",
+              duration: 1e3
+            });
+            common_vendor.index.reLaunch({
+              url: "/pages/login/login"
+            });
+            loginRdirect = true;
+          }
         }
         successCallback && successCallback(u);
       };
@@ -511,7 +527,7 @@ const cookieStore = new CookieStore();
     Object.defineProperties(api, {
       // request
       // request: {
-      //   value: requestProxy,
+      // 	value: requestProxy,
       // },
       // uploadFile
       uploadFile: {
@@ -526,16 +542,15 @@ const cookieStore = new CookieStore();
     console.error("weapp-cookie: ", err);
   }
   cookieStore2.config = function(options) {
-    options = Object.assign(
-      {
-        requestAlias: "requestWithCookie",
-        uploadFileAlias: "uploadFileWithCookie",
-        downloadFileAlias: "downloadFileWithCookie"
-      },
-      options
-    );
+    options = Object.assign({
+      requestAlias: "requestWithCookie",
+      uploadFileAlias: "uploadFileWithCookie",
+      downloadFileAlias: "downloadFileWithCookie"
+    }, options);
     if (options.requestAlias) {
-      Object.defineProperty(api, options.requestAlias, { value: requestProxy });
+      Object.defineProperty(api, options.requestAlias, {
+        value: requestProxy
+      });
     }
     if (options.uploadFileAlias) {
       Object.defineProperty(api, options.uploadFileAlias, {

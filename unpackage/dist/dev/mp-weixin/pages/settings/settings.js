@@ -34,9 +34,9 @@ const _sfc_main = {
               },
               success: (e3) => {
                 console.log(e3);
-                if (e3.tempFiles[0].size > 2 * 1024 * 1024) {
+                if (e3.tempFiles[0].size > 5 * 1024 * 1024) {
                   common_vendor.index.showToast({
-                    title: "图片大小超过2M,请重新选择。"
+                    title: "图片大小超过5M,请重新选择。"
                   });
                   return;
                 }

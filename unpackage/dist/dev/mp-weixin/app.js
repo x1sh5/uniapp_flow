@@ -21,7 +21,7 @@ if (!Math) {
   "./pages/logintips/logintips.js";
   "./pages/register/register.js";
   "./pages/login/login.js";
-  "./pages/chat/chat.js";
+  "./pages/message/chat/chat.js";
   "./pages/holdTask/holdTask.js";
   "./pages/taskDetail/taskDetail.js";
   "./pages/searchResult/searchResult.js";
@@ -44,6 +44,7 @@ if (!Math) {
   "./pages/myApply/myApply.js";
   "./pages/order/order.js";
   "./pages/userCenter/about/about.js";
+  "./pages/userCenter/instructions/instructions.js";
 }
 const _sfc_main = {
   async beforeCreate() {

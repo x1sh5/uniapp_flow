@@ -18,6 +18,7 @@ const _sfc_main = {
     let qurl = this.$store.state.apiBaseUrl + "/api/Reference/history/" + this.id;
     common_vendor.index.requestWithCookie({
       url: qurl,
+      data: { count: 10, offset: 0 },
       success: (res) => {
         if (res.statusCode === 200) {
           this.versions = res.data;

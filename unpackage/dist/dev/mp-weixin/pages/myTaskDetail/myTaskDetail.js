@@ -127,8 +127,18 @@ const _sfc_main = {
                     success: (res2) => {
                       this.task.payed = 1;
                       this.$store.commit("updateLocalTaskById", this.task);
-                      common_vendor.index.navigateTo({
-                        url: "/pages/pay-result/pay-result"
+                      common_vendor.index.showModal({
+                        title: "支付成功",
+                        showCancel: false,
+                        success: (res3) => {
+                          if (res3.confirm) {
+                            if (this.refer === "newtask") {
+                              common_vendor.index.reLaunch({
+                                url: "/pages/addtask/addtask"
+                              });
+                            }
+                          }
+                        }
                       });
                     },
                     fail: (err) => {

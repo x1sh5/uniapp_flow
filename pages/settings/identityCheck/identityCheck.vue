@@ -9,10 +9,10 @@
 			</view>
 
 			<view>
-				<input class="rg-input" v-model="cardNo" maxlength="18" placeholder="身份证号码：" />
+				<input class="rg-input" v-model="cardNo" maxlength="18" placeholder="身份证号：" />
 			</view>
 
-			<text style="margin-top:60rpx;margin-left: 60rpx;">上传身份证信息:</text>
+			<text style="margin-top:60rpx;margin-left: 60rpx;">请上传身份证信息:</text>
 			<view>
 				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="pos"></image>
 				<button style="width: 180px;" @click="uploadPos">上传正面照</button>

@@ -3,14 +3,20 @@ const common_vendor = require("../../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      refer: { title: "", lines: new Array(), content: /* @__PURE__ */ new Map() }
+      refer: {
+        title: "",
+        lines: new Array(),
+        content: /* @__PURE__ */ new Map()
+      }
     };
   },
   computed: {
     lines() {
       let l = [];
       for (let i of Array.from(this.refer.content.keys())) {
-        l.push({ id: i });
+        l.push({
+          id: i
+        });
       }
       return l;
     }
@@ -34,7 +40,13 @@ const _sfc_main = {
       common_vendor.index.requestWithCookie({
         url: qurl,
         method: "POST",
-        data: { id: 0, title: this.refer.title, content, authId: 0, userName: "" },
+        data: {
+          id: 0,
+          title: this.refer.title,
+          content,
+          authId: 0,
+          userName: ""
+        },
         success: (res) => {
           common_vendor.index.showModal({
             showCancel: false,

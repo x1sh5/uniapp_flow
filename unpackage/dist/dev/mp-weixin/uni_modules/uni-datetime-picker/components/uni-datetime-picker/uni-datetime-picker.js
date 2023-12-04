@@ -304,7 +304,9 @@ const _sfc_main = {
         this.isPhone = navigator.userAgent.toLowerCase().indexOf("mobile") !== -1;
         return;
       }
-      const { windowWidth } = common_vendor.index.getSystemInfoSync();
+      const {
+        windowWidth
+      } = common_vendor.index.getSystemInfoSync();
       this.isPhone = windowWidth <= 500;
       this.windowWidth = windowWidth;
     },
@@ -351,6 +353,7 @@ const _sfc_main = {
       setTimeout(() => {
         this.pickerVisible = false;
         this.$emit("maskClick", this.value);
+        this.$emit("deadtime-change", "cancel");
         this.$refs.mobile && this.$refs.mobile.close();
       }, 20);
     },
@@ -471,7 +474,10 @@ const _sfc_main = {
     },
     mobileChange(e) {
       if (this.isRange) {
-        const { before, after } = e.range;
+        const {
+          before,
+          after
+        } = e.range;
         if (!before || !after) {
           return;
         }
@@ -494,6 +500,7 @@ const _sfc_main = {
         this.setEmit(this.displayValue);
       }
       this.$refs.mobile.close();
+      this.$emit("deadtime-change", "ensure");
     },
     rangeChange(before, after) {
       if (!(before && after))

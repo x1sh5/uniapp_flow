@@ -34,8 +34,8 @@ const Messages = {
         this.commit("Msgs/addChat", payload);
         return;
       }
-      if (payload && payload.title) {
-        cco.title = payload.title;
+      if (payload && payload.senderName) {
+        cco.senderName = payload.senderName;
       }
       if (payload && payload.date) {
         cco.date = payload.date;

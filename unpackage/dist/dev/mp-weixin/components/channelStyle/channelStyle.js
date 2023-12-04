@@ -38,9 +38,9 @@ const _sfc_main = {
   methods: {
     jump() {
       let userId = this.cc.cid;
-      let userName = this.cc.title;
+      let userName = this.cc.senderName;
       common_vendor.index.navigateTo({
-        url: "/pages/chat/chat?userId=" + userId + "&userName=" + userName
+        url: "/pages/message/chat/chat?userId=" + userId + "&userName=" + userName
       });
     },
     showDelete(e) {

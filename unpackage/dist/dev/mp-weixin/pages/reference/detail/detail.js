@@ -3,6 +3,16 @@ const common_vendor = require("../../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
+      /**
+       * @type {object} refer 审核区间参考
+       * @type {Number} refer.id 
+       * @type {String} refer.title 标题 
+       * @type {String} refer.createtime 创建时间
+       * @type {String} refer.content 内容：Map {Id:referItem}序列化后的内容
+       * @type {String} refer.authid 作者id
+       * @type {String} refer.version 版本
+       * @type {String} refer.username 作者用户名
+       */
       refer: {},
       dataLoaded: false
     };

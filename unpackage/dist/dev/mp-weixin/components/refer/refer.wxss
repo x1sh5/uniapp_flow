@@ -1,55 +1,56 @@
 
-	/*.td, .th{
-		border: 1px solid black;
-		display: flex;
-		flex-direction: row;
-		min-height: 30px;
+	/*
 		
+		
+		.th > textarea{
+			height: 30px;
+		}
+		
+		.td{
+			
+			height: auto;
+		}
+		
+		.stitle, .rate, .brief, .detail, .remark{
+			border: 1px solid black;
+			box-sizing: border-box;
+		}
+		
+		from > view {
+			text-align: center;
+		}
+		
+		.addLine{
+			margin-top: 5px;
+			margin-bottom: 5px;
+			width: 40px;
+			height: 20px;
+			margin-left: auto;
+			margin-right: auto;
+			border: 1px solid black;
+			border-radius: 10px;
+		}
+		
+		.del{
+			width: 40px;
+			margin-top: auto;
+			margin-bottom: auto;
+			border: 1px solid black;
+		}
+		
+		*/
+.table-row {
 		width: 100%;
-	}
-	
-	.th{
-		text-align: center;
-		height: 30px;
-	}
-	
-	.th > textarea{
-		height: 30px;
-	}
-	
-	.td{
-		
-		height: auto;
-	}
-	
-	.stitle, .rate, .brief, .detail, .remark{
-		border: 1px solid black;
+		height: 40px;
 		box-sizing: border-box;
-	}
-	
-	from > view {
-		text-align: center;
-	}
-	
-	.addLine{
-		margin-top: 5px;
-		margin-bottom: 5px;
-		width: 40px;
-		height: 20px;
-		margin-left: auto;
-		margin-right: auto;
-		border: 1px solid black;
-		border-radius: 10px;
-	}
-	
-	.del{
-		width: 40px;
-		margin-top: auto;
-		margin-bottom: auto;
-		border: 1px solid black;
-	}
-	
-	*/
+}
+.th{
+		display: flex;
+		flex-direction: column;
+}
+.td {
+		height: auto;
+}
 .a {
 		z-index: -1;
 		display: table-cell;
@@ -93,7 +94,7 @@
 
 		width: 13%;
 		height: 110rpx;
-
+		font-size: 28rpx;
 		text-align: center;
 		/*水平居中对齐 */
 		display: flex;
@@ -154,7 +155,7 @@
 		height: 60rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 }
 .table-cell-bb {
 		z-index: 3;
@@ -173,7 +174,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
+		color: #ffffff;
 }
 .table-cell-cc {
 		z-index: 3;
@@ -193,7 +194,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
+		color: #000000;
 }
 .table-cell-dd {
 		z-index: 3;
@@ -213,40 +214,7 @@
 		/*主轴上水平居中对齐 */
 		align-items: center;
 		/*垂直居中对齐 */
-		color: #f0f0f0;
-}
-.stitle {
-
-		z-index: 4;
-		display: table-cell;
-		padding: 0rpx;
-		/* 内边距 */
-		transform: translate(0rpx, -380rpx) scale(1);
-
-		width: 100%;
-		height: 70rpx;
-
-		display: flex;
-		/*变为弹性容器 */
-		align-items: center;
-		/*垂直居中对齐 */
-
-		text-decoration: none;
-		padding-left: 8rpx;
-		/* 右缩进 */
-		font-size: 36rpx;
-		/* 尺寸 */
-		letter-spacing: 6rpx;
-		/* 字母之间的间距 */
-		line-height: 00rpx;
-		/* 文本上下位置 */
-
-		color: #ffffff;
-		/* 字体颜色 */
-		margin: rpx 0;
-		/* 上下位置 */
-
-		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+		color: #000000;
 }
 .textarea-field-ee {
 		z-index: 4;
@@ -258,24 +226,7 @@
 		height: 60rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
-}
-.rate {
-		z-index: 5;
-		transform: translate(0rpx, -360rpx) scale(1);
-		background-color: #ffffff;
-		/*设置背景颜色 */
-
-		width: 30%;
-		height: 80rpx;
-
-		font-size: 26rpx;
-
-		display: flex;
-		/*变为弹性容器 */
-		align-items: center;
-		/*垂直居中对齐 */
-		color: #4a1cd3;
+		color: #000000;
 }
 .textarea-field-ff {
 		z-index: 5;
@@ -287,24 +238,7 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
-}
-.brief {
-		z-index: 6;
-		transform: translate(0rpx, -360rpx) scale(1);
-		background-color: #ffffff;
-		/*设置背景颜色 */
-
-		width: 30%;
-		height: 80rpx;
-
-		font-size: 26rpx;
-
-		display: flex;
-		/*变为弹性容器 */
-		align-items: center;
-		/*垂直居中对齐 */
-		color: #4a1cd3;
+		color: #000000;
 }
 .textarea-field-gg {
 		z-index: 6;
@@ -316,24 +250,7 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
-}
-.detail {
-		z-index: 7;
-		transform: translate(0rpx, -360rpx) scale(1);
-		background-color: #ffffff;
-		/*设置背景颜色 */
-
-		width: 30%;
-		height: 80rpx;
-
-		font-size: 26rpx;
-
-		display: flex;
-		/*变为弹性容器 */
-		align-items: center;
-		/*垂直居中对齐 */
-		color: #4a1cd3;
+		color: #000000;
 }
 .textarea-field-hh {
 		z-index: 7;
@@ -345,67 +262,38 @@
 		height: 120rpx;
 
 		font-size: 26rpx;
-		color: #f0f0f0;
+		color: #000000;
 }
+
 
 	/*添加步骤按钮*/
-.addLine {
-		margin-top: 5px;
-		margin-bottom: 5px;
-		width: 100%;
-
-		margin-left: auto;
-		margin-right: auto;
-		border: 1px solid black;
-		border-radius: 10px;
-}
-.del {
-		z-index: 20;
-		display: flex;
-		/* 使用Flex布局 */
-		justify-content: center;
-		/* 水平居中 */
-		align-items: center;
-		/* 垂直居中 */
-		border-radius: 40rpx;
-		/* 新增：设置按钮边框为圆角 */
-		width: 150rpx;
-		height: 70rpx;
-		color: #6c4ad1;
-		border: 1px solid #6c4ad1;
-		text-align: center;
-		/* top: calc(150vh - 350rpx);
-   */
-		margin-top: 0rpx;
-		margin-left: 280px;
-		background-color: #ffffff;
-		/*设置背景颜色 */
-
-		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
-}
 .addLine {
 		z-index: 30;
 		border: 1px solid #6c4ad1;
 		border-radius: 40rpx;
+
+    /* translate 请尽量使用百分比 */
+	/* 	transform: translate(-100rpx, -330rpx) scale(1); */
+	
 		/* 新增：设置按钮边框为圆角 */
-		width: 450rpx;
+		width: 350rpx;
 		height: 70rpx;
 		color: rgb(255, 255, 255);
 		/* 新增：设置按钮文字颜色为白色 */
-		background-color: #6c4ad1;
+		background-color: #5500ff;
 		text-align: center;
 		/* top: calc(150vh - 350rpx);
-   */
+	   */
 
-
+		font-size: 26rpx;
 		display: flex;
 		/* 使用Flex布局 */
 		justify-content: center;
 		/* 水平居中 */
 		align-items: center;
 		/* 垂直居中 */
-		margin-top: -70rpx;
-		margin-left: 20px;
+		margin-top: 0rpx;
+		margin-left: 10px;
 		box-shadow: 0ch;
 
 		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);

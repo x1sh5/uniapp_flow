@@ -8012,7 +8012,7 @@ const pages = [
     }
   },
   {
-    path: "pages/chat/chat",
+    path: "pages/message/chat/chat",
     style: {
       navigationBarTitleText: "",
       enablePullDownRefresh: false,
@@ -8086,7 +8086,7 @@ const pages = [
   {
     path: "pages/myTaskDetail/myTaskDetail",
     style: {
-      navigationBarTitleText: "以发布任务详情",
+      navigationBarTitleText: "已发布任务详情",
       enablePullDownRefresh: false
     }
   },
@@ -8173,6 +8173,13 @@ const pages = [
     path: "pages/userCenter/about/about",
     style: {
       navigationBarTitleText: "服务协议",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/userCenter/instructions/instructions",
+    style: {
+      navigationBarTitleText: "使用说明",
       enablePullDownRefresh: false
     }
   }

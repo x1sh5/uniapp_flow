@@ -4,11 +4,16 @@ const _sfc_main = {
   data() {
     return {
       curr: 0,
-      lines: []
+      //分配模式的总条数
+      referItems: []
     };
   },
   props: {
+    /**
+     * @type {Map} refer 
+     */
     refer: Object,
+    //是否能编辑
     editable: {
       type: Boolean,
       default() {
@@ -22,12 +27,13 @@ const _sfc_main = {
     this.curr = this.refer.content.size;
     if (this.curr > 0) {
       let l = [];
-      for (let i of Array.from(this.refer.content.keys())) {
+      for (let i of this.refer.content) {
         l.push({
-          id: i
+          id: i[0],
+          ...i[1]
         });
       }
-      this.lines = l;
+      this.referItems = l;
     }
   },
   mounted() {
@@ -35,34 +41,22 @@ const _sfc_main = {
   },
   methods: {
     addLine(e) {
-      this.refer.content.set(this.curr, {
+      const currentId = this.curr++;
+      this.referItems.push({
+        id: currentId,
         stitle: "",
         rate: "",
         brief: "",
         detail: "",
         remark: ""
       });
-      this.lines.push({
-        id: this.curr++
-      });
     },
     delLine(id) {
-      let index = this.lines.find((item) => item.id === id);
+      let index = this.referItems.findIndex((item) => item.id === id);
       if (index !== -1) {
-        this.lines.splice(index, 1);
+        this.referItems.splice(index, 1);
       }
       this.refer.content.delete(id);
-    },
-    stitleChange(e) {
-      console.log(e);
-    },
-    rateChange(id) {
-    },
-    briefChange(id) {
-    },
-    detailChange(id) {
-    },
-    remarkChange(id) {
     }
   },
   beforeCreate() {
@@ -78,26 +72,34 @@ const _sfc_main = {
     console.log("beforeRouteLeave");
   }
 };
+if (!Array) {
+  const _easycom_referItem2 = common_vendor.resolveComponent("referItem");
+  _easycom_referItem2();
+}
+const _easycom_referItem = () => "../referItem/referItem.js";
+if (!Math) {
+  _easycom_referItem();
+}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: !$props.editable,
     b: $props.refer.title,
     c: common_vendor.o(($event) => $props.refer.title = $event.detail.value),
-    d: !$props.editable,
-    e: !$props.editable,
-    f: !$props.editable,
-    g: !$props.editable,
-    h: !$props.editable,
-    i: $props.editable,
-    j: common_vendor.f($data.lines, (t, k0, i0) => {
+    d: common_vendor.f($data.referItems, (r, k0, i0) => {
       return {
-        a: t.id
+        a: common_vendor.o($options.delLine, r.id),
+        b: r.id,
+        c: "86c01172-0-" + i0,
+        d: common_vendor.p({
+          item: r,
+          id: r.id,
+          editable: $props.editable
+        }),
+        e: r.id
       };
     }),
-    k: common_vendor.o(($event) => $options.delLine(_ctx.t.id)),
-    l: $props.editable,
-    m: $props.editable,
-    n: common_vendor.o((...args) => $options.addLine && $options.addLine(...args))
+    e: $props.editable,
+    f: common_vendor.o((...args) => $options.addLine && $options.addLine(...args))
   };
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/refer/refer.vue"]]);

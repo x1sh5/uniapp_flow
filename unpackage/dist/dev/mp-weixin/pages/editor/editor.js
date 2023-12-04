@@ -34,7 +34,10 @@ const _sfc_main = {
           const pages = getCurrentPages();
           if (pages.length >= 2) {
             this.newTask = pages[pages.length - 1];
-            this.newTask.$vm.updateTask(this.id, { ctx: res, files: lastFiles });
+            this.newTask.$vm.updateTask(this.id, {
+              ctx: res,
+              files: lastFiles
+            });
           }
         }
       });
@@ -108,9 +111,9 @@ const _sfc_main = {
           console.log(res);
           let file = res.tempFiles[0];
           this.files.push(file);
-          if (file.size > 2097152) {
+          if (file.size > 5 * 1024 * 1024) {
             common_vendor.index.showModal({
-              content: "文件大于2Mb"
+              content: "文件大于5Mb"
             });
           } else {
             this.editorCtx.insertImage({

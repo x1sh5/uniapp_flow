@@ -13,7 +13,7 @@
     "pages/logintips/logintips",
     "pages/register/register",
     "pages/login/login",
-    "pages/chat/chat",
+    "pages/message/chat/chat",
     "pages/holdTask/holdTask",
     "pages/taskDetail/taskDetail",
     "pages/searchResult/searchResult",
@@ -35,7 +35,8 @@
     "pages/settings/identityCheck/identityCheck",
     "pages/myApply/myApply",
     "pages/order/order",
-    "pages/userCenter/about/about"
+    "pages/userCenter/about/about",
+    "pages/userCenter/instructions/instructions"
   ],
   "window": {
     "navigationBarTextStyle": "black",

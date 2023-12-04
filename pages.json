@@ -206,7 +206,7 @@
             "path" : "pages/myTaskDetail/myTaskDetail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "以发布任务详情",
+                "navigationBarTitleText": "已发布任务详情",
                 "enablePullDownRefresh": false
             }
             
@@ -336,6 +336,22 @@
         	"style" : 
         	{
         		"navigationBarTitleText" : "绑定邮箱",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/settings/nickname/nickname",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "昵称设置",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/settings/signature/signature",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "个性签名设置",
         		"enablePullDownRefresh" : false
         	}
         }

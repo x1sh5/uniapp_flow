@@ -4,7 +4,9 @@ const common_storageKeys = require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
-      login: false
+      login: false,
+      isPanelCollapsed: true
+      // 默认折叠
     };
   },
   computed: {
@@ -25,6 +27,15 @@ const _sfc_main = {
     }
   },
   methods: {
+    showDevelopmentTip() {
+      common_vendor.index.showToast({
+        title: "正在开发中",
+        icon: "none",
+        // 不显示图标
+        duration: 4e3
+        // 提示持续时间，单位为毫秒
+      });
+    },
     toReference(e) {
       common_vendor.index.navigateTo({
         url: "/pages/reference/reference"
@@ -64,9 +75,9 @@ const _sfc_main = {
         url: "/pages/order/order"
       });
     },
-    toAbout(e) {
+    toinstructions(e) {
       common_vendor.index.navigateTo({
-        url: "/pages/userCenter/about/about"
+        url: "/pages/userCenter/instructions/instructions"
       });
     },
     signin(e) {
@@ -127,12 +138,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.o((...args) => $options.toOrder && $options.toOrder(...args)),
     i: common_vendor.o((...args) => $options.myApply && $options.myApply(...args)),
     j: common_vendor.o((...args) => $options.toReference && $options.toReference(...args)),
-    k: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
-    l: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
-    m: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
-    n: $options.hasLogin,
-    o: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
-    p: !$options.hasLogin,
+    k: common_vendor.o((...args) => $options.showDevelopmentTip && $options.showDevelopmentTip(...args)),
+    l: common_vendor.o((...args) => $options.toinstructions && $options.toinstructions(...args)),
+    m: common_vendor.o((...args) => $options.toSetting && $options.toSetting(...args)),
+    n: common_vendor.o((...args) => $options.signout && $options.signout(...args)),
+    o: $options.hasLogin,
+    p: common_vendor.o((...args) => $options.signin && $options.signin(...args)),
     q: common_vendor.o((...args) => $options.signup && $options.signup(...args)),
     r: !$options.hasLogin
   };

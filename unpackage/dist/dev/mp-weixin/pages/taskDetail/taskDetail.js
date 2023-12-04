@@ -12,6 +12,7 @@ const _sfc_main = {
           return "done";
         }
       },
+      task: void 0,
       status: ["waitfor", "undone", "done", "announcement"]
     };
   },
@@ -30,8 +31,8 @@ const _sfc_main = {
   },
   mounted() {
     console.log("mounted");
-    let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.task.id;
-    let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.task.id;
+    let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.id;
+    let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.id;
     if (!this.ptask) {
       common_vendor.index.requestWithCookie({
         url: curl,
@@ -53,6 +54,9 @@ const _sfc_main = {
       });
     }
   },
+  async beforeMount() {
+    console.log("beforeMount");
+  },
   onLoad(op) {
     console.log("options:", op);
     this.id = op.id;
@@ -61,16 +65,21 @@ const _sfc_main = {
       this.task = task;
     } else {
       let qurl = this.$store.state.apiBaseUrl + "/api/Assignment/" + this.id;
-      common_vendor.index.requestWithCookie({
-        url: qurl,
-        success: (res) => {
-          if (res.statusCode == 200) {
-            this.task = res.data;
+      const ps = new Promise((resolve, reject) => {
+        common_vendor.index.requestWithCookie({
+          url: qurl,
+          success: (res) => {
+            if (res.statusCode == 200) {
+              resolve(res.data);
+            }
           }
-        }
+        });
+      });
+      ps.then((o) => {
+        this.task = o;
+        this.mode = this.status[o.status];
       });
     }
-    this.mode = this.status[this.task.status];
   },
   methods: {
     editEvent(e) {
@@ -80,7 +89,7 @@ const _sfc_main = {
     },
     contact(e) {
       common_vendor.index.navigateTo({
-        url: "/pages/chat/chat?cid=" + this.task.id + "&userName=" + this.task.username + "&userId=" + this.task.userId
+        url: "/pages/message/chat/chat?cid=" + this.task.id + "&userName=" + this.task.username + "&userId=" + this.task.userId
       });
     },
     gain(e) {
@@ -163,7 +172,7 @@ if (!Math) {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: common_vendor.p({
-      task: _ctx.task,
+      task: $data.task,
       editable: false
     }),
     b: $data.mode == "waitfor"
