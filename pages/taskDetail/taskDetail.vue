@@ -147,6 +147,12 @@
 				})
 			},
 			gain(e) {
+				if (!this.$store.getters.IsActive) {
+					uni.navigateTo({
+						url: "/pages/settings/identityCheck/identityCheck"
+					})
+					return;
+				}
 				let gurl = this.$store.state.apiBaseUrl + "/api/TaskRequest";
 				uni.showModal({
 					editable: true,

@@ -301,10 +301,6 @@
 						uni.navigateTo({
 							url: "/pages/logintips/logintips"
 						})
-					} else if (!this.$store.getters.IsActive) {
-						uni.navigateTo({
-							url: "/pages/settings/identityCheck/identityCheck"
-						})
 					} else {
 						const pages = getCurrentPages();
 						let current = pages[pages.length - 1];
