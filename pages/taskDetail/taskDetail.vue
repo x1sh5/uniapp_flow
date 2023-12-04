@@ -148,9 +148,18 @@
 			},
 			gain(e) {
 				if (!this.$store.getters.IsActive) {
-					uni.navigateTo({
-						url: "/pages/settings/identityCheck/identityCheck"
+					uni.showModal({
+						content:"未实名认证，不能接取任务。",
+						confirmText:"实名认证",
+						success: (res) => {
+							if(res.confirm){
+								uni.navigateTo({
+									url: "/pages/settings/identityCheck/identityCheck"
+								})
+							}
+						}
 					})
+
 					return;
 				}
 				let gurl = this.$store.state.apiBaseUrl + "/api/TaskRequest";
