@@ -47,6 +47,7 @@
 							that.$store.commit("login");
 							that.$store.commit("setUserName", res.data.userName);
 							that.$store.commit("setUserAvatar", res.data.avatar);
+							that.$store.commit("setIntroduce", res.data.introduce);
 							// uni.navigateBack({
 							// 	delta:that.depth
 							// })

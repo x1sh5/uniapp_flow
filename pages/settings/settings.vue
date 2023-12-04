@@ -6,27 +6,36 @@
 				<image :src="imgsrc" class="user-avatar-img"></image>
 			</view>
 		</view>
+
+		<view @click="nicknameSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view>昵称</view>
+			<view style="position: absolute;right: 0;">{{ Nickname }}></view>
+		</view>
+
+		<view @click="signatureSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view>个性签名</view>
+			<!-- <view style="position: absolute;right: 0;">{{ signature }}></view> -->
+		</view>
+
 		<view class="driver"></view>
 		<view @click="identityCheck" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view  >身份验证</view>
+			<view>身份验证</view>
 			<view style="position: absolute;right: 0;">></view>
 		</view>
 		
-<!-- 		<view class="driver"></view>
-		<view @click="phoneBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view  >绑定手机号</view>
+<!-- 		<view @click="phoneBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+			<view>绑定手机号</view>
 			<view style="position: absolute;right: 0;">></view>
 		</view> -->
 		
-		<view class="driver"></view>
 		<view @click="emailBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view  >绑定邮箱</view>
+			<view>绑定邮箱</view>
 			<view style="position: absolute;right: 0;">></view>
 		</view>
 		
 <!-- 		<view class="driver"></view>
 		<view @click="unregister" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view  >账号注销</view>
+			<view>账号注销</view>
 			<view style="position: absolute;right: 0;">></view>
 		</view> -->
 		
@@ -34,36 +43,26 @@
 </template>
 
 <script>
+import { StorageKeys } from '../../common/storageKeys'
+
 	export default {
 		data() {
 			return {
-
+				nickname:""
 			}
+		},
+		onLoad(){
+			this.nickname = this.$store.state.$userName;
 		},
 		computed:{
 			imgsrc(){
 				return this.$store.state.useravatar
+			},
+			NickName(){
+				return this.$store.state.$userName
 			}
 		},
 		methods: {
-			identityCheck(e){
-				if(!this.$store.getters.IsActive){
-					uni.navigateTo({
-						url: "identityCheck/identityCheck"
-					});
-				}else{
-					uni.showModal({
-						showCancel:true,
-						content:"已通过验证！"
-					})
-				}
-
-			},
-			unregister(e){
-				uni.navigateTo({
-					url: "unregister/unregister"
-				});
-			},
 			avataSet(e){
 				uni.showActionSheet({
 					itemList: ["选择文件"],
@@ -112,6 +111,29 @@
 					}
 				})
 			},
+			nicknameSetting(e){
+				uni.navigateTo({
+					url: "nickname/nickname"
+				})
+			},
+			signatureSetting(e){
+				uni.navigateTo({
+					url: "signature/signature"
+				})
+			},
+			identityCheck(e){
+				if(!this.$store.getters.IsActive){
+					uni.navigateTo({
+						url: "identityCheck/identityCheck"
+					});
+				}else{
+					uni.showModal({
+						showCancel:true,
+						content:"已通过验证！"
+					})
+				}
+
+			},
 			phoneBind(e){
 				uni.navigateTo({
 					url:"phoneBind/phoneBind"
@@ -121,7 +143,12 @@
 				uni.navigateTo({
 					url:"emailBind/emailBind"
 				})
-			}
+			},
+			unregister(e){
+				uni.navigateTo({
+					url: "unregister/unregister"
+				});
+			},
 		}
 	}
 </script>

@@ -46,7 +46,7 @@
 
 				if (match) {
 					uni.requestWithCookie({
-						url: this.$store.state.apiBaseUrl + "/api/IdentityInfo/emailcode/send?email=" + this
+						url: this.$store.state.apiBaseUrl + "/api/AuthUser/emailcode/send?email=" + this
 							.newEmail,
 						success: (res) => {
 							if (res.statusCode !== 204) {
@@ -72,7 +72,7 @@
 			},
 			bindEmail(e) {
 				uni.requestWithCookie({
-					url: this.$store.state.apiBaseUrl + "/api/IdentityInfo/emailcode/confirm?code="+this.code,
+					url: this.$store.state.apiBaseUrl + "/api/AuthUser/emailcode/confirm?code="+this.code,
 					method: "POST",
 					success: (res) => {
 						uni.showModal({
@@ -111,7 +111,7 @@
 		},
 		onLoad() {
 			uni.requestWithCookie({
-				url: this.$store.state.apiBaseUrl + "/api/IdentityInfo/email",
+				url: this.$store.state.apiBaseUrl + "/api/AuthUser/email",
 				success: (res) => {
 					if (res.statusCode === 200) {
 						this.email = res.data;

@@ -61,7 +61,12 @@
 			}
 		},
 		computed: {
-			
+			userName(){
+				if(this.user&&this.user.userName){
+					return this.user.userName
+				}
+				return "获取用户名出错"
+			},
 			hispubs(){
 
 				return this.$data.$hispubs

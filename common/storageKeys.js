@@ -9,3 +9,4 @@ StorageKeys.uuid = "__DC_STAT_UUID";
 StorageKeys.userAvatar = "_userAvatar";
 StorageKeys.searchs="_searchs";
 StorageKeys.isActive="_isActive";
+StorageKeys.introduce="_introduce";

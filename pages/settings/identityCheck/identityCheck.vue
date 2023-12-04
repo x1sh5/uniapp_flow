@@ -9,7 +9,7 @@
 			</view>
 
 			<view>
-				<input class="rg-input" v-model="cardNo" maxlength="18" placeholder="身份证号：" />
+				<input class="rg-input" v-model="cardNo" @blur="CardNoCheck" maxlength="18" placeholder="身份证号：" />
 			</view>
 
 			<text style="margin-top:60rpx;margin-left: 60rpx;">请上传身份证信息:</text>
@@ -38,7 +38,8 @@
 				neg: "", //反面照
 				posMd5: "",
 				name: "",
-				cardNo: ""
+				cardNo: "",
+				cardNoChecked: false
 			}
 		},
 		methods: {
@@ -72,8 +73,25 @@
 					})
 				uni.requireNativePlugin
 			},
+			CardNoCheck(e){
+				if(/[0-9X]{18}/.test(this.cardNo)){
+					this.cardNoChecked = true;
+					return
+				}
+				uni.showModal({
+					showCancel:false,
+					content:"身份证号格式不合法"
+				})
+			},
 			check(e) {
 				let qurl = this.$store.state.apiBaseUrl + "/api/IdentityInfo/check";
+				if(!this.cardNoChecked){
+					uni.showModal({
+						showCancel:false,
+						content:"身份证号格式不合法"
+					})
+					return;
+				}
 				uni.uploadFile({
 					url: qurl,
 					filePath: '123', // 随便填，不为空即可  

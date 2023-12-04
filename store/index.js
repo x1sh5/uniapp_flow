@@ -28,6 +28,7 @@ const store = createStore({
 	state: {
 		$hasLogin: false,
 		$userName: "未登录",
+		introduce:"",
 		useravatar: "/static/meactive.png",
 		branchs: [],
 		openid:"",
@@ -139,6 +140,10 @@ const store = createStore({
 		setUserAvatar(state, payload) {
 			state.useravatar = payload;
 			uni.setStorageSync(StorageKeys.userAvatar, payload);
+		},
+		setIntroduce(state, payload){
+			state.introduce = payload;
+			uni.setStorageSync(StorageKeys.introduce, payload);
 		},
 		initUserInfo: (state) => {
 			try {

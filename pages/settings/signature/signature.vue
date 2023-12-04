@@ -1,6 +1,6 @@
 <template>
     <view class="rg-input">
-        <input value={{ signature }} maxlength="10" @blur="signatureCheckEvent" placeholder="请填写个性签名"/>
+        <input :value="signature" maxlength="10" @blur="signatureCheckEvent" placeholder="请填写个性签名"/>
     </view>
     <view>
         <button class="lgtip-button" @click="setSignature">保存</button>
@@ -19,36 +19,47 @@ export default {
         }
     },
     onLoad() {
-        // this.signature = StorageKeys. 这里需要完善一下
+		
+		try {
+			const value = uni.getStorageSync(StorageKeys.introduce);
+			if (value) {
+				this.signature = value;
+			}
+		} catch (e) {
+			// error
+		}
+        
     },
     methods: {
         signatureCheckEvent(event) {
             let signature = event.detail.value
-            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(signature) //需要后端对接
-            uni.request({
-                url: checkUrl,
-                success: (res) => {
-                    if (res.statusCode === 200) {
-                        this.signatureCheckTip = res.data.data.msg
-                    }
-                    if (res.data.data.status) {
-                        this.signatureVerify = true
-                    }
-                }
-            })
+			this.signature = signature;
+            // let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(signature) //需要后端对接
+            // uni.request({
+            //     url: checkUrl,
+            //     success: (res) => {
+            //         if (res.statusCode === 200) {
+            //             this.signatureCheckTip = res.data.data.msg
+            //         }
+            //         if (res.data.data.status) {
+            //             this.signatureVerify = true
+            //         }
+            //     }
+            // })
         },
         setSignature(event) {
             let signature = this.signature
-            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(nickname) //需要后端对接
-            uni.request({
+            let checkUrl = this.$store.state.apiBaseUrl + "/api/AuthUser/set/introduce?introduce=" + encodeURIComponent(signature) //需要后端对接
+            uni.requestWithCookie({
                 url: checkUrl,
-                data: signature,
+                method:"POST",
                 success: (res) => {
                     if (res.statusCode === 200) {
                         uni.showToast({
 								title: '保存成功',
 								icon: 'success',
 							})
+						that.$store.commit("setIntroduce", this.signature);
                         uni.navigateBack()
                     } else {
                         uni.showToast({

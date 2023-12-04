@@ -1,6 +1,6 @@
 <template>
     <view class="rg-input">
-        <input value={{ nickname }} maxlength="10" @blur="nicknameCheckEvent" placeholder="请填写昵称"/>
+        <input :value="nickname" maxlength="10" @blur="nicknameCheckEvent" placeholder="请填写昵称"/>
         <view>{{ nicknameCheckTip }}</view>
     </view>
     <view>
@@ -21,16 +21,17 @@ export default {
         }
     },
     onLoad() {
-        this.nickname = StorageKeys.userName
+        this.nickname = this.$store.state.$userName
     },
     methods: {
         nicknameCheckEvent(event) {
-            let nickname = event.detail.value
+            let nickname = event.detail.value;
+			this.nickname = nickname;
             if (/[ !@#$%^&*()+{}\[\]:;<>,.?~\-，。？、《》【】（）]/.test(nickname)) {
                 this.nicknameCheckTip = "昵称不能包含特殊字符"
                 return
             }
-            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(nickname) //需要后端对接
+            let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/namecheck?username=" + encodeURIComponent(nickname) //需要后端对接
             uni.request({
                 url: checkUrl,
                 success: (res) => {
@@ -45,16 +46,17 @@ export default {
         },
         setNickname(event) {
             let nickname = this.nickname
-            let checkUrl = this.$store.state.apiBaseUrl + "" + encodeURIComponent(nickname) //需要后端对接
-            uni.request({
+            let checkUrl = this.$store.state.apiBaseUrl + "/api/AuthUser/set/nickname?nickname=" + encodeURIComponent(nickname) //需要后端对接
+            uni.requestWithCookie({
                 url: checkUrl,
-                data: nickname,
+                method:"POST",
                 success: (res) => {
                     if (res.statusCode === 200) {
                         uni.showToast({
 								title: '保存成功',
 								icon: 'success',
 							})
+						this.$store.commit("setUserName", this.nickname);
                         uni.navigateBack()
                     } else {
                         uni.showToast({
