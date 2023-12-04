@@ -32,7 +32,8 @@
 			login(e) {
 				console.log(e)
 				const that = this;
-				const url = this.$store.state.apiBaseUrl + "/api/Account/login"
+				const url = this.$store.state.apiBaseUrl + "/api/Account/login";
+				e.detail.value.openId = this.$store.state.openid;
 				uni.request({
 					url: url,
 					method: "POST",

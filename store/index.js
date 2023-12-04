@@ -30,6 +30,7 @@ const store = createStore({
 		$userName: "未登录",
 		useravatar: "/static/meactive.png",
 		branchs: [],
+		openid:"",
 		currentTask: {},
 		taskTypes: [],
 		//未读信息
@@ -492,6 +493,23 @@ const store = createStore({
 					console.log(res.statusCode);
 				}
 			});
+		},
+		getOpenid({state}){
+			wx.login({
+				success:(res)=>{
+					if(res.code){
+						uni.requestWithCookie({
+							url:state.apiBaseUrl+"/api/Bill/openId?code="+res.code,
+							success: (result) => {
+								if(result.statusCode===200){
+									state.openid = result.data
+								}
+							}
+						})
+					}
+
+				}
+			})
 		},
 		upload({
 			state

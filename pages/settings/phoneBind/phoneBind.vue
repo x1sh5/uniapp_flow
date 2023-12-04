@@ -1,8 +1,19 @@
 <template>
 	<view>
-		<input class="rg-input" type="digit" maxlength="15" placeholder="请输入手机号码"/>
-		<view v-if="!phone">
-			<button>切换手机号</button>>
+		<view v-if="mode=='show'">
+			<input class="rg-input" :disabled="true" v-model="phone" type="text" maxlength="256" placeholder="请输入手机号码" />
+			<button @click="bindChange">更改号码</button>
+		</view>
+		
+		<view v-if="mode=='bindnew'">
+			<input class="rg-input" v-model="newphone" type="text" maxlength="256" placeholder="请输入手机号码" />
+			<button @click="sendCode">发送验证码</button>
+			<view v-show="showCode">
+				<view>请输入{{email}}收到的验证码</view>
+				<xt-verify-code inputType="text" type="bottom" v-model="code"></xt-verify-code>
+				<button @click="bindPhone">绑定</button>
+			</view>
+		
 		</view>
 	</view>
 </template>
@@ -11,11 +22,23 @@
 	export default {
 		data() {
 			return {
-				phone:""
+				phone: "",
+				showCode: false,
+				code: "",
+				newphone:"",
+				mode:"bindnew"//bindnew, show
 			}
 		},
 		methods: {
-			
+			bindPhone(e){
+				
+			},
+			sendCode(e){
+				
+			},
+			bindChange(e){
+				
+			}
 		}
 	}
 </script>

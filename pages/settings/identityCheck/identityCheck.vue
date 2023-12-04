@@ -23,6 +23,7 @@
 			</view> -->
 		</view>
 		<button style="width: 80px;" @click="check">认证</button>
+		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
 	</view>
 </template>
 

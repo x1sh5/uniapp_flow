@@ -55,6 +55,9 @@
 
 			this.$store.commit("Msgs/initChatChannels");
 			this.$store.dispatch("activeValidate");
+			// #ifdef MP-WEIXIN
+			this.$store.dispatch("getOpenid");
+			// #endif
 		}
 	}
 </script>
