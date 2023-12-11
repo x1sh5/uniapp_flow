@@ -1,9 +1,10 @@
 import cookieParser from 'set-cookie-parser';
+import { baseUrl } from "../common/const.js";
 
 /**
  * Util 类
  */
-var host = "https://www.liusha-gy.com"
+var host = baseUrl;
 class Util {
 	/**
 	 * 根据域名获取该域名的 cookie 作用域范围列表

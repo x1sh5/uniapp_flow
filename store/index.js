@@ -17,12 +17,12 @@ import {
 	References
 } from "./reference.js";
 
+import { baseUrl } from "../common/const.js";
+
 // #ifdef MP-WEIXIN
 const signalR = require("../common/signalr.js");
 // #endif
 
-
-const baseUrl = "https://www.liusha-gy.com" //"https://www.liusha-gy.com"; //"https://localhost:7221"; 
 
 const store = createStore({
 	state: {

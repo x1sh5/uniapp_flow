@@ -49,7 +49,7 @@
 						this.pos = res.filePath;
 						if(res.statusCode===200){
 							let o = JSON.parse(res.data)
-							this.posMd5 = this.$store.state.apiBaseUrl + o[0].md5;
+							this.posMd5 = o[0].md5;
 						}
 
 					})
@@ -94,11 +94,10 @@
 				}
 				uni.uploadFile({
 					url: qurl,
-					filePath: '123', // 随便填，不为空即可  
-					name: '123', // 随便填，不为空即可  
+					filePath: this.pos, // 随便填，不为空即可  
+					name: 'posimg', // 随便填，不为空即可  
 					//header: header, // 可以加access_token等  
 					formData: {
-						posimg: this.pos,
 						name: this.name,
 						cardNo: this.cardNo
 					}, // 接口参数，json格式，底层自动转为FormData的格式数据  
