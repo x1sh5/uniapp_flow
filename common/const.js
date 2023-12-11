@@ -1,1 +1,1 @@
-export var baseUrl = "https://localhost:7221";//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
+export var baseUrl = "https://www.liusha-gy.com";//"https://www.liusha-gy.com"; //"https://localhost:7221"; 
