@@ -1,232 +1,150 @@
 <template>
 	<view>
-		<form class="usercenter" @submit="register">
+		<view style="display: flex;flex-direction: column;">
+			<!-- <view>
+				<input placeholder="姓名" maxlength="20"/>
+			</view> -->
 			<view>
-				<input class="rg-input" name="name" @blur="nameCheckEvent" maxlength="15" placeholder="昵称：" />
-				<view class="tips">{{nameCheckTip}}</view>
+				<input class="rg-input" v-model="name" maxlength="15" placeholder="真实姓名：" />
 			</view>
+
 			<view>
-				<input class="rg-input" name="password" type="safe-password" @blur="pwdCheckEvent" maxlength="20"
-					placeholder="密码：" />
-				<view class="tips">{{pwdCheckTip}}</view>
+				<input class="rg-input" v-model="cardNo" @blur="CardNoCheck" maxlength="18" placeholder="身份证号：" />
 			</view>
+
+			<text style="margin-top:60rpx;margin-left: 60rpx;">请上传身份证信息:</text>
 			<view>
-				<input class="rg-input" name="affirm" type="safe-password" @blur="pwdVerifyEvent" maxlength="20"
-					placeholder="确认密码：" />
-				<view class="tips">{{pwdVerifyTip}}</view>
+				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="pos"></image>
+				<button style="width: 180px;" @click="uploadPos">上传正面照</button>
 			</view>
-			<view>
-				<input class="rg-input" name="email" @blur="emailCheckEvent" maxlength="25" placeholder="邮箱(选填)：" />
-				<view class="tips">{{emailCheckTip}}</view>
-			</view>
-			<view>
-				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12" placeholder="手机号码(选填)：" />
-				<view class="tips">{{phoneCheckTip}}</view>
-			</view>
-			<view>
-				<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent"
-					style="transform:scale(0.7); margin-top: 5%;" />
-				<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout"
-						style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
-				<view class="tips">{{aggrementCheckTip}}</view>
-			</view>
-			<button class="lgtip-button" form-type="submit">注册</button>
-			<view class="tips" style="height: 20px;">{{logintips}}</view>
-		</form>
+			<!-- <view>
+				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="neg"></image>
+				<button style="width: 180px;" @click="uploadNeg">上传反面照</button>
+			</view> -->
+		</view>
+		<button style="width: 80px;" @click="check">注册</button>
+		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
 	</view>
 </template>
 
 <script>
+	import {
+		StorageKeys
+	} from '../../../common/storageKeys';
 	export default {
 		data() {
 			return {
-				logintips: "",
-				nameCheckTip: "", //名字检查出错后的提示
-				nameVerify: false,
-				pwdCheckTip: "",
-				pwdVerify: false,
-				pwdVerifyTip: "",
-				pwdAffirm: false,
-				pwd: "", //密码暂存
-				emailCheckTip: "",
-				emailVerify: false,
-				phoneCheckTip: "",
-				phoneVerify: false,
-				aggrementCheckTip: "",
-				isChecked: false
+				pos: "", //正面照
+				neg: "", //反面照
+				posMd5: "",
+				name: "",
+				cardNo: "",
+				cardNoChecked: false
 			}
 		},
 		methods: {
-			nameCheckEvent(event) {
-
-				let name = event.detail.value;
-				if (name.length < 1) {
-					this.nameCheckTip = "姓名不能为空";
-					return
-				}
-				let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/namecheck?username=" + encodeURIComponent(
-				name);
-				uni.request({
-					url: checkUrl,
-					success: (res) => {
-						if (res.statusCode === 200) {
-							this.nameCheckTip = res.data.data.msg;
-							if (res.data.data.status) {
-								this.nameVerify = true
-							}
+			uploadPos(e) {
+				this.$store.dispatch("upload", "pupload")
+					.then((res) => {
+						this.pos = res.filePath;
+						if(res.statusCode===200){
+							let o = JSON.parse(res.data)
+							this.posMd5 = o[0].md5;
 						}
-					}
-				});
-			},
-			pwdCheckEvent(event) {
 
-				let password = event.detail.value;
-				if (password.length < 8) {
-					this.pwdCheckTip = "长度必须大于7位"
-					return
-				}
-
-				// 检查是否包含大写字母
-				if (!/[A-Z]/.test(password)) {
-					this.pwdCheckTip = "密码中必须要有大写字母";
-					return
-				}
-
-				// 检查是否包含数字
-				if (!/\d/.test(password)) {
-					this.pwdCheckTip = "密码中必须要有数字";
-					return
-				}
-
-				// 检查是否包含特殊符号，您可以根据需要修改特殊符号的正则表达式
-				if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(password)) {
-					this.pwdCheckTip = "密码中必须要有特殊字母";
-					return
-				}
-				this.pwdCheckTip = "密码可用";
-				this.pwd = password;
-				this.pwdVerify = true;
-			},
-			pwdVerifyEvent(event) {
-
-				let affirmPwd = event.detail.value;
-				if (affirmPwd !== this.pwd) {
-					this.pwdVerifyTip = "必须跟密码保持一致";
-					return
-				}
-				this.pwdAffirm = true;
-				this.pwdVerifyTip = "密码确认成功";
-			},
-			emailCheckEvent(event) {
-
-				let email = event.detail.value;
-				const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				let isOk = regex.test(email);
-				if (!isOk) {
-					this.emailCheckTip = "邮箱格式不正确";
-					return
-				}
-				let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/emailcheck?email=" + encodeURIComponent(email);
-				uni.request({
-					url: checkUrl,
-					success: (res) => {
-						if (res.statusCode === 200) {
-							this.emailCheckTip = res.data.data.msg;
-							if (res.data.data.status) {
-								this.emailVerify = true
-							}
-						}
-					}
-				});
-			},
-			phoneCheckEvent(event) {
-
-				let phone = event.detail.value;
-
-				let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/phonecheck?phoneNo=" + encodeURIComponent(
-					phone);
-				uni.request({
-					url: checkUrl,
-					success: (res) => {
-						this.phoneCheckTip = res.data.data.msg;
-						if (res.data.data.status) {
-							this.phoneVerify = true;
-						}
-					}
-				});
-			},
-			agreementCheckEvent(event) {
-				this.isChecked = !this.isChecked
-
-				if (this.isChecked == false) {
-					this.aggrementCheckTip = "请勾选同意《用户协议》";
-					return
-				}
-				if (this.isChecked == true) {
-					this.aggrementCheckTip = "";
-					return
-				}
-			},
-			toAbout(e) {
-				uni.navigateTo({
-					url: "/pages/userCenter/about/about"
-				});
-			},
-			register(e) {
-
-				let registerView = {
-					userName: e.detail.value.name,
-					phoneNo: e.detail.value.phone,
-					password: e.detail.value.affirm,
-					email: e.detail.value.email
-				}
-				let url = this.$store.state.apiBaseUrl + "/api/Account/register";
-				if (this.isChecked == true) {
-					uni.request({
-						url: url,
-						method: "POST",
-						data: registerView,
-						success: (res) => {
-							if (res.statusCode === 200) {
-								uni.showModal({
-									title: '',
-									content: '注册成功',
-									cancelText: '去登录',
-									confirmText: '实名认证',
-									success: function(res) {
-										if (res.confirm) {
-											uni.navigateTo({
-												url:"/pages/settings/identityCheck/identityCheck"
-											})
-										} else if (res.cancel) {
-											uni.switchTab({
-												url: "/pages/userCenter/userCenter"
-											})
-										}
-									}
-								});
-							} else {
-								uni.showModal({
-									showCancel:true,
-									content:res.data.message
-								})
-								this.logintips = res.data.message;
-							}
-						}
 					})
-				} else {
-					uni.showModal({
-						title: '',
-						content: '请先勾选同意《用户协议》',
-						showCancel: false,
-						confirmText: '返回',
-					});
+					.catch((err) => {
+						uni.showToast({
+							title: err.message.errors
+						})
+					})
+			},
+			uploadNeg(e) {
+				this.$store.dispatch("upload")
+					.then((res) => {
+						let o = JSON.parse(res.data)
+						this.neg = res.filePath;
+						this.$store.state.apiBaseUrl + o[0].url;
+					})
+					.catch((err) => {
+						uni.showToast({
+							title: err.message
+						})
+					})
+				uni.requireNativePlugin
+			},
+			CardNoCheck(e){
+				if(/[0-9X]{18}/.test(this.cardNo)){
+					this.cardNoChecked = true;
+					return
 				}
+				uni.showModal({
+					showCancel:false,
+					content:"身份证号格式不合法"
+				})
+			},
+			check(e) {
+				let qurl = this.$store.state.apiBaseUrl + "/api/IdentityInfo/check";
+				if(!this.cardNoChecked){
+					uni.showModal({
+						showCancel:false,
+						content:"身份证号格式不合法"
+					})
+					return;
+				}
+				uni.uploadFile({
+					url: qurl,
+					filePath: this.pos, // 随便填，不为空即可  
+					name: 'posimg', // 随便填，不为空即可  
+					//header: header, // 可以加access_token等  
+					formData: {
+						name: this.name,
+						cardNo: this.cardNo
+					}, // 接口参数，json格式，底层自动转为FormData的格式数据  
+					success: (res) => {
+						if (res.statusCode === 200) {
+							uni.setStorage({
+								key: StorageKeys.isActive,
+								data: true
+							});
+							uni.navigateTo({
+								url:"accountInfo/accountInfo"
+							})
+						} else {
+							uni.showModal({
+								showCancel: true,
+								content: res.data
+							})
+						}
+
+					}
+				})
 			}
 		}
 	}
 </script>
 
 <style>
-	@import url('./register.css');
+	.rg-input {
+		margin-top: 100rpx;
+		margin-left: 60rpx;
+		width: 300px;
+		height: 20rpx;
+		border: 2px solid #6c4ad1;
+
+
+		border-radius: 0px;
+		/* 将输入框的圆角设置为50 */
+		border: none;
+		/* 移除默认边框 */
+		border-bottom: 1px solid #6c4ad1;
+		/* 添加底部边框，可以根据需要调整颜色和粗细 */
+		outline: none;
+		/* 移除默认的焦点边框 */
+		background: transparent;
+		/* 设置背景为透明，以便底部边框显示 */
+		padding: 0;
+		/* 移除默认内边距，可以根据需要设置 */
+
+	}
 </style>

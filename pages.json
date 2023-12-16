@@ -279,15 +279,6 @@
             
         }
         ,{
-            "path" : "pages/settings/identityCheck/identityCheck",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "身份验证",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
             "path" : "pages/myApply/myApply",
             "style" :                                                                                    
             {
@@ -352,6 +343,14 @@
         	"style" : 
         	{
         		"navigationBarTitleText" : "个性签名设置",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/register/accountInfo/accountInfo",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "完善账号信息",
         		"enablePullDownRefresh" : false
         	}
         }

@@ -17,11 +17,6 @@
 			<!-- <view style="position: absolute;right: 0;">{{ signature }}></view> -->
 		</view>
 
-		<view class="driver"></view>
-		<view @click="identityCheck" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view>身份验证</view>
-			<view style="position: absolute;right: 0;">></view>
-		</view>
 		
 <!-- 		<view @click="phoneBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
 			<view>绑定手机号</view>
@@ -120,19 +115,6 @@ import { StorageKeys } from '../../common/storageKeys'
 				uni.navigateTo({
 					url: "signature/signature"
 				})
-			},
-			identityCheck(e){
-				if(!this.$store.getters.IsActive){
-					uni.navigateTo({
-						url: "identityCheck/identityCheck"
-					});
-				}else{
-					uni.showModal({
-						showCancel:true,
-						content:"已通过验证！"
-					})
-				}
-
 			},
 			phoneBind(e){
 				uni.navigateTo({
