@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_customTypes = require("../../common/customTypes.js");
 const _sfc_main = {
   data() {
     return {
@@ -26,7 +27,7 @@ const _sfc_main = {
           return "done";
         }
       },
-      status: ["waitfor", "undone", "done", "announcement"]
+      status: common_customTypes.TaskStatus
     };
   },
   created() {
@@ -46,24 +47,29 @@ const _sfc_main = {
     }
   },
   onLoad(op) {
-    console.log("options:", op);
     this.id = op.id;
     this.refer = op.refer;
     let task = this.$store.getters.getTaskById(this.id);
     if (task !== void 0) {
       this.task = task;
+      this.mode = this.status[this.task.status];
     } else {
       let qurl = this.$store.state.apiBaseUrl + "/api/Assignment/" + this.id;
-      common_vendor.index.requestWithCookie({
-        url: qurl,
-        success: (res) => {
-          if (res.statusCode == 200) {
-            this.task = res.data;
+      const ps = new Promise((resolve, reject) => {
+        common_vendor.index.requestWithCookie({
+          url: qurl,
+          success: (res) => {
+            if (res.statusCode == 200) {
+              resolve(res.data);
+            }
           }
-        }
+        });
+      });
+      ps.then((o) => {
+        this.task = o;
+        this.mode = this.status[o.status];
       });
     }
-    this.mode = this.status[this.task.status];
   },
   methods: {
     del(e) {
@@ -126,22 +132,28 @@ const _sfc_main = {
                     paySign: praypay.paySign,
                     success: (res2) => {
                       this.task.payed = 1;
-                      this.$store.commit("updateLocalTaskById", this.task);
+                      this.$store.commit(
+                        "updateLocalTaskById",
+                        this.task
+                      );
                       common_vendor.index.showModal({
                         title: "支付成功",
                         showCancel: false,
                         success: (res3) => {
                           if (res3.confirm) {
-                            if (this.refer === "newtask") {
-                              common_vendor.index.reLaunch({
-                                url: "/pages/addtask/addtask"
-                              });
-                            }
+                            common_vendor.index.navigateTo({
+                              url: "/pages/pay-result/pay-result?taskid=" + this.task.id
+                            });
                           }
                         }
                       });
                     },
                     fail: (err) => {
+                      common_vendor.index.showModal({
+                        title: "支付失败",
+                        showCancel: false,
+                        content: err.message
+                      });
                     }
                   });
                 }
@@ -185,5 +197,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: common_vendor.o((...args) => $options.pay && $options.pay(...args))
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/myTaskDetail/myTaskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/myTaskDetail/myTaskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

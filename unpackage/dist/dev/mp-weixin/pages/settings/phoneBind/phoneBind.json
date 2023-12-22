@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "绑定手机号",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "xt-verify-code": "../../../uni_modules/xt-verify-code/components/xt-verify-code/xt-verify-code"
+  }
+}

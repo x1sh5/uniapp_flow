@@ -27,7 +27,6 @@ const _sfc_main = {
   methods: {
     //重设截止日期
     agree(e) {
-      console.log("接取任务");
       this.$refs.calendar.show();
     },
     disagree(e) {
@@ -51,7 +50,6 @@ const _sfc_main = {
           }
         },
         fail: (err) => {
-          console.log("failed");
           common_vendor.index.showModal({
             content: err
           });
@@ -134,7 +132,6 @@ const _sfc_main = {
       });
     },
     complete(e) {
-      console.log(e);
       this.archiveyes("yes");
     },
     failure(e) {
@@ -151,7 +148,9 @@ const _sfc_main = {
         let url = this.$store.state.apiBaseUrl + "/api/Assignment/take/" + this.simpleInfo.id;
         common_vendor.index.requestWithCookie({
           url,
-          data: { deadline: this.deadtime },
+          data: {
+            deadline: this.deadtime
+          },
           success: (res) => {
             if (res.statusCode === 200) {
               if (res.data.data.success) {
@@ -171,7 +170,6 @@ const _sfc_main = {
             }
           },
           fail: (err) => {
-            console.log("failed");
             common_vendor.index.showModal({
               content: err
             });
@@ -263,7 +261,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     n: common_vendor.o((...args) => $options.complete && $options.complete(...args)),
     o: common_vendor.o((...args) => $options.failure && $options.failure(...args))
   } : {}), {
-    p: common_vendor.sr("calendar", "d68e5676-1"),
+    p: common_vendor.sr("calendar", "4f0eb924-1"),
     q: common_vendor.o($options.deadtimeChange),
     r: common_vendor.o(($event) => $options.deadtime = $event),
     s: common_vendor.p({
@@ -272,5 +270,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/simpleCard/simpleCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/simpleCard/simpleCard.vue"]]);
 wx.createComponent(Component);

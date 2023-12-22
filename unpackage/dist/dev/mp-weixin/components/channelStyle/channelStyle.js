@@ -26,7 +26,6 @@ const _sfc_main = {
     common_vendor.index.requestWithCookie({
       url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.cc.cid,
       success: (res) => {
-        console.log(res.data);
         this.imgsrc = res.data;
       }
     });
@@ -37,6 +36,7 @@ const _sfc_main = {
   },
   methods: {
     jump() {
+      this.$store.dispatch("unreadChange", this.cc.unread);
       let userId = this.cc.cid;
       let userName = this.cc.senderName;
       common_vendor.index.navigateTo({
@@ -61,5 +61,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.o((...args) => $options.showDelete && $options.showDelete(...args))
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/channelStyle/channelStyle.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/channelStyle/channelStyle.vue"]]);
 wx.createComponent(Component);

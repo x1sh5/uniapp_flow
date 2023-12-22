@@ -252,5 +252,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     bw: !$data.isSubPanelCollapsed[7][3]
   }, !$data.isSubPanelCollapsed[7][3] ? {} : {}) : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-57f294dd"], ["__file", "E:/uniapp_flow/pages/userCenter/instructions/instructions.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-57f294dd"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userCenter/instructions/instructions.vue"]]);
 wx.createPage(MiniProgramPage);

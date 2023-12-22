@@ -6,11 +6,20 @@ const _sfc_main = {
     return {
       user: {},
       $hispubs: [],
+      //已发布任务
       $hisacpt: [],
+      //已接受任务
       curIndex: 0
+      //界面选项，0：已发布任务，1：已接受任务
     };
   },
   computed: {
+    userName() {
+      if (this.user && this.user.userName) {
+        return this.user.userName;
+      }
+      return "获取用户名出错";
+    },
     hispubs() {
       return this.$data.$hispubs;
     },
@@ -99,7 +108,7 @@ if (!Math) {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: _ctx.imgsrc,
-    b: common_vendor.t(_ctx.userName),
+    b: common_vendor.t($options.userName),
     c: $data.curIndex === 0 ? "underline" : "",
     d: $data.curIndex === 0 ? "#4d1ae4" : "",
     e: common_vendor.o((...args) => $options.HisPublish && $options.HisPublish(...args)),
@@ -111,7 +120,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     j: common_vendor.f($options.hispubs, (item, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
-        b: "b0c4a376-0-" + i0,
+        b: "d64b7bf4-0-" + i0,
         c: common_vendor.p({
           task: item,
           editable: false,
@@ -124,7 +133,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     k: common_vendor.f($options.hisacpt, (item, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.toDetails(item.id), item.id),
-        b: "b0c4a376-1-" + i0,
+        b: "d64b7bf4-1-" + i0,
         c: common_vendor.p({
           task: item,
           editable: false,
@@ -135,5 +144,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   });
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/userhomepage/userhomepage.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userhomepage/userhomepage.vue"]]);
 wx.createPage(MiniProgramPage);

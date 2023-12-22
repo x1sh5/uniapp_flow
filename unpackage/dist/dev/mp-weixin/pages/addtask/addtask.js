@@ -20,19 +20,16 @@ const _sfc_main = {
   },
   methods: {
     editTask(e) {
-      console.log(e);
       common_vendor.index.navigateTo({
         url: "/pages/newTask/newTask?branchid=" + e
       });
     },
     createTask(e) {
-      console.log("createTask", e);
       common_vendor.index.navigateTo({
         url: "/pages/newTask/newTask?branchid=" + this.selected.id + "&createType=" + this.defaultT + "&mode=" + this.mode
       });
     },
     typeChange(e) {
-      console.log("typechange", e);
       if (e.detail.value === 1) {
         this.mode = "mutiple";
         this.$refs.dataSelect.statusDisable(true);
@@ -43,19 +40,8 @@ const _sfc_main = {
       }
     },
     receiveDataFromChild(data) {
-      console.log("data", data);
       this.selected = data;
-      console.log("this.selected", this.selected);
     }
-  },
-  async created() {
-    console.log("addtask create");
-  },
-  onLoad() {
-    console.log("onload");
-  },
-  onShow() {
-    console.log("onshow");
   }
 };
 if (!Array) {
@@ -77,7 +63,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       localdata: $data.ctype,
       modelValue: $data.defaultT
     }),
-    d: common_vendor.sr("dataSelect", "f955be9a-1"),
+    d: common_vendor.sr("dataSelect", "2ce241b4-1"),
     e: common_vendor.o($options.receiveDataFromChild),
     f: common_vendor.p({
       localdata: $options.branchTypes,
@@ -87,5 +73,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: !Boolean($data.selected)
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/addtask/addtask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/addtask/addtask.vue"]]);
 wx.createPage(MiniProgramPage);

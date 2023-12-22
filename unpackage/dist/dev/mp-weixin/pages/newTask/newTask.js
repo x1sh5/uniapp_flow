@@ -20,11 +20,8 @@ const _sfc_main = {
     }
   },
   created(op) {
-    console.log("created");
-    console.log(op);
   },
   onLoad(op) {
-    console.log("onload");
     op.createType;
     let branchType = op.branchid;
     this.$data.$mode = op.mode;
@@ -160,7 +157,6 @@ const _sfc_main = {
       }
     },
     createTask(e) {
-      console.log(e);
       this.tasks.push({
         "id": this.counter++,
         "username": false,
@@ -181,10 +177,7 @@ const _sfc_main = {
       });
     },
     updateTask(id, payload) {
-      console.log("updateTask triggered", id, payload);
-      console.log(this.tasks);
       let index = this.tasks.findIndex((item) => item.id === parseInt(id));
-      console.log(index);
       if (index !== -1) {
         this.tasks[index].description = payload.html;
         this.$refs["id" + id][0].updateT(payload);
@@ -200,10 +193,8 @@ const _sfc_main = {
     }
   },
   mounted() {
-    console.log(this.$refs);
   },
   onShow() {
-    console.log(this.$refs);
   }
 };
 if (!Array) {
@@ -230,14 +221,14 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.f($data.tasks, (item, index, i0) => {
       return {
-        a: common_vendor.sr("id" + item.id, "0cc2ddf1-1-" + i0, {
+        a: common_vendor.sr("id" + item.id, "9360021c-1-" + i0, {
           "f": 1
         }),
         b: item.id,
         c: "id" + item.id,
         d: common_vendor.o($options.checkResult, item.id),
         e: common_vendor.o($options.removeTask, item.id),
-        f: "0cc2ddf1-1-" + i0,
+        f: "9360021c-1-" + i0,
         g: common_vendor.p({
           task: item,
           editable: true
@@ -254,5 +245,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/newTask/newTask.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/newTask/newTask.vue"]]);
 wx.createPage(MiniProgramPage);

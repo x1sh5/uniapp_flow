@@ -47,7 +47,6 @@ const _sfc_main = {
       });
     },
     history(e) {
-      console.log(e);
       common_vendor.index.navigateTo({
         url: "/pages/history/history"
       });
@@ -59,13 +58,11 @@ const _sfc_main = {
       });
     },
     taskReq(e) {
-      console.log(e);
       common_vendor.index.navigateTo({
         url: "/pages/taskReq/taskReq"
       });
     },
     myApply(e) {
-      console.log(e);
       common_vendor.index.navigateTo({
         url: "/pages/myApply/myApply"
       });
@@ -91,7 +88,6 @@ const _sfc_main = {
       });
     },
     signout(e) {
-      console.log("signout");
       const lurl = this.$store.state.apiBaseUrl + "/api/Account/logout";
       common_vendor.index.requestWithCookie({
         url: lurl,
@@ -148,5 +144,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     r: !$options.hasLogin
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/userCenter/userCenter.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userCenter/userCenter.vue"]]);
 wx.createPage(MiniProgramPage);

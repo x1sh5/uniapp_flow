@@ -36,7 +36,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.f($data.myreqs, (item, k0, i0) => {
       return {
-        a: "09ed1fab-0-" + i0,
+        a: "990b7ea8-0-" + i0,
         b: common_vendor.p({
           simpleInfo: item,
           showbutton: false
@@ -46,5 +46,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/myApply/myApply.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/myApply/myApply.vue"]]);
 wx.createPage(MiniProgramPage);

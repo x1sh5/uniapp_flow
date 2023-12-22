@@ -5,17 +5,17 @@
 			@focus="search" />
 		<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="5000" :duration="500">
 			<swiper-item>
-				<image class="swiper-item-image" src="/static/p1.png">
+				<image class="swiper-item-image" src="https://liusha-gy.com/flow/static/p1.png">
 				</image>
 			</swiper-item>
 
 			<swiper-item>
-				<image class="swiper-item-image" src="/static/p2.png">
+				<image class="swiper-item-image" src="https://liusha-gy.com/flow/static/p2.png">
 				</image>
 			</swiper-item>
 
 			<swiper-item>
-				<image class="swiper-item-image" src="/static/p3.png">
+				<image class="swiper-item-image" src="https://liusha-gy.com/flow/static/p3.png">
 				</image>
 			</swiper-item>
 		</swiper>

@@ -10,7 +10,7 @@ const _sfc_main = {
       userId: NaN,
       //发卡人id
       calcHeight: NaN
-      //
+      //计算后的scrollview高度
       //messages:[],
     };
   },
@@ -27,7 +27,6 @@ const _sfc_main = {
   },
   methods: {
     async send(e) {
-      console.log(this.text1);
       let cc = this.$store.getters["Msgs/getCcById"](this.userId);
       if (!cc) {
         let ncc = new common_customTypes.ChatChannel(this.userId, 0, this.userName, (/* @__PURE__ */ new Date()).toLocaleString(), "");
@@ -58,7 +57,6 @@ const _sfc_main = {
       common_vendor.index.navigateBack();
     },
     receiveOld() {
-      console.log("scroll up");
       let lastid = this.messages[0].cid;
       let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&lastid=" + lastid + "&count=10";
       common_vendor.index.requestWithCookie({
@@ -81,7 +79,6 @@ const _sfc_main = {
       });
     },
     scrollDown() {
-      console.log("scroll down");
     }
   },
   onLoad(op) {
@@ -137,7 +134,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.f($options.messages, (m, k0, i0) => {
       return {
         a: m.id,
-        b: "c4db2cc6-1-" + i0,
+        b: "185b4e5e-1-" + i0,
         c: common_vendor.p({
           message: m,
           isLeft: m.isLeft,
@@ -149,7 +146,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.f($options.messages, (m, k0, i0) => {
       return {
         a: m.id,
-        b: "c4db2cc6-2-" + i0,
+        b: "185b4e5e-2-" + i0,
         c: common_vendor.p({
           message: m,
           isLeft: m.isLeft,
@@ -171,5 +168,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     n: common_vendor.o((...args) => $options.send && $options.send(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/message/chat/chat.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/message/chat/chat.vue"]]);
 wx.createPage(MiniProgramPage);

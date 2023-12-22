@@ -1,30 +1,28 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
-    return {};
+    return {
+      nickname: ""
+    };
+  },
+  onLoad() {
+    this.nickname = this.$store.state.$userName;
   },
   computed: {
     imgsrc() {
       return this.$store.state.useravatar;
+    },
+    NickName() {
+      return this.$store.state.$userName;
     }
   },
   methods: {
-    identityCheck(e) {
-      common_vendor.index.navigateTo({
-        url: "identityCheck/identityCheck"
-      });
-    },
-    unregister(e) {
-      common_vendor.index.navigateTo({
-        url: "unregister/unregister"
-      });
-    },
     avataSet(e) {
       common_vendor.index.showActionSheet({
         itemList: ["选择文件"],
         success: (e2) => {
-          console.log(e2);
           if (e2.tapIndex === 0) {
             common_vendor.index.chooseImage({
               count: 1,
@@ -33,7 +31,6 @@ const _sfc_main = {
                 height: 800
               },
               success: (e3) => {
-                console.log(e3);
                 if (e3.tempFiles[0].size > 5 * 1024 * 1024) {
                   common_vendor.index.showToast({
                     title: "图片大小超过5M,请重新选择。"
@@ -45,7 +42,6 @@ const _sfc_main = {
                   filePath: e3.tempFilePaths[0],
                   url: this.$store.state.apiBaseUrl + "/api/Image/upload",
                   success: (res) => {
-                    console.log(res);
                     if (res.statusCode === 201) {
                       let data = JSON.parse(res.data);
                       let imgurl = this.$store.state.apiBaseUrl + data[0].url;
@@ -64,6 +60,31 @@ const _sfc_main = {
           }
         }
       });
+    },
+    nicknameSetting(e) {
+      common_vendor.index.navigateTo({
+        url: "nickname/nickname"
+      });
+    },
+    signatureSetting(e) {
+      common_vendor.index.navigateTo({
+        url: "signature/signature"
+      });
+    },
+    phoneBind(e) {
+      common_vendor.index.navigateTo({
+        url: "phoneBind/phoneBind"
+      });
+    },
+    emailBind(e) {
+      common_vendor.index.navigateTo({
+        url: "emailBind/emailBind"
+      });
+    },
+    unregister(e) {
+      common_vendor.index.navigateTo({
+        url: "unregister/unregister"
+      });
     }
   }
 };
@@ -71,8 +92,11 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: $options.imgsrc,
     b: common_vendor.o((...args) => $options.avataSet && $options.avataSet(...args)),
-    c: common_vendor.o((...args) => $options.identityCheck && $options.identityCheck(...args))
+    c: common_vendor.t(_ctx.Nickname),
+    d: common_vendor.o((...args) => $options.nicknameSetting && $options.nicknameSetting(...args)),
+    e: common_vendor.o((...args) => $options.signatureSetting && $options.signatureSetting(...args)),
+    f: common_vendor.o((...args) => $options.emailBind && $options.emailBind(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/settings/settings.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/settings/settings.vue"]]);
 wx.createPage(MiniProgramPage);

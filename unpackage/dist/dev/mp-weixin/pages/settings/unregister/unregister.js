@@ -8,7 +8,6 @@ const _sfc_main = {
   },
   methods: {
     checkboxChange(e) {
-      console.log(e);
       if (e.detail.value[0]) {
         this.known = true;
       } else {
@@ -22,7 +21,6 @@ const _sfc_main = {
         editable: true,
         placeholderText: "密码...",
         success: (res) => {
-          console.log(res);
           if (res.confirm) {
             common_vendor.index.uploadFileWithCookie({
               url: qurl,
@@ -34,7 +32,6 @@ const _sfc_main = {
               formData: { password: res.content },
               // 接口参数，json格式，底层自动转为FormData的格式数据  
               success: (res2) => {
-                console.log(res2);
                 if (res2.statusCode === 200) {
                   common_vendor.index.showModal({
                     content: res2.data,
@@ -67,5 +64,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.o((...args) => $options.unregister && $options.unregister(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/settings/unregister/unregister.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/settings/unregister/unregister.vue"]]);
 wx.createPage(MiniProgramPage);

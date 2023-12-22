@@ -353,6 +353,22 @@
         		"navigationBarTitleText" : "完善账号信息",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/register/v2/v2",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "注册",
+        		"enablePullDownRefresh" : false
+        	}
+        },
+        {
+        	"path" : "pages/register/livedetect/livedetect",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {

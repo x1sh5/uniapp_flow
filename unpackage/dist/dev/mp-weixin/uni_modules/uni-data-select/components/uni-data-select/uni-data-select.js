@@ -2,7 +2,7 @@
 const common_vendor = require("../../../../common/vendor.js");
 const _sfc_main = {
   name: "uni-data-select",
-  mixins: [common_vendor.$s.mixinDatacom || {}],
+  mixins: [common_vendor.Bs.mixinDatacom || {}],
   props: {
     localdata: {
       type: Array,
@@ -180,7 +180,6 @@ const _sfc_main = {
       }
     },
     clearVal() {
-      console.log("clearVal");
       this.emit("");
       this.initDefVal();
       if (this.collection) {
@@ -188,7 +187,6 @@ const _sfc_main = {
       }
     },
     change(item) {
-      console.log(item);
       if (!item.disable) {
         this.showSelector = false;
         this.current = this.formatItemName(item);
@@ -309,5 +307,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     r: $data.current ? 1 : ""
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/uni_modules/uni-data-select/components/uni-data-select/uni-data-select.vue"]]);
 wx.createComponent(Component);

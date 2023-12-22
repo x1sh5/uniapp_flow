@@ -1,8 +1,9 @@
 <template>
-	<view class="container" style="background-image: url('/static/beijing.png');">
+	<view class="container" style="background-image: url('https://liusha-gy.com/flow/static/beijing.png');">
 		<!-- 页面内容 -->
 	</view>
 	<text class="t">让生活自在掌握~</text>
+	<button @click="skip" style="position: absolute;right: 0px;margin-right: 20px;width: 60px;height: 40px;">跳过</button>
 	<view class="usercenter">
 		<form @submit="login">
 			<text class="y">用户名：</text>
@@ -29,6 +30,11 @@
 			};
 		},
 		methods: {
+			skip(e){
+				uni.switchTab({
+					url:"/pages/index/index"
+				})
+			},
 			login(e) {
 				console.log(e)
 				const that = this;

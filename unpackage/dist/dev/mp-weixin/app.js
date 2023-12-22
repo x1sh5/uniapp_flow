@@ -5,6 +5,7 @@ const common_storageKeys = require("./common/storageKeys.js");
 require("./common/signalr.js");
 const store_index = require("./store/index.js");
 require("./common/weapp-cookie.js");
+require("./common/const.js");
 require("./store/messages.js");
 require("./store/reference.js");
 if (!Math) {
@@ -40,30 +41,31 @@ if (!Math) {
   "./pages/reference/history/history.js";
   "./pages/reference/history/detail/detail.js";
   "./pages/settings/unregister/unregister.js";
-  "./pages/settings/identityCheck/identityCheck.js";
   "./pages/myApply/myApply.js";
   "./pages/order/order.js";
   "./pages/userCenter/about/about.js";
   "./pages/userCenter/instructions/instructions.js";
+  "./pages/settings/phoneBind/phoneBind.js";
+  "./pages/settings/emailBind/emailBind.js";
+  "./pages/settings/nickname/nickname.js";
+  "./pages/settings/signature/signature.js";
+  "./pages/register/accountInfo/accountInfo.js";
+  "./pages/register/v2/v2.js";
 }
 const _sfc_main = {
   async beforeCreate() {
-    console.log("before Create");
     this.$store.dispatch("loginTest").then(
       () => {
         this.$store.state.$hasLogin = true;
-        console.log(this.$store.state.$hasLogin);
         common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, true);
       },
       () => {
         this.$store.state.$hasLogin = false;
-        console.log(this.$store.state.$hasLogin);
         common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, false);
         this.$store.commit("clearStorageInfo");
       }
     ).catch((err) => {
       this.$store.state.$hasLogin = false;
-      console.log(this.$store.state.$hasLogin);
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.hasLogin, false);
       this.$store.commit("clearStorageInfo");
     });
@@ -84,14 +86,18 @@ const _sfc_main = {
   },
   mounted() {
     this.$store.state.workSocket.on("ReceiveMessage", (user, message) => {
-      console.log("receiveMessage", user, message);
-      this.$store.dispatch("receiveMsg", { user, message });
+      this.$store.dispatch("receiveMsg", {
+        user,
+        message
+      });
     });
     this.$store.dispatch("connect");
     this.$store.commit("Msgs/initChatChannels");
+    this.$store.dispatch("activeValidate");
+    this.$store.dispatch("getOpenid");
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/uniapp_flow/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "C:/Users/x/Documents/HBuilderProjects/flow/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   app.use(store_index.store);

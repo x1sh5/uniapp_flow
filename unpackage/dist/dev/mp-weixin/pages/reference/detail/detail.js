@@ -29,31 +29,12 @@ const _sfc_main = {
       });
     }
   },
-  beforeCreate() {
-    console.log("beforeCreate");
-  },
-  created() {
-    console.log("created");
-  },
-  beforeMount() {
-    console.log("beforeMount");
-  },
-  beforeRouteEnter() {
-    console.log("beforeRouteEnter");
-  },
-  beforeRouteLeave() {
-    console.log("beforeRouteLeave");
-  },
-  mounted() {
-    console.log("mounted");
-  },
   computed: {
     r() {
       return this.refer;
     }
   },
   onLoad(op) {
-    console.log("onload");
     this.id = op.id;
     let kv;
     let r = this.$store.getters["Refer/getReferById"](this.id);
@@ -94,5 +75,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o((...args) => $options.history && $options.history(...args))
   });
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/reference/detail/detail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/reference/detail/detail.vue"]]);
 wx.createPage(MiniProgramPage);

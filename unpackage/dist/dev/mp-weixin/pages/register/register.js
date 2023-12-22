@@ -1,120 +1,24 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_storageKeys = require("../../common/storageKeys.js");
 const _sfc_main = {
   data() {
     return {
-      logintips: "",
-      nameCheckTip: "",
-      //名字检查出错后的提示
-      nameVerify: false,
-      pwdCheckTip: "",
-      pwdVerify: false,
-      pwdVerifyTip: "",
-      pwdAffirm: false,
-      pwd: "",
-      //密码暂存
-      emailCheckTip: "",
-      emailVerify: false,
-      phoneCheckTip: "",
-      phoneVerify: false,
+      pos: "",
+      //正面照
+      neg: "",
+      //反面照
+      posMd5: "",
+      name: "",
+      cardNo: "",
+      cardNoChecked: false,
       aggrementCheckTip: "",
       isChecked: false
     };
   },
   methods: {
-    nameCheckEvent(event) {
-      console.log(event);
-      let name = event.detail.value;
-      if (name.length < 1) {
-        this.nameCheckTip = "姓名不能为空";
-        return;
-      }
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/namecheck?username=" + encodeURIComponent(name);
-      common_vendor.index.request({
-        url: checkUrl,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            this.nameCheckTip = res.data.data.msg;
-            if (res.data.data.status) {
-              this.nameVerify = true;
-            }
-          }
-        }
-      });
-    },
-    pwdCheckEvent(event) {
-      console.log(event);
-      let password = event.detail.value;
-      if (password.length < 8) {
-        this.pwdCheckTip = "长度必须大于7位";
-        return;
-      }
-      if (!/[A-Z]/.test(password)) {
-        this.pwdCheckTip = "密码中必须要有大写字母";
-        return;
-      }
-      if (!/\d/.test(password)) {
-        this.pwdCheckTip = "密码中必须要有数字";
-        return;
-      }
-      if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(password)) {
-        this.pwdCheckTip = "密码中必须要有特殊字母";
-        return;
-      }
-      this.pwdCheckTip = "密码可用";
-      this.pwd = password;
-      this.pwdVerify = true;
-    },
-    pwdVerifyEvent(event) {
-      console.log(event);
-      let affirmPwd = event.detail.value;
-      if (affirmPwd !== this.pwd) {
-        this.pwdVerifyTip = "必须跟密码保持一致";
-        return;
-      }
-      this.pwdAffirm = true;
-      this.pwdVerifyTip = "密码确认成功";
-    },
-    emailCheckEvent(event) {
-      console.log(event);
-      let email = event.detail.value;
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      let isOk = regex.test(email);
-      if (!isOk) {
-        this.emailCheckTip = "邮箱格式不正确";
-        return;
-      }
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/emailcheck?email=" + encodeURIComponent(email);
-      common_vendor.index.request({
-        url: checkUrl,
-        success: (res) => {
-          if (res.statusCode === 200) {
-            this.emailCheckTip = res.data.data.msg;
-            if (res.data.data.status) {
-              this.emailVerify = true;
-            }
-          }
-        }
-      });
-    },
-    phoneCheckEvent(event) {
-      console.log(event);
-      let phone = event.detail.value;
-      console.log(phone);
-      let checkUrl = this.$store.state.apiBaseUrl + "/api/Account/phonecheck?phoneNo=" + encodeURIComponent(phone);
-      common_vendor.index.request({
-        url: checkUrl,
-        success: (res) => {
-          this.phoneCheckTip = res.data.data.msg;
-          if (res.data.data.status) {
-            this.phoneVerify = true;
-          }
-        }
-      });
-    },
     agreementCheckEvent(event) {
       this.isChecked = !this.isChecked;
-      console.log(this.isChecked);
       if (this.isChecked == false) {
         this.aggrementCheckTip = "请勾选同意《用户协议》";
         return;
@@ -129,72 +33,97 @@ const _sfc_main = {
         url: "/pages/userCenter/about/about"
       });
     },
-    register(e) {
-      console.log(e);
-      let registerView = {
-        userName: e.detail.value.name,
-        phoneNo: e.detail.value.phone,
-        password: e.detail.value.affirm,
-        email: e.detail.value.email
-      };
-      let url = this.$store.state.apiBaseUrl + "/api/Account/register";
-      if (this.isChecked == true) {
-        common_vendor.index.request({
-          url,
-          method: "POST",
-          data: registerView,
-          success: (res) => {
-            if (res.statusCode === 200) {
-              common_vendor.index.showModal({
-                title: "",
-                content: "注册成功",
-                cancelText: "返回",
-                confirmText: "去登录",
-                success: function(res2) {
-                  if (res2.confirm) {
-                    common_vendor.index.switchTab({
-                      url: "/pages/userCenter/userCenter"
-                    });
-                  } else if (res2.cancel) {
-                    console.log("用户点击取消");
-                  }
-                }
-              });
-            } else {
-              this.logintips = res.data.message;
-            }
-          }
+    uploadPos(e) {
+      this.$store.dispatch("upload", "pupload").then((res) => {
+        this.pos = res.filePath;
+        if (res.statusCode === 200) {
+          let o = JSON.parse(res.data);
+          this.posMd5 = o[0].md5;
+        }
+      }).catch((err) => {
+        common_vendor.index.showToast({
+          title: err.message.errors
         });
-      } else {
-        common_vendor.index.showModal({
-          title: "",
-          content: "请先勾选同意《用户协议》",
-          showCancel: false,
-          confirmText: "返回"
+      });
+    },
+    uploadNeg(e) {
+      this.$store.dispatch("upload").then((res) => {
+        let o = JSON.parse(res.data);
+        this.neg = res.filePath;
+        this.$store.state.apiBaseUrl + o[0].url;
+      }).catch((err) => {
+        common_vendor.index.showToast({
+          title: err.message
         });
+      });
+      common_vendor.index.requireNativePlugin;
+    },
+    CardNoCheck(e) {
+      if (/[0-9X]{18}/.test(this.cardNo)) {
+        this.cardNoChecked = true;
+        return;
       }
+      common_vendor.index.showModal({
+        showCancel: false,
+        content: "身份证号格式不合法"
+      });
+    },
+    check(e) {
+      let qurl = this.$store.state.apiBaseUrl + "/api/IdentityInfo/check";
+      if (!this.cardNoChecked) {
+        common_vendor.index.showModal({
+          showCancel: false,
+          content: "身份证号格式不合法"
+        });
+        return;
+      }
+      common_vendor.index.uploadFile({
+        url: qurl,
+        filePath: this.pos,
+        // 随便填，不为空即可  
+        name: "posimg",
+        // 随便填，不为空即可  
+        //header: header, // 可以加access_token等  
+        formData: {
+          name: this.name,
+          cardNo: this.cardNo
+        },
+        // 接口参数，json格式，底层自动转为FormData的格式数据  
+        success: (res) => {
+          if (res.statusCode === 200) {
+            common_vendor.index.setStorage({
+              key: common_storageKeys.StorageKeys.isActive,
+              data: true
+            });
+            common_vendor.index.navigateTo({
+              url: "accountInfo/accountInfo?identity=" + res.data
+            });
+          } else {
+            common_vendor.index.showModal({
+              showCancel: true,
+              content: res.data
+            });
+          }
+        }
+      });
     }
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.o((...args) => $options.nameCheckEvent && $options.nameCheckEvent(...args)),
-    b: common_vendor.t($data.nameCheckTip),
-    c: common_vendor.o((...args) => $options.pwdCheckEvent && $options.pwdCheckEvent(...args)),
-    d: common_vendor.t($data.pwdCheckTip),
-    e: common_vendor.o((...args) => $options.pwdVerifyEvent && $options.pwdVerifyEvent(...args)),
-    f: common_vendor.t($data.pwdVerifyTip),
-    g: common_vendor.o((...args) => $options.emailCheckEvent && $options.emailCheckEvent(...args)),
-    h: common_vendor.t($data.emailCheckTip),
-    i: common_vendor.o((...args) => $options.phoneCheckEvent && $options.phoneCheckEvent(...args)),
-    j: common_vendor.t($data.phoneCheckTip),
-    k: $data.isChecked,
-    l: common_vendor.o((...args) => $options.agreementCheckEvent && $options.agreementCheckEvent(...args)),
-    m: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
-    n: common_vendor.t($data.aggrementCheckTip),
-    o: common_vendor.t($data.logintips),
-    p: common_vendor.o((...args) => $options.register && $options.register(...args))
+    a: $data.name,
+    b: common_vendor.o(($event) => $data.name = $event.detail.value),
+    c: common_vendor.o((...args) => $options.CardNoCheck && $options.CardNoCheck(...args)),
+    d: $data.cardNo,
+    e: common_vendor.o(($event) => $data.cardNo = $event.detail.value),
+    f: $data.pos,
+    g: common_vendor.o((...args) => $options.uploadPos && $options.uploadPos(...args)),
+    h: $data.isChecked,
+    i: common_vendor.o((...args) => $options.agreementCheckEvent && $options.agreementCheckEvent(...args)),
+    j: common_vendor.o((...args) => $options.toAbout && $options.toAbout(...args)),
+    k: common_vendor.t($data.aggrementCheckTip),
+    l: common_vendor.o((...args) => $options.check && $options.check(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/register/register.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/register/register.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -84,7 +84,6 @@ const _sfc_main = {
     }
   },
   beforeMount() {
-    console.log("onload");
     if (this.message.contentType == "img") {
       common_vendor.index.getImageInfo({
         src: this.imgsrc,
@@ -143,5 +142,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     H: $props.icon
   }));
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "E:/uniapp_flow/components/yd-chatitem/yd-chatitem.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/yd-chatitem/yd-chatitem.vue"]]);
 wx.createComponent(Component);

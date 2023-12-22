@@ -7,8 +7,10 @@ const _sfc_main = {
       current: 0,
       hasPushlishs: false,
       $publishs: [],
+      //已发布任务
       hasHistorys: false,
       $historys: []
+      //历史浏览
       //$complete:false,//数组，false表示为初始化
     };
   },
@@ -22,7 +24,6 @@ const _sfc_main = {
   computed: {
     publishs() {
       if (!this.hasPushlishs) {
-        console.log("get user task");
         common_vendor.index.requestWithCookie({
           url: this.$store.state.apiBaseUrl + "/api/Assignment/user",
           success: (res) => {
@@ -38,7 +39,6 @@ const _sfc_main = {
     }
   },
   onLoad(options) {
-    console.log("get user task");
   }
 };
 if (!Array) {
@@ -64,7 +64,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 0 ? {
     d: common_vendor.f($options.publishs, (item, k0, i0) => {
       return {
-        a: "54ae0676-1-" + i0,
+        a: "31f86ff4-1-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -77,7 +77,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.current === 1 ? {
     f: common_vendor.f($data.$historys, (item, k0, i0) => {
       return {
-        a: "54ae0676-2-" + i0,
+        a: "31f86ff4-2-" + i0,
         b: common_vendor.p({
           task: item,
           editable: false
@@ -87,5 +87,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/userTaskDetail/userTaskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/userTaskDetail/userTaskDetail.vue"]]);
 wx.createPage(MiniProgramPage);

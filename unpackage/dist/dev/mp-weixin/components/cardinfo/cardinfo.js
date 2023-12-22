@@ -15,7 +15,6 @@ const _sfc_main = {
     mode: String
   },
   created() {
-    console.log("task is:", this.task);
   },
   computed: {
     Id() {
@@ -166,13 +165,11 @@ const _sfc_main = {
   },
   methods: {
     branchChange(e) {
-      console.log("picker发送选择改变，携带值为", e);
       let branchIndex = e.detail.value;
       this.branchIndex = branchIndex;
       this.task.branchid = branchIndex;
     },
     rewardTypeChange(e) {
-      console.log("rewardType 改变，携带值为", e);
       this.task.rewardtype = parseInt(e.value);
       let pages = getCurrentPages();
       let current = pages[pages.length - 1];
@@ -221,11 +218,9 @@ const _sfc_main = {
       this.task.description = data;
     },
     biupdatePt(e) {
-      console.log(e);
       this.task.deadline = e;
     },
     check() {
-      console.log(this.task);
       if (!this.task.title) {
         this.$emit("check-Result", false);
         common_vendor.index.showModal({
@@ -265,7 +260,6 @@ const _sfc_main = {
       return;
     },
     put() {
-      console.log(this.task);
       if (!this.task.title) {
         common_vendor.index.showModal({
           content: "标题不能为空！"
@@ -322,7 +316,6 @@ const _sfc_main = {
       });
     },
     removeTask(e) {
-      console.log(e);
       if (this.task.main === 1) {
         common_vendor.index.showModal({
           title: "错误！",
@@ -334,11 +327,9 @@ const _sfc_main = {
       this.$emit("remove-task", this.task.id);
     },
     showPopup(e) {
-      console.log("click show");
       this.vis = true;
     },
     exitDel(e) {
-      console.log("exit");
       this.vis = false;
     }
   },
@@ -376,6 +367,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     i: common_vendor.o($options.biupdatePt),
     j: common_vendor.o(($event) => $options.deadline = $event),
     k: common_vendor.p({
+      disabled: !$props.editable,
       type: "datetime",
       modelValue: $options.deadline
     }),
@@ -418,5 +410,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/cardinfo/cardinfo.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);
 wx.createComponent(Component);

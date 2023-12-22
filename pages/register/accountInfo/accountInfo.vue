@@ -23,13 +23,7 @@
 				<input class="rg-input" name="phone" @blur="phoneCheckEvent" maxlength="12" placeholder="手机号码(选填)：" />
 				<view class="tips">{{phoneCheckTip}}</view>
 			</view>
-			<view>
-				<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent"
-					style="transform:scale(0.7); margin-top: 5%;" />
-				<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout"
-						style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
-				<view class="tips">{{aggrementCheckTip}}</view>
-			</view>
+
 			<button class="lgtip-button" form-type="submit">注册</button>
 			<view class="tips" style="height: 20px;">{{logintips}}</view>
 		</form>
@@ -52,8 +46,6 @@
 				emailVerify: false,
 				phoneCheckTip: "",
 				phoneVerify: false,
-				aggrementCheckTip: "",
-				isChecked: false
 			}
 		},
 		methods: {
@@ -153,23 +145,6 @@
 							this.phoneVerify = true;
 						}
 					}
-				});
-			},
-			agreementCheckEvent(event) {
-				this.isChecked = !this.isChecked
-
-				if (this.isChecked == false) {
-					this.aggrementCheckTip = "请勾选同意《用户协议》";
-					return
-				}
-				if (this.isChecked == true) {
-					this.aggrementCheckTip = "";
-					return
-				}
-			},
-			toAbout(e) {
-				uni.navigateTo({
-					url: "/pages/userCenter/about/about"
 				});
 			},
 			register(e) {

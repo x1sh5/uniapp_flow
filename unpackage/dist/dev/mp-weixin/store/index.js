@@ -3,20 +3,24 @@ const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
 const store_reference = require("./reference.js");
+const common_const = require("../common/const.js");
 const signalR = require("../common/signalr.js");
-const baseUrl = "https://www.liusha-gy.com";
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,
     $userName: "未登录",
+    introduce: "",
     useravatar: "/static/meactive.png",
     branchs: [],
+    openid: "",
     currentTask: {},
     taskTypes: [],
-    apiBaseUrl: baseUrl,
+    //未读信息
+    unread: 0,
+    apiBaseUrl: common_const.baseUrl,
     //"https://testsite:7221/api", 
     tasks: /* @__PURE__ */ new Map(),
-    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Critical).build()),
+    workSocket: common_vendor.markRaw(new signalR.HubConnectionBuilder().withUrl(common_const.baseUrl + "/chathub").withAutomaticReconnect().configureLogging(signalR.LogLevel.Critical).build()),
     messages: /* @__PURE__ */ new Map(),
     //对话消息
     $currentContent: {},
@@ -29,13 +33,11 @@ const store = common_vendor.createStore({
       state2.currentTask = payload;
     },
     updateBranchs(state2, payload) {
-      console.log("branchs:", payload);
       if (payload !== void 0) {
         state2.branchs = common_vendor.toRaw(payload);
       }
     },
     updateTaskTypes(state2, payload) {
-      console.log("taskTypes:", payload);
       if (payload !== void 0) {
         state2.taskTypes = common_vendor.toRaw(payload);
       }
@@ -47,14 +49,12 @@ const store = common_vendor.createStore({
       }
     },
     setTasks(state2, payload) {
-      console.log("tasks:", payload);
       if (payload !== void 0) {
         let t = payload.taskTypeName;
         state2.tasks.set(t, payload.data);
       }
     },
     updateTasks(state2, payload) {
-      console.log("tasks:", payload);
       if (payload !== void 0) {
         let t = payload.taskTypeName;
         state2.tasks.get(t).push(...payload.data);
@@ -105,6 +105,10 @@ const store = common_vendor.createStore({
       state2.useravatar = payload;
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userAvatar, payload);
     },
+    setIntroduce(state2, payload) {
+      state2.introduce = payload;
+      common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.introduce, payload);
+    },
     initUserInfo: (state2) => {
       try {
         const userName = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.userName);
@@ -136,7 +140,6 @@ const store = common_vendor.createStore({
       }
     },
     updatePublishResults(state2, payload) {
-      console.log("call");
       if (typeof payload.func === "function") {
         payload.func.call(state2.$publishResults, payload.data);
       } else {
@@ -148,6 +151,7 @@ const store = common_vendor.createStore({
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.userName);
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.cookies);
       common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.taskContent);
+      common_vendor.index.removeStorageSync(common_storageKeys.StorageKeys.isActive);
     },
     disconnect(state2) {
       state2.workSocket.stop();
@@ -174,7 +178,6 @@ const store = common_vendor.createStore({
     },
     getBranch: (state2) => (branchid) => {
       let i = state2.branchs.find((item) => item.id === parseInt(branchid));
-      console.log("branch is: ", i);
       if (i === void 0) {
         return "部门";
       }
@@ -183,9 +186,12 @@ const store = common_vendor.createStore({
     //deprecated 弃用
     getTaskType: (state2) => (typeId) => {
       let i = state2.taskTypes.find((item) => item.id === parseInt(typeId));
-      console.log("taskType is: ", i);
       if (i === void 0) {
-        return { id: 0, name: "类型", "rewardType": "all" };
+        return {
+          id: 0,
+          name: "类型",
+          "rewardType": "all"
+        };
       }
       return i;
     },
@@ -214,11 +220,25 @@ const store = common_vendor.createStore({
         console.error(e);
       }
       return Login;
+    },
+    //是否已经通过验证
+    IsActive: () => {
+      let Login;
+      try {
+        Login = common_vendor.index.getStorageSync(common_storageKeys.StorageKeys.isActive);
+      } catch (e) {
+        Login = false;
+        console.error(e);
+      }
+      return Login;
     }
   },
   actions: {
     //获取部门信息
-    async fetchBranchs({ commit, state: state2 }) {
+    async fetchBranchs({
+      commit,
+      state: state2
+    }) {
       try {
         const response = await common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Information/branchs",
@@ -226,7 +246,6 @@ const store = common_vendor.createStore({
           complete() {
           },
           success: function(res) {
-            console.log(res);
             let data = res.data;
             commit("updateBranchs", data);
           }
@@ -239,7 +258,10 @@ const store = common_vendor.createStore({
       }
     },
     //获取任务类型信息
-    async fetchTaskTypes({ commit, state: state2 }) {
+    async fetchTaskTypes({
+      commit,
+      state: state2
+    }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Information/customtypes",
@@ -247,20 +269,25 @@ const store = common_vendor.createStore({
           complete() {
           },
           success: function(res) {
-            console.log(res);
             let data = res.data;
             resolve(data);
           }
         });
       });
     },
-    fetchTasks({ commit, state: state2 }, { count, offset, branchid }) {
+    fetchTasks({
+      commit,
+      state: state2
+    }, {
+      count,
+      offset,
+      branchid
+    }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Assignment?count=" + count + "&offset=" + offset + "&branchid=" + branchid,
           method: "GET",
           success: (res) => {
-            console.log(res);
             let data = res.data;
             resolve(data);
           },
@@ -270,14 +297,15 @@ const store = common_vendor.createStore({
         });
       });
     },
-    async fetchTaskById({ commit }, id2) {
+    async fetchTaskById({
+      commit
+    }, id2) {
       let qurl = state.apiBaseUrl + "/api/Assignment/" + id2;
       try {
         const response = await common_vendor.index.requestWithCookie({
           url: qurl,
           method: "GET",
           success: function(res) {
-            console.log(res);
             let data = res.data;
             common_vendor.nextTick$1(() => {
               commit("setTasks", data);
@@ -288,18 +316,38 @@ const store = common_vendor.createStore({
         console.error("fetch tasks error:", error);
       }
     },
-    async sendMsg({ commit, state: state2 }, { user, message, contentType }) {
+    async sendMsg({
+      commit,
+      state: state2
+    }, {
+      user,
+      message,
+      contentType
+    }) {
       await state2.workSocket.invoke("SendToUser", user, message, contentType);
-      console.log("sendMsg");
       let userId = parseInt(user);
       let chat = state2.messages.get(userId);
       if (typeof chat === "undefined") {
         state2.messages.set(userId, new Array());
       }
-      state2.messages.get(userId).push({ isLeft: false, content: message });
+      state2.messages.get(userId).push({
+        isLeft: false,
+        content: message
+      });
     },
-    receiveMsg({ commit, state: state2, dispatch }, { user, message }) {
-      console.log("receiveMsg");
+    receiveMsg({
+      commit,
+      state: state2,
+      dispatch
+    }, {
+      user,
+      message
+    }) {
+      state2.unread += 1;
+      common_vendor.index.setTabBarBadge({
+        index: 2,
+        text: state2.unread
+      });
       let userId = parseInt(user);
       message.cid = userId;
       let chat = state2.messages.get(userId);
@@ -310,7 +358,19 @@ const store = common_vendor.createStore({
       state2.messages.get(userId).push(message);
       dispatch("Msgs/updateAsync", message);
     },
-    async connect({ state: state2, actions }) {
+    unreadChange({
+      state: state2
+    }, count) {
+      state2.unread -= count;
+      common_vendor.index.setTabBarBadge({
+        index: 2,
+        text: state2.unread
+      });
+    },
+    async connect({
+      state: state2,
+      actions
+    }) {
       async function reconnect() {
         try {
           await state2.workSocket.start();
@@ -323,13 +383,14 @@ const store = common_vendor.createStore({
       await reconnect();
     },
     //判断是否登录
-    loginTest({ state: state2 }) {
+    loginTest({
+      state: state2
+    }) {
       return new Promise((resolve, reject) => {
         common_vendor.index.requestWithCookie({
           url: state2.apiBaseUrl + "/api/Account/loginTest",
           method: "HEAD",
           success: (res) => {
-            console.log(res);
             if (res.statusCode === 200) {
               resolve();
             } else {
@@ -342,7 +403,9 @@ const store = common_vendor.createStore({
         });
       });
     },
-    genHistory({ state: state2 }, id2) {
+    genHistory({
+      state: state2
+    }, id2) {
       let qurl = state2.apiBaseUrl + "/api/History";
       common_vendor.index.uploadFileWithCookie({
         url: qurl,
@@ -351,19 +414,38 @@ const store = common_vendor.createStore({
         name: "123",
         // 随便填，不为空即可  
         //header: header, // 可以加access_token等  
-        formData: { asgid: id2 },
+        formData: {
+          asgid: id2
+        },
         // 接口参数，json格式，底层自动转为FormData的格式数据  
         success: (res) => {
-          console.log(res);
+          console.log(res.statusCode);
         }
       });
     },
-    upload({ state: state2 }) {
+    getOpenid({ state: state2 }) {
+      common_vendor.wx$1.login({
+        success: (res) => {
+          if (res.code) {
+            common_vendor.index.requestWithCookie({
+              url: state2.apiBaseUrl + "/api/Bill/openId?code=" + res.code,
+              success: (result) => {
+                if (result.statusCode === 200) {
+                  state2.openid = result.data;
+                }
+              }
+            });
+          }
+        }
+      });
+    },
+    upload({
+      state: state2
+    }, path = "upload") {
       return new Promise((resolve, reject) => {
         common_vendor.index.showActionSheet({
           itemList: ["选择文件"],
           success: (e) => {
-            console.log(e);
             if (e.tapIndex === 0) {
               common_vendor.index.chooseImage({
                 count: 1,
@@ -372,7 +454,6 @@ const store = common_vendor.createStore({
                   height: 800
                 },
                 success: (e2) => {
-                  console.log(e2);
                   if (e2.tempFiles[0].size > 5 * 1024 * 1024) {
                     common_vendor.index.showToast({
                       title: "图片大小超过5M,请重新选择。"
@@ -382,11 +463,14 @@ const store = common_vendor.createStore({
                   common_vendor.index.uploadFile({
                     name: "user-avatar",
                     filePath: e2.tempFilePaths[0],
-                    url: state2.apiBaseUrl + "/api/Image/upload",
+                    url: state2.apiBaseUrl + "/api/Image/" + path,
                     success: (res) => {
-                      resolve(res);
                     },
                     fail: (err) => {
+                    },
+                    complete: (res) => {
+                      res.filePath = e2.tempFilePaths[0];
+                      resolve(res);
                     }
                   });
                 },
@@ -398,6 +482,25 @@ const store = common_vendor.createStore({
           }
         });
       });
+    },
+    activeValidate({
+      state: state2,
+      getters
+    }) {
+      let isActive = getters.isActive;
+      if (!isActive) {
+        common_vendor.index.requestWithCookie({
+          url: state2.apiBaseUrl + "/api/IdentityInfo/validate",
+          success: (res) => {
+            if (res.statusCode == 200) {
+              common_vendor.index.setStorage({
+                key: common_storageKeys.StorageKeys.isActive,
+                data: true
+              });
+            }
+          }
+        });
+      }
     }
   },
   modules: {

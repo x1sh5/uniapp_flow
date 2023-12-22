@@ -32,11 +32,16 @@
     "pages/reference/history/history",
     "pages/reference/history/detail/detail",
     "pages/settings/unregister/unregister",
-    "pages/settings/identityCheck/identityCheck",
     "pages/myApply/myApply",
     "pages/order/order",
     "pages/userCenter/about/about",
-    "pages/userCenter/instructions/instructions"
+    "pages/userCenter/instructions/instructions",
+    "pages/settings/phoneBind/phoneBind",
+    "pages/settings/emailBind/emailBind",
+    "pages/settings/nickname/nickname",
+    "pages/settings/signature/signature",
+    "pages/register/accountInfo/accountInfo",
+    "pages/register/v2/v2"
   ],
   "window": {
     "navigationBarTextStyle": "black",

@@ -67,7 +67,6 @@ const _sfc_main = {
       this.$emit("del-Line", this.id);
     },
     stitleChange(e) {
-      console.log(e);
       this.item.stitle = e.detail.value;
     },
     rateChange(e) {
@@ -103,5 +102,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     o: $props.editable
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/referItem/referItem.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/referItem/referItem.vue"]]);
 wx.createComponent(Component);

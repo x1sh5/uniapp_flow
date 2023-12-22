@@ -1,0 +1,1 @@
+<view class="rg-input"><input value="{{a}}" maxlength="10" bindblur="{{b}}" placeholder="请填写昵称"/><view>{{c}}</view></view><view><button class="lgtip-button" bindtap="{{d}}">保存</button></view>

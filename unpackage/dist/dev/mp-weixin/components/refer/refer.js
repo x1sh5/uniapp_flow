@@ -23,7 +23,6 @@ const _sfc_main = {
   },
   computed: {},
   beforeMount() {
-    console.log("beforeMount");
     this.curr = this.refer.content.size;
     if (this.curr > 0) {
       let l = [];
@@ -37,7 +36,6 @@ const _sfc_main = {
     }
   },
   mounted() {
-    console.log("mounted");
   },
   methods: {
     addLine(e) {
@@ -58,18 +56,6 @@ const _sfc_main = {
       }
       this.refer.content.delete(id);
     }
-  },
-  beforeCreate() {
-    console.log("beforeCreate");
-  },
-  created() {
-    console.log("created");
-  },
-  beforeRouteEnter() {
-    console.log("beforeRouteEnter");
-  },
-  beforeRouteLeave() {
-    console.log("beforeRouteLeave");
   }
 };
 if (!Array) {
@@ -89,7 +75,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       return {
         a: common_vendor.o($options.delLine, r.id),
         b: r.id,
-        c: "86c01172-0-" + i0,
+        c: "44b6f666-0-" + i0,
         d: common_vendor.p({
           item: r,
           id: r.id,
@@ -102,5 +88,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.o((...args) => $options.addLine && $options.addLine(...args))
   };
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/refer/refer.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/refer/refer.vue"]]);
 wx.createComponent(Component);

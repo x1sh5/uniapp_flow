@@ -1,5 +1,5 @@
 <template>
-	<view class="container" style="background-image: url('/static/beijing.png');">
+	<view class="container" style="background-image: url('https://liusha-gy.com/flow/static/beijing.png');">
 	  <!-- 页面内容 -->
 	</view>
 	

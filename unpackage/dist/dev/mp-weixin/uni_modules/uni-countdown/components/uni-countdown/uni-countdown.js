@@ -237,5 +237,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     s: common_vendor.s($options.splitorStyle)
   } : {});
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c592f7f2"], ["__file", "E:/uniapp_flow/uni_modules/uni-countdown/components/uni-countdown/uni-countdown.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-c592f7f2"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/uni_modules/uni-countdown/components/uni-countdown/uni-countdown.vue"]]);
 wx.createComponent(Component);

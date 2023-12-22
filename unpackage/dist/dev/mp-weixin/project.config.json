@@ -6,9 +6,9 @@
   },
   "setting": {
     "urlCheck": false,
-    "es6": false,
+    "es6": true,
     "postcss": true,
-    "minified": false,
+    "minified": true,
     "newFeature": true,
     "bigPackageSizeSupport": true,
     "babelSetting": {
@@ -16,11 +16,12 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "ignoreUploadUnusedFiles": true
+    "ignoreUploadUnusedFiles": true,
+    "enhance": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "wx74faf1edc4537526",
+  "appid": "wxbef31cb0acc4e14c",
   "projectname": "flow",
   "condition": {},
   "editorSetting": {

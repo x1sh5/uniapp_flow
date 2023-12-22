@@ -12,17 +12,21 @@
 				<input class="rg-input" v-model="cardNo" @blur="CardNoCheck" maxlength="18" placeholder="身份证号：" />
 			</view>
 
-			<text style="margin-top:60rpx;margin-left: 60rpx;">请上传身份证信息:</text>
+<!-- 			<text style="margin-top:60rpx;margin-left: 60rpx;">请上传身份证信息:</text>
 			<view>
 				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="pos"></image>
 				<button style="width: 180px;" @click="uploadPos">上传正面照</button>
-			</view>
-			<!-- <view>
-				<image :draggable="false" style="width: 350px;height: 200px;margin-left: 15px;" :src="neg"></image>
-				<button style="width: 180px;" @click="uploadNeg">上传反面照</button>
 			</view> -->
+
 		</view>
-		<button style="width: 80px;" @click="check">注册</button>
+		<view>
+			<checkbox :checked="isChecked" name="aggrement" @click="agreementCheckEvent"
+				style="transform:scale(0.7); margin-top: 5%;" />
+			<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout"
+					style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
+			<view class="tips">{{aggrementCheckTip}}</view>
+		</view>
+		<button style="width: 80px;" @click="check">人脸验证</button>
 		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
 	</view>
 </template>
@@ -30,7 +34,7 @@
 <script>
 	import {
 		StorageKeys
-	} from '../../../common/storageKeys';
+	} from '/common/storageKeys';
 	export default {
 		data() {
 			return {
@@ -39,40 +43,59 @@
 				posMd5: "",
 				name: "",
 				cardNo: "",
-				cardNoChecked: false
+				cardNoChecked: false,
+				aggrementCheckTip: "",
+				isChecked: false
 			}
 		},
 		methods: {
-			uploadPos(e) {
-				this.$store.dispatch("upload", "pupload")
-					.then((res) => {
-						this.pos = res.filePath;
-						if(res.statusCode===200){
-							let o = JSON.parse(res.data)
-							this.posMd5 = o[0].md5;
-						}
+			agreementCheckEvent(event) {
+				this.isChecked = !this.isChecked
+			
+				if (this.isChecked == false) {
+					this.aggrementCheckTip = "请勾选同意《用户协议》";
+					return
+				}
+				if (this.isChecked == true) {
+					this.aggrementCheckTip = "";
+					return
+				}
+			},
+			toAbout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/about/about"
+				});
+			},
+			// uploadPos(e) {
+			// 	this.$store.dispatch("upload", "pupload")
+			// 		.then((res) => {
+			// 			this.pos = res.filePath;
+			// 			if(res.statusCode===200){
+			// 				let o = JSON.parse(res.data)
+			// 				this.posMd5 = o[0].md5;
+			// 			}
 
-					})
-					.catch((err) => {
-						uni.showToast({
-							title: err.message.errors
-						})
-					})
-			},
-			uploadNeg(e) {
-				this.$store.dispatch("upload")
-					.then((res) => {
-						let o = JSON.parse(res.data)
-						this.neg = res.filePath;
-						this.$store.state.apiBaseUrl + o[0].url;
-					})
-					.catch((err) => {
-						uni.showToast({
-							title: err.message
-						})
-					})
-				uni.requireNativePlugin
-			},
+			// 		})
+			// 		.catch((err) => {
+			// 			uni.showToast({
+			// 				title: err.message.errors
+			// 			})
+			// 		})
+			// },
+			// uploadNeg(e) {
+			// 	this.$store.dispatch("upload")
+			// 		.then((res) => {
+			// 			let o = JSON.parse(res.data)
+			// 			this.neg = res.filePath;
+			// 			this.$store.state.apiBaseUrl + o[0].url;
+			// 		})
+			// 		.catch((err) => {
+			// 			uni.showToast({
+			// 				title: err.message
+			// 			})
+			// 		})
+			// 	uni.requireNativePlugin
+			// },
 			CardNoCheck(e){
 				if(/[0-9X]{18}/.test(this.cardNo)){
 					this.cardNoChecked = true;
@@ -84,7 +107,8 @@
 				})
 			},
 			check(e) {
-				let qurl = this.$store.state.apiBaseUrl + "/api/IdentityInfo/check";
+				
+				let qurl = this.$store.state.apiBaseUrl + "/api/Account/register/v2";
 				if(!this.cardNoChecked){
 					uni.showModal({
 						showCancel:false,
@@ -92,33 +116,36 @@
 					})
 					return;
 				}
-				uni.uploadFile({
-					url: qurl,
-					filePath: this.pos, // 随便填，不为空即可  
-					name: 'posimg', // 随便填，不为空即可  
-					//header: header, // 可以加access_token等  
-					formData: {
-						name: this.name,
-						cardNo: this.cardNo
-					}, // 接口参数，json格式，底层自动转为FormData的格式数据  
-					success: (res) => {
-						if (res.statusCode === 200) {
-							uni.setStorage({
-								key: StorageKeys.isActive,
-								data: true
-							});
-							uni.navigateTo({
-								url:"accountInfo/accountInfo"
-							})
-						} else {
-							uni.showModal({
-								showCancel: true,
-								content: res.data
-							})
+				if (this.isChecked == true) {
+					uni.uploadFile({
+						url: qurl,
+						filePath: '123',//this.pos, // 随便填，不为空即可  
+						name: 'posimg', // 随便填，不为空即可  
+						//header: header, // 可以加access_token等  
+						formData: {
+							name: this.name,
+							cardNo: this.cardNo
+						}, // 接口参数，json格式，底层自动转为FormData的格式数据  
+						success: (res) => {
+							if (res.statusCode === 200) {
+								uni.setStorage({
+									key: StorageKeys.isActive,
+									data: true
+								});
+								uni.navigateTo({
+									url:"livedetect/livedetect?identity="+res.data
+								})
+							} else {
+								uni.showModal({
+									showCancel: true,
+									content: res.data
+								})
+							}
+					
 						}
+					})
+				}
 
-					}
-				})
 			}
 		}
 	}

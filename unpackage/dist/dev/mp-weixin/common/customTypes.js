@@ -11,4 +11,6 @@ class ChatChannel {
     this.mtype = mtype;
   }
 }
+var TaskStatus = ["waitfor", "undone", "done", "announcement", "fail"];
 exports.ChatChannel = ChatChannel;
+exports.TaskStatus = TaskStatus;

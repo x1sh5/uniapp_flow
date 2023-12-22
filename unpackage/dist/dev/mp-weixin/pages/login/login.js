@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const common_weappCookie = require("../../common/weapp-cookie.js");
+require("../../common/const.js");
 const _sfc_main = {
   data() {
     return {
@@ -8,10 +9,16 @@ const _sfc_main = {
     };
   },
   methods: {
+    skip(e) {
+      common_vendor.index.switchTab({
+        url: "/pages/index/index"
+      });
+    },
     login(e) {
       console.log(e);
       const that = this;
       const url = this.$store.state.apiBaseUrl + "/api/Account/login";
+      e.detail.value.openId = this.$store.state.openid;
       common_vendor.index.request({
         url,
         method: "POST",
@@ -25,6 +32,7 @@ const _sfc_main = {
             that.$store.commit("login");
             that.$store.commit("setUserName", res.data.userName);
             that.$store.commit("setUserAvatar", res.data.avatar);
+            that.$store.commit("setIntroduce", res.data.introduce);
             if (this.refer === "order") {
               common_vendor.index.redirectTo({
                 url: "/pages/order/order"
@@ -74,10 +82,8 @@ const _sfc_main = {
   },
   onLoad(op) {
     const refer = op.refer;
-    console.log(refer);
     this.refer = refer;
     if (refer === "usercenter") {
-      console.log("equal");
       this.depth = 1;
     } else {
       this.depth = 3;
@@ -86,9 +92,10 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.o((...args) => $options.login && $options.login(...args)),
-    b: common_vendor.o((...args) => $options.register && $options.register(...args))
+    a: common_vendor.o((...args) => $options.skip && $options.skip(...args)),
+    b: common_vendor.o((...args) => $options.login && $options.login(...args)),
+    c: common_vendor.o((...args) => $options.register && $options.register(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/login/login.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/login/login.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -1,31 +1,29 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const _sfc_main = {};
-if (!Array) {
-  const _component_t_navbar = common_vendor.resolveComponent("t-navbar");
-  const _component_t_icon = common_vendor.resolveComponent("t-icon");
-  const _component_price = common_vendor.resolveComponent("price");
-  (_component_t_navbar + _component_t_icon + _component_price)();
-}
-function _sfc_render(_ctx, _cache) {
+const _sfc_main = {
+  props: {
+    taskid: Number
+  },
+  methods: {
+    viewTask(e) {
+      if (this.taskid) {
+        common_vendor.index.navigateTo({
+          url: "/pages/taskDetail/taskDetail?id=" + this.taskid
+        });
+      }
+    },
+    goHome(e) {
+      common_vendor.index.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
+  }
+};
+function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: common_vendor.p({
-      background: "#ffffff",
-      ["left-icon"]: "slot"
-    }),
-    b: common_vendor.p({
-      name: "check-circle-filled",
-      size: "60rpx",
-      color: "#47D368"
-    }),
-    c: common_vendor.p({
-      ["wx:if"]: "{{totalPaid}}",
-      price: "{{totalPaid}}",
-      ["wr-class"]: "pay-money__price",
-      decimalSmaller: true,
-      fill: true
-    })
+    a: common_vendor.o((...args) => $options.viewTask && $options.viewTask(...args)),
+    b: common_vendor.o((...args) => $options.goHome && $options.goHome(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/pay-result/pay-result.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/pay-result/pay-result.vue"]]);
 wx.createPage(MiniProgramPage);

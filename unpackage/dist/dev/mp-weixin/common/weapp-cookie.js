@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("./vendor.js");
-var host = "https://www.liusha-gy.com";
+const common_const = require("./const.js");
+var host = common_const.baseUrl;
 class Util {
   /**
    * 根据域名获取该域名的 cookie 作用域范围列表

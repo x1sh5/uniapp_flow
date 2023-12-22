@@ -60,9 +60,7 @@ const _sfc_main = {
     }
   },
   onLoad(op) {
-    console.log("options:", op);
     this.$data.task.branchid = op.branchid;
-    console.log("branchid is ", this.$data.task.branchid);
   },
   methods: {
     editEvent(e) {
@@ -75,7 +73,6 @@ const _sfc_main = {
       this.content.html = value;
     },
     updateT(payload) {
-      console.log("updateT trigger", payload);
       for (let file of payload.files) {
         payload.ctx.delta.ops.indexOf((x) => x.attributes && x.attributes["data-local"] === file.path);
         common_vendor.index.uploadFileWithCookie({
@@ -87,9 +84,7 @@ const _sfc_main = {
             if (("" + res.statusCode).startsWith("2")) {
               let search = '<img src="' + file.path + '" data-local="' + file.path + '" alt="图像">';
               let replace = '<img src="' + this.$store.state.apiBaseUrl + "/flow/static/" + data.$values[0].url + '">';
-              console.log(search, replace);
               let newHtml = payload.ctx.html.replace(search, replace);
-              console.log(newHtml);
               this.$refs.cardinfo.updateDes(newHtml);
             }
           }
@@ -125,7 +120,7 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.sr("cardinfo", "99e8df36-0"),
+    a: common_vendor.sr("cardinfo", "0f887c44-0"),
     b: common_vendor.o($options.checkResult),
     c: common_vendor.o($options.removeTask),
     d: common_vendor.p({
@@ -141,5 +136,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.o((...args) => $options.checkResult && $options.checkResult(...args))
   });
 }
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/components/taskCard/taskCard.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/taskCard/taskCard.vue"]]);
 wx.createComponent(Component);

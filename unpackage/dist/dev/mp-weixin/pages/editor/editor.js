@@ -26,7 +26,6 @@ const _sfc_main = {
     submitEvent() {
       this.editorCtx.getContents({
         success: (res) => {
-          console.log(res);
           let images = res.delta.ops.filter((item) => item.attributes && item.attributes.alt === "图像");
           const lastFiles = this.files.filter((itemB) => {
             return images.some((itemA) => itemA.attributes["data-local"] === itemB.path);
@@ -108,7 +107,6 @@ const _sfc_main = {
         count: 1,
         sizeType: ["compressed"],
         success: (res) => {
-          console.log(res);
           let file = res.tempFiles[0];
           this.files.push(file);
           if (file.size > 5 * 1024 * 1024) {
@@ -189,5 +187,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     K: common_vendor.o((...args) => $options.onEditorReady && $options.onEditorReady(...args))
   };
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/editor/editor.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/editor/editor.vue"]]);
 wx.createPage(MiniProgramPage);

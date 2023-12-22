@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const common_customTypes = require("../../common/customTypes.js");
 const _sfc_main = {
   data() {
     return {
@@ -13,11 +14,10 @@ const _sfc_main = {
         }
       },
       task: void 0,
-      status: ["waitfor", "undone", "done", "announcement"]
+      status: common_customTypes.TaskStatus
     };
   },
   created() {
-    console.log("created");
   },
   computed: {
     enable() {
@@ -30,7 +30,6 @@ const _sfc_main = {
     }
   },
   mounted() {
-    console.log("mounted");
     let curl = this.$store.state.apiBaseUrl + "/api/Assignment/childs/" + this.id;
     let purl = this.$store.state.apiBaseUrl + "/api/Assignment/parent/" + this.id;
     if (!this.ptask) {
@@ -54,15 +53,12 @@ const _sfc_main = {
       });
     }
   },
-  async beforeMount() {
-    console.log("beforeMount");
-  },
   onLoad(op) {
-    console.log("options:", op);
     this.id = op.id;
     let task = this.$store.getters.getTaskById(this.id);
     if (task !== void 0) {
       this.task = task;
+      this.mode = this.status[this.task.status];
     } else {
       let qurl = this.$store.state.apiBaseUrl + "/api/Assignment/" + this.id;
       const ps = new Promise((resolve, reject) => {
@@ -93,6 +89,20 @@ const _sfc_main = {
       });
     },
     gain(e) {
+      if (!this.$store.getters.IsActive) {
+        common_vendor.index.showModal({
+          content: "未实名认证，不能接取任务。",
+          confirmText: "实名认证",
+          success: (res) => {
+            if (res.confirm) {
+              common_vendor.index.navigateTo({
+                url: "/pages/settings/identityCheck/identityCheck"
+              });
+            }
+          }
+        });
+        return;
+      }
       let gurl = this.$store.state.apiBaseUrl + "/api/TaskRequest";
       common_vendor.index.showModal({
         editable: true,
@@ -151,7 +161,6 @@ const _sfc_main = {
       });
     },
     reloadTask(task) {
-      console.log(task.id);
       this.$store.commit("setCurrentTask", task);
       common_vendor.index.redirectTo({
         url: "/pages/taskDetail/taskDetail?id=" + task.id
@@ -199,7 +208,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     m: common_vendor.f($data.ctasks, (c, k0, i0) => {
       return {
         a: common_vendor.o(($event) => $options.reloadTask(c), c.id),
-        b: "4ffcaaa5-2-" + i0,
+        b: "83597234-2-" + i0,
         c: common_vendor.p({
           task: c,
           editable: false
@@ -209,5 +218,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/uniapp_flow/pages/taskDetail/taskDetail.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/taskDetail/taskDetail.vue"]]);
 wx.createPage(MiniProgramPage);
