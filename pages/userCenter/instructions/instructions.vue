@@ -847,7 +847,7 @@
 					<!-- 折叠面板 -->
 					<view v-if="!isSubPanelCollapsed[7][2]">
 						<text>
-							这是第三个折叠面板中的子面板2的内容。
+							<text class="bold"> 联系开发人员</text><br />电子邮箱：2541613004@qq.com<br />微信号：mxt0796<br /><text>\n</text>
 						</text>
 					</view>
 
@@ -863,7 +863,7 @@
 						<!-- 折叠面板 -->
 						<view v-if="!isSubPanelCollapsed[7][3]">
 							<text>
-								这是第三个折叠面板中的子面板2的内容。
+								流沙社区欢迎您
 							</text>
 						</view>
 					</view>

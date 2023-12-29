@@ -3,6 +3,7 @@
 	<view style="position: relative; margin: 0 40rpx;">
 		<!-- 区间添加模块 ，其中包括标题，和对应的输入框。输入框可根据输入内容调整大小。-->
 		<view class="table-cell" style="position: relative; margin: 0 40rpx;">
+			
 			<view class="table-cell">
 				<view class="stitle">区间分配项</view>
 				<textarea :disabled="!editable" :value="item.stitle" @blur="stitleChange" rows="3" inputmode="text"
@@ -155,7 +156,7 @@
 		display: table-cell;
 		padding: 0rpx;
 		/* 内边距 */
-		transform: translate(0rpx, -380rpx) scale(1);
+		transform: translate(0rpx, 20rpx) scale(1);
 	
 		width: 100%;
 		height: 70rpx;
@@ -185,8 +186,8 @@
 	
 	.rate {
 		z-index: 5;
-		transform: translate(0rpx, -360rpx) scale(1);
-		background-color: #ffffff;
+		transform: translate(0rpx, 20rpx) scale(1);
+		
 		/*设置背景颜色 */
 	
 		width: 30%;
@@ -203,7 +204,7 @@
 	
 	.brief {
 		z-index: 6;
-		transform: translate(0rpx, -360rpx) scale(1);
+		transform: translate(0rpx, 40rpx) scale(1);
 		background-color: #ffffff;
 		/*设置背景颜色 */
 	
@@ -221,8 +222,8 @@
 	
 	.detail {
 		z-index: 7;
-		transform: translate(0rpx, -360rpx) scale(1);
-		background-color: #ffffff;
+		transform: translate(0rpx, 40rpx) scale(1);
+		
 		/*设置背景颜色 */
 	
 		width: 30%;
@@ -242,11 +243,11 @@
 		display: flex;
 		/* 使用Flex布局 */
 	
-		//transform: translate(400rpx, -420rpx) scale(1);
+		transform: translate(400rpx, 20rpx) scale(1);
 		/* 水平居中 */
 		align-items: center;
 		/* 垂直居中 */
-		border-radius: 60rpx;
+		border-radius: 00rpx;
 		/* 新增：设置按钮边框为圆角 */
 		width: 250rpx;
 		height: 30rpx;
@@ -268,7 +269,10 @@
 		height: 30px;
 	}
 	
+	
+	/*选择框 */
 	.refer-input{
+		transform: translate(0rpx, 0rpx) scale(1);
 		border: 1rpx solid #6c4ad1;
 		width: 80rpx;
 		height: 40rpx;
@@ -281,7 +285,7 @@
 	
 	.textarea-field-ee {
 		z-index: 4;
-		transform: translate(0rpx, -380rpx) scale(1);
+		transform: translate(0rpx, 20rpx) scale(1);
 		border: 2rpx solid #886cdb;
 		/* 边框颜色 */
 	
@@ -297,7 +301,7 @@
 	
 	.textarea-field-ff {
 		z-index: 5;
-		transform: translate(0rpx, -380rpx) scale(1);
+		transform: translate(0rpx, 20rpx) scale(1);
 		border: 2rpx solid #886cdb;
 		/* 边框颜色 */
 	
@@ -311,7 +315,7 @@
 	
 	.textarea-field-gg {
 		z-index: 6;
-		transform: translate(0rpx, -380rpx) scale(1);
+		transform: translate(0rpx, 20rpx) scale(1);
 		border: 2rpx solid #886cdb;
 		/* 边框颜色 */
 	
@@ -324,7 +328,7 @@
 	
 	.textarea-field-hh {
 		z-index: 7;
-		transform: translate(0rpx, -380rpx) scale(1);
+		transform: translate(0rpx, 20rpx) scale(1);
 		border: 2rpx solid #886cdb;
 		/* 边框颜色 */
 	

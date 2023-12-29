@@ -567,18 +567,20 @@
 	}
 
 	.bid1 {
-		// ”信息“ #54cfa5
-		color: #31c695;
+		//”审核“
+		color: #3734c1;
+		
 	}
 
 	.bid2 {
-		//”审核“ 
-		color: #3734c1;
+		//”制作“ #509cf5
+		color: #046ef1;
 	}
 
 	.bid3 {
-		//”建设“ #5656cb
-		color: #000000;
+		// ”信息“ #54cfa5
+		color: #31c695;
+		
 	}
 
 	.bid4 {
@@ -587,18 +589,20 @@
 	}
 
 	.bid5 {
-		//”制作“ #509cf5
-		color: #046ef1;
+		//”资金“ #d169cd
+		color: #c5308b;
+		
 	}
 
 	.bid6 {
 		//”分发“ #e0ba46
-		color: #e0bb45;
+		color: #f3af00;
 	}
 
 	.bid7 {
-		//”资金“ #d169cd
-		color: #d169cd;
+		//”建设“ #5656cb
+		color: #000000;
+		
 	}
 
 	.task() {
@@ -668,22 +672,23 @@
 	}
 
 	.task1:before {
-		//信息
-		.taskbefore();
-		background-image: -webkit-linear-gradient(-90deg, #53cfa5 0%, #62d3a0 100%);
-	}
-
-	.task2:before {
 		//审核
 		.taskbefore();
 		background-image: -webkit-linear-gradient(-90deg, #5654ca 0%, #6a77d1 100%);
+		
+	}
+
+	.task2:before {
+		//制作
+		.taskbefore();
+		background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
 	}
 
 	.task3:before {
-		//建设
+		//信息
 		.taskbefore();
-
-		background-image: -webkit-linear-gradient(-90deg, #000000 0%, #242121 100%);
+		background-image: -webkit-linear-gradient(-90deg, #53cfa5 0%, #62d3a0 100%);
+		
 	}
 
 	.task4:before {
@@ -693,21 +698,24 @@
 	}
 
 	.task5:before {
-		//制作
+		//资金
 		.taskbefore();
-		background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
+		background-image: -webkit-linear-gradient(-90deg, #d457a4 0%, #d96bbc 100%);
+		
 	}
 
 	.task6:before {
 		//分发
 		.taskbefore();
-		background-image: -webkit-linear-gradient(-90deg, #e0bb45 0%, #daaf22 100%);
+		background-image: -webkit-linear-gradient(-90deg, #e0bb45 0%, #f6ae3b 100%);
 	}
 
 	.task7:before {
-		//资金
+		//建设
 		.taskbefore();
-		background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
+		
+		background-image: -webkit-linear-gradient(-90deg, #000000 0%, #242121 100%);
+	
 	}
 
 	.tasktype {
