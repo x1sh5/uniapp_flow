@@ -8,37 +8,50 @@
 
 .ql-container {
 	box-sizing: border-box;
-	padding: 12px 15px;
+	padding: 12px 15px;z-index: 2;
 	width: 90%;
 	min-height: 30vh;
-	margin-top: 20px;
-	font-size: 16px;
+	margin-top: 100rpx;
+	font-size: 16px;background-color: rgb(255, 255, 255);border: 1px solid #6c4ad1;
+	
+	padding: 100rpx 15rpx 20rpx 15rpx; /* 这里设置了文字与输入框顶部的距离 */
+	
+	min-height: 30vh; /* 输入框的最小高度 */
+		max-height: 60vh; /* 输入框的最大高度 */
+		overflow-y: auto; /* 当内容超过最大高度时，内容会自动滚动 */
 }
 
 /* 点击添加任务说明 */
 .editbutton {
-	display: flex;
-	/* 使用Flex布局 */
-	justify-content: center;
-	/* 水平居中 */
-	align-items: center;
-	/* 垂直居中 */
-	transform: translate(0rpx, 0rpx) scale(1);
-	border: 1px solid #6c4ad1;
-	border-radius: 20px;
-	/* 新增：设置按钮边框为圆角 */
-	width: 700rpx;
-	height: 90rpx;
-	margin-top: 0rpx;
+		z-index: 9;
+		border: 1px solid #6c4ad1;
+		border-radius: 00rpx;
+transform: translate(0rpx, -520rpx) scale(1);
+    /* translate 请尽量使用百分比 */
+	/* 	 */
+	
+		/* 新增：设置按钮边框为圆角 */
+		width: 350rpx;
+		height: 70rpx;
+		color: #6c4ad1;
+		/* 新增：设置按钮文字颜色为白色 */
+		background-color: #ffffff;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+	   */
 
-	margin-left: 0rpx;
+		font-size: 26rpx;
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+		margin-top: 50rpx;
+		margin-left: -20px;
+		box-shadow: 0ch;
 
-	font-size: 28rpx;
-	color: #6c4ad1;
-	/* 新增：设置注册按钮文字颜色为绿色 */
-	background-color: rgb(255, 255, 255);
-	/* 新增：设置注册按钮背景颜色为白色 */
-	box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 }
 
 .tasktype {
@@ -47,13 +60,13 @@
 	/* 水平居中 */
 	align-items: center;
 	/* 垂直居中 */
-	z-index: 3;
+	z-index: 2;
 	bottom: 1rpx;
 	right: 1rpx;
-	font-size: 39rpx;
+	font-size: 24rpx;
 	/*font-style: italic; 斜体 */
 	font-weight: 900;
-	color: #4d1ae4;
+	color: #723de4;
 	text-decoration: underline;
 	/* 添加下划线 */
 	text-decoration-thickness: 15rpx;
@@ -63,5 +76,5 @@
 /* 分割线*/
 .driver {
 	z-index: 1;
-	display: flex;
+	display: flex;transform: translate(0rpx, 6rpx) scale(1);
 }

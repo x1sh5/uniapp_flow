@@ -7,7 +7,7 @@
 	<image class="swiper-item-image" src="/static/p1.png">
 	</image>
 
-	<view>
+	<view  style="position: relative;margin-left: 10rpx ;">
 		<!-- 第一个折叠面板 -->
 		<view>
 			<!-- 主面板 -->

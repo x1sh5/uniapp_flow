@@ -26,8 +26,8 @@
 					style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
 			<view class="tips">{{aggrementCheckTip}}</view>
 		</view>
-		<button style="width: 80px;" @click="check">人脸验证</button>
-		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
+		<button class="button" style="width: 80px;" @click="check">人脸验证</button>
+		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">*信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
 	</view>
 </template>
 
@@ -153,25 +153,41 @@
 
 <style>
 	.rg-input {
-		margin-top: 100rpx;
-		margin-left: 60rpx;
-		width: 300px;
-		height: 20rpx;
-		border: 2px solid #6c4ad1;
+  margin-top:40rpx;
+  width: 300px;
+    height:30rpx;
+    border: 1rpx solid #6c4ad1;
 
-
-		border-radius: 0px;
-		/* 将输入框的圆角设置为50 */
-		border: none;
-		/* 移除默认边框 */
-		border-bottom: 1px solid #6c4ad1;
-		/* 添加底部边框，可以根据需要调整颜色和粗细 */
-		outline: none;
-		/* 移除默认的焦点边框 */
-		background: transparent;
-		/* 设置背景为透明，以便底部边框显示 */
-		padding: 0;
-		/* 移除默认内边距，可以根据需要设置 */
-
+   /* font-family: uniicons;*/
+    text-decoration: none;
+    padding-left: 15px;/* 右缩进 */
+    font-size: 30rpx; /* 尺寸 */
+    letter-spacing: 3px;
+    line-height: 40rpx;/* 文本上下位置 */
+    height: 70rpx;/* 背景高度 */
+    color: #ffffff;/* 字体颜色 */
+    margin: rpx 0;/* 上下位置 */
+    background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+   
+    border-bottom:0rpx solid #6c4ad1; /* 添加底部边框，可以根据需要调整颜色和粗细 */
+    outline: none; /* 移除默认的焦点边框 */
 	}
+	.button{
+	  border: 0px solid  #6c4ad1;
+	  font-size: 13px;
+	  border-radius: 0px; /* 新增：设置按钮边框为圆角 */
+	  width: 100px;
+	  height: 35px;
+	  margin-top: 0rpx;
+	 display: flex;  /* 使用Flex布局 */ 
+	   justify-content: center;  /* 水平居中 */
+	   align-items: center; /* 垂直居中 */
+	   margin-left: 500rpx;
+	   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+	   background-color: rgba(0, 0, 0, 0);
+	   text-decoration: underline; 
+	 
+	   
+	}
+	
 </style>

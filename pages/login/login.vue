@@ -3,7 +3,9 @@
 		<!-- 页面内容 -->
 	</view>
 	<text class="t">让生活自在掌握~</text>
-	<button @click="skip" style="position: absolute;right: 0px;margin-right: 20px;width: 60px;height: 40px;">跳过</button>
+	
+	<!--考虑了一下跳过暂时可以不用加，用户不想登录可以直接左上退出页面-->
+	<!----><button @click="skip" style="position: absolute;right: 0px;margin-right: 20px;width: 60px;height: 40px;">跳过</button>
 	<view class="usercenter">
 		<form @submit="login">
 			<text class="y">用户名：</text>

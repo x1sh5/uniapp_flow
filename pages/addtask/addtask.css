@@ -171,6 +171,30 @@
   /* 修改复选框内部样式 */
   
 
+.select- container{
+	 z-index: 10;
+  transform: translate(300rpx,500rpx) scale(1);
+
+  border: 0px solid  #6c4ad1;
+  border-radius: 0rpx; /*设置按钮边框为圆角 */
+  border: none;
+
+  color: rgb(255, 255, 255); 
+  background-color: #ffffff; 
+  font-size:40rpx;
+  text-align: center;
+/* top: calc(150vh - 350rpx);
+   */
+ 
+ display: flex;  /* 使用Flex布局 */ 
+    justify-content: center;  /* 水平居中 */
+ align-items: center;   /* 垂直居中 */
+   
+   margin-top: 0rpx;
+   box-shadow:0ch;
+ padding-left: 00rpx; 
+   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+}
 
 
 

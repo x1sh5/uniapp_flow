@@ -8,7 +8,7 @@
 			已归档
 			<price wx:if="{{totalPaid}}" price="{{totalPaid}}" wr-class="pay-money__price" decimalSmaller fill />
 		</view>
-		<button @click="share">分享</button>
+		<button class="share" @click="share">分享</button>
 		<view class="btn-wrapper">
 			<view class="status-btn" data-type="orderList" bindtap="onTapReturn" @click="show">查看任务</view>
 			<view class="status-btn" data-type="home" bindtap="onTapReturn" @click="back">返回首页</view>
@@ -102,6 +102,15 @@ export default {
 	font-size: 36rpx;
 	line-height: 48rpx;
 	color: #fa4126;
+}
+.share{
+	color: #6c4ad1;
+	font-size: 28rpx;
+	line-height: 48rpx;
+	margin-top: 28rpx;
+	display: flex;
+	align-items: baseline;
+	text-decoration: underline;
 }
 
 .pay-result .btn-wrapper {

@@ -9,7 +9,7 @@
 			<view class="proposer">申请人：</view>
 			<view>
 				<view class="name">{{ simpleInfo.userName }}</view>
-				<button class="contact" @click="contact">联系</button>
+				<button class="contact" @click="contact">👉沟通</button>
 			</view>
 
 			<view v-show="simpleInfo.agree === 2" style=" flex-direction: row;">
@@ -27,13 +27,13 @@
 				<view v-else>任务失败</view>
 			</view>
 			<view v-else>
-				<view style="margin-top: 10px;" v-if="simpleInfo.agree === 1 && deadline">
-					<uni-countdown :day="deadline.days" :hour="deadline.hours" :minute="deadline.minutes"
+				<view  style="margin-top: 30rpx;" v-if="simpleInfo.agree === 1 && deadline">
+					<uni-countdown class="t"  :day="deadline.days" :hour="deadline.hours" :minute="deadline.minutes"
 						:second="deadline.seconds">
 					</uni-countdown>
 					<view>
-						<button @click="complete">确认完成</button>
-						<button @click="failure">未达到要求</button>
+						<button class="r" @click="complete">确认完成✔</button>
+						<button class="w" @click="failure">未达到要求×</button>
 					</view>
 				</view>
 			</view>
@@ -158,10 +158,10 @@
 				uni.showModal({
 					title: "进行‘确认’操作后, 任务将不再能修改。",
 					editable: true,
-					placeholderText: "输入‘确认’完成操作！",
+					placeholderText: "输入‘未达标’完成操作！",
 					success: (res) => {
 						if (res.confirm) {
-							if (res.content == '确认') {
+							if (res.content == '未达标') {
 								uni.request({
 									url: this.$store.state.apiBaseUrl + "/api/Assignment/archive/" +
 										this.simpleInfo.taskId,
@@ -390,7 +390,7 @@
 		transform: translate(0rpx, -60rpx) scale(1);
 
 		border: 10px solid #6c4ad1;
-		border-radius: 80rpx;
+		border-radius: 0rpx;
 		/*设置按钮边框为圆角 */
 		border: none;
 
@@ -399,7 +399,7 @@
 
 		color: rgb(255, 255, 255);
 		background-color: #4d1ae4;
-		font-size: 80rpx;
+		font-size: 60rpx;
 		text-align: center;
 		/* top: calc(150vh - 350rpx);
 	   */
@@ -408,7 +408,7 @@
 		margin-left: -120px;
 		margin-top: 0rpx;
 		box-shadow: 0ch;
-		padding-left: 500rpx;
+		padding-left: 300rpx;
 		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
 		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
 	}
@@ -491,4 +491,61 @@
 		color: #ffffff;
 		font-size: 10px;
 	}
+	
+	.t {
+		text-color: #ffffff;
+		font-size: 14rpx;
+	   
+	}
+	.r {
+		z-index: 10;
+
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+
+		transform: translate(0rpx, 0rpx) scale(1);
+
+		border: 10px solid #6c4ad1;
+		border-radius: 0rpx;
+		/*设置按钮边框为圆角 */
+		border: none;
+
+		width: 700rpx;
+		height: 80rpx;
+
+		color: rgb(255, 255, 255);
+		background-color: #4d1ae4;
+		font-size: 30rpx;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+	   */
+
+
+		margin-left: -120px;
+		margin-top: 0rpx;
+		box-shadow: 0ch;
+		padding-left: 400rpx;
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+	}
+	
+	.w {
+		z-index: 10;	height: 70rpx; 	align-items: center;
+		display: flex;
+		margin-left: 0rpx;
+		transform: translate(480rpx, -20rpx) scale(1);
+		margin-top: -30rpx;
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1rpx solid #6c4ad1;border-radius: 0px; 
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 14rpx;
+	   
+	}
+	
 </style>

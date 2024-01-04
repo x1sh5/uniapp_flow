@@ -70,7 +70,7 @@
 		height: calc(100vh - var(--window-top) - var(--status-bar-height) - 140px);
 		background: #ffffff;
 		color: rgb(0, 0, 0);
-		border: 1rpx solid #6c4ad1;
+		border: 0rpx solid #6c4ad1;
 	}
 
 	/* 功能区 */
@@ -101,7 +101,7 @@
 		width: 100%;
 		min-height: 30vh;
 		height: 100%;
-		margin-top: 20px;
+		margin-top: 120rpx;
 		font-size: 16px;
 		line-height: 1.5;
 	}

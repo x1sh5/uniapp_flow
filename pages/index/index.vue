@@ -47,7 +47,7 @@
 
 		<view id="top" class="totop" @click="backtotop">
 			<view class="topicon"></view>
-			<view>顶部</view>
+			
 		</view>
 		<!-- <uni-paginati on prevText="上一页" nextText="下一页" piecePerPageText="页" pageSize="10" :total="total" 
 			@update:modelValue="modelChange"></uni-pagination>  -->

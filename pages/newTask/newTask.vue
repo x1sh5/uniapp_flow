@@ -9,7 +9,7 @@
 	<view>
 		<view class="text">编辑任务卡</view>
 		<!--导航栏-->
-		<uni-nav-bar left-icon="left" leftText="返回" rightText="下一步" backgroundColor="#f8f8f8" @clickLeft="backEvent"
+		<uni-nav-bar style="align-items: center;" left-icon="left" leftText="返回" rightText="下一步" backgroundColor="#f8f8f8" @clickLeft="backEvent"
 			@clickRight="submitEvent" class="uni-navbar"></uni-nav-bar>
 	</view>
 	<!--卡片主体-->

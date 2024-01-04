@@ -52,11 +52,11 @@
 
 
 			<view class="user-view">帮助中心</view>
-			<view style="position: absolute;right: 20rpx;margin-top: -90rpx;"></view>
+			<view style="position: absolute;right: 50rpx;margin-top: -90rpx;">v</view>
 
 			<view class="user-view2" @click="showDevelopmentTip">技能互助文档</view>
 
-			<view class="user-view2">收益来源</view>
+			<!--<view class="user-view2">收益来源</view>-->
 
 
 			<!-- -->
@@ -75,12 +75,12 @@
 		</view>
 
 		<view v-show="hasLogin">
-			<button @click="signout">退出登录</button>
+			<button class="signout" @click="signout">退出登录</button>
 		</view>
 
 		<view v-show="!hasLogin">
-			<button @click="signin">登录</button>
-			<button @click="signup">注册</button>
+			<button class="signin" @click="signin">登录</button>
+			<button class="signup" @click="signup">注册</button>
 		</view>
 
 	</view>

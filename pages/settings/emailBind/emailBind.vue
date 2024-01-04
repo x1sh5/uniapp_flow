@@ -2,12 +2,12 @@
 	<view>
 		<view v-if="mode=='show'">
 			<input class="rg-input" :disabled="true" v-model="email" type="text" maxlength="256" placeholder="请输入邮箱" />
-			<button @click="bindChange">更改邮箱</button>
+			<button class="f" @click="bindChange">更改邮箱</button>
 		</view>
 
 		<view v-if="mode=='bindnew'">
 			<input class="rg-input" v-model="newEmail" type="text" maxlength="256" placeholder="请输入邮箱" />
-			<button @click="sendCode">发送验证码</button>
+			<button class="f" @click="sendCode">发送验证码</button>
 			<view v-show="showCode">
 				<view>请输入{{email}}收到的验证码</view>
 				<xt-verify-code inputType="text" type="bottom" v-model="code"></xt-verify-code>
@@ -126,24 +126,52 @@
 
 <style>
 	.rg-input {
-		margin-top: 100rpx;
-		width: 300px;
-		height: 20rpx;
-		border: 2px solid #6c4ad1;
+  margin-top:40rpx;
+  width: 300px;
+    height:30rpx;
+    border: 1rpx solid #6c4ad1;
 
-
-		border-radius: 0px;
-		/* 将输入框的圆角设置为50 */
-		border: none;
-		/* 移除默认边框 */
-		border-bottom: 1px solid #6c4ad1;
-		/* 添加底部边框，可以根据需要调整颜色和粗细 */
-		outline: none;
-		/* 移除默认的焦点边框 */
-		background: transparent;
-		/* 设置背景为透明，以便底部边框显示 */
-		padding: 0;
-		/* 移除默认内边距，可以根据需要设置 */
-
+   /* font-family: uniicons;*/
+    text-decoration: none;
+    padding-left: 15px;/* 右缩进 */
+    font-size: 30rpx; /* 尺寸 */
+    letter-spacing: 3px;
+    line-height: 40rpx;/* 文本上下位置 */
+    height: 70rpx;/* 背景高度 */
+    color: #ffffff;/* 字体颜色 */
+    margin: rpx 0;/* 上下位置 */
+    background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+   
+    border-bottom:0rpx solid #6c4ad1; /* 添加底部边框，可以根据需要调整颜色和粗细 */
+    outline: none; /* 移除默认的焦点边框 */
+	}
+	
+	.f{
+	
+	  	 z-index: 10;
+	    transform: translate(0rpx,10rpx) scale(1);
+	  
+	    border: 10px solid  #6c4ad1;
+	    border-radius: 0rpx; /*设置按钮边框为圆角 */
+	    border: none;
+	    width: 800rpx;
+	    height: 150rpx;
+	    color: rgb(255, 255, 255); 
+	    background-color: #4d1ae4; 
+	    font-size: 40rpx;
+	    text-align: center;
+	  /* top: calc(150vh - 350rpx);
+	     */
+	   
+	   display: flex;  /* 使用Flex布局 */ 
+	      justify-content: center;  /* 水平居中 */
+	   align-items: center;   /* 垂直居中 */
+	     margin-top: 0rpx;
+	     box-shadow:0ch;
+	   padding-left: 500rpx; 
+	     box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+	  
+	  
+	  
 	}
 </style>

@@ -3,7 +3,7 @@
 		<refer :refer="refer" :editable="true"></refer>
 	</view>
 	<view>
-		<button style="width: 80px;height: 40px;"  @click="commit">提交</button>
+		<button class="commit-btn"   @click="commit">提交</button>
 	</view>
 </template>
 
@@ -125,5 +125,24 @@ function deepClone(obj) {
 </script>
 
 <style>
-
+	.commit-btn {
+			z-index: 10;
+		display: flex;
+		height: 70px;
+		width: 100%;
+		background-color: #5500ff;
+		margin-left: auto;
+		margin-right: auto;
+		/* align-content: center; */
+		justify-content: center;
+		flex-wrap: nowrap;
+		align-items: center;
+		margin-bottom: 5px;
+		color: #ffffff;
+		border: 1px solid #5500ff;	border-radius: 0rpx;
+		transform: translate(0rpx, 0rpx) scale(1);
+		position: relative;
+		margin-top:20px;
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+	}
 </style>

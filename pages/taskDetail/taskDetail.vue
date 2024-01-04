@@ -4,23 +4,23 @@
 			<taskCard :task="task" :editable="false"></taskCard>
 
 			<view v-if="mode=='waitfor'">
-				<button class="detail-btn" @click="contact">联系发布人</button>
-				<button class="detail-btn" @click="gain">申请接取任务</button>
+				<button class="l" @click="contact">联系发布人</button>
+				<button class="s" @click="gain">申请接取任务</button>
 			</view>
 
 			<view v-if="mode=='undone'">
-				<button class="detail-btn" @click="contact">联系发布人</button>
-				<button class="detail-btn" @click="abandon" :disabled="enable">放弃任务</button>
+				<button class="l" @click="contact">联系发布人</button>
+				<button class="s" @click="abandon" :disabled="enable">放弃任务</button>
 			</view>
 
 			<view v-else>
 			</view>
 
 		</view>
-
-		<view class="driver"></view>
-		<view class="relate">
-			<view style="color: orangered;margin-bottom: 10px;">相关任务:</view>
+<view class="blank" style="width: 100%; height: 80rpx; border: 0px solid  #6c4ad1;  background-color: #ffffff; "></view>
+		
+		<view class="tasktype">
+			<view >相关任务:</view>
 			<view>
 				<view v-if="ptask">
 					<cardinfo @click="reloadTask(ptask)" :task="ptask" :editable="false"></cardinfo>

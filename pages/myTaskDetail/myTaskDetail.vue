@@ -15,7 +15,7 @@
 
 			<view v-if="task.canTake==0&&task.main==1&&task.payed==0" class="pay-container">
 				<view class="balance">金额：{{ balance }}</view>
-				<button v-show="balance*100>0" @click="pay">支付</button>
+				<button class="z" v-show="balance*100>0" @click="pay">支付</button>
 			</view>
 
 		</view>
@@ -227,5 +227,30 @@
 
 	.balance {
 		margin-left: 30px;
+	}
+	
+	.z{
+		 z-index: 10;
+	  transform: translate(0rpx,10rpx) scale(1);
+	
+	  border: 0px solid  #6c4ad1;
+	  border-radius: 0rpx; /*设置按钮边框为圆角 */
+	  border: none;
+	  width: 800rpx;
+	  height: 150rpx;
+	  color: rgb(255, 255, 255); 
+	  background-color:  #ffaa00; 
+	  font-size: 80rpx;
+	  text-align: center;
+	/* top: calc(150vh - 350rpx);
+	   */
+	 
+	 display: flex;  /* 使用Flex布局 */ 
+	    justify-content: center;  /* 水平居中 */
+	 align-items: center;   /* 垂直居中 */
+	   margin-top: 0rpx;
+	   box-shadow:0ch;
+	 padding-left: 500rpx; 
+	   box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 	}
 </style>

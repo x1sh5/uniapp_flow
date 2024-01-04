@@ -13,7 +13,7 @@
 			</view>
 
 		</view>
-		<button style="width: 80px;" @click="check">下一步</button>
+		<button class="button" style="width: 80px;" @click="check">下一步</button>
 		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
 	</view>
 </template>
@@ -108,4 +108,22 @@
 		/* 移除默认内边距，可以根据需要设置 */
 
 	}
+	.button{
+	  border: 0px solid  #6c4ad1;
+	  font-size: 13px;
+	  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+	  width: 100px;
+	  height: 35px;
+	  margin-top: 0rpx;
+	 display: flex;  /* 使用Flex布局 */ 
+	   justify-content: center;  /* 水平居中 */
+	   align-items: center; /* 垂直居中 */
+	   margin-left: 280px;
+	   color: #6c4ad1; /* 新增：设置注册按钮文字颜色为绿色 */
+	   background-color: rgba(0, 0, 0, 0);
+	   text-decoration: underline; 
+	 
+	   
+	}
+	
 </style>

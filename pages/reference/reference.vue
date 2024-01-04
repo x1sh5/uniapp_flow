@@ -86,21 +86,50 @@
 	}
 
 	.addcontainer {
-		width: 55px;
-		height: 55px;
+		width: 200rpx;
+		height: 55rpx;
 		position: fixed;
 		display: flex;
-		justify-content: center;
+		
 		align-items: center;
 		z-index: 10;
-		border-width: 0px;
-		border-radius: 45px;
-		box-shadow: 0 1px 5px 2px rgba(0, 0, 0, 0.3);
-		right: 50px;
-		bottom: 50px;
-		background-color: rgb(0, 122, 255);
+		border-width: 100rpx;
+		border-radius: 0rpx;
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
+		right: 00rpx;
+		bottom: 100rpx;
+		
+		background-color:#5500ff;
+		
+		margin-right: -40rpx;
+		
+		padding-right:10rpx;
+	
 	}
 
+	/* 联系 */
+	.contact {
+		
+
+
+
+		
+
+		color: rgb(255, 255, 255);
+		background-color: #4d1ae4;
+		font-size: 60rpx;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+	   */
+
+
+		margin-left: -120px;
+		margin-top: 0rpx;
+		box-shadow: 0ch;
+		padding-left: 300rpx;
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+	}
 	.add-icon {
 		color: rgb(255, 255, 255);
 		font-size: 32px;

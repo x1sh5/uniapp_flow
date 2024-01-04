@@ -1,9 +1,9 @@
 <template>
 	<view>
-		  <!-- 2. 改变“请选择创建类型”字体颜色为灰色、大小30px，页面居中，上边距70px <view class="title">请选择创建类型</view>  -->
+		  <!-- <view class="title1">*即时回报的<br>单次任务</view> 
+		  <view class="title2">*后续收入的多项任务</view>   -->
 		
-		  <view class="title1">*即时回报的<br>单次任务</view> 
-		  <view class="title2">*后续收入的多项任务</view> 
+		 
 		   <!-- 1. 添加居中灰色分割线 -->
 		   <!-- <view class="horizontal-line-0"></view>-->
 		   <view class="horizontal-line"></view>
@@ -12,18 +12,18 @@
 		  <view class="horizontal-line-b"></view> 
 		  <view class="horizontal-line-d"></view> 
 		  <view class="container" style="background-image: url('/static/addtask.png');">
-		    <!-- 页面内容 -->
-		  </view>
+		  
+		  </view>  <!-- 页面内容 -->
 		  <!--  
 		  
 		  
 		   -->
 		  
 		  <!-- 3. uni-data-checkbox 内容页面居中，上边距70px -->
-		  <view class="checkbox-container">
+		  <view class="checkbox-container" >
 			<uni-data-checkbox mode="button" v-model="defaultT" :localdata="ctype" @change="typeChange"></uni-data-checkbox>
 		  </view>
-		  <view class="select-container" >
+		  <view class="select-container"  >
 			<uni-data-select :localdata="branchTypes" :showProp="'name'"
 			 ref="dataSelect" @data-to-parent="receiveDataFromChild">
 			</uni-data-select>

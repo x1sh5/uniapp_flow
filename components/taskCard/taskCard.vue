@@ -8,14 +8,17 @@
 			<view class="tasktype">任务说明</view>
 			<!--分割线-->
 			<view class="driver"
-				style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #6c4ad1;margin-top: 10rpx;">
+				style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #c6b8f1;margin-top: 10rpx;z-index: 2;">
 			</view>
 			<!--输入结果的显示区域-->
 			<view class="ql-container" style="position: relative; margin: 0 40rpx;">
 				<rich-text class="content" :nodes="html" style="word-break: keep-all; overflow-wrap: anywhere;"></rich-text>
 			</view>
+			
 			<!--输入按钮-->
 			<button v-if="editable" class="editbutton" @click="editEvent">+编辑制作说明...</button>
+		</view>
+		<view class="blank" style="width: 100%; height: 80rpx; border: 0px solid  #6c4ad1;  background-color: #ffffff; ">
 		</view>
 	</view>
 </template>

@@ -89,10 +89,11 @@
 		align-items: center;
 		margin-bottom: 5px;
 		color: #ffffff;
-		border: 1px solid #5500ff;
+		border: 1px solid #5500ff;	border-radius: 0rpx;
 		transform: translate(0rpx, -180rpx) scale(1);
 		position: relative;
 		margin-top:300px;
+		box-shadow: 5px 5px 5px rgba(116, 116, 116, 0.5);
 	}
 	
 	.a {

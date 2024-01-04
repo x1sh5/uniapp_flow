@@ -1,18 +1,18 @@
 <template>
-	<view style="width: 90%;">
-		<view class="setting-view">
+	<view class="user-view" style="display: flex;flex-direction: row; position: relative">
+		<view class="user-view2">
 			头像设置
 			<view class="user-avatar" @click="avataSet">
 				<image :src="imgsrc" class="user-avatar-img"></image>
 			</view>
 		</view>
 
-		<view @click="nicknameSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+		<view @click="nicknameSetting" class="user-view2" style="display: flex;flex-direction: row; position: relative">
 			<view>昵称</view>
 			<view style="position: absolute;right: 0;">{{ Nickname }}></view>
 		</view>
 
-		<view @click="signatureSetting" class="setting-view" style="display: flex;flex-direction: row; position: relative">
+		<view @click="signatureSetting" class="user-view2" style="display: flex;flex-direction: row; position: relative">
 			<view>个性签名</view>
 			<!-- <view style="position: absolute;right: 0;">{{ signature }}></view> -->
 		</view>
@@ -23,10 +23,7 @@
 			<view style="position: absolute;right: 0;">></view>
 		</view> -->
 		
-		<view @click="emailBind" class="setting-view" style="display: flex;flex-direction: row; position: relative">
-			<view>绑定邮箱</view>
-			<view style="position: absolute;right: 0;">></view>
-		</view>
+		
 		
 <!-- 		<view class="driver"></view>
 		<view @click="unregister" class="setting-view" style="display: flex;flex-direction: row; position: relative">
@@ -35,6 +32,23 @@
 		</view> -->
 		
 	</view>
+	<view class="user-view"  >身份验证</view>
+	<view @click="toinstructions" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+		<view>绑定手机号</view>
+		<view style="position: absolute;right: 710rpx;">></view>
+	</view>
+	<view @click="toinstructions" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+		<view>绑定银行卡</view>
+		<view style="position: absolute;right: 710rpx;">></view>
+	</view>
+	<view @click="emailBind" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+		<view>绑定邮箱</view>
+		<view style="position: absolute;right: 710rpx;">></view>
+	</view>
+	<view @click="unregister" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+		<view>账号注销</view>
+		<view style="position: absolute;right:710rpx;">></view>
+	</view> 
 </template>
 
 <script>
@@ -136,6 +150,40 @@ import { StorageKeys } from '../../common/storageKeys'
 </script>
 
 <style>
+	.user-view {
+	  width: auto; /* 自适应内容宽度 */
+	  margin-left: 6rpx;
+	  margin-top: 2px;
+	  margin-bottom: 2px;
+	  border-radius: 5px;
+	  box-sizing: content-box;
+	  padding-left: 15px;/* 右缩进 */
+	  border: 1px solid #6c4ad1;
+	  background-color: rgb(255, 255, 255);
+	  color: #4723b3;
+	  font-size: 20px;
+	  margin-bottom: 10px;
+	  padding-top: 10px; /* 上内边距设置为 10px */
+	  padding-bottom: 10px; /* 下内边距设置为 10px */
+	  /* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+	}
+	.user-view2 {
+	  
+	  margin-left: 5px;
+	  margin-top: 0px;
+	  margin-bottom: 2px;
+	  border-radius: 5px;
+	  padding-left: 15px;/* 右缩进 */
+	  box-sizing: content-box;
+	  border: 0px solid rgb(245, 245, 245);
+	  background-color: rgb(255, 255, 255);
+	  color: #6c4ad1;
+	  font-size: 15px;
+	  
+	  padding-top: 0px; /* 上内边距设置为 10px */
+	  padding-bottom: 10px; /* 下内边距设置为 10px */
+	  /* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+	}
 	.driver{
 		display: block;
 		height: 1rpx;
