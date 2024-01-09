@@ -3,12 +3,12 @@
 	flex-direction: row;
 	justify-content: center;
 	/* align-content: stretch;
-	flex-wrap: wrap; */
+	flex-wrap: wrap; */z-index: 1;
 }
 
 .ql-container {
 	box-sizing: border-box;
-	padding: 12px 15px;z-index: 2;
+	padding: 12px 15px;z-index: 1;
 	width: 90%;
 	min-height: 30vh;
 	margin-top: 100rpx;
@@ -23,7 +23,7 @@
 
 /* 点击添加任务说明 */
 .editbutton {
-		z-index: 9;
+		z-index: 1;
 		border: 1px solid #6c4ad1;
 		border-radius: 00rpx;
 transform: translate(0rpx, -520rpx) scale(1);
@@ -55,12 +55,13 @@ transform: translate(0rpx, -520rpx) scale(1);
 }
 
 .tasktype {
+	
 	display: flex;
 	justify-content: center;
 	/* 水平居中 */
 	align-items: center;
 	/* 垂直居中 */
-	z-index: 2;
+	z-index: 1;
 	bottom: 1rpx;
 	right: 1rpx;
 	font-size: 24rpx;

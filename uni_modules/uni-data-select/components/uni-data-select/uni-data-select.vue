@@ -11,7 +11,7 @@
 					</view>
 					<view v-else>
 						<uni-icons :type="showSelector? 'top' : 'bottom'" size="14" color="#999" />
-					</view>
+					</view> 
 				</view>
 				<view class="uni-select--mask" v-if="showSelector" @click="toggleSelector" />
 				<view class="uni-select__selector" v-if="showSelector">
@@ -77,7 +77,7 @@
 			},
 			placeholder: {
 				type: String,
-				default: '请选择'
+				default: '选择卡片类型'
 			},
 			emptyTips: {
 				type: String,
@@ -225,16 +225,23 @@
 				return isDisabled;
 			},
 			statusDisable(e){
-				if(e === true){
-					this.current = '';
-				}
-				this.current
-				for(let x of this.localdata){
-					if(x.name !== "审核"){
-						x.disable = e;
-					}
-				}
+    for (let x of this.localdata) {
+        if (e === false) {
+			this.current = '';
+            if (x.name === "制作") {
+                x.disable = true; // 当 e 为 false 时，禁用 "制作" 选项
+            } else {
+                x.disable = false; // 当 e 为 false 时，其他选项可见
+            }
+        } else if (e === true && x.name !== "审核") {
+			this.current = '';
+            x.disable = true; // 当 e 为 true 且不是 "审核" 选项时，禁用其他选项
+        } else {
+            x.disable = false; // 当 e 为 true 且是 "审核" 选项时，显示 "审核"
+        }
+    }
 			},
+
 			clearVal() {
 				//console.log("clearVal")
 				this.emit('');

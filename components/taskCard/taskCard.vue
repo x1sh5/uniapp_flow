@@ -8,7 +8,7 @@
 			<view class="tasktype">任务说明</view>
 			<!--分割线-->
 			<view class="driver"
-				style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #c6b8f1;margin-top: 10rpx;z-index: 2;">
+				style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #c6b8f1;margin-top: 10rpx;z-index: 1;">
 			</view>
 			<!--输入结果的显示区域-->
 			<view class="ql-container" style="position: relative; margin: 0 40rpx;">

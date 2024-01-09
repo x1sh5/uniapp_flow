@@ -48,6 +48,7 @@
 			}
 		},
 		computed:{
+			
 			branchTypes(){
 				return this.$store.state.branchs
 			},
@@ -65,6 +66,8 @@
 				  url:"/pages/newTask/newTask?branchid="+this.selected.id+"&createType="+this.defaultT+"&mode="+this.mode,
 				})
 			},
+				
+				
 			typeChange(e){
 
 				if(e.detail.value === 1){
@@ -74,6 +77,7 @@
 				if(e.detail.value === 0){
 					this.mode = 'single';
 					this.$refs.dataSelect.statusDisable(false)
+					
 				}
 			},
 			receiveDataFromChild(data) {
@@ -83,7 +87,10 @@
 
 			}
 		},
-
+	mounted() {
+			// 在组件挂载时调用 statusDisable(false) 来初始化状态
+			this.$refs.dataSelect.statusDisable(false);
+		}
 	}
 </script>
 

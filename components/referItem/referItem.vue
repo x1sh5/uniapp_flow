@@ -13,7 +13,8 @@
 			<view class="table-cell">
 				<view class="rate">分配比例区间</view>
 				<view  style="display: flex;flex-direction: row;">
-					<input v-model="min" class="refer-input" type="digit"/>%-<input v-model="max" class="refer-input" type="digit"/>%
+					<input v-model="min" class="refer-input" type="number" max="99" min="0" maxlength="2" />%-<input v-model="max" class="refer-input" type="number" max="99" min="0" maxlength="2" />
+%
 				</view>
 				<!-- <textarea :disabled="!editable" :value="rate" @blur="rateChange" rows="3" inputmode="text"
 					auto-height class="textarea-field-ff" placeholder="*次任务占总预估劳动量的百分比范围例如:1%-10%"
@@ -120,26 +121,50 @@
 			}
 		},
 		methods: {
-			delLine(e) {
-				this.$emit("del-Line", this.id)
-			},
-			stitleChange(e) {
-				//let x = this.$refs['stitle'+e];
-				this.item.stitle = e.detail.value
-			},
-			rateChange(e) {
-				this.item.rate = e.detail.value
-			},
-			briefChange(e) {
-				this.item.brief = e.detail.value
-			},
-			detailChange(e) {
-				this.item.detail = e.detail.value
-			},
-			remarkChange(e) {
-				this.item.remark = e.detail.value
-			}
-		}
+		  delLine(e) {
+        this.$emit("del-Line", this.id)
+    },
+    stitleChange(e) {
+        //let x = this.$refs['stitle'+e];
+        this.item.stitle = e.detail.value
+    },
+    checkMin(e) {
+        let value = e.target.value.replace(/[^\d.]/g, ''); // 仅保留数字和小数点
+        const decimalCount = (value.split('.')[1] || '').length; // 获取小数点后的位数
+        if (value === '.') {
+            value = '0.'; // 如果只输入小数点，将其视为0.
+        }
+        if (parseFloat(value) > 100 || decimalCount > 2) {
+            value = value.slice(0, -1); // 超过限制则删除最后一位
+        }
+        this.min = value;
+        this.item.rate = `${this.min}-${this.max}`;
+    },
+    checkMax(e) {
+        let value = e.target.value.replace(/[^\d.]/g, ''); // 仅保留数字和小数点
+        const decimalCount = (value.split('.')[1] || '').length; // 获取小数点后的位数
+        if (value === '.') {
+            value = '0.'; // 如果只输入小数点，将其视为0.
+        }
+        if (parseFloat(value) > 100 || decimalCount > 2) {
+            value = value.slice(0, -1); // 超过限制则删除最后一位
+        }
+        this.max = value;
+        this.item.rate = `${this.min}-${this.max}`;
+    },
+    rateChange(e) {
+        // this.item.rate = e.detail.value
+    },
+    briefChange(e) {
+        this.item.brief = e.detail.value
+    },
+    detailChange(e) {
+        this.item.detail = e.detail.value
+    },
+    remarkChange(e) {
+        this.item.remark = e.detail.value
+    }
+}
 
 	}
 </script>

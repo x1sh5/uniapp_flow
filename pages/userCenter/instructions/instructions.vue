@@ -405,9 +405,11 @@
 				<view style="position: absolute; right: 30rpx;;margin-top: -40rpx;">
 					{{ isPanelCollapsed[1] ? 'v' : '收起' }}</view>
 			</view>
-			<text style="color: #6c4ad1;">-----------------
-				不同类型卡片作用与发布过程
-				-------------</text>
+			<text class="center">
+			    --------
+			    不同类型卡片作用与发布过程
+			    --------
+			</text>
 			<!-- 折叠面板 -->
 			<view style="position:relative;margin: 0 60rpx;" v-if="!isPanelCollapsed[4]">
 				<view>
@@ -699,11 +701,6 @@
 
 
 
-		<view @click="toabout" class="user-view" style="display: flex;flex-direction: row; position: relative">
-			<view>用户协议</view>
-			<view style="position: absolute;right: 30rpx;">></view>
-		</view>
-
 
 
 		<!-- 第6个折叠面板 -->
@@ -715,8 +712,34 @@
 					{{ isPanelCollapsed[1] ? 'v' : '收起' }}</view>
 			</view>
 
+
+		
 			<!-- 折叠面板 -->
 			<view style="position:relative;margin: 0 60rpx;" v-if="!isPanelCollapsed[6]">
+				
+				
+				
+				
+				<view @click="toabout" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+							<view>《用户协议》</view>
+							<view style="position: absolute;right: 30rpx;">></view>
+						</view>
+						
+						<view @click="topbout" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+							<view>《隐私政策》</view>
+							<view style="position: absolute;right: 30rpx;">></view>
+						</view>
+						
+						<view @click="tocbout" class="user-view2" style="display: flex;flex-direction: row; position: relative">
+							<view>《成本分摊方略》</view>
+							<view style="position: absolute;right: 30rpx;">></view>
+						</view>
+				
+	
+				
+				
+				
+				
 				<view>
 					<!-- 主面板 -->
 					<view class="user-view2" @click="toggleSubPanel(6, 1)">
@@ -767,6 +790,8 @@
 							</text>
 						</view>
 
+
+
 						<view>
 							<!-- 主面板 -->
 							<view class="user-view2" @click="toggleSubPanel(6, 4)">
@@ -786,6 +811,7 @@
 									---公共资金池归零时无需主动填充。<br /><text>\n\n</text>
 								</text>
 							</view>
+							
 						</view>
 					</view>
 				</view>
@@ -956,6 +982,19 @@
 					url: "/pages/userCenter/about/about"
 				});
 			},
+			
+			topbout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/privacy/privacy"
+				});
+			},
+			
+			tocbout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/cost/cost"
+				});
+			},
+			
 			togglePanel(panelNumber) {
 				this.isPanelCollapsed[panelNumber] = !this.isPanelCollapsed[panelNumber];
 			},
@@ -1044,4 +1083,14 @@
 		font-size: 1.2rem;
 		font-weight: bold;
 	}
+	.center {
+		display: flex;  /* 使用Flex布局 */
+		  justify-content: center;  /* 水平居中 */
+		  align-items: center; /* 垂直居中 */
+		
+	}
+	
+	
+	
+	
 </style>

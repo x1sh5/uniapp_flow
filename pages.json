@@ -306,7 +306,27 @@
             }
           
         },
+		
         {
+			"path" : "pages/userCenter/cost/cost",
+			    "style" :                                                                                    
+			    {
+			        "navigationBarTitleText": "成本平摊方略",
+			        "enablePullDownRefresh": false
+			    }
+			  
+			},
+			
+			{
+				
+				"path" : "pages/userCenter/privacy/privacy",
+					"style" : 
+					{
+						"navigationBarTitleText" : "隐私政策",
+						"enablePullDownRefresh" : false
+					}
+				},
+				{
         	"path" : "pages/userCenter/instructions/instructions",
         	"style" : 
         	{

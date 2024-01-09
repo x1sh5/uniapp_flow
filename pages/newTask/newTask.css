@@ -60,7 +60,7 @@
 }
 
 .u {
-
+z-index: 1;
 	border: 1px solid white;
 	color: darkgray;
 	transform: translate(0rpx, 0rpx) scale(1);
@@ -70,6 +70,7 @@
 }
 
 .w {
+	z-index: 1;
 	border: 1px solid white;
 	color: darkgray;
 	background-color: #55557f;

@@ -49,7 +49,7 @@
 					<!-- @blur="updateReward" -->
 					<view style="min-width: 1em;margin-bottom: auto;margin-top: auto;">{{ rewardSymbol }}</view>
 					<uni-data-select class="s" :disabled="task.main===1" :localdata="rewardtypeSymbol.options"
-						:clear="false" :modelValue="rewardtype" placeholder="类型" @change="rewardTypeChange"
+						:clear="false" :modelValue="rewardtype" placeholder="回馈类型" @change="rewardTypeChange"
 						v-if="editable">
 
 					</uni-data-select>
@@ -254,14 +254,14 @@
 					options: [{
 							text: '￥',
 							value: '1',
-							name: "固定",
+							name: "固定金额",
 							selected: true,
 							disable: this.taskType && this.taskType.rewardType === "only percent"
 						},
 						{
 							text: '%',
 							value: '2',
-							name: "百分比",
+							name: "回馈比",
 							disable: this.taskType && this.taskType.rewardType === "only fixed"
 						},
 					]
@@ -874,7 +874,7 @@
 		flex-basis: 20rpx;
 		text-align: center;
 
-		margin-left: -40px;
+		margin-left: -30px;
 		font-size: 20rpx;
 		grid-row-start: 3;
 		grid-row-end: 3;
@@ -890,22 +890,23 @@
 	.s {
 		display: block;
 		position: absolute;
-		z-index: 2;
+		z-index: 4;
 		border-bottom: 1px dashed gray;
 		flex-basis: 20rpx;
 		text-align: center;
 
 		margin-top: 30rpx;
-		margin-left: -50rpx;
-		font-size: 20rpx;
+		margin-left: -60rpx;
+		font-size: 34rpx;
+		
 		grid-row-start: 3;
 		grid-row-end: 3;
 		grid-column-start: 3;
 		grid-column-end: 3;
-		height: 40rpx;
-		width: 60rpx;
+		height: 0rpx;
+		width: 0rpx;
 
-		background-color: #2d87f3;
+		background-color: #ffffff;
 	}
 
 	/*大标题*/
