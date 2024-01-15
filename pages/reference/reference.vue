@@ -3,9 +3,7 @@
 		<view class="content">
 			<uni-search-bar class="uni-mt-10" radius="5" placeholder="搜索审核区间" clearButton="auto" cancelButton="none"
 				@confirm="search" />
-			<swiper class="swiper" circular :indicator-dots="true" :autoplay="true" :interval="2000" :duration="500">
 
-			</swiper>
 		</view>
 		<view v-for="d in datas" :key="d.id" @click="detail(d.id)" class="title">
 			{{d.title}}
@@ -41,8 +39,24 @@
 				})
 			},
 			search(e){
+				let searchWord = e.value;
+				uni.navigateTo({
+					url: "/pages/searchResult/searchResult"
 				
+				})
 			}
+		},
+		searchByTpe(id, name) {
+			if (id === '') {
+				this.currentTab = 0
+			} else {
+				this.currentTab = id
+			}
+		
+			this.curBranchid = id;
+			this.taskTypeName = name;
+			this.updateData();
+		
 		},
 		onLoad() {
 			let curl = this.$store.state.apiBaseUrl + "/api/Reference/count";

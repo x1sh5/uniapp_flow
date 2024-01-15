@@ -30,12 +30,21 @@
 				<view class="rowlayout-y" style="position:relative;margin: 0 8rpx;">
 					<!-- 				  <input maxlength="20" :disabled="!editable" type="text" 
 				  :value="deadline" class="input" @blur="updatePt"/>h -->
-					<uni-datetime-picker :disabled="!editable" type="datetime" v-model="deadline" @change="biupdatePt">
+				  
+				<!-- 		<uni-datetime-picker :disabled="!editable" type="datetime" v-model="deadline" @change="biupdatePt">
 						<view class="uni-input">{{deadline}}</view>
-					</uni-datetime-picker>
+					</uni-datetime-picker> -->
+					
 					<!-- <picker class="input" mode="date" :value="deadline" @change="biupdatePt">
 								<view class="uni-input">{{deadline}}</view>
 							</picker> -->
+
+     <picker class="t" :value="selectedTime" mode="multiSelector" :range="timeRange" @change="handleTimeChange">
+       <!-- 这里是时间选择器 -->
+       <view class="picker">
+       {{ selectedTime[0] }} 天 {{ selectedTime[1] }} 时 {{ selectedTime[2] }} 分
+       </view>
+     </picker>
 
 				</view>
 
@@ -269,6 +278,18 @@
 			}
 		},
 		methods: {
+			
+			   handleTimeChange(e) {
+			       // 处理时间变化
+			       console.log('选中的时间：', e.detail.value);
+			       this.selectedTime = e.detail.value;
+			     },
+			     addZero(num) {
+			       return num < 10 ? '0' + num : '' + num; // 将个位数补零，例如 9 变成 '09'
+			     },
+			  
+			
+			
 			branchChange(e) {
 
 				let branchIndex = e.detail.value;
@@ -484,6 +505,15 @@
 				vis: false,
 				status: ["待接", "待完成", "完成", "公示"],
 				branchIndex: false,
+				
+				 selectedTime: [0, 0, 0], // 默认选择为 0 天 0 时 0 分
+				      timeRange: [
+				        // 天的范围是 0-365，时和分的范围是 0-23 和 0-59
+				       Array.from({ length: 366 }, (_, i) => `${i} 天`),
+        Array.from({ length: 24 }, (_, i) => `${this.addZero(i)} 时`),
+        Array.from({ length: 60 }, (_, i) => `${this.addZero(i)} 分`),
+				      ],
+				   
 
 			};
 		}
@@ -766,7 +796,7 @@
 		margin-right: 0rpx;
 		height: 40rpx;
 		width: 160rpx;
-
+ font-weight: bold; /* 加粗文字 */
 	}
 
 	/*一句话*/
@@ -774,16 +804,19 @@
 		display: block;
 		position: absolute;
 		z-index: 3;
-		color: rgb(129, 129, 129);
+		color: rgb(0, 0, 0);
 		margin-top: 40rpx;
 		height: 130rpx;
-		width: 400rpx;
+		width: 320rpx;
 		white-space: pre-wrap;
 		grid-row-start: 2;
 		grid-row-end: 2;
 		grid-column-start: 1;
 		grid-column-end: 1;
-
+ font-weight: bold; /* 加粗文字 */
+ color: #000;
+ 
+ 
 	}
 
 
@@ -817,7 +850,13 @@
 
 	}
 
-
+	/*预计工时   */
+	.t {
+		top: 4rpx;
+		width: 200rpx;
+ color: black; /* 设置文字颜色为黑色 */
+  
+	}
 	.rowlayout-y {
 		display: block;
 		position: absolute;
@@ -863,6 +902,7 @@
 		height: 40rpx;
 		width: 130rpx;
 
+ color: #000;
 	}
 
 	/*回馈值选择框*/
@@ -881,9 +921,10 @@
 		grid-column-start: 3;
 		grid-column-end: 3;
 		height: 40rpx;
-		width: 60rpx;
+		width: 70rpx;
 
 
+ color: #000;
 	}
 
 	/*回馈值选择框*/
@@ -944,6 +985,7 @@
 		position: absolute;
 		margin-right: 1px;
 
+ font-weight: bold; /* 加粗文字 */
 
 
 	}
@@ -983,7 +1025,8 @@
 		width: 80rpx;
 		margin-top: 30rpx;
 		font-size: 18rpx;
-
+ 
+ 
 	}
 
 	//status 和 statuscontent 都必须使用flex布局才能使align-items: center;生效
