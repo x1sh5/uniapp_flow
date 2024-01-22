@@ -748,19 +748,6 @@
 	
 	}
 
-	.tasktype {
-		display: block;
-		position: absolute;
-		bottom: 0px;
-		right: 0px;
-		font-size: 2cm;
-		font-style: italic;
-		color: #ff0000;
-		//position:fixed;
-		// align-self: flex-end;
-		// align-content: flex-end;
-	}
-
 	.title {
 		.blackcolor();
 		.margin-top5();
