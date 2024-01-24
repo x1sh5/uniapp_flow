@@ -1,10 +1,376 @@
-<template>
-	dasdad
+<template >
+	<text>\n</text>
+	<view style="margin-left: auto;margin-right: auto;font-weight: bold;text-align: center;font-size: 1.5rem;">
+		流沙任务系统成本分摊方略
+		</view><text>\n</text>
+<view style="position: relative;margin-left: 30rpx ;">	
+&#8195;共创、共享、共进步。<text>\n</text>
+
+&#8195;欢迎进入流沙社区！<text>\n</text>&#8195;社区基本运营成本费用分摊方略如下：<text>\n\n\n\n</text>
+
+<text class="bold">方案简述</text>
+<text class="user-view2" style="display: flex;justify-content: center;
+		  align-items: center;">整体思路为：“收费-扣除消耗-返还剩余”</text><text>\n\n\n</text>
+<text class="gaoliang2">收费-</text><text>\n</text>
+&#8195;&#8195;&#8195;
+<text class="x">用户注册后有7天试用期，7日过后相关服务功能将被暂停，
+如想继续使用本流沙任务系统需要向流沙任务系统分发数额为2个人民币单位的资金（
+<text class="gaoliang">*即每年两块钱。</text> 
+）。
+作为支付使用期限为一年的平台使用费用，以下统称为“年费”</text><text>\n\n</text>
+<text class="jieshao">·年费所支撑的消耗时限计算从用户注册时间始，至一个公历年后止。</text><text>\n\n</text>
+<text class="jieshao">·过期若还需使用系统服务，则需续缴下一年的年费。</text><text>\n\n</text>
+
+<text class="jieshao">·已缴入的年费不退还。</text><text>\n\n</text>
+<text class="jieshao">·年费会直接注入公共资金池，在消耗扣除时会公示通知。</text><text>\n\n</text>
+<text class="jieshao">·缴纳方法：发布分发卡。发布内容详见——(任务卡)</text><text>\n\n\n</text>
+<text class="gaoliang2">扣除消耗-</text><text>\n</text>
+&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;
+<text class="x">流沙任务系统的小程序版本的所有基础消耗见下“维护成本统计”表。</text><text>\n\n</text>
+<text class="jieshao">·“维护成本统计”的内容是开发建立时支出的消耗费用统计。每次实际扣除都会附上此表以展示实际支出。 </text><text>\n\n</text>
+
+<text class="jieshao">·“维护成本统计”的内容也许会根据现实市场、供应商、基础需求的现实变动去增删条目或进行价格变动
+。是根据市场浮动的表单而非定值。</text><text>\n\n</text>
+<text class="jieshao">·当基础费用在市场行情变动下增多或减少时，年费的收取价格也会相应的增加或减少。
+具体浮动幅价格会提前通过公示通知。</text><text>\n\n</text>
+<text class="bold">维护成本统计</text><text>\n</text>
+<text class="x">*维护成本由以下几基础部分组成，可根据现实运行情况对具体服务经行增减。</text><text>\n\n</text>
+
+<!-- WXML -->
+<view class="table" style="position: relative; margin-left: 10rpx;">
+  <view class="tr"  style="font-weight: bold;">
+    <view class="th">费用类型</view>
+    <view class="th">供应商</view>
+    <view class="th">适用期限</view>
+    <view class="th">价格</view>
+  </view>
+  <view class="tr">
+    <view class="td">服务器租赁</view>
+    <view class="td">阿里云</view>
+    <view class="td">年</view>
+    <view class="td">1403.76元/年</view>
+  </view>
+  <view class="tr">
+    <view class="td">生物核验功能</view>
+    <view class="td">网易易盾</view>
+    <view class="td">套餐\5000元</view>
+    <view class="td">0.1元/次</view>
+  </view>
+  <!-- Add more rows as needed -->
+  <view class="tr">
+    <view class="td">身份证件核对功能</view>
+    <view class="td">网易易盾</view>
+    <view class="td">套餐包含</view>
+    <view class="td">0.2元/次</view>
+  </view>
+  <view class="tr">
+    <view class="td">Oss总流量费</view>
+    <view class="td">阿里云</view>
+    <view class="td">按量付费</view>
+    <view class="td">按每天5g使用量费用大约912.5 元/年 波动区间向上取整</view>
+  </view>
+
+  <view>恒定成本约3000元/年</view>
+  <view>总预估基础成本8500元/年</view>
+
+  <view class="table" style="position: relative; margin-left: 10rpx;">
+    <view class="tr">
+      <view class="th">当注册人数为\n（人）</view>
+      <view class="th">年费收取标准\n（元）</view>
+      <view class="th">开发者垫付\n（元）</view>
+      <view class="th">返还给相关用户\n（元）</view>
+    </view>
+    <view class="tr" style="font-weight: bold;">
+      <view class="td">100</view>
+      <view class="td">2</view>
+      <view class="td">2800</view>
+      <view class="td">0</view>
+    </view>
+    <view class="tr">
+      <view class="td">100</view>
+      <view class="td">5</view>
+      <view class="td">2500</view>
+      <view class="td">0</view>
+    </view>
+    <!-- Add more rows as needed -->
+    <view class="tr">
+      <view class="td">100</view>
+      <view class="td">10</view>
+      <view class="td">1500</view>
+      <view class="td">0</view>
+    </view>
+
+    <view class="tr" style="font-weight: bold;">
+      <view class="td">5000</view>
+      <view class="td">2</view>
+      <view class="td">0</view>
+      <view class="td">（5000×2-5500）÷5000=0.9</view>
+    </view>
+    <view class="tr">
+      <view class="td">5000</view>
+      <view class="td">5</view>
+      <view class="td">0</view>
+      <view class="td">3.9</view>
+    </view>
+    <!-- Add more rows as needed -->
+    <view class="tr">
+      <view class="td">5000</view>
+      <view class="td">10</view>
+      <view class="td">0</view>
+      <view class="td">8.9</view>
+    </view>
+
+    <view class="tr" style="font-weight: bold;">
+      <view class="td">10000+</view>
+      <view class="td">2</view>
+      <view class="td">0</view>
+      <view class="td">（10000×2-8500）÷10000=1.15+</view>
+    </view>
+    <view class="tr">
+      <view class="td">10000+</view>
+      <view class="td">5</view>
+      <view class="td">0</view>
+      <view class="td">4.15+</view>
+    </view>
+    <!-- Add more rows as needed -->
+    <view class="tr">
+      <view class="td">10000+</view>
+      <view class="td">10</view>
+      <view class="td">0</view>
+      <view class="td">9.15+</view>
+    </view>
+
+    <text>\n\n</text><text>\n</text>
+	<text class="x">服务器每年9月2日到期，将会提前一周续费，提前两周进行统计。
+届时会扣取一整年的相关运营基础消耗费用。</text><text>\n\n\n</text>
+	<text class="gaoliang2">返还剩余-</text><text>\n\n</text>
+	&#8195;&#8195;&#8195;&#8195;&#8195;
+	<text class="x">当系统运行维护的基础消耗费用被扣除时，此时将计算此时所有注册满一年并交过年费的用户数量。
+	<text>\n</text>&#8195;&#8195; 
+并以此为基数，将为期一年的年费扣除基础消耗费用后所剩的资金，平均返还给相关的注册用户。
+</text><text>\n\n\n</text>
+	<text class="gaoliang2">举例说明：</text><text>\n</text>
+	<text class="bold2">情况1：</text><text>\n</text>
 	
+	<text class="beizhu">系统运行至第三年9月份，基础消耗费用结算。<text>\n</text>
+此时<text>\n</text>
+用户注册满一年的成员人数：12500人<text>\n</text>
+用户注册满两年以上的成员人数：2500人<text>\n</text>
+用户注册未满一年的成员人数：5000人<text>\n</text>
+所有注册成员共：20000人<text>\n\n</text>   
+
+·基础消耗扣除时资金池当年所存有年费数量为：<text>\n</text>
+20000*2=40000元<text>\n</text>
+
+系统统计平摊人数为12500+2500=15000人<text>\n</text>
+其所交当年年费共计15000*2=30000元<text>\n</text>
+
+假设基础消耗费为10000元，将其扣除，剩余20000元<text>\n\n</text>
+
+此时每位注册满一年的用户会返还到20000/15000=1.3元左右。</text><text>\n\n</text>
+<text class="bold2">情况2：</text><text>\n</text>
+	<text class="beizhu">系统运行至第三年9月份，基础消耗费用结算。<text>\n</text>
+此时<text>\n</text>
+用户注册满一年的成员人数：100人<text>\n</text>
+用户注册满两年以上的成员人数：100人<text>\n</text> 
+用户注册未满一年的成员人数：100人<text>\n</text>
+所有注册成员共：300人<text>\n\n</text>
+
+·基础消耗扣除时资金池当年所存有年费数量为：
+300*2=600元<text>\n</text>
+
+系统统计平摊人数为100+100=200人<text>\n</text>
+其所交当年年费共计200*2=400元<text>\n\n</text>
+
+假设基础消耗费为10000元，将其扣除，资金池当年可支配年费剩余0元<text>\n</text>
+
+此时每位注册满一年的用户会返还到0元。<text>\n</text>
+
+开发者将向资金池注入9600元，以维持基本运行。</text><text>\n\n\n</text>
+
+	<text class="bold">无劳动能力成员辅助方略</text><text>\n</text>
+	<text class="bold2">被辅助成员的判定资格：</text><text>\n</text>
+	<text class="jieshao">1.注册后没有参与过除提交年费外的任何任务卡活动的。</text><text>\n</text>
+	<text class="jieshao">2.实际年龄在50岁以上的。</text><text>\n</text>
+	<text class="jieshao">3.有残疾或其他身体限制导致无法劳动并提供证明的。</text><text>\n</text>
+	<text class="jieshao">4.在系统内被违规任务牵连并造成了实际损失的。</text><text>\n</text>
+	<text class="jinggao">以上条件同时具备2条或以上的注册用户可享有被辅助的资格。</text><text>\n</text>
+	<text class="bold2">资金收集标准：</text><text>\n</text>
+	<text class="jieshao">初步设想，除去成员所交年费剩余外，在超过2两年以上的有持续回报的任务上每次划拨1%的援助金。
+	累积出用来援助无劳动能力的成员</text><text>\n</text>
+	<text class="jinggao2">*因运行情况未知，现阶段辅助方略的划拨比例与细节不能作为定论，
+等待系统内至少有10个以上有持续分发超过一年的长期任务后由开发者收集成员建议再做详细的细节制定。                                                                                                                   </text><text>\n\n\n</text>
+	<text class="bold">开发者占比</text><text>\n</text>
+	<text class="x">每份注入资金平台的资金将有1%划拨给开发者，用以资助开发者的初始贡献和基本生活。</text><text>\n\n\n</text>
+	<text class="bold">其他</text><text>\n</text>
+
+	
+	
+  </view>
+</view>
+
+  </view>
+  
+ 
 </template>
 
 <script>
 </script>
 
 <style>
+/* WXSS */
+.table {
+  position: relative;
+  margin-left: 10rpx;
+}
+
+.tr {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #000; /* 单实线边框 */
+  padding: 5rpx 0;
+}
+
+.th, .td {
+  flex: 1;
+  text-align: center;
+  padding: 5rpx;
+}
+
+/* Add more styles as needed */
+
+
+
+
+.swiper-item-image {
+		width: 100%;
+		height: 315rpx;
+	}
+
+	.user-view {
+		width: auto;
+		/* 自适应内容宽度 */
+		margin-left: 1px;
+		margin-top: 2px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+		box-sizing: content-box;
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1px solid #6c4ad1;
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 40rpx;
+		margin-bottom: 10px;
+		padding-top: 10px;
+		/* 上内边距设置为 10px */
+		padding-bottom: 10px;
+		/* 下内边距设置为 10px */
+		/* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+	}
+
+	.user-view2 {
+
+		margin-left: 5px;
+		margin-top: 0px;
+		margin-bottom: 2px;
+		border-radius: 5px;
+		padding-left: 15px;
+		/* 右缩进 */
+		box-sizing: content-box;
+		border: 0px solid rgb(245, 245, 245);
+		background-color: rgb(255, 255, 255);
+		color: #6c4ad1;
+		font-size: 30rpx;
+
+		padding-top: 0px;
+		/* 上内边距设置为 10px */
+		padding-bottom: 10px;
+		/* 下内边距设置为 10px */
+		/* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+		
+		text-decoration: underline;
+	}
+
+
+.jinggao {
+  display: flex; 
+  font-size: 30rpx;
+  color: #ffffff;
+  background-color: #ffaa00;
+  height: 150rpx;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20rpx; /* 调整文字与左边的间距 */
+  padding-right: 20rpx; /* 调整文字与右边的间距 */
+}
+
+.jinggao2 {
+  display: flex; 
+  font-size: 30rpx;
+  color: #ffffff;
+  background-color: #ffaa00;
+  height: 200rpx;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20rpx; /* 调整文字与左边的间距 */
+  padding-right: 20rpx; /* 调整文字与右边的间距 */
+}
+
+
+
+	.x {
+		text-decoration: underline;
+	}
+	
+	
+	.beizhu {
+		font-size: 26rpx;
+		color: #7c7c7c;
+	}
+	
+	
+	.lianjie {
+		font-size: 26rpx;
+		color: #5500ff;
+	}
+	
+	.jieshao {
+		font-size: 26rpx;
+		color: #00007f;
+		font-weight: bold; 
+	}
+	
+	.gaoliang {
+		font-size: 30rpx;
+		color: #5500ff;
+		font-weight: bold; 
+	}
+	
+	.gaoliang2 {
+		font-size: 40rpx;
+		color: #5500ff;
+		font-weight: bold; 
+	}
+	.bold2 {
+		
+		color: #00007f;
+		font-weight: bold; 
+	}
+	
+
+	.bold {
+		
+		color: #6c4ad1;
+		font-weight: bold;
+		display: flex;  /* 使用Flex布局 */
+		  justify-content: center;  /* 水平居中 */
+		  font-size: 40rpx;
+		  align-items: center; /* 垂直居中 */
+	}
+
+
+
+
+
 </style>

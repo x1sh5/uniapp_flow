@@ -1,16 +1,321 @@
 <template>
-	<text>\n</text>
-	<text class="bold">最基本规则阐明：</text><br />
-	<text>
-		用户通过发布、完成任务卡的形式获得属于他的既定或后续的劳动报酬。<br /> <text>\n</text>
+	
+	<view style="width: 92%;margin-left: auto;margin-right: auto;">
+	<view style="margin-left: auto;margin-right: auto;font-weight: bold;text-align: center;font-size: 1.5rem;">
+		流沙任务系统隐私政策</view>
+	<text>\n\n</text>
+	
+	&#8195;流沙任务系统尊重并保护所有使用服务用户的隐私权。为了给您提供更准确、更有个性化的服务，流沙任务系统会按照本隐私政策
+	（以下简称“本政策”）的规定使用、保护和有限披露您的注册个⼈信息。除法律规定和本政策另有规定外，在未征得您事先同意的情况下，
+	流沙任务系统（以下可简称“我们”“本系统”）不会将这些信息对外披露或向第三方提供。流沙任务系统将以审慎义务对您的个人信息加以保护。
+	
+	&#8195;本系统将以⾼度的勤勉、审慎义务对待这些信息。本系统会适时更新本政策规定。请在使用我们的服务前，
+	仔细阅读并了解本政策，以便您更好地了解我们的服务，并做出适当的选择。除法律等下法规规定及本政策另有规定或声明外，
+	在未征得您事先许可的情况下，本系统不会将这些信息对外披露或向第三⽅提供。针对我们如何处理您的个人信息，
+	您享有知情权和决定权，有权限制或者拒绝我们或其他方对您的个人信息进行处理；同时，
+	您有权要求我们对我们向您提供的个人信息处理规则进行解释说明。您在同意本系统服务使用协议之时，
+	即视为您已经同意本政策全部。本政策与服务使用说明同属于服务使用协议的重要组成部分。
+	 
+	<text class="bold">您使用流沙任务系统服务视为您已经同意本政策全部内容。 </text>本政策为流沙任务系统
 	
 	
-	</text>
-	<text class="bold">该系统不可替代必须要达成的要素要点：</text><br />
-</template>
-
-<script>
-</script>
-
-<style>
-</style>
+	<text @click="toabout" class="lianjie" >《用户协议》</text>和
+	<text  @click="toibout" class="lianjie">《流沙任务系统使用说明》</text>中的重要组成部分。<text>\n\n</text>
+	
+	<text class="bold3">一、适用范围 </text><text>\n\n</text>
+	&#8195;1.在您注册并登录使用流沙任务系统服务或访问系统小程序网页时，流沙任务系统应用程序会自动接收并记录的您的浏览器和计算机上的信息，
+	包括但不限于您的IP地址、浏览器类型、使用的语言、访问日期和时间、软硬件特征信息及您需求的网页记录等数据；
+	在账号注册流沙任务系统时部分初始注册用的个人信息资料可能将无法更改。个人信息受法律保护，适用本政策。<text>\n\n</text>
+	&#8195;2.流沙任务系统收集到的您在流沙任务系统小程序平台发布的相关信息数据包括但不限于任务创建任务及审核区间发布、
+	参与完成任务、任务双方交流沟通、任务达标信息及评价详情等，根据本系统服务协议规定该等信息数据被视为商业机密，
+	用户应当履行保密义务，相关信息数据使用和保护，亦适用本政策。<text>\n\n</text>
+	&#8195;您了解并同意， 用户违反法律规定以及违规使用流沙任务系统小程序，已被收回、注销账号或终止服务协议因信息数据已被删除或屏蔽的，
+	不适用本政策。<text>\n\n</text>
+	
+	<text class="bold3">二、信息使用 </text><text>\n\n</text>
+	&#8195;本隐私政策所述使用是指根据现行法律和个人信息主体的授权许可，对数据进行加
+	工处理以实现数据的存储、访问和展示、汇聚融合和统计分析等使用和利用方式。
+	1.流沙任务系统不会向任何无关联的第三方提供、分享或交易您的个⼈信息，除⾮事先得到您的许可或同意。
+	但有下列情形的除外：<text>\n\n</text>
+	&#8195;a根据相关法律法规或国家机关要求；<text>\n\n</text>
+	&#8195;b发生合并、分立、收购或资产转移；<text>\n\n</text>
+	&#8195;c为提供相关服务所必须的信息。<text>\n\n</text>
+	&#8195;2.流沙任务系统不允许任何第三方以任何手段收集、编辑、出售您的个⼈信息。
+	任何用户如果从事了该活动，流沙任务系统将立即收回、注销用户账号并终止服务协议，所生责任与不利后果均自行承担。<text>\n\n</text>
+	&#8195;3.劳动方对已完成的作品或产品在交付发卡人后，未经发卡人同意或许可不得自行复制、编辑、发表、转让、出租、
+	使用或衍生使用。造成损失的由行为人承担责任。<text>\n\n</text>
+	&#8195;4.发卡人在创建资金卡任务时应当在自己认为不属于泄露个人信息或商业秘密的前提下进行发布和展示。
+	因创建任务卡出现发布人的个人信息或商业秘密被泄露的情况责任应由创建发任务卡者自行承担。<text>\n\n</text>
+	&#8195;5.您同意我们将通过我们自身或受托方技术对您在本服务中主动或被动提供的个人信息进行汇聚融合、
+	识别分析、作品或产品进一步加工。我们可能会将标签信息用于具体的场景和目的中，以改进我们的服务，
+	或向您展示和推荐更符合您的潜在需求的产品、服务或向您推广商业广告等。<text>\n\n</text>
+	&#8195;6.自动化决策决定可能影响您的合法权益，您有权通过本政策约定的联系方式要求我们做出说明，
+	并有权拒绝我们仅通过自动化决策的方式作出决定，我们将提供适当的救济方式。<text>\n\n</text>
+	&#8195;7.我们可能对外公开并与我们的合作伙伴分享经统计加工后不含身份识别内容的大数据分析信息。
+	我们需要使用收集的信息来提供并改进数字作品或产品交易服务，进行必要的业务运营与评估、客户支持，改进产品和服务的性能等。<text>\n\n</text>
+	
+	
+	
+	<text class="bold3">三、 信息披露 </text><text>\n\n</text>
+	&#8195;1.本系统服务平台内所有信息和数据包括但不限于创建任务及审核区间发布、承接任务与对方沟通交流信息等，
+	根据流沙任务系统服务协议均视为商业机密，所有用户未经发布者不得外泄于平台外，违反该规定责任自负。<text>\n\n</text>
+	&#8195;2.对如下情形，流沙任务系统将根据您的个⼈意愿或法律规定全部或部分披露您的个⼈信息：<text>\n\n</text>
+	&#8195;a.经您事先许可或同意可以向第三方披露；<text>\n\n</text>
+	&#8195;b.为您提供所需服务可以与第三方分享您的个⼈信息；<text>\n\n</text>
+	&#8195;c.现行法律规定或行政司法机关要求向第三方或行政司法机关披露；<text>\n\n</text>
+	&#8195;d.如您是知识产权侵权被投诉人，为方便处理侵权纠纷，应投诉人合理请求可以披露您相关个人信息；<text>\n\n</text>
+	&#8195;e.根据法律法规或者网站设置政策要求需要披露的其他情形。<text>\n\n</text>
+	&#8195;f.因您自身行为或不可抗力等情形，导致上述可能涉及您隐私或您认为是个人信息的内容发生被泄露、披露，或被第三方获取、
+	使用、转让等情形的，后果由您自行承担，我们对此不承担责任。<text>\n\n</text>
+	<text class="bold3">四、信息存储 </text><text>\n\n</text>
+	&#8195;1.本隐私政策中的收集是指获得个人信息的控制权，可以自主决定对个人信息的处理目的、处理方式的行为，
+	包括由个人信息主体主动向我们提供、通过我们与个人信息主体交互或记录个人信息主体行为等“自动采集”方式，
+	以及我们通过接收其他个人信息或搜集公开信息等“间接获取”的方式。您确认并同意，保障移动互联网应用程序基本业务功能正常运行
+	所必须的个人信息，缺少该信息移动互联网应用程序即无法实现基本业务功能。<text>\n\n</text>
+	&#8195;2.流沙任务系统收集的有关您的信息或资料将保存于流沙任务系统或关联第三方服务器上，
+	这些信息资料可能被传送至您所在国家或地区或流沙任务系统收集信息资料所在地的境外并在境外被访问。
+	当我们要将基于特定目的收集而来的信息用于其他目的时，会事先征求您的同意，
+	但相关法律法规及国家标准豁免我们获取您的同意的情形除外。<text>\n\n</text>
+	&#8195;3.出于正常业务所需，我们会将产品所需个人信息根据不同的合法处理理由所需的保存期限内进行保存：<text>\n\n</text>
+	&#8195;a.基于您的授权同意处理的个人信息将自收集之日起保存至处理目的实现、用户注销/删除账户全部信息或撤回同意且约定的反悔期届满的；<text>\n\n</text>
+	&#8195;b.基于订立或履行合同您作为一方当事人的合同所必需的个人信息将自收集之日起保存至合同履行完毕且诉讼时效届满；<text>\n\n</text>
+	&#8195;c.基于履行法定义务所必需的个人信息将自收集之日起保存至法定义务履行完毕且诉讼时效届满。<text>\n\n</text>
+	
+	
+	
+	<text class="bold3">五、 信息保护 </text><text>\n\n</text>
+	&#8195;1.个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，包括但不限于个人电话号码、
+	个人信息主体账号、IP 地址、唯一设备识别码以及私密活动等。<text>\n\n</text>
+	&#8195;2.个人敏感信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹以及不满十四周岁未成
+	年人的个人信息等。<text>\n\n</text>
+	&#8195;3.对个人信息一旦被泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害，
+	故此我们将根据我国现行法律即个人信息保护法及流沙任务系统的相关规定以高度勤勉和审慎义务加以保护。<text>\n\n</text>
+	&#8195;4.流沙任务系统小程序对相关信息采用专业加密存储与传输⽅式，保障用户个⼈信息安全，如果您选择同意使用app软件，
+	即表⽰您认可并接受app服务条款及其可能随时更新的内容。<text>\n\n</text>
+	&#8195;5.我们将会使用您的以下功能：麦克风、喇叭、wifi⽹络、蜂窝通信⽹络、⼿机基站数据、SD卡、短信控制、
+	浏览照片、通话权限、蓝⽛管理，如果您禁⽌app使用以上相关服务和功能，您将自行承担不能获得或享用app相应服务的后果。<text>\n\n</text>
+	&#8195;6.为了能够让app定位服务更精确，可能会收集并处理有关您实际所在位置信息（例如移动设备发送的GPS或北斗信号），
+	wifi接⼊点和 基站位置信息。我们将对上述信息实施技术保护措施，以最⼤程度保护这些信息不被第三方获得，同时，
+	您可以自行选择或拒绝我们基于技术必要性收集的这些信息，并自行承担不能获得或享用app相应服务的后果。<text>\n\n\n</text>
+	
+	
+	<text class="bold3">六、Cookie的使用 </text><text>\n\n</text>
+	&#8195;1.在您未拒绝接受cookies的情况下流沙任务系统会在您的计算机上设定或取用cookies 
+	以便您能登录或使用依赖于cookies的流沙任务系统平台服务。流沙任务系统使用cookies
+	可为您提供更加周到的个性化服务包括推广服务。<text>\n\n</text>
+	&#8195;2.您有权选择或拒绝接受cookies。您可以通过修改浏览器设置方式拒绝接受cookies。
+	但如果您选择了拒绝接受cookies，您可能无法登录或使用依赖于cookies的流沙任务系统服务。<text>\n\n</text>
+	&#8195;3.通过流沙任务系统设置cookies应用程序所收集的相关信息，适用本政策。<text>\n\n</text>
+	
+	<text class="bold3">七、信息安全 </text><text>\n\n</text>
+	&#8195;1.流沙任务系统帐号均有安全保护功能，请妥善保管您的用户名及密码。<text>\n\n</text>
+	流沙任务系统将通过对用户密码进行加密等安全措施确保您的信息不丢失、不被滥用和伪造或变造等。
+	尽管有前述安全措施，但也特别提醒您注意，在信息网络上不存在“完善的安全措施”。<text>\n\n</text>
+	&#8195;2.使用流沙任务系统程序服务交易您不可避免的要向交易对方或潜在交易对方提供有关个人信息及其他信息，
+	对于提供者应当尽到注意义务的审核安全义务，造成不利后果负担，本系统不为此因提供使用服务而担责。<text>\n\n</text>
+	&#8195;3.基于保障业务安全运营、反欺诈及网络安全所需，我们需要收集您的 IP 地址，设备信息，
+	网络信息和操作日志，若您拒绝提供此类信息，则我们将无法向您确保本服务的正常运营。<text>\n\n</text>
+	&#8195;4.我们需要针对您所选择的不同服务类别，申请您向我们开启相应的设备访问权限。
+	在您的手机系统允许的情况下，我们会在需要开启权限时向您弹窗说明用途并征得您的同意，
+	您开启这些权限即代表您授权我们可以收集和处理这些信息来实现相应功能。您可以通过设备设置取消授权，
+	但我们将无法为您提供前述对应服务。<text>\n\n</text>
+	&#8195;5.用户违反法律行政法规或违规使用流沙任务系统服务，根据用户服务协议约定最大限度地曝光违规用户部分信息，
+	以更好地维护守规用户和新用户的合法权益。<text>\n\n</text>
+	
+	<text class="bold3">八、本隐私政策的更改 </text><text>\n\n</text>
+	&#8195;1.如果决定更改隐私政策，我们会在本政策中、本系统网站、网页中以及我们认为适当的位置发布这些更改，
+	以便您了解我们如何收集、使用您的个⼈信息，何⼈可以访问这些信息，以及在什么情况下我们会透露这些信息。<text>\n\n</text>
+	&#8195;2.流沙任务系统保留随时修改本政策的权利，因此请用户经常查看。如对本政策作出重大更改，
+	流沙任务系统会通过网站、小程序网页及时通知或告知。<text>\n\n</text>
+	
+	
+	<text class="bold">附则：我们拥有对上述条款的最终解释权。 </text><text>\n\n</text>
+	<text class="bold" style="	display: flex; justify-content: center; font-size: 40rpx;align-items: center; ">
+		流沙任务系统 </text><text>\n\n\n\n</text>
+	
+	
+		
+		</view>
+	</template>
+	
+	<script>
+		export default {
+			data() {
+				return {
+	
+				}
+			},
+			methods: {
+		toabout(e) {
+					uni.navigateTo({
+						url: "/pages/userCenter/about/about"
+					});
+				},
+				
+				topbout(e) {
+					uni.navigateTo({
+						url: "/pages/userCenter/privacy/privacy"
+					});
+				},
+				toibout(e) {
+					uni.navigateTo({
+						url: "/pages/userCenter/instructions/instructions"
+					});
+				},
+				
+				tocbout(e) {
+					uni.navigateTo({
+						url: "/pages/userCenter/cost/cost"
+					});
+				},
+			}
+		}
+	</script>
+	
+	<style>
+		.bold {
+			font-weight: bold;
+		}
+	
+		.underline {
+			text-decoration: underline;
+		}
+	
+		.sectitle {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+		
+		
+		
+		.swiper-item-image {
+				width: 100%;
+				height: 315rpx;
+			}
+		
+			.user-view {
+				width: auto;
+				/* 自适应内容宽度 */
+				margin-left: 1px;
+				margin-top: 2px;
+				margin-bottom: 2px;
+				border-radius: 5px;
+				box-sizing: content-box;
+				padding-left: 15px;
+				/* 右缩进 */
+				border: 1px solid #6c4ad1;
+				background-color: rgb(255, 255, 255);
+				color: #4723b3;
+				font-size: 40rpx;
+				margin-bottom: 10px;
+				padding-top: 10px;
+				/* 上内边距设置为 10px */
+				padding-bottom: 10px;
+				/* 下内边距设置为 10px */
+				/* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+			}
+		
+			.user-view2 {
+		
+				margin-left: 5px;
+				margin-top: 0px;
+				margin-bottom: 2px;
+				border-radius: 5px;
+				padding-left: 15px;
+				/* 右缩进 */
+				box-sizing: content-box;
+				border: 0px solid rgb(245, 245, 245);
+				background-color: rgb(255, 255, 255);
+				color: #6c4ad1;
+				font-size: 30rpx;
+		
+				padding-top: 0px;
+				/* 上内边距设置为 10px */
+				padding-bottom: 10px;
+				/* 下内边距设置为 10px */
+				/* background-image: -webkit-linear-gradient(0deg, #9781da 0%, #999fd8 100%);*/
+				
+				text-decoration: underline;
+			}
+		
+		
+		.jinggao {
+		  display: flex; 
+		  font-size: 30rpx;
+		  color: #ffffff;
+		  background-color: #ffaa00;
+		  height: 160rpx;
+		  align-items: center;
+		  justify-content: center;
+		  padding-left: 20rpx; /* 调整文字与左边的间距 */
+		  padding-right: 20rpx; /* 调整文字与右边的间距 */
+		}
+		
+		.jinggao2 {
+		  display: flex; 
+		  font-size: 30rpx;
+		  color: #ffffff;
+		  background-color: #ffaa00;
+		  height: 200rpx;
+		  align-items: center;
+		  justify-content: center;
+		  padding-left: 20rpx; /* 调整文字与左边的间距 */
+		  padding-right: 20rpx; /* 调整文字与右边的间距 */
+		}
+		
+			
+			.beizhu {
+				font-size: 26rpx;
+				color: #7c7c7c;
+			}
+			
+			
+			.lianjie {
+				font-size: 26rpx;
+				color: #0000f4;
+				text-decoration: underline;
+			}
+			
+			.jieshao {
+				font-size: 26rpx;
+				color: #00007f;
+				font-weight: bold; 
+			}
+			
+			.gaoliang {
+				font-size: 30rpx;
+				color: #5500ff;
+				font-weight: bold; 
+			}
+			.bold2 {
+				
+				color: #00007f;
+				font-weight: bold; 
+			}
+			
+		
+		.bold3 {
+			
+			color: #6c4ad1;
+			font-weight: bold;
+			display: flex;  /* 使用Flex布局 */
+			  justify-content: center;  /* 水平居中 */
+			  font-size: 40rpx;
+			  align-items: center; /* 垂直居中 */
+		}
+	
+	
+		
+		
+			.center {
+				display: flex;  /* 使用Flex布局 */
+				  justify-content: center;  /* 水平居中 */
+				  align-items: center; /* 垂直居中 */
+				
+			}
+			
+			
+			
+		
+		
+	</style>

@@ -1,6 +1,6 @@
 <template>
-	<view class="container" style="background-image: url('https://liusha-gy.com/flow/static/beijing.png');">
-	  <!-- 页面内容 -->
+	<view class="container" style="background-image: url('https://liusha-gy.com/flow/static/beijing.png'); background-size: cover; background-position: center center;">
+	    <!-- 页面内容 -->
 	</view>
 	
 	<view class="text"><text>您还未登录~<br>

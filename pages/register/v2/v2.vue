@@ -14,7 +14,8 @@
 
 		</view>
 		<button class="button" style="width: 80px;" @click="check">下一步</button>
-		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">信息仅用于身份验证，我们依照隐私政策保护您的个人信息</text>
+		<text style="margin-left: auto;margin-right: auto;font-size: small;margin-top: 2px;">
+			信息仅用于身份验证，我们依照<text class="lianjie"  @click="topbout">《隐私政策》</text>保护您的个人信息</text>
 	</view>
 </template>
 
@@ -34,6 +35,30 @@
 			}
 		},
 		methods: {
+			
+			
+			toabout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/about/about"
+						});
+					},
+					
+					topbout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/privacy/privacy"
+						});
+					},
+					toibout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/instructions/instructions"
+						});
+					},
+					
+					tocbout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/cost/cost"
+						});
+					},
 			CardNoCheck(e){
 				if(/[0-9X]{18}/.test(this.cardNo)){
 					this.cardNoChecked = true;
@@ -124,6 +149,10 @@
 	   text-decoration: underline; 
 	 
 	   
+	}
+	.lianjie {
+		font-size: 26rpx;
+		color: #5500ff;
 	}
 	
 </style>

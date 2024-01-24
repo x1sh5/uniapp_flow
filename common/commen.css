@@ -5,9 +5,10 @@
 
 .columnlayout{
   display: flex;
-  flex-direction: column;
+  flex-direction: column;height: 200rpx;
+  transform: skewX(-15deg); /* 在水平方向上倾斜 -15 度 */
+  
 }
-
 .bluecolor{
   color: blue;
 }
