@@ -16,6 +16,7 @@ import {
 import {
 	References
 } from "./reference.js";
+import {ContentUrlCache} from './contentUrl.js'
 
 import { baseUrl } from "../common/const.js";
 
@@ -592,7 +593,8 @@ const store = createStore({
 	},
 	modules: {
 		Msgs: Messages,
-		Refer: References
+		Refer: References,
+		UrlCache:ContentUrlCache
 	}
 })
 
