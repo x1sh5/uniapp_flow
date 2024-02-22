@@ -174,7 +174,7 @@
 .select-container{
 	 z-index: 10;
   
-  transform: translate(400rpx,580rpx) scale(1);
+  transform: translate(500rpx,580rpx) scale(1);
   border: 0px solid  #6c4ad1;
   border-radius: 0rpx; /*设置按钮边框为圆角 */
   border: none;

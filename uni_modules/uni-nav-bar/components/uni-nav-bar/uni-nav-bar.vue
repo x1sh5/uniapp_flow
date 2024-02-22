@@ -260,26 +260,31 @@
 	
 		justify-content: flex-start;
 		align-items: center;
-		border-top-left-radius: 10px; /* 右上角圆角 */
-		border-bottom-left-radius: 10px; /* 右下角圆角 */
+		border-top-left-radius: 0px; /* 右上角圆角 */
+		border-bottom-left-radius: 0px; /* 右下角圆角 */
 		border: 1px solid #6c4ad1;
 	}
 //按钮左右文字
 	.uni-navbar-btn-text {
 		/* #ifndef APP-NVUE */
-		display: flex;
+	
 		/* #endif */
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		line-height: 36rpx; 
+		
+		
+		
+		display: flex;  /* 使用Flex布局 */
+		  justify-content: center;  /* 水平居中 */
+		  align-items: center; /* 垂直居中 */
+		line-height: 80rpx; 
 	}
 
 //右按钮文字
 	.uni-nav-bar-right-text {
-
-		font-size: 26rpx;
-		
+	display: flex;  /* 使用Flex布局 */
+		  justify-content: center;  /* 水平居中 */
+		  align-items: center; /* 垂直居中 */
+		font-size: 30rpx;
+		width: 100rpx;
 		
 	}
 //右按钮区域
@@ -288,13 +293,12 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
-		// width: 150rpx;
-		// padding-right: 30rpx;
+		width: 150rpx;border: 1px solid #6c4ad1;
+		 padding-right: 30rpx;
 		justify-content: flex-end;
 		align-items: center;
-		border-top-right-radius: 10px; /* 右上角圆角 */
-		border-bottom-right-radius: 10px; /* 右下角圆角 */
-		border: 1px solid #6c4ad1;
+		border-top-right-radius: 0px; /* 右上角圆角 */
+		border-bottom-right-radius: 0px; /* 右下角圆角 */
 	}
 	
 // 按钮间隔

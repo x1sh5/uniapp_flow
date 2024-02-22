@@ -24,6 +24,9 @@
 				style="transform:scale(0.7); margin-top: 5%;" />
 			<label for="checkbox" style="font-size: smaller;">我已阅读并同意<label @click="toAbout"
 					style="color: #6c4ad1;">《流沙任务系统用户服务协议》</label></label>
+					<text class="lianjie"  @click="topbout">《隐私政策》</text>
+					<text  @click="toibout" class="lianjie">《流沙任务系统使用说明》</text>
+					<text class="lianjie"  @click="tocbout">《成本分摊方略》</text><text>\n\n</text>
 			<view class="tips">{{aggrementCheckTip}}</view>
 		</view>
 		<button class="button" style="width: 80px;" @click="check">人脸验证</button>
@@ -61,6 +64,33 @@
 					return
 				}
 			},
+			
+			
+			
+			toabout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/about/about"
+						});
+					},
+					
+					topbout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/privacy/privacy"
+						});
+					},
+					toibout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/instructions/instructions"
+						});
+					},
+					
+					tocbout(e) {
+						uni.navigateTo({
+							url: "/pages/userCenter/cost/cost"
+						});
+					},
+			
+			
 			toAbout(e) {
 				uni.navigateTo({
 					url: "/pages/userCenter/about/about"
@@ -189,5 +219,8 @@
 	 
 	   
 	}
-	
+	.lianjie {
+		font-size: 26rpx;
+		color: #5500ff;
+	}
 </style>
