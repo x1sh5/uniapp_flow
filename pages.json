@@ -18,7 +18,7 @@
 			
 		},
 		{
-			"path": "pages/addtask/addtask",
+			"path": "pages/addtask/addtaskView",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
@@ -419,7 +419,7 @@
 				"text": "任务卡池"
 			},
 			{
-				        "pagePath": "pages/addtask/addtask",
+				        "pagePath": "pages/addtask/addtaskView",
 				        "iconPath": "static/add.png",
 				        "selectedIconPath": "static/addactive.png",
 				"text": "发布任务"

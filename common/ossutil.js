@@ -71,19 +71,9 @@ export async function putObject(requestObj,osspath){
 		
 	let url = await ossUrl(requestObj,osspath);
 	requestObj.url = url;
+	uni.request(requestObj);
 }
 
-function buildSignature(requestObj,resourcePath,securityToken,accessKeySecret,expires){
-	let contentmd5 = requestObj.header["Content-MD5"]==void 0?"":requestObj.header["Content-MD5"];
-	let contentType = requestObj.header["Content-Type"]==void 0?"":requestObj.header["Content-Type"];
-	
-	let  strToSign = `${requestObj.method}\n${contentmd5}\n${contentType}\n${expires}\n${resourcePath}?security-token=${securityToken}`;
-	console.log(strToSign);
-	let sign;
-	const result = hmacEncode(accessKeySecret,strToSign);
-
-	return result;
-}
 
 export async function ossGetUrl(osspath){
 	let requestObj = {
@@ -100,19 +90,45 @@ export async function ossGetUrl(osspath){
 async function ossUrl(requestObj,osspath){
 	let urlpath=osspath.substring(osspath.indexOf("/",1));
 	const token = await tokenManager.getOrUpdateToken();
-	let expires = dayjs().add(1,"h").unix();
-	let signature = buildSignature(requestObj,osspath,token.SecurityToken,token.AccessKeySecret,expires);
+	let expires = dayjs("Sun Mar 03 2024 13:36:01 GMT").unix();//dayjs().add(1,"h").unix();
+	
+	let resourceMap = new Map();
+	if(requestObj.callback){resourceMap.set("callback",btoa(JSON.stringify(requestObj.callback)))}
+	if(requestObj.callback_var){resourceMap.set("callback-var",btoa(JSON.stringify(requestObj.callback_var)))}
+	resourceMap.set("security-token",token.SecurityToken);
+	
+	let canaResource = buildResource(osspath,resourceMap);
+	let signature = buildSignature(requestObj,canaResource,token.AccessKeySecret,expires);
 	let query;
-	if(requestObj.callback&&requestObj.callback_var){
-		let callback = btoa(JSON.stringify(requestObj.callback)) ;
-		let callback_var = btoa(JSON.stringify(requestObj.callback_var));
-		query = buildUrlQuery1(token,expires,signature,callback,callback_var);
+	if(requestObj.callback){
+		query = buildUrlQuery1(token,expires,signature,resourceMap.get("callback"),resourceMap.get("callback-var"));
 	}else{
 		query = buildUrlQuery(token,expires,signature);
 	}
 	
 	
 	return requestObj.url + urlpath +query;
+}
+
+function buildSignature(requestObj,canaResource,accessKeySecret,expires){
+	let contentmd5 = requestObj.header["Content-MD5"]==void 0?"":requestObj.header["Content-MD5"];
+	let contentType = requestObj.header["Content-Type"]==void 0?"":requestObj.header["Content-Type"];
+	
+	let  strToSign = `${requestObj.method}\n${contentmd5}\n${contentType}\n${expires}\n${canaResource}`;
+	console.log(strToSign);
+	let sign;
+	const result = hmacEncode(accessKeySecret,strToSign);
+
+	return result;
+}
+
+function buildResource(osspath,resourceMap){
+	let r = `${osspath}?`;
+	for(let a of resourceMap){
+		r+=`${a[0]}=${a[1]}&`;
+	}
+	
+	return r.slice(0, -1);;
 }
 
 function buildUrlQuery(token,expires,signature){

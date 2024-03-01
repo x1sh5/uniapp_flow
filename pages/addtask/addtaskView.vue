@@ -95,5 +95,5 @@
 </script>
 
 <style lang="less">
-	@import url('./addtask.css');
+	@import url('./addtaskView.css');
 </style>

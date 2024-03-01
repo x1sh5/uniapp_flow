@@ -3,9 +3,10 @@
 		{{sd}}
 	</view>
 	<view>{{ws}}</view>
-<!-- 	<image style="width: 200px; height: 200px; background-color: #eeeeee;"  :src="url"></image> -->
+	<image style="width: 200px; height: 200px; background-color: #eeeeee;"  :src="url"></image>
 
 	<button @click="chooseFile">选择文件</button>
+	
 </template>
 
 <script>
@@ -17,7 +18,7 @@
 			return {
 				sd:putObject,
 				ws:"",
-				url:""
+				url:null
 			}
 		},
 		methods: {
@@ -28,30 +29,42 @@
 						console.log(e)
 						for(const file of e.tempFiles){
 							file.slice().arrayBuffer().then((res)=>{
-								let mdstr = btoa(md5(res));
-								let name=mdstr+"_"+file.name;
+								console.log(res)
+								let mdstr = md5.base64(res);;
+								let name=md5(res)+"_"+file.name;
+								let resourcePath = "/sdfsdafasdf/"+file.name;
 								let requestObj = {
 									url:"https://sdfsdafasdf.oss-cn-shanghai.aliyuncs.com",
 									method:"PUT",
 									header:{
-										"Content-Type": file.type,
-										"Content-Length": file.size,
-										"Content-MD5": mdstr
+										"Content-Type": file.type?file.type:"application/octet-stream",
+										// "Content-Length": file.size,
+										"Content-MD5": mdstr,
+										"cache-control":"no-cache"
 									},
 									callback:{
-										"callbackUrl":"https://www.liusha-gy.com/api/OSSNotify",
-										"callbackBody":`bucket=sdfsdafasdf&object=${"/sdfsdafasdf/"+name}&size=${file.size}&mimeType=${file.type}&contentMd5=${mdstr}`
+										"callbackUrl":"https://www.liusha-gy.com/api/OSSNotify/callback",
+										"callbackBody":`bucket=sdfsdafasdf&object=${resourcePath}&size=${file.size}&mimeType=${file.type}&contentMd5=${mdstr}`
 									},
-									callback_var:{"x:userid":1}
+									data:res,
+									success:function(resl){
+										if(resl.statusCode === 200){
+											uni.showToast({
+												title:"上传成功！",
+											})
+										}
+									},
+									callback_var:{"x:userid":"1"}
 								}
-								
-								putObject(requestObj,"/sdfsdafasdf/"+name)
+								console.log(encodeURIComponent(mdstr));
+								putObject(requestObj,resourcePath)
 							})
 						}
 						
 					}
 				})
-			}
+			},
+
 		},
 		onLoad() {
 			// ossGetUrl("/sdfsdafasdf/IMG_20190119_144633_1.jpg").then((url)=>{
@@ -61,10 +74,13 @@
 
 		},
 		onShow() {
-			ossGetUrl("/sdfsdafasdf/IMG_20190119_144633_1.jpg").then((url)=>{
-				console.log(url);
-				this.url = url ;
-			});
+			if(!this.url){
+				ossGetUrl("/sdfsdafasdf/IMG_20190119_144633_1.jpg").then((url)=>{
+					console.log(url);
+					this.url = url ;
+				});
+			}
+
 		}
 	}
 </script>

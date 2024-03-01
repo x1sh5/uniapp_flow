@@ -510,8 +510,8 @@
 				      timeRange: [
 				        // 天的范围是 0-365，时和分的范围是 0-23 和 0-59
 				       Array.from({ length: 366 }, (_, i) => `${i} 天`),
-        Array.from({ length: 24 }, (_, i) => `${this.addZero(i)} 时`),
-        Array.from({ length: 60 }, (_, i) => `${this.addZero(i)} 分`),
+						Array.from({ length: 24 }, (_, i) => `${this.addZero(i)} 时`),
+						Array.from({ length: 60 }, (_, i) => `${this.addZero(i)} 分`),
 				      ],
 				   
 

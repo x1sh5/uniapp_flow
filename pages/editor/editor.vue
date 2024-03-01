@@ -233,9 +233,9 @@
 					success: (res) => {
 						let file = res.tempFiles[0]; //文件
 						this.files.push(file)
-						if (file.size > 5 * 1024 * 1024) {
+						if (file.size > 3 * 1024 * 1024) {
 							uni.showModal({
-								content: "文件大于5Mb"
+								content: "文件大于3Mb"
 							})
 						} else {
 							this.editorCtx.insertImage({
