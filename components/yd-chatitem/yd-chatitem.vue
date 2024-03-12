@@ -12,6 +12,14 @@
 				<view v-if="message.contentType=='img'">
 					<image @click="preview" :style="{width:imgWidth,height:imgHeight}" :src="imgsrc"></image>
 				</view>
+				<view v-if="message.contentType=='file'">
+					<view style="display: flex;" @click="fileview" class="message" 
+					:style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+						<view class="angle" :style="{borderRightColor: bubbleColor}"></view>
+						{{ message.fileName }}
+						<view style="width:50px;height: 50px;hebackground-image:url('../../static/icons/icons8-file-50.png');"></view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<view v-else class="rightitem">
@@ -24,6 +32,14 @@
 				</view>
 				<view v-if="message.contentType=='img'">
 					<image @click="preview" :style="{width:imgWidth,height:imgHeight}" :src="imgsrc"></image>
+				</view>
+				<view v-if="message.contentType=='file'">
+					<view style="display: flex;" @click="fileview" class="message"
+					:style="{backgroundColor: bubbleColor, fontSize: messageSize, color: messageColor}">
+						<view class="angle" :style="{borderRightColor: bubbleColor}"></view>
+						{{ message.fileName }}
+						<view style="width:50px;height: 50px;background-image:url('../../static/icons/icons8-file-50.png');"></view>
+					</view>
 				</view>
 			</view>
 			<image class="icon" :src="icon" alt="Local Image"></image>
@@ -45,7 +61,7 @@
 			message: Object,
 			icon: {
 				type: String,
-				default: "../../static/logo.png"
+				default: "/static/logo.png"
 			},
 			bubbleColor: {
 				type: String,
@@ -114,6 +130,41 @@
 				uni.navigateTo({
 					url:"/pages/userhomepage/userhomepage?id="
 				})
+			},
+			fileview(e){
+				let fpath = this.$store.getters["FileCache/getFile"](this.message.content);
+				if(fpath){
+					// #ifdef MP-WEIXIN
+					uni.getFileSystemManager().getFileInfo({
+						filePath:res.tempFilePath
+					})
+					// #endif
+					
+					// #ifdef H5
+					uni.getFileInfo({
+						filePath:res.tempFilePath
+					})
+					// #endif
+				}else{
+					uni.downloadFile({
+						url:this.message.content,
+						success: (res) => {
+							this.$store.commit("FileCache/add",this.message.content,res.tempFilePath);
+							// #ifdef MP-WEIXIN
+							uni.getFileSystemManager().getFileInfo({
+								filePath:res.tempFilePath
+							})
+							// #endif
+							
+							// #ifdef H5
+							uni.getFileInfo({
+								filePath:res.tempFilePath
+							})
+							// #endif
+						}
+					})
+				}
+
 			}
 		},
 		
@@ -168,6 +219,8 @@
 					padding: 20rpx 20rpx;
 					background-color: #fff;
 					border-radius: 10rpx;
+					white-space: pre-wrap;
+					word-break: break-all;
 
 					.angle {
 						position: absolute;

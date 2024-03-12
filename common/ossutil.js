@@ -74,10 +74,52 @@ export async function putObject(requestObj,osspath){
 	uni.request(requestObj);
 }
 
+export function uploadFile(file, ossdir="files/",callback=(resl)=>{
+				if(resl.statusCode === 200){
+					uni.showToast({
+						title:"上传成功！",
+					})
+					console.log(resl.data.url)
+				}else{
+						uni.showToast({
+							title:file.name+" :上传失败！",
+						})
+					}
+			}
+){
+	file.slice().arrayBuffer().then((res)=>{
+		console.log(res)
+		let mdstr = md5.base64(res);
+		let suffs = file.name.split(".");
+		let suffix = suffs.length>1?suffs.pop():"";
+		suffix = /[\u4e00-\u9fa5]/.test(suffix)?"":"."+suffix;
+		let name=md5(res)+suffix;
+		let resourcePath = "/liusha-images/"+ossdir+name;
+		let requestObj = {
+			url:"https://liusha-images.oss-cn-chengdu.aliyuncs.com",
+			method:"PUT",
+			header:{
+				"Content-Type": file.type?file.type:"application/octet-stream",
+				// "Content-Length": file.size,
+				"Content-MD5": mdstr,
+				"cache-control":"no-cache"
+			},
+			callback:{
+				"callbackUrl":"https://www.liusha-gy.com/api/OSSNotify/callback",
+				"callbackBody":`bucket=liusha-images&object=${ossdir+name}&size=${file.size}&mimeType=${file.type}&contentMd5=${mdstr}&userid=$\{x:userid\}`
+			},
+			data:res,
+			success:callback,
+			callback_var:{"x:userid":"1"}
+		}
+		//console.log(encodeURIComponent(mdstr));
+		putObject(requestObj,resourcePath)
+	})
+}
 
 export async function ossGetUrl(osspath){
 	let requestObj = {
-		url:"https://sdfsdafasdf.oss-cn-shanghai.aliyuncs.com",
+		url:"https://liusha-images.oss-cn-chengdu.aliyuncs.com",
 		method:"GET",
 		header:{
 			
@@ -90,7 +132,7 @@ export async function ossGetUrl(osspath){
 async function ossUrl(requestObj,osspath){
 	let urlpath=osspath.substring(osspath.indexOf("/",1));
 	const token = await tokenManager.getOrUpdateToken();
-	let expires = dayjs("Sun Mar 03 2024 13:36:01 GMT").unix();//dayjs().add(1,"h").unix();
+	let expires = dayjs().add(1,"h").unix();
 	
 	let resourceMap = new Map();
 	if(requestObj.callback){resourceMap.set("callback",btoa(JSON.stringify(requestObj.callback)))}
@@ -115,7 +157,7 @@ function buildSignature(requestObj,canaResource,accessKeySecret,expires){
 	let contentType = requestObj.header["Content-Type"]==void 0?"":requestObj.header["Content-Type"];
 	
 	let  strToSign = `${requestObj.method}\n${contentmd5}\n${contentType}\n${expires}\n${canaResource}`;
-	console.log(strToSign);
+	//console.log(strToSign);
 	let sign;
 	const result = hmacEncode(accessKeySecret,strToSign);
 

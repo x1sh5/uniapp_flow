@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { StorageKeys } from '../../common/storageKeys'
+import { StorageKeys } from '../../common/storageKeys';
+import { uploadFile } from '../../common/ossutil.js';
 
 	export default {
 		data() {
@@ -86,33 +87,28 @@ import { StorageKeys } from '../../common/storageKeys'
 								},
 								success: (e) => {
 
-									if(e.tempFiles[0].size>5*1024*1024){
+									if(e.tempFiles[0].size>2*1024*1024){
 										uni.showToast({
-											title: "图片大小超过5M,请重新选择。"
+											title: "图片大小超过2M,请重新选择。"
 										})
 										return
 									}
-									uni.uploadFile({
-										name: "user-avatar",
-										filePath: e.tempFilePaths[0],
-										url: this.$store.state.apiBaseUrl+"/api/Image/upload",
-										success:(res)=>{
-
-											if(res.statusCode===201){
-												let data = JSON.parse(res.data);
-												let imgurl = this.$store.state.apiBaseUrl+data[0].url;
-												this.$store.commit("setUserAvatar",imgurl);
-												uni.requestWithCookie({
-													url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
-													method:"POST",
-													success: () => {
-														
-													}
-												})
-												
-											}
+									uploadFile(e.tempFilePaths[0],"images/",(resl)=>{
+										if(res.statusCode===201){
+											let data = JSON.parse(res.data);
+											let imgurl = this.$store.state.apiBaseUrl+data.url;
+											this.$store.commit("setUserAvatar",imgurl);
+											uni.requestWithCookie({
+												url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
+												method:"POST",
+												success: () => {
+													
+												}
+											})
+											
 										}
 									})
+
 								}
 							})
 						}

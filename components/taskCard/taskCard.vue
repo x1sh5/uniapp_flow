@@ -5,15 +5,16 @@
 				@remove-task="removeTask"></cardinfo>
 			<!--空白<view class="blank" style="width: 100%; height: 68rpx; border: 3px solid  #6c4ad1;  background-color: #ffffff; " ></view>-->
 			<!--文字-->
-			<view class="tasktype">任务说明</view>
+			<text>\n</text>
+			<view class="tasktype" v-if="!editable" @click="taskDetail">查看任务详细</view>
 			<!--分割线-->
 			<view class="driver"
 				style="position: relative; margin: 0 40rpx;height: 2rpx;width: 90%;background-color: #c6b8f1;margin-top: 10rpx;z-index: 1;">
 			</view>
 			<!--输入结果的显示区域-->
-			<view class="ql-container" style="position: relative; margin: 0 40rpx;">
+<!-- 			<view class="ql-container" style="position: relative; margin: 0 40rpx;">
 				<rich-text class="content" :nodes="html" style="word-break: keep-all; overflow-wrap: anywhere;"></rich-text>
-			</view>
+			</view> -->
 			
 			<!--输入按钮-->
 			<button v-if="editable" class="editbutton" @click="editEvent">+编辑制作说明...</button>
@@ -25,6 +26,7 @@
 
 <script>
 import { StorageKeys } from "../../common/storageKeys.js";
+import { uploadFile } from '../../common/ossutil.js';
 export default {
 	name: "taskCard",
 	props: {
@@ -100,24 +102,6 @@ export default {
 		updateT(payload) {
 			//{ctx:res, files: lastFiles}
 
-			for (let file of payload.files) {
-				let index = payload.ctx.delta.ops.indexOf(x => x.attributes && x.attributes["data-local"] === file.path)
-				uni.uploadFileWithCookie({
-					url: this.$store.state.apiBaseUrl + "/api/Image/upload",
-					filePath: file.path,
-					name: file.name,
-					success: (res) => {
-						let data = JSON.parse(res.data)
-						if (('' + res.statusCode).startsWith('2')) {
-							let search = "<img src=\"" + file.path + "\" data-local=\"" + file.path + "\" alt=\"图像\">";
-							let replace = "<img src=\"" + this.$store.state.apiBaseUrl + "/flow/static/" + data.$values[0].url + "\">"
-
-							let newHtml = payload.ctx.html.replace(search, replace)
-							this.$refs.cardinfo.updateDes(newHtml)
-						}
-					}
-				});
-			}
 			this.content = payload.ctx;
 
 		},
@@ -136,6 +120,11 @@ export default {
 		},
 		removeTask(e) {
 			this.$emit('remove-task', e)
+		},
+		taskDetail(e){
+			uni.navigateTo({
+				url:"/pages/taskContent/taskContent?id="+this.task.id
+			})
 		}
 	}
 }

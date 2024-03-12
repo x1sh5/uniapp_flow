@@ -10,11 +10,11 @@
 			<scroll-view :style="`height:${calcHeight}px`" class="chat-messages" scroll-y="true" :scroll-top="0"
 				@scrolltoupper="receiveOld" @scrolltolower="scrollDown">
 
-				<yd-chatitem v-for="m in messages" :key="m.id" :message="m" :isLeft="m.isLeft" :bgColor="'#f7f7f7'"
-					:userId="m.id"></yd-chatitem>
+<!-- 				<yd-chatitem v-for="m in messages" :key="m.id" :message="m" :isLeft="m.isLeft" :bgColor="'#f7f7f7'"
+					:userId="m.id"></yd-chatitem> -->
 
 				<yd-chatitem v-for="m in messages" :key="m.id" :message="m" :isLeft="m.isLeft"
-					:icon="m.isLeft?imgsrc:me_avatar" :bgColor="'#f7f7f7'" :userId="m.id"></yd-chatitem>
+					:icon="m.isLeft?imgsrc:meAvatar" :bgColor="'#f7f7f7'" :userId="m.id"></yd-chatitem>
 
 			</scroll-view>
 			<!-- </view> -->
@@ -38,6 +38,9 @@
 	import {
 		ChatChannel
 	} from "/common/customTypes.js";
+	import { uploadFile } from '../../../common/ossutil.js';
+	import { md5 } from 'js-md5';
+import { v3 } from "uuid";
 	export default {
 		data() {
 			return {
@@ -45,6 +48,7 @@
 				userName: "",
 				userId: NaN, //发卡人id
 				calcHeight: NaN, //计算后的scrollview高度
+				img_src:"",
 				//messages:[],
 
 			}
@@ -58,6 +62,22 @@
 					return false;
 				}
 				return true;
+			},
+			imgsrc(){
+				if(!this.img_src){
+					uni.requestWithCookie({
+						url:this.$store.state.apiBaseUrl +"/api/AuthUser/avatar?id="+this.userId,
+						success: (res) => {
+							if(res.statusCode===200){
+								this.img_src=res.data
+							}
+						}
+					})
+				}
+				return this.img_src;
+			},
+			meAvatar(){
+				return this.$store.state.useravatar;
 			}
 		},
 		methods: {
@@ -72,26 +92,67 @@
 				this.$store.dispatch("sendMsg", {
 					user: this.userId,
 					message: this.text1,
-					contentType: 'string'
+					contentType: 'string',
+					fileName:""
 				});
 
 				this.text1 = "";
 			},
 			sendImg(e) {
-				this.$store.dispatch("upload")
-					.then((res) => {
-						let o = JSON.parse(res.data)
-						this.$store.dispatch("sendMsg", {
-							user: this.userId,
-							message: o[0].url,
-							contentType: 'img'
-						});
-					})
-					.catch((err) => {
-						uni.showToast({
-							title: err.message
-						})
-					})
+				// #ifdef MP-WEIXIN
+				uni.chooseMessageFile({
+					count:3,
+					success:(res)=>{
+						const tempFilePaths = res.tempFiles;
+						for(const file of tempFilePaths){
+							uploadFile(file,"files/",(resl)=>{
+								if(resl.statusCode === 200){
+									this.$store.dispatch("sendMsg", {
+										user: this.userId,
+										message: resl.data.url,
+										contentType: file.type.split('/')[0]=="image"?"img":"file",
+										fileName:file.name
+									});
+								}
+								else{
+										uni.showToast({
+											title:file.name+" :上传失败！",
+										})
+									}
+				
+							})
+						}
+					}
+				})
+				// #endif
+				
+				// #ifdef H5
+				uni.chooseFile({
+					count:3,
+					success:(res)=>{
+						const tempFilePaths = res.tempFiles;
+						for(const file of tempFilePaths){
+							uploadFile(file,"files/",(resl)=>{
+								if(resl.statusCode === 200){
+									this.$store.dispatch("sendMsg", {
+										user: this.userId,
+										message: resl.data.url,
+										contentType: file.type=="image"?"img":"file",
+										fileName:file.name
+									});
+								}
+								else{
+										uni.showToast({
+											title:file.name+" :上传失败！",
+										})
+									}
+									
+							})
+						}
+					}
+				})
+				// #endif
+
 			},
 			back(e) {
 				uni.navigateBack()
@@ -99,7 +160,7 @@
 			receiveOld() {
 
 				let lastid = this.messages[0].cid;
-				let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&lastid=" +
+				let qurl = this.$store.state.apiBaseUrl + "/api/messages/each?receiverId=" + this.userId + "&lastid=" +
 					lastid +
 					"&count=10";
 				uni.requestWithCookie({
@@ -107,8 +168,8 @@
 					success: (res) => {
 						if (res.statusCode === 200) {
 							for (let m of res.data) {
-								this.$store.dispatch("receiveMsg", {
-									user: m.from,
+								this.$store.dispatch("eachMsg", {
+									userid: m.from,
 									message: m
 								})
 							}
@@ -135,15 +196,14 @@
 			let hasLoad = this.$store.getters["Msgs/getHasFirstLoad"](this.userId)
 			if (!hasLoad) {
 				//let [lastid] = this.messages.slice(-1);
-				let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId +
+				let qurl = this.$store.state.apiBaseUrl + "/api/messages/each?receiverId=" + this.userId +
 					"&count=10";
 				uni.requestWithCookie({
 					url: qurl,
 					success: (res) => {
 						if (res.statusCode === 200) {
 							for (let m of res.data) {
-								this.$store.dispatch("receiveMsg", {
-									user: m.from,
+								this.$store.dispatch("eachMsg", {
 									message: m
 								})
 							}

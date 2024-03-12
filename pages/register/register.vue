@@ -64,31 +64,23 @@
 					return
 				}
 			},
-			
-			
-			
-			toabout(e) {
-						uni.navigateTo({
-							url: "/pages/userCenter/about/about"
-						});
-					},
 					
-					topbout(e) {
-						uni.navigateTo({
-							url: "/pages/userCenter/privacy/privacy"
-						});
-					},
-					toibout(e) {
-						uni.navigateTo({
-							url: "/pages/userCenter/instructions/instructions"
-						});
-					},
+			topbout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/privacy/privacy"
+				});
+			},
+			toibout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/instructions/instructions"
+				});
+			},
 					
-					tocbout(e) {
-						uni.navigateTo({
-							url: "/pages/userCenter/cost/cost"
-						});
-					},
+			tocbout(e) {
+				uni.navigateTo({
+					url: "/pages/userCenter/cost/cost"
+				});
+			},
 			
 			
 			toAbout(e) {
@@ -168,7 +160,7 @@
 							} else {
 								uni.showModal({
 									showCancel: true,
-									content: res.data
+									content: res.data?res.data:"网络错误！"
 								})
 							}
 					

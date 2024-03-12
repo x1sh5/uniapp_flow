@@ -187,7 +187,7 @@
 				return ''
 			},
 			rewardEditable() {
-				return !this.editable || (this.task.main === 1 && this.rewardtype === 2)
+				return !this.editable //|| (this.task.main === 1 && this.rewardtype === 2)
 			},
 			branch: {
 				get() {
@@ -410,6 +410,31 @@
 				// 	{data: {success:true, message:"任务："+this.task.title+"发布成功", errMsg:"ok"}, func: Array.prototype.push} )
 				//发布任务
 
+			},
+			preprocess(e){
+				const payload = this.task.description
+				for (let file of payload.files) {
+					let index = payload.ctx.delta.ops.indexOf(x => x.attributes && x.attributes["data-local"] === file.path);
+					uploadFile(file,"images/", (resl)=>{
+						if(resl.statusCode === 200){
+							uni.showToast({
+								title:"上传成功！",
+							})
+							
+							let search = "<img src=\"" + file.path + "\" data-local=\"" + file.path + "\" alt=\"图像\">";
+							let replace = "<img src=\"" + resl.data.url + "\">"
+							
+							let newHtml = payload.ctx.html.replace(search, replace)
+							this.$refs.cardinfo.updateDes(newHtml)
+							//console.log(resl.data.url)
+						}else{
+							uni.showToast({
+								title:file.name+" :上传失败！",
+							})
+						}
+					});
+				
+				}
 			},
 			put() {
 

@@ -397,6 +397,14 @@
         		"navigationBarTitleText" : "",
         		"enablePullDownRefresh" : false
         	}
+        },
+        {
+        	"path" : "pages/taskContent/taskContent",
+        	"style" : 
+        	{
+        		"navigationBarTitleText" : "任务详细",
+        		"enablePullDownRefresh" : false
+        	}
         }
     ],
 	"globalStyle": {

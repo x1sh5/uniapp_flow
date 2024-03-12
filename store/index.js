@@ -16,7 +16,8 @@ import {
 import {
 	References
 } from "./reference.js";
-import {ContentUrlCache} from './contentUrl.js'
+import {ContentUrlCache} from './contentUrl.js';
+import { FileCache } from './filecache.js'
 
 import { baseUrl } from "../common/const.js";
 
@@ -29,6 +30,7 @@ const store = createStore({
 	state: {
 		$hasLogin: false,
 		$userName: "未登录",
+		userid:undefined,
 		introduce:"",
 		useravatar: "/static/meactive.png",
 		branchs: [],
@@ -137,6 +139,9 @@ const store = createStore({
 		setUserName(state, payload) {
 			state.$userName = payload;
 			uni.setStorageSync(StorageKeys.userName, payload);
+		},
+		setUserId(state,id){
+			state.userid = parseInt(id);
 		},
 		setUserAvatar(state, payload) {
 			state.useravatar = payload;
@@ -380,15 +385,10 @@ const store = createStore({
 		},
 		async sendMsg({
 			commit,
-			state
-		}, {
-			user,
-			message,
-			contentType
-		}) {
+			state}, {user,message,contentType,fileName}) {
 			//SendToUser为后端api处理消息的函数，位于ChatHub中
 			//state.workSocket.invoke("SendMessage", [user, message]);
-			await state.workSocket.invoke("SendToUser", user, message, contentType);
+			await state.workSocket.invoke("SendToUser", user, message, contentType,fileName);
 
 			let userId = parseInt(user);
 			let chat = state.messages.get(userId)
@@ -401,14 +401,7 @@ const store = createStore({
 			});
 
 		},
-		receiveMsg({
-			commit,
-			state,
-			dispatch
-		}, {
-			user,
-			message
-		}) {
+		receiveMsg({commit,state,dispatch}, {user,message}) {
 
 			state.unread += 1;
 			uni.setTabBarBadge({
@@ -428,6 +421,26 @@ const store = createStore({
 			state.messages.get(userId).push(message);
 			dispatch('Msgs/updateAsync', message)
 
+		},
+		//对话消息
+		async eachMsg({state},{message}){
+			let cid = parseInt(message.to);
+			if(cid==state.userid){
+				cid = parseInt(message.from)
+			}
+			message.cid = cid;
+			let chat = state.messages.get(cid)
+			if (typeof(chat) === 'undefined') {
+				state.messages.set(cid, new Array())
+			}
+			
+			if(message.to==state.userId){
+				message.isLeft = true;
+			}
+			else{
+				message.isLeft = false;
+			}
+			state.messages.get(cid).push(message);
 		},
 		unreadChange({
 			state
@@ -594,7 +607,8 @@ const store = createStore({
 	modules: {
 		Msgs: Messages,
 		Refer: References,
-		UrlCache:ContentUrlCache
+		UrlCache:ContentUrlCache,
+		FileCache:FileCache
 	}
 })
 

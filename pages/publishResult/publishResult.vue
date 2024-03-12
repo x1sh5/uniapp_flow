@@ -3,6 +3,8 @@
 		<view v-for="item in results" :key="item" style="height: 40px;">
 			{{ item.message }}
 		</view>
+		<button @click="flush">继续发布任务</button>
+		<button v-show="success" @click="detail">查看任务详情</button>
 	</view>
 </template>
 
@@ -14,19 +16,30 @@
 			}
 		},
 		mounted() {
-			setTimeout(()=> {
-			  uni.navigateTo({
-			  	url: "/pages/myTaskDetail/myTaskDetail?refer=newtask&id="+this.results[0].id
-			  })
-			}, 1000); // 延时 1 秒执行
+
+		},
+		onLoad(e) {
+			
 		},
 		methods: {
-			
+			detail(e){
+				uni.navigateTo({
+					url: "/pages/myTaskDetail/myTaskDetail?refer=newtask&id="+this.results[0].id
+				})
+			}
+			,flush(e){
+				uni.switchTab({
+					url:"/pages/addtask/addtaskView"
+				})
+			}
 		},
 		computed:{
 			results(){
 
 				return this.$store.getters.publishResults
+			},
+			success(){
+				return !this.results[0].id==undefined;
 			}
 		}
 	}

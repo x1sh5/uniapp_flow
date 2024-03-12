@@ -26,9 +26,9 @@
 		z-index: 1;
 		border: 1px solid #6c4ad1;
 		border-radius: 00rpx;
-transform: translate(0rpx, -520rpx) scale(1);
+
     /* translate 请尽量使用百分比 */
-	/* 	 */
+/* 	transform: translate(0rpx, -520rpx) scale(1); */
 	
 		/* 新增：设置按钮边框为圆角 */
 		width: 350rpx;

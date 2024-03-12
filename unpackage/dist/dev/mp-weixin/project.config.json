@@ -20,7 +20,7 @@
     "enhance": true
   },
   "compileType": "miniprogram",
-  "libVersion": "",
+  "libVersion": "3.1.5",
   "appid": "wxbef31cb0acc4e14c",
   "projectname": "flow",
   "condition": {},

@@ -154,6 +154,10 @@
 					this.$refs['id' + item.id][0].check();
 
 				}
+				for(const t of this.tasks){
+					this.$refs['id' + item.id][0].preprocess()
+				}
+				
 				if (this.results.length > 0 && this.results.every(ele => Boolean(ele))) {
 					let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/posts"
 					uni.requestWithCookie({
