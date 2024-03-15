@@ -31,6 +31,7 @@ const _sfc_main = {
             common_weappCookie.cookieManager.default.setResponseCookies(res.data.refreshToken, domain);
             that.$store.commit("login");
             that.$store.commit("setUserName", res.data.userName);
+            that.$store.commit("setUserId", res.data.id);
             that.$store.commit("setUserAvatar", res.data.avatar);
             that.$store.commit("setIntroduce", res.data.introduce);
             if (this.refer === "order") {

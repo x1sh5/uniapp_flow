@@ -149,16 +149,30 @@
 					uni.downloadFile({
 						url:this.message.content,
 						success: (res) => {
-							this.$store.commit("FileCache/add",this.message.content,res.tempFilePath);
+							
 							// #ifdef MP-WEIXIN
-							uni.getFileSystemManager().getFileInfo({
-								filePath:res.tempFilePath
+							uni.getFileSystemManager().saveFile({
+								tempFilePath:res.tempFilePath,
+								success:(resl)=>{
+									this.$store.commit("FileCache/add",this.message.content,resl.savedFilePath);
+								},
+								fail(){
+									uni.showToast({
+										title:"文件保存失败！"
+									})
+								}
 							})
 							// #endif
 							
 							// #ifdef H5
-							uni.getFileInfo({
-								filePath:res.tempFilePath
+							uni.saveFile({
+								tempFilePath:res.tempFilePath,
+								success: (res) => {
+									console.log(res)
+								},
+								complete: (r) => {
+									console.log(r)
+								}
 							})
 							// #endif
 						}

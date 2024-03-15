@@ -19,6 +19,7 @@
 		},
 		methods: {
 			chooseFile(e){
+				// #ifdef H5
 				uni.chooseFile({
 					count:10,
 					success: (e) => {
@@ -29,6 +30,24 @@
 						
 					}
 				})
+				// #endif
+				
+				// #ifdef MP-WEIXIN
+				wx.chooseMessageFile({
+					count:10,
+					success: (e) => {
+						let fmana = wx.getFileSystemManager();
+						for(let fileinfo of e.tempFiles){
+							fmana.readFile({filePath:fileinfo.path,success:(file)=>{
+								console.log(file)
+								fileinfo.data = file.data;
+								uploadFile(fileinfo)
+							}})
+						}
+						
+					}
+					})
+				// #endif
 			},
 
 		},

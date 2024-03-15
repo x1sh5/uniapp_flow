@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/userCenter/userCenter",
-    "pages/addtask/addtask",
+    "pages/addtask/addtaskView",
     "pages/editor/editor",
     "pages/newTask/newTask",
     "pages/message/message",
@@ -35,13 +35,18 @@
     "pages/myApply/myApply",
     "pages/order/order",
     "pages/userCenter/about/about",
+    "pages/userCenter/cost/cost",
+    "pages/userCenter/privacy/privacy",
     "pages/userCenter/instructions/instructions",
     "pages/settings/phoneBind/phoneBind",
     "pages/settings/emailBind/emailBind",
     "pages/settings/nickname/nickname",
     "pages/settings/signature/signature",
     "pages/register/accountInfo/accountInfo",
-    "pages/register/v2/v2"
+    "pages/register/v2/v2",
+    "pages/register/livedetect/livedetect",
+    "pages/test/test",
+    "pages/taskContent/taskContent"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -62,7 +67,7 @@
         "text": "任务卡池"
       },
       {
-        "pagePath": "pages/addtask/addtask",
+        "pagePath": "pages/addtask/addtaskView",
         "iconPath": "static/add.png",
         "selectedIconPath": "static/addactive.png",
         "text": "发布任务"

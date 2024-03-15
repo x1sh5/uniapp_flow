@@ -78,12 +78,13 @@
 					})
 					return;
 				}
-				uni.uploadFile({
+				uni.request({
 					url: qurl,
-					filePath: this.pos, // 随便填，不为空即可  
-					name: 'posimg', // 随便填，不为空即可  
-					//header: header, // 可以加access_token等  
-					formData: {
+					header:{
+						"Content-Type":"application/x-www-form-urlencoded"
+					},
+					method:"POST",
+					data: {
 						name: this.name,
 						cardNo: this.cardNo
 					}, // 接口参数，json格式，底层自动转为FormData的格式数据  
@@ -103,6 +104,9 @@
 							})
 						}
 
+					},
+					fail(err) {
+						console.log(err)
 					}
 				})
 			}

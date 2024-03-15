@@ -21,7 +21,21 @@ const _sfc_main = {
       });
     },
     search(e) {
+      e.value;
+      common_vendor.index.navigateTo({
+        url: "/pages/searchResult/searchResult"
+      });
     }
+  },
+  searchByTpe(id, name) {
+    if (id === "") {
+      this.currentTab = 0;
+    } else {
+      this.currentTab = id;
+    }
+    this.curBranchid = id;
+    this.taskTypeName = name;
+    this.updateData();
   },
   onLoad() {
     let curl = this.$store.state.apiBaseUrl + "/api/Reference/count";
@@ -53,7 +67,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     a: common_vendor.o($options.search),
     b: common_vendor.p({
       radius: "5",
-      placeholder: "搜索审核区间",
+      placeholder: "搜索任务",
       clearButton: "auto",
       cancelButton: "none"
     }),

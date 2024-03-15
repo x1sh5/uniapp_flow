@@ -3,6 +3,7 @@ import { baseUrl } from "../common/const.js";
 import hmacsha1 from 'hmacsha1';
 import encodeUtf8 from 'encode-utf8';
 import { md5 } from 'js-md5';
+import {encode as encodeBase64} from "base64-arraybuffer"
 
 
 class UrlManager{
@@ -15,7 +16,7 @@ class STSToken{
 	constructor(AccessKeyId,AccessKeySecret,Expiration,SecurityToken){
 		this.AccessKeyId=AccessKeyId;
 		this.AccessKeySecret=AccessKeySecret;
-		this.Expiration=dayjs(Expiration);
+		this.Expiration=dayjs.default(Expiration);
 		this.SecurityToken=SecurityToken;
 	}
 }
@@ -66,6 +67,7 @@ class TokenManager{
 }
 
 var tokenManager = new TokenManager();
+var encoder = new TextEncoder();
 
 export async function putObject(requestObj,osspath){
 		
@@ -87,8 +89,37 @@ export function uploadFile(file, ossdir="files/",callback=(resl)=>{
 					}
 			}
 ){
+	// #ifdef MP-WEIXIN
+	let mdstr = md5.base64(file.data);
+	let suffs = file.name.split(".");
+	let suffix = suffs.length>1?suffs.pop():"";
+	suffix = /[\u4e00-\u9fa5]/.test(suffix)?"":"."+suffix;
+	let name=md5(file.data)+suffix;
+	let resourcePath = "/liusha-images/"+ossdir+name;
+	let requestObj = {
+		url:"https://liusha-images.oss-cn-chengdu.aliyuncs.com",
+		method:"PUT",
+		header:{
+			"Content-Type": file.type?file.type:"application/octet-stream",
+			// "Content-Length": file.size,
+			"Content-MD5": mdstr,
+			"cache-control":"no-cache"
+		},
+		callback:{
+			"callbackUrl":"https://www.liusha-gy.com/api/OSSNotify/callback",
+			"callbackBody":`bucket=liusha-images&object=${ossdir+name}&size=${file.size}&mimeType=${file.type}&contentMd5=${mdstr}&userid=$\{x:userid\}`
+		},
+		data:file.data,
+		success:callback,
+		callback_var:{"x:userid":"1"}
+	}
+	//console.log(encodeURIComponent(mdstr));
+	putObject(requestObj,resourcePath)
+	// #endif
+	
+	// #ifdef H5
 	file.slice().arrayBuffer().then((res)=>{
-		console.log(res)
+		console.log(res);
 		let mdstr = md5.base64(res);
 		let suffs = file.name.split(".");
 		let suffix = suffs.length>1?suffs.pop():"";
@@ -115,6 +146,8 @@ export function uploadFile(file, ossdir="files/",callback=(resl)=>{
 		//console.log(encodeURIComponent(mdstr));
 		putObject(requestObj,resourcePath)
 	})
+	// #endif
+
 }
 
 export async function ossGetUrl(osspath){
@@ -135,8 +168,8 @@ async function ossUrl(requestObj,osspath){
 	let expires = dayjs().add(1,"h").unix();
 	
 	let resourceMap = new Map();
-	if(requestObj.callback){resourceMap.set("callback",btoa(JSON.stringify(requestObj.callback)))}
-	if(requestObj.callback_var){resourceMap.set("callback-var",btoa(JSON.stringify(requestObj.callback_var)))}
+	if(requestObj.callback){resourceMap.set("callback",encodeBase64(encoder.encode(JSON.stringify(requestObj.callback))))}
+	if(requestObj.callback_var){resourceMap.set("callback-var",encodeBase64(encoder.encode(JSON.stringify(requestObj.callback_var))))}
 	resourceMap.set("security-token",token.SecurityToken);
 	
 	let canaResource = buildResource(osspath,resourceMap);

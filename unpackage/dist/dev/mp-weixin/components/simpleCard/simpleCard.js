@@ -4,7 +4,7 @@ const _sfc_main = {
   name: "simpleCard",
   data() {
     return {
-      deadline: "",
+      deadline: "0001-01-01T00:00:00",
       resetDeadline: false,
       newDeadtime: void 0
     };
@@ -100,10 +100,10 @@ const _sfc_main = {
       common_vendor.index.showModal({
         title: "进行‘确认’操作后, 任务将不再能修改。",
         editable: true,
-        placeholderText: "输入‘确认’完成操作！",
+        placeholderText: "输入‘未达标’完成操作！",
         success: (res) => {
           if (res.confirm) {
-            if (res.content == "确认") {
+            if (res.content == "未达标") {
               common_vendor.index.request({
                 url: this.$store.state.apiBaseUrl + "/api/Assignment/archive/" + this.simpleInfo.taskId,
                 data: {

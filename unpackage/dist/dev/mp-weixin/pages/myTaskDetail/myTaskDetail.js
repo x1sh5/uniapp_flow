@@ -11,7 +11,7 @@ const _sfc_main = {
         "branchid": 1,
         "description": "任务描述",
         "finishtime": "0001-01-01T00:00:00",
-        "deadline": "",
+        "deadline": "0001-01-01T00:00:00",
         "publishtime": "0001-01-01T00:00:00",
         "fixedReward": "",
         "percentReward": "",
@@ -123,7 +123,6 @@ const _sfc_main = {
               success: (result) => {
                 if (result.statusCode === 200) {
                   let praypay = result.data;
-                  console.log(praypay);
                   common_vendor.index.requestPayment({
                     timeStamp: praypay.timeStamp,
                     nonceStr: praypay.nonceStr,

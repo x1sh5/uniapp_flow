@@ -29,7 +29,7 @@ const _sfc_main = {
       "id": 0,
       "branchid": branchType,
       "description": "",
-      "finishtime": "",
+      "finishtime": "0001-01-01T00:00:00",
       "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
       "publishtime": "0001-01-01T00:00:00",
       "fixedReward": 0,
@@ -114,6 +114,10 @@ const _sfc_main = {
       for (let item of this.tasks) {
         this.$refs["id" + item.id][0].check();
       }
+      for (const t of this.tasks) {
+        const ref = this.$refs["id" + t.id][0];
+        ref.preprocess(ref.content);
+      }
       if (this.results.length > 0 && this.results.every((ele) => Boolean(ele))) {
         let posturl = this.$store.state.apiBaseUrl + "/api/Assignment/posts";
         common_vendor.index.requestWithCookie({
@@ -162,7 +166,7 @@ const _sfc_main = {
         "username": false,
         "branchid": 1,
         "description": "",
-        "finishtime": "",
+        "finishtime": "0001-01-01T00:00:00",
         "deadline": (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
         "publishtime": "0001-01-01T00:00:00",
         "fixedReward": 0,
@@ -179,7 +183,6 @@ const _sfc_main = {
     updateTask(id, payload) {
       let index = this.tasks.findIndex((item) => item.id === parseInt(id));
       if (index !== -1) {
-        this.tasks[index].description = payload.html;
         this.$refs["id" + id][0].updateT(payload);
       }
     },

@@ -28,6 +28,8 @@
   padding: 20rpx 20rpx;
   background-color: #fff;
   border-radius: 10rpx;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 .chatitem .leftitem .info .message .angle.data-v-e72a33f9 {
   position: absolute;

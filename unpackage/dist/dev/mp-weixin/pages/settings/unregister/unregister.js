@@ -22,14 +22,13 @@ const _sfc_main = {
         placeholderText: "密码...",
         success: (res) => {
           if (res.confirm) {
-            common_vendor.index.uploadFileWithCookie({
+            common_vendor.index.requestWithCookie({
               url: qurl,
-              filePath: "123",
-              // 随便填，不为空即可  
-              name: "123",
-              // 随便填，不为空即可  
-              //header: header, // 可以加access_token等  
-              formData: { password: res.content },
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              method: "POST",
+              data: { password: res.content },
               // 接口参数，json格式，底层自动转为FormData的格式数据  
               success: (res2) => {
                 if (res2.statusCode === 200) {

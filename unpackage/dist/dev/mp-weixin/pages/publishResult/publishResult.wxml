@@ -1,1 +1,1 @@
-<view><view wx:for="{{a}}" wx:for-item="item" wx:key="b" style="height:40px">{{item.a}}</view></view>
+<view><view wx:for="{{a}}" wx:for-item="item" wx:key="b" style="height:40px">{{item.a}}</view><button bindtap="{{b}}">继续发布任务</button><button hidden="{{!c}}" bindtap="{{d}}">查看任务详情</button></view>

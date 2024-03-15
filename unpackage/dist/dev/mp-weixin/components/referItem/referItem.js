@@ -69,8 +69,31 @@ const _sfc_main = {
     stitleChange(e) {
       this.item.stitle = e.detail.value;
     },
+    checkMin(e) {
+      let value = e.target.value.replace(/[^\d.]/g, "");
+      const decimalCount = (value.split(".")[1] || "").length;
+      if (value === ".") {
+        value = "0.";
+      }
+      if (parseFloat(value) > 100 || decimalCount > 2) {
+        value = value.slice(0, -1);
+      }
+      this.min = value;
+      this.item.rate = `${this.min}-${this.max}`;
+    },
+    checkMax(e) {
+      let value = e.target.value.replace(/[^\d.]/g, "");
+      const decimalCount = (value.split(".")[1] || "").length;
+      if (value === ".") {
+        value = "0.";
+      }
+      if (parseFloat(value) > 100 || decimalCount > 2) {
+        value = value.slice(0, -1);
+      }
+      this.max = value;
+      this.item.rate = `${this.min}-${this.max}`;
+    },
     rateChange(e) {
-      this.item.rate = e.detail.value;
     },
     briefChange(e) {
       this.item.brief = e.detail.value;

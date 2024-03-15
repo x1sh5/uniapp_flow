@@ -55,8 +55,8 @@ export default {
 					path: 'pages/index/index',
 					type: 0,
 				},
-				success: ret => {
-					console.log(JSON.stringify(ret));
+				success: (ret) => {
+					//console.log(JSON.stringify(ret));
 				}
 			});
 

@@ -487,12 +487,10 @@ import {cookieManager} from "/common/weapp-cookie.js";
             options.dataType = "text";
             return new Promise((resolve, reject) => {
                 options.success = (response) => {
-                    console.log("success HttpResponse", response);
                     let res = new HttpResponse(response.statusCode, response.errMsg, response.data);
                     resolve(res);
                 };
                 options.fail = (response) => {
-                    console.log("fail HttpResponse", response);
                     reject(new Error(response?.errMsg));
                 };
                 uni.requestWithCookie(options);

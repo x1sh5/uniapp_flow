@@ -45,6 +45,7 @@
 				neg: "", //反面照
 				posMd5: "",
 				name: "",
+				nameChecked:false,
 				cardNo: "",
 				cardNoChecked: false,
 				aggrementCheckTip: "",
@@ -88,36 +89,6 @@
 					url: "/pages/userCenter/about/about"
 				});
 			},
-			// uploadPos(e) {
-			// 	this.$store.dispatch("upload", "pupload")
-			// 		.then((res) => {
-			// 			this.pos = res.filePath;
-			// 			if(res.statusCode===200){
-			// 				let o = JSON.parse(res.data)
-			// 				this.posMd5 = o[0].md5;
-			// 			}
-
-			// 		})
-			// 		.catch((err) => {
-			// 			uni.showToast({
-			// 				title: err.message.errors
-			// 			})
-			// 		})
-			// },
-			// uploadNeg(e) {
-			// 	this.$store.dispatch("upload")
-			// 		.then((res) => {
-			// 			let o = JSON.parse(res.data)
-			// 			this.neg = res.filePath;
-			// 			this.$store.state.apiBaseUrl + o[0].url;
-			// 		})
-			// 		.catch((err) => {
-			// 			uni.showToast({
-			// 				title: err.message
-			// 			})
-			// 		})
-			// 	uni.requireNativePlugin
-			// },
 			CardNoCheck(e){
 				if(/[0-9X]{18}/.test(this.cardNo)){
 					this.cardNoChecked = true;
@@ -138,13 +109,21 @@
 					})
 					return;
 				}
+				if(this.name==""){
+					uni.showToast({
+						title:"姓名不能为空。"
+					})
+					return;
+				}
+				
 				if (this.isChecked == true) {
-					uni.uploadFile({
+					uni.request({
 						url: qurl,
-						filePath: '123',//this.pos, // 随便填，不为空即可  
-						name: 'posimg', // 随便填，不为空即可  
-						//header: header, // 可以加access_token等  
-						formData: {
+						header:{
+							"Content-Type":"application/x-www-form-urlencoded"
+						},
+						method:"POST",
+						data: {
 							name: this.name,
 							cardNo: this.cardNo
 						}, // 接口参数，json格式，底层自动转为FormData的格式数据  
@@ -164,7 +143,14 @@
 								})
 							}
 					
+						},
+						fail:(err)=>{
+							console.log(err)
 						}
+					})
+				}else{
+					uni.showToast({
+						title:"未勾选协议。"
 					})
 				}
 

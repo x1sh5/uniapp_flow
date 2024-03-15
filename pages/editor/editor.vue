@@ -137,22 +137,22 @@
 						//res.dalta.ops[x].attributes.alt === "图像"
 						let images = res.delta.ops.filter(item => item.attributes && item.attributes.alt ===
 							"图像")
-						const lastFiles = this.files.filter(itemB => {
-							return images.some(itemA => itemA.attributes["data-local"] === itemB.path);
-						});
+						// const lastFiles = this.files.filter(itemB => {
+						// 	return images.some(itemA => itemA.attributes["data-local"] === itemB.path);
+						// });
 						//if(file.path = res.dalta.ops[x].attributes.data-local)
 						const pages = getCurrentPages();
 						if (pages.length >= 2) {
 							// #ifdef H5
-							this.newTask = pages[pages.length - 2]; // 获取页面A的实例
+							const newTask = pages[pages.length - 2]; // 获取页面A的实例
 							// #endif
 
 							// #ifdef MP-WEIXIN
-							this.newTask = pages[pages.length - 1]; // 获取页面A的实例
+							const newTask = pages[pages.length - 1]; // 获取页面A的实例
 							// #endif
-							this.newTask.$vm.updateTask(this.id, {
+							newTask.$vm.updateTask(this.id, {
 								ctx: res,
-								files: lastFiles
+								files: images//lastFiles
 							}); // 修改页面A的属性a1的值
 						}
 					}
@@ -226,29 +226,63 @@
 				})
 			},
 			insertImage() {
-				uni.chooseImage({
-					count: 1,
 
-					sizeType: ['compressed'],
+				// #ifdef MP-WEIXIN
+				wx.chooseMessageFile({
+					count:1,
+					type:"image",
 					success: (res) => {
+						console.log(res);
 						let file = res.tempFiles[0]; //文件
-						this.files.push(file)
 						if (file.size > 3 * 1024 * 1024) {
 							uni.showModal({
 								content: "文件大于3Mb"
 							})
-						} else {
+						}
+						else {
+							this.files.push(file)
 							this.editorCtx.insertImage({
-								src: res.tempFilePaths[0],
+								src: file.path,
 								alt: '图像',
 								success: function() {
 									console.log('insert image success')
 								}
 							})
 						}
-
+					},
+					fail: (err) => {
+						console.log(err)
 					}
 				})
+				// #endif
+				
+				// #ifdef H5
+				uni.chooseImage({
+					count: 1,
+				
+					sizeType: ['compressed'],
+					success: (res) => {
+						let file = res.tempFiles[0]; //文件
+						if (file.size > 3 * 1024 * 1024) {
+							uni.showModal({
+								content: "文件大于3Mb"
+							})
+						} 
+						else {
+							this.files.push(file)
+							this.editorCtx.insertImage({
+								src: file.path,
+								alt: '图像',
+								success: function() {
+									console.log('insert image success')
+								}
+							})
+						}
+				
+					}
+				})
+				// #endif
+
 			},
 			setTaskContent() {
 				const pages = getCurrentPages();

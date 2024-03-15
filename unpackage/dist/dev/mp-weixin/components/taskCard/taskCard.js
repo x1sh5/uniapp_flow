@@ -1,6 +1,8 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 require("../../common/storageKeys.js");
+require("../../common/ossutil.js");
+require("../../common/const.js");
 const _sfc_main = {
   name: "taskCard",
   props: {
@@ -13,7 +15,7 @@ const _sfc_main = {
           "branchid": 1,
           "description": "",
           "finishtime": "0001-01-01T00:00:00",
-          "deadline": "",
+          "deadline": "0001-01-01T00:00:00",
           "fixedReward": "",
           "percentReward": "",
           "publishtime": "0001-01-01T00:00:00",
@@ -73,27 +75,13 @@ const _sfc_main = {
       this.content.html = value;
     },
     updateT(payload) {
-      for (let file of payload.files) {
-        payload.ctx.delta.ops.indexOf((x) => x.attributes && x.attributes["data-local"] === file.path);
-        common_vendor.index.uploadFileWithCookie({
-          url: this.$store.state.apiBaseUrl + "/api/Image/upload",
-          filePath: file.path,
-          name: file.name,
-          success: (res) => {
-            let data = JSON.parse(res.data);
-            if (("" + res.statusCode).startsWith("2")) {
-              let search = '<img src="' + file.path + '" data-local="' + file.path + '" alt="图像">';
-              let replace = '<img src="' + this.$store.state.apiBaseUrl + "/flow/static/" + data.$values[0].url + '">';
-              let newHtml = payload.ctx.html.replace(search, replace);
-              this.$refs.cardinfo.updateDes(newHtml);
-            }
-          }
-        });
-      }
-      this.content = payload.ctx;
+      this.content = payload;
     },
     check() {
       return this.$refs.cardinfo.check();
+    },
+    preprocess(e) {
+      return this.$refs.cardinfo.preprocess(e);
     },
     checkResult(data) {
       this.$emit("check-Result", data);
@@ -107,6 +95,11 @@ const _sfc_main = {
     },
     removeTask(e) {
       this.$emit("remove-task", e);
+    },
+    taskDetail(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/taskContent/taskContent?id=" + this.task.id
+      });
     }
   }
 };
@@ -128,12 +121,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       editable: $props.editable,
       mode: $props.mode
     }),
-    e: $options.html,
-    f: $props.editable
-  }, $props.editable ? {
-    g: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
+    e: !$props.editable
+  }, !$props.editable ? {
+    f: common_vendor.o((...args) => $options.taskDetail && $options.taskDetail(...args))
   } : {}, {
-    h: common_vendor.o((...args) => $options.checkResult && $options.checkResult(...args))
+    g: $props.editable
+  }, $props.editable ? {
+    h: common_vendor.o((...args) => $options.editEvent && $options.editEvent(...args))
+  } : {}, {
+    i: common_vendor.o((...args) => $options.checkResult && $options.checkResult(...args))
   });
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/taskCard/taskCard.vue"]]);

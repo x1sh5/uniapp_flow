@@ -9,7 +9,7 @@
 .lgtip-up-button{
   transform: translate(0rpx, 10rpx) scale(1);
     border: 1px solid  #6c4ad1;
-    border-radius:40rpx; /* 新增：设置按钮边框为圆角 */
+    border-radius:0rpx; /* 新增：设置按钮边框为圆角 */
     width: 250rpx;
     height: 70rpx;
     color: rgb(255, 255, 255); /* 新增：设置按钮文字颜色为白色 */
@@ -29,7 +29,7 @@
 .lgtip-button{
   transform: translate(0rpx, 0rpx) scale(1);
   border: 1px solid  #6c4ad1;
-  border-radius: 20px; /* 新增：设置按钮边框为圆角 */
+  border-radius: 0rpx; /* 新增：设置按钮边框为圆角 */
   width: 250rpx;
   height: 70rpx;
   margin-top: -65rpx;
@@ -52,4 +52,8 @@
 bottom: 0;
 left: 0;
 right: 0;
+}
+.container {
+	  display: flex;
+	  flex-wrap: wrap;
 }

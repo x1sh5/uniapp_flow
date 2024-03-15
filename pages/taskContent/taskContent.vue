@@ -1,5 +1,5 @@
 <template>
-	<web-view :src="url"></web-view>
+	<web-view v-if="loaded" :src="url"></web-view>
 </template>
 
 <script>
@@ -10,7 +10,8 @@
 	export default {
 		data() {
 			return {
-				
+				url:null,
+				loaded:false
 			}
 		},
 		methods: {
@@ -20,7 +21,14 @@
 			let domain = baseUrl.split("/")[2].split(":")[0];
 			let cookie = cookieManager.default.getRequestQueries(domain,"/")
 			this.url = baseUrl+"/api/Assignment/content/" +param.id+"?"+cookie
+
+		},
+		onReady() {
+			if(!this.loaded){
+				this.loaded = true
+			}
 		}
+		
 	}
 </script>
 

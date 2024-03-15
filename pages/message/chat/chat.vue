@@ -100,7 +100,7 @@ import { v3 } from "uuid";
 			},
 			sendImg(e) {
 				// #ifdef MP-WEIXIN
-				uni.chooseMessageFile({
+				wx.chooseMessageFile({
 					count:3,
 					success:(res)=>{
 						const tempFilePaths = res.tempFiles;

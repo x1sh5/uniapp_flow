@@ -2,7 +2,7 @@
 const common_vendor = require("../../../../common/vendor.js");
 const _sfc_main = {
   name: "uni-data-select",
-  mixins: [common_vendor.Bs.mixinDatacom || {}],
+  mixins: [common_vendor.Ws.mixinDatacom || {}],
   props: {
     localdata: {
       type: Array,
@@ -30,7 +30,7 @@ const _sfc_main = {
     },
     placeholder: {
       type: String,
-      default: "请选择"
+      default: "选择卡片类型"
     },
     emptyTips: {
       type: String,
@@ -169,13 +169,19 @@ const _sfc_main = {
       return isDisabled;
     },
     statusDisable(e) {
-      if (e === true) {
-        this.current = "";
-      }
-      this.current;
       for (let x of this.localdata) {
-        if (x.name !== "审核") {
-          x.disable = e;
+        if (e === false) {
+          this.current = "";
+          if (x.name === "制作") {
+            x.disable = true;
+          } else {
+            x.disable = false;
+          }
+        } else if (e === true && x.name !== "审核") {
+          this.current = "";
+          x.disable = true;
+        } else {
+          x.disable = false;
         }
       }
     },

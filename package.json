@@ -15,6 +15,7 @@
     "@types/eventsource": "^1.1.8",
     "@types/node": "^20.4.5",
     "@types/tough-cookie": "^4.0.0",
+    "base64-arraybuffer": "^1.0.2",
     "copy-webpack-plugin": "^11.0.0",
     "dayjs": "^1.11.10",
     "encode-utf8": "^2.0.0",

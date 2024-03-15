@@ -5,6 +5,9 @@
 .columnlayout {
   display: flex;
   flex-direction: column;
+  height: 200rpx;
+  transform: skewX(-15deg);
+  /* 在水平方向上倾斜 -15 度 */
 }
 .bluecolor {
   color: blue;
@@ -62,25 +65,25 @@
   color: #1e1ef5;
 }
 .bid1 {
-  color: #31c695;
-}
-.bid2 {
   color: #3734c1;
 }
+.bid2 {
+  color: #046ef1;
+}
 .bid3 {
-  color: #000000;
+  color: #31c695;
 }
 .bid4 {
   color: #1ebdd7;
 }
 .bid5 {
-  color: #046ef1;
+  color: #c5308b;
 }
 .bid6 {
-  color: #e0bb45;
+  color: #f3af00;
 }
 .bid7 {
-  color: #d169cd;
+  color: #000000;
 }
 .r12c13 {
   display: block;
@@ -125,7 +128,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #53cfa5 0%, #62d3a0 100%);
+  background-image: -webkit-linear-gradient(-90deg, #5654ca 0%, #6a77d1 100%);
 }
 .task2:before {
   display: block;
@@ -139,7 +142,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #5654ca 0%, #6a77d1 100%);
+  background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
 }
 .task3:before {
   display: block;
@@ -153,7 +156,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #000000 0%, #242121 100%);
+  background-image: -webkit-linear-gradient(-90deg, #53cfa5 0%, #62d3a0 100%);
 }
 .task4:before {
   display: block;
@@ -181,7 +184,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
+  background-image: -webkit-linear-gradient(-90deg, #d457a4 0%, #d96bbc 100%);
 }
 .task6:before {
   display: block;
@@ -195,7 +198,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #e0bb45 0%, #daaf22 100%);
+  background-image: -webkit-linear-gradient(-90deg, #e0bb45 0%, #f6ae3b 100%);
 }
 .task7:before {
   display: block;
@@ -209,16 +212,7 @@
   -webkit-clip-path: circle(75% at 100% 0%);
   clip-path: circle(75% at 100% 0%);
   z-index: -1;
-  background-image: -webkit-linear-gradient(-90deg, #2d87f3 0%, #42a7f4 100%);
-}
-.tasktype {
-  display: block;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-size: 2cm;
-  font-style: italic;
-  color: #ff0000;
+  background-image: -webkit-linear-gradient(-90deg, #000000 0%, #242121 100%);
 }
 .title {
   color: black;
@@ -251,21 +245,26 @@
   margin-right: 0rpx;
   height: 40rpx;
   width: 160rpx;
+  font-weight: bold;
+  /* 加粗文字 */
 }
 /*一句话*/
 .brief {
   display: block;
   position: absolute;
   z-index: 3;
-  color: #818181;
+  color: #000000;
   margin-top: 40rpx;
   height: 130rpx;
-  width: 400rpx;
+  width: 320rpx;
   white-space: pre-wrap;
   grid-row-start: 2;
   grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 1;
+  font-weight: bold;
+  /* 加粗文字 */
+  color: #000;
 }
 .margin-top5 {
   display: block;
@@ -282,13 +281,20 @@
 .presumedtime {
   display: block;
   position: absolute;
-  z-index: 2;
+  z-index: 30;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 1;
   margin-top: -40rpx;
   margin-bottom: 0rpx;
+}
+/*预计工时   */
+.t {
+  top: 4rpx;
+  width: 200rpx;
+  color: black;
+  /* 设置文字颜色为黑色 */
 }
 .rowlayout-y {
   display: block;
@@ -328,6 +334,7 @@
   font-size: 24rpx;
   height: 40rpx;
   width: 130rpx;
+  color: #000;
 }
 /*回馈值选择框*/
 .reward {
@@ -337,33 +344,34 @@
   border-bottom: 1px dashed gray;
   flex-basis: 20rpx;
   text-align: center;
-  margin-left: -40px;
+  margin-left: -30px;
   font-size: 20rpx;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 3;
   grid-column-end: 3;
   height: 40rpx;
-  width: 60rpx;
+  width: 70rpx;
+  color: #000;
 }
 /*回馈值选择框*/
 .s {
   display: block;
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   border-bottom: 1px dashed gray;
   flex-basis: 20rpx;
   text-align: center;
   margin-top: 30rpx;
-  margin-left: -50rpx;
-  font-size: 20rpx;
+  margin-left: -60rpx;
+  font-size: 34rpx;
   grid-row-start: 3;
   grid-row-end: 3;
   grid-column-start: 3;
   grid-column-end: 3;
-  height: 40rpx;
-  width: 60rpx;
-  background-color: #2d87f3;
+  height: 0rpx;
+  width: 0rpx;
+  background-color: #ffffff;
 }
 /*大标题*/
 .bigtype {
@@ -392,10 +400,14 @@
   display: block;
   position: absolute;
   margin-right: 1px;
+  font-weight: bold;
+  /* 加粗文字 */
 }
 /*卡片类型*/
 .department {
   margin-right: 1px;
+  font-weight: bold;
+  /* 加粗文字 */
   display: block;
   position: absolute;
   position: relative;
@@ -432,6 +444,8 @@
   display: block;
   position: absolute;
   margin-right: 1px;
+  font-weight: bold;
+  /* 加粗文字 */
   padding-bottom: 10rpx;
   grid-row: 0.8;
   grid-column: 0.2;

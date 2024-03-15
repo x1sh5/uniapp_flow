@@ -61,7 +61,7 @@
 				"id": 0,
 				"branchid": branchType,
 				"description": "",
-				"finishtime": "",
+				"finishtime": "0001-01-01T00:00:00",
 				"deadline": new Date().toISOString().slice(0, 10),
 				"publishtime": "0001-01-01T00:00:00",
 				"fixedReward": 0,
@@ -155,7 +155,7 @@
 
 				}
 				for(const t of this.tasks){
-					this.$refs['id' + item.id][0].preprocess()
+					this.$refs['id' + t.id][0].preprocess()
 				}
 				
 				if (this.results.length > 0 && this.results.every(ele => Boolean(ele))) {
@@ -210,7 +210,7 @@
 					"username": false,
 					"branchid": 1,
 					"description": "",
-					"finishtime": "",
+					"finishtime": "0001-01-01T00:00:00",
 					"deadline": new Date().toISOString().slice(0, 10),
 					"publishtime": "0001-01-01T00:00:00",
 					"fixedReward": 0,
@@ -230,7 +230,7 @@
 				let index = this.tasks.findIndex((item) => item.id === parseInt(id));
 
 				if (index !== -1) {
-					this.tasks[index].description = payload.html;
+					this.tasks[index].description = payload.ctx.html;
 					this.$refs['id' + id][0].updateT(payload);
 				}
 

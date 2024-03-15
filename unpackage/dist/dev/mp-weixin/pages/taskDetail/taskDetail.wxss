@@ -58,23 +58,71 @@
 		margin-top: 10rpx;
 }
 	/* 相关任务 */
-.tasktyp2{
-	z-index: 1;
+.tasktype {
 		display: flex;
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+		z-index: 9;
+		bottom: 1rpx;
+		right: 1rpx;
+		font-size: 24rpx;
+		/*font-style: italic; 斜体 */
+		font-weight: 900;
+		color: #723de4;
+		text-decoration: underline;
+		/* 添加下划线 */
+		text-decoration-thickness: 15rpx;
+		/* 设置下划线的粗细 */
+}
+.l {
+		z-index: 10;
 	
-			  justify-content: center;  
-			  align-items: center; 
-			  
-			  z-index: 3;
-			  bottom: 1rpx;
-			  right: 1rpx;
-			  font-size: 39rpx;
-			  /*font-style: italic; 斜体 */
-				   margin-top: 8rpx;
-			  font-weight: 900;
-			  color: #4d1ae4;
-			  text-decoration: underline; /* 添加下划线 */
-			  text-decoration-thickness: 15rpx; /* 设置下划线的粗细 */
+		display: flex;
+		/* 使用Flex布局 */
+		justify-content: center;
+		/* 水平居中 */
+		align-items: center;
+		/* 垂直居中 */
+	
+		transform: translate(0rpx, 0rpx) scale(1);
+	
+		border: 10px solid #6c4ad1;
+		border-radius: 0rpx;
+		/*设置按钮边框为圆角 */
+		border: none;
+	
+		width: 700rpx;
+		height: 80rpx;
+	
+		color: rgb(255, 255, 255);
+		background-color: #4d1ae4;
+		font-size: 30rpx;
+		text-align: center;
+		/* top: calc(150vh - 350rpx);
+	   */
+	
+	
+		margin-left: -120px;
+		margin-top: 0rpx;
+		box-shadow: 0ch;
+		padding-left: 400rpx;
+		box-shadow: 0px 5px 2px rgba(116, 116, 116, 0.5);
+		background-image: -webkit-linear-gradient(0deg, #4d1ae4 0%, #886cdb 100%);
+}
+.s {
+		z-index: 10;	height: 70rpx; 	align-items: center;
+		display: flex;
+		margin-left: 0rpx;
+		transform: translate(480rpx, -20rpx) scale(1);
+		margin-top: -30rpx;
+		padding-left: 15px;
+		/* 右缩进 */
+		border: 1rpx solid #6c4ad1;border-radius: 0px; 
+		background-color: rgb(255, 255, 255);
+		color: #4723b3;
+		font-size: 14rpx;
 }
 .detail-btn1 {
 			position: fixed;

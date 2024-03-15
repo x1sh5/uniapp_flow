@@ -1,6 +1,8 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 require("../../common/storageKeys.js");
+const common_ossutil = require("../../common/ossutil.js");
+require("../../common/const.js");
 const _sfc_main = {
   data() {
     return {
@@ -24,27 +26,25 @@ const _sfc_main = {
         itemList: ["选择文件"],
         success: (e2) => {
           if (e2.tapIndex === 0) {
-            common_vendor.index.chooseImage({
+            common_vendor.wx$1.chooseMessageFile({
               count: 1,
-              crop: {
-                with: 800,
-                height: 800
-              },
-              success: (e3) => {
-                if (e3.tempFiles[0].size > 5 * 1024 * 1024) {
+              type: "image",
+              success: (res) => {
+                let fileinfo = res.tempFiles[0];
+                if (fileinfo.size > 2 * 1024 * 1024) {
                   common_vendor.index.showToast({
-                    title: "图片大小超过5M,请重新选择。"
+                    title: "图片大小超过2M,请重新选择。"
                   });
                   return;
                 }
-                common_vendor.index.uploadFile({
-                  name: "user-avatar",
-                  filePath: e3.tempFilePaths[0],
-                  url: this.$store.state.apiBaseUrl + "/api/Image/upload",
-                  success: (res) => {
-                    if (res.statusCode === 201) {
+                let fmana = common_vendor.wx$1.getFileSystemManager();
+                fmana.readFile({ filePath: fileinfo.path, success: (file) => {
+                  console.log(file);
+                  fileinfo.data = file.data;
+                  common_ossutil.uploadFile(fileinfo, "images/", (resl) => {
+                    if (res.statusCode === 200) {
                       let data = JSON.parse(res.data);
-                      let imgurl = this.$store.state.apiBaseUrl + data[0].url;
+                      let imgurl = this.$store.state.apiBaseUrl + data.url;
                       this.$store.commit("setUserAvatar", imgurl);
                       common_vendor.index.requestWithCookie({
                         url: this.$store.state.apiBaseUrl + "/api/AuthUser/setavatar?avatar=" + encodeURIComponent(imgurl),
@@ -53,8 +53,11 @@ const _sfc_main = {
                         }
                       });
                     }
-                  }
-                });
+                  });
+                } });
+              },
+              fail: (err) => {
+                console.log(err);
               }
             });
           }
@@ -95,7 +98,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.t(_ctx.Nickname),
     d: common_vendor.o((...args) => $options.nicknameSetting && $options.nicknameSetting(...args)),
     e: common_vendor.o((...args) => $options.signatureSetting && $options.signatureSetting(...args)),
-    f: common_vendor.o((...args) => $options.emailBind && $options.emailBind(...args))
+    f: common_vendor.o((...args) => _ctx.toinstructions && _ctx.toinstructions(...args)),
+    g: common_vendor.o((...args) => _ctx.toinstructions && _ctx.toinstructions(...args)),
+    h: common_vendor.o((...args) => $options.emailBind && $options.emailBind(...args)),
+    i: common_vendor.o((...args) => $options.unregister && $options.unregister(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/settings/settings.vue"]]);

@@ -8,7 +8,7 @@ export const Publish = {
 			  "branchid": 1,
 			  "description": "",
 			  "finishtime": "0001-01-01T00:00:00",
-			  "deadline": '',
+			  "deadline": '0001-01-01T00:00:00',
 			  "publishtime": "0001-01-01T00:00:00",
 			  "fixedReward": '',
 			  "percentReward": '',

@@ -39,7 +39,6 @@ const _sfc_main = {
           type: 0
         },
         success: (ret) => {
-          console.log(JSON.stringify(ret));
         }
       });
     }

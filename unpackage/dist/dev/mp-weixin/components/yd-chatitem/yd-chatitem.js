@@ -13,7 +13,7 @@ const _sfc_main = {
     message: Object,
     icon: {
       type: String,
-      default: "../../static/logo.png"
+      default: "/static/logo.png"
     },
     bubbleColor: {
       type: String,
@@ -81,6 +81,31 @@ const _sfc_main = {
       common_vendor.index.navigateTo({
         url: "/pages/userhomepage/userhomepage?id="
       });
+    },
+    fileview(e) {
+      let fpath = this.$store.getters["FileCache/getFile"](this.message.content);
+      if (fpath) {
+        common_vendor.index.getFileSystemManager().getFileInfo({
+          filePath: res.tempFilePath
+        });
+      } else {
+        common_vendor.index.downloadFile({
+          url: this.message.content,
+          success: (res2) => {
+            common_vendor.index.getFileSystemManager().saveFile({
+              tempFilePath: res2.tempFilePath,
+              success: (resl) => {
+                this.$store.commit("FileCache/add", this.message.content, resl.savedFilePath);
+              },
+              fail() {
+                common_vendor.index.showToast({
+                  title: "文件保存失败！"
+                });
+              }
+            });
+          }
+        });
+      }
     }
   },
   beforeMount() {
@@ -119,27 +144,45 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     p: $options.imgHeight,
     q: $options.imgsrc
   } : {}, {
-    r: $props.bgColor
+    r: $props.message.contentType == "file"
+  }, $props.message.contentType == "file" ? {
+    s: $props.bubbleColor,
+    t: common_vendor.t($props.message.fileName),
+    v: common_vendor.o((...args) => $options.fileview && $options.fileview(...args)),
+    w: $props.bubbleColor,
+    x: $props.messageSize,
+    y: $props.messageColor
+  } : {}, {
+    z: $props.bgColor
   }) : common_vendor.e({
-    s: common_vendor.t($props.nickname),
-    t: $props.nameSize,
-    v: $props.nameColor,
-    w: $props.message.contentType == "string"
+    A: common_vendor.t($props.nickname),
+    B: $props.nameSize,
+    C: $props.nameColor,
+    D: $props.message.contentType == "string"
   }, $props.message.contentType == "string" ? {
-    x: $props.bubbleColor,
-    y: common_vendor.t($props.message.content),
-    z: $props.bubbleColor,
-    A: $props.messageSize,
-    B: $props.messageColor
+    E: $props.bubbleColor,
+    F: common_vendor.t($props.message.content),
+    G: $props.bubbleColor,
+    H: $props.messageSize,
+    I: $props.messageColor
   } : {}, {
-    C: $props.message.contentType == "img"
+    J: $props.message.contentType == "img"
   }, $props.message.contentType == "img" ? {
-    D: common_vendor.o((...args) => $options.preview && $options.preview(...args)),
-    E: $options.imgWidth,
-    F: $options.imgHeight,
-    G: $options.imgsrc
+    K: common_vendor.o((...args) => $options.preview && $options.preview(...args)),
+    L: $options.imgWidth,
+    M: $options.imgHeight,
+    N: $options.imgsrc
   } : {}, {
-    H: $props.icon
+    O: $props.message.contentType == "file"
+  }, $props.message.contentType == "file" ? {
+    P: $props.bubbleColor,
+    Q: common_vendor.t($props.message.fileName),
+    R: common_vendor.o((...args) => $options.fileview && $options.fileview(...args)),
+    S: $props.bubbleColor,
+    T: $props.messageSize,
+    U: $props.messageColor
+  } : {}, {
+    V: $props.icon
   }));
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e72a33f9"], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/yd-chatitem/yd-chatitem.vue"]]);

@@ -108,7 +108,8 @@
 <script>
 	import {
 		RewardType
-	} from '../../common/Task'
+	} from '../../common/Task';
+	import { uploadFile } from '../../common/ossutil.js';
 	export default {
 		name: "cardinfo",
 		props: {
@@ -281,7 +282,6 @@
 			
 			   handleTimeChange(e) {
 			       // 处理时间变化
-			       console.log('选中的时间：', e.detail.value);
 			       this.selectedTime = e.detail.value;
 			     },
 			     addZero(num) {
@@ -412,9 +412,10 @@
 
 			},
 			preprocess(e){
-				const payload = this.task.description
+				const payload = this.task.description;
+				let contentHtml = payload.ctx.html;
+				this.updateDes(contentHtml);
 				for (let file of payload.files) {
-					let index = payload.ctx.delta.ops.indexOf(x => x.attributes && x.attributes["data-local"] === file.path);
 					uploadFile(file,"images/", (resl)=>{
 						if(resl.statusCode === 200){
 							uni.showToast({
@@ -425,7 +426,7 @@
 							let replace = "<img src=\"" + resl.data.url + "\">"
 							
 							let newHtml = payload.ctx.html.replace(search, replace)
-							this.$refs.cardinfo.updateDes(newHtml)
+							this.updateDes(newHtml)
 							//console.log(resl.data.url)
 						}else{
 							uni.showToast({

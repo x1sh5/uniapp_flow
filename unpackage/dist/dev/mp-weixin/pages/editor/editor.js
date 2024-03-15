@@ -14,7 +14,7 @@ const _sfc_main = {
     this.id = options.id;
     common_vendor.index.loadFontFace({
       family: "Pacifico",
-      source: 'url("../../static/Pacifico.ttf")'
+      source: 'url("../../../static/Pacifico.ttf")'
     });
   },
   mounted() {
@@ -27,15 +27,13 @@ const _sfc_main = {
       this.editorCtx.getContents({
         success: (res) => {
           let images = res.delta.ops.filter((item) => item.attributes && item.attributes.alt === "图像");
-          const lastFiles = this.files.filter((itemB) => {
-            return images.some((itemA) => itemA.attributes["data-local"] === itemB.path);
-          });
           const pages = getCurrentPages();
           if (pages.length >= 2) {
-            this.newTask = pages[pages.length - 1];
-            this.newTask.$vm.updateTask(this.id, {
+            const newTask = pages[pages.length - 1];
+            newTask.$vm.updateTask(this.id, {
               ctx: res,
-              files: lastFiles
+              files: images
+              //lastFiles
             });
           }
         }
@@ -48,7 +46,7 @@ const _sfc_main = {
     onEditorReady() {
       common_vendor.index.createSelectorQuery().select("#editor").context((res) => {
         this.editorCtx = res.context;
-        this.editorCtx.setContents(this.$store.state.$currentContent);
+        this.editorCtx.setContents(this.$store.state.$currentContent.ctx);
       }).exec();
     },
     undo() {
@@ -103,32 +101,42 @@ const _sfc_main = {
       });
     },
     insertImage() {
-      common_vendor.index.chooseImage({
+      common_vendor.wx$1.chooseMessageFile({
         count: 1,
-        sizeType: ["compressed"],
+        type: "image",
         success: (res) => {
+          console.log(res);
           let file = res.tempFiles[0];
-          this.files.push(file);
-          if (file.size > 5 * 1024 * 1024) {
+          if (file.size > 3 * 1024 * 1024) {
             common_vendor.index.showModal({
-              content: "文件大于5Mb"
+              content: "文件大于3Mb"
             });
           } else {
+            this.files.push(file);
             this.editorCtx.insertImage({
-              src: res.tempFilePaths[0],
+              src: file.path,
               alt: "图像",
+              data:{ 
+                name:file.name,
+                size:file.size,
+                type:file.type,
+                time:file.time
+              },
               success: function() {
                 console.log("insert image success");
               }
             });
           }
+        },
+        fail: (err) => {
+          console.log(err);
         }
       });
     },
     setTaskContent() {
       const pages = getCurrentPages();
       if (pages.length >= 2) {
-        const newTask = pages[pages.length - 2];
+        const newTask = pages[pages.length - 1];
         newTask.tasks[this.id].description = "new value";
       }
     }

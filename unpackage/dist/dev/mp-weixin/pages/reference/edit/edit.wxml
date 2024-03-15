@@ -1,1 +1,1 @@
-<view><refer wx:if="{{a}}" u-i="ada14bbc-0" bind:__l="__l" u-p="{{a}}"></refer></view><view><button style="width:80px;height:40px" bindtap="{{b}}">提交</button></view>
+<view><refer wx:if="{{a}}" u-i="ada14bbc-0" bind:__l="__l" u-p="{{a}}"></refer></view><view><button class="commit-btn" bindtap="{{b}}">提交</button></view>

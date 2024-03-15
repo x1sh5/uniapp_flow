@@ -1,6 +1,8 @@
 "use strict";
 const common_vendor = require("../../../common/vendor.js");
 const common_customTypes = require("../../../common/customTypes.js");
+const common_ossutil = require("../../../common/ossutil.js");
+require("../../../common/const.js");
 const _sfc_main = {
   data() {
     return {
@@ -9,8 +11,9 @@ const _sfc_main = {
       userName: "",
       userId: NaN,
       //发卡人id
-      calcHeight: NaN
+      calcHeight: NaN,
       //计算后的scrollview高度
+      img_src: ""
       //messages:[],
     };
   },
@@ -23,6 +26,22 @@ const _sfc_main = {
         return false;
       }
       return true;
+    },
+    imgsrc() {
+      if (!this.img_src) {
+        common_vendor.index.requestWithCookie({
+          url: this.$store.state.apiBaseUrl + "/api/AuthUser/avatar?id=" + this.userId,
+          success: (res) => {
+            if (res.statusCode === 200) {
+              this.img_src = res.data;
+            }
+          }
+        });
+      }
+      return this.img_src;
+    },
+    meAvatar() {
+      return this.$store.state.useravatar;
     }
   },
   methods: {
@@ -35,22 +54,33 @@ const _sfc_main = {
       this.$store.dispatch("sendMsg", {
         user: this.userId,
         message: this.text1,
-        contentType: "string"
+        contentType: "string",
+        fileName: ""
       });
       this.text1 = "";
     },
     sendImg(e) {
-      this.$store.dispatch("upload").then((res) => {
-        let o = JSON.parse(res.data);
-        this.$store.dispatch("sendMsg", {
-          user: this.userId,
-          message: o[0].url,
-          contentType: "img"
-        });
-      }).catch((err) => {
-        common_vendor.index.showToast({
-          title: err.message
-        });
+      common_vendor.wx$1.chooseMessageFile({
+        count: 3,
+        success: (res) => {
+          const tempFilePaths = res.tempFiles;
+          for (const file of tempFilePaths) {
+            common_ossutil.uploadFile(file, "files/", (resl) => {
+              if (resl.statusCode === 200) {
+                this.$store.dispatch("sendMsg", {
+                  user: this.userId,
+                  message: resl.data.url,
+                  contentType: file.type.split("/")[0] == "image" ? "img" : "file",
+                  fileName: file.name
+                });
+              } else {
+                common_vendor.index.showToast({
+                  title: file.name + " :上传失败！"
+                });
+              }
+            });
+          }
+        }
       });
     },
     back(e) {
@@ -58,14 +88,14 @@ const _sfc_main = {
     },
     receiveOld() {
       let lastid = this.messages[0].cid;
-      let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&lastid=" + lastid + "&count=10";
+      let qurl = this.$store.state.apiBaseUrl + "/api/messages/each?receiverId=" + this.userId + "&lastid=" + lastid + "&count=10";
       common_vendor.index.requestWithCookie({
         url: qurl,
         success: (res) => {
           if (res.statusCode === 200) {
             for (let m of res.data) {
-              this.$store.dispatch("receiveMsg", {
-                user: m.from,
+              this.$store.dispatch("eachMsg", {
+                userid: m.from,
                 message: m
               });
             }
@@ -88,14 +118,13 @@ const _sfc_main = {
     this.calcHeight = info.windowHeight * 96 / 100 - 66 - 74;
     let hasLoad = this.$store.getters["Msgs/getHasFirstLoad"](this.userId);
     if (!hasLoad) {
-      let qurl = this.$store.state.apiBaseUrl + "/api/messages/receives?receiverId=" + this.userId + "&count=10";
+      let qurl = this.$store.state.apiBaseUrl + "/api/messages/each?receiverId=" + this.userId + "&count=10";
       common_vendor.index.requestWithCookie({
         url: qurl,
         success: (res) => {
           if (res.statusCode === 200) {
             for (let m of res.data) {
-              this.$store.dispatch("receiveMsg", {
-                user: m.from,
+              this.$store.dispatch("eachMsg", {
                 message: m
               });
             }
@@ -138,34 +167,22 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         c: common_vendor.p({
           message: m,
           isLeft: m.isLeft,
+          icon: m.isLeft ? $options.imgsrc : $options.meAvatar,
           bgColor: "#f7f7f7",
           userId: m.id
         })
       };
     }),
-    d: common_vendor.f($options.messages, (m, k0, i0) => {
-      return {
-        a: m.id,
-        b: "185b4e5e-2-" + i0,
-        c: common_vendor.p({
-          message: m,
-          isLeft: m.isLeft,
-          icon: m.isLeft ? _ctx.imgsrc : _ctx.me_avatar,
-          bgColor: "#f7f7f7",
-          userId: m.id
-        })
-      };
-    }),
-    e: common_vendor.s(`height:${$data.calcHeight}px`),
-    f: common_vendor.o((...args) => $options.receiveOld && $options.receiveOld(...args)),
-    g: common_vendor.o((...args) => $options.scrollDown && $options.scrollDown(...args)),
-    h: $data.text1,
-    i: common_vendor.o(($event) => $data.text1 = $event.detail.value),
-    j: $options.canSend,
-    k: common_vendor.o((...args) => $options.sendImg && $options.sendImg(...args)),
-    l: !$options.canSend,
-    m: $options.canSend,
-    n: common_vendor.o((...args) => $options.send && $options.send(...args))
+    d: common_vendor.s(`height:${$data.calcHeight}px`),
+    e: common_vendor.o((...args) => $options.receiveOld && $options.receiveOld(...args)),
+    f: common_vendor.o((...args) => $options.scrollDown && $options.scrollDown(...args)),
+    g: $data.text1,
+    h: common_vendor.o(($event) => $data.text1 = $event.detail.value),
+    i: $options.canSend,
+    j: common_vendor.o((...args) => $options.sendImg && $options.sendImg(...args)),
+    k: !$options.canSend,
+    l: $options.canSend,
+    m: common_vendor.o((...args) => $options.send && $options.send(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/message/chat/chat.vue"]]);

@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const common_Task = require("../../common/Task.js");
+const common_ossutil = require("../../common/ossutil.js");
 const _sfc_main = {
   name: "cardinfo",
   props: {
@@ -77,7 +78,7 @@ const _sfc_main = {
       return "";
     },
     rewardEditable() {
-      return !this.editable || this.task.main === 1 && this.rewardtype === 2;
+      return !this.editable;
     },
     branch: {
       get() {
@@ -149,14 +150,14 @@ const _sfc_main = {
           {
             text: "￥",
             value: "1",
-            name: "固定",
+            name: "固定金额",
             selected: true,
             disable: this.taskType && this.taskType.rewardType === "only percent"
           },
           {
             text: "%",
             value: "2",
-            name: "百分比",
+            name: "回馈比",
             disable: this.taskType && this.taskType.rewardType === "only fixed"
           }
         ]
@@ -164,6 +165,12 @@ const _sfc_main = {
     }
   },
   methods: {
+    handleTimeChange(e) {
+      this.selectedTime = e.detail.value;
+    },
+    addZero(num) {
+      return num < 10 ? "0" + num : "" + num;
+    },
     branchChange(e) {
       let branchIndex = e.detail.value;
       this.branchIndex = branchIndex;
@@ -259,6 +266,41 @@ const _sfc_main = {
       this.$emit("check-Result", true);
       return;
     },
+    preprocess(payload) {
+      let contentHtml = payload.ctx.html;
+      this.updateDes(contentHtml);
+      let fmana = common_vendor.wx$1.getFileSystemManager();
+      for (let fileinfo of payload.files) {
+        let f = {};
+        if(fileinfo.attributes["data-custom"]){
+          let attrs = fileinfo.attributes["data-custom"].split("&");
+          for(let attr of attrs){
+            let [k,v] = attr.split("=");
+            f[k] = v;
+          }
+        }
+        f["path"] = fileinfo.insert.image;
+        fmana.readFile({ filePath: f.path, success: (file) => {
+          console.log(file);
+          f.data = file.data;
+          common_ossutil.uploadFile(f,"images/", (resl) => {
+            if (resl.statusCode === 200) {
+              common_vendor.index.showToast({
+                title: "上传成功！"
+              });
+              let search = '<img src="' + file.path  + '" alt="图像">';
+              let replace = '<img src="' + resl.data.url + '">';
+              contentHtml = contentHtml.replace(search, replace);
+              this.updateDes(contentHtml);
+            } else {
+              common_vendor.index.showToast({
+                title: file.name + " :上传失败！"
+              });
+            }
+          });
+        } });
+      }
+    },
     put() {
       if (!this.task.title) {
         common_vendor.index.showModal({
@@ -340,19 +382,25 @@ const _sfc_main = {
       //tasktype:"类型",
       vis: false,
       status: ["待接", "待完成", "完成", "公示"],
-      branchIndex: false
+      branchIndex: false,
+      selectedTime: [0, 0, 0],
+      // 默认选择为 0 天 0 时 0 分
+      timeRange: [
+        // 天的范围是 0-365，时和分的范围是 0-23 和 0-59
+        Array.from({ length: 366 }, (_, i) => `${i} 天`),
+        Array.from({ length: 24 }, (_, i) => `${this.addZero(i)} 时`),
+        Array.from({ length: 60 }, (_, i) => `${this.addZero(i)} 分`)
+      ]
     };
   }
 };
 if (!Array) {
-  const _easycom_uni_datetime_picker2 = common_vendor.resolveComponent("uni-datetime-picker");
   const _easycom_uni_data_select2 = common_vendor.resolveComponent("uni-data-select");
-  (_easycom_uni_datetime_picker2 + _easycom_uni_data_select2)();
+  _easycom_uni_data_select2();
 }
-const _easycom_uni_datetime_picker = () => "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.js";
 const _easycom_uni_data_select = () => "../../uni_modules/uni-data-select/components/uni-data-select/uni-data-select.js";
 if (!Math) {
-  (_easycom_uni_datetime_picker + _easycom_uni_data_select)();
+  _easycom_uni_data_select();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -363,51 +411,49 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     e: $options.title,
     f: common_vendor.o((...args) => $options.updateBrief && $options.updateBrief(...args)),
     g: common_vendor.n(`bid${$options.branchid}`),
-    h: common_vendor.t($options.deadline),
-    i: common_vendor.o($options.biupdatePt),
-    j: common_vendor.o(($event) => $options.deadline = $event),
-    k: common_vendor.p({
-      disabled: !$props.editable,
-      type: "datetime",
-      modelValue: $options.deadline
-    }),
-    l: common_vendor.n(`bid${$options.branchid}`),
-    m: $options.rewardEditable,
-    n: $options.reward,
-    o: common_vendor.o(($event) => $options.reward = $event.detail.value),
-    p: common_vendor.t($options.rewardSymbol),
-    q: $props.editable
+    h: common_vendor.t($data.selectedTime[0]),
+    i: common_vendor.t($data.selectedTime[1]),
+    j: common_vendor.t($data.selectedTime[2]),
+    k: $data.selectedTime,
+    l: $data.timeRange,
+    m: common_vendor.o((...args) => $options.handleTimeChange && $options.handleTimeChange(...args)),
+    n: common_vendor.n(`bid${$options.branchid}`),
+    o: $options.rewardEditable,
+    p: $options.reward,
+    q: common_vendor.o(($event) => $options.reward = $event.detail.value),
+    r: common_vendor.t($options.rewardSymbol),
+    s: $props.editable
   }, $props.editable ? {
-    r: common_vendor.o($options.rewardTypeChange),
-    s: common_vendor.p({
+    t: common_vendor.o($options.rewardTypeChange),
+    v: common_vendor.p({
       disabled: $props.task.main === 1,
       localdata: $options.rewardtypeSymbol.options,
       clear: false,
       modelValue: $options.rewardtype,
-      placeholder: "类型"
+      placeholder: "回馈类型"
     })
   } : {}, {
-    t: $props.editable
+    w: $props.editable
   }, $props.editable ? {
-    v: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
+    x: common_vendor.o((...args) => $options.showPopup && $options.showPopup(...args))
   } : {}, {
-    w: !$props.editable,
-    x: $props.task.tag,
-    y: common_vendor.o(($event) => $props.task.tag = $event.detail.value),
-    z: common_vendor.t($options.branch),
-    A: common_vendor.n(`bid${$options.branchid}`),
-    B: common_vendor.t($options.userName),
+    y: !$props.editable,
+    z: $props.task.tag,
+    A: common_vendor.o(($event) => $props.task.tag = $event.detail.value),
+    B: common_vendor.t($options.branch),
     C: common_vendor.n(`bid${$options.branchid}`),
-    D: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
-    E: common_vendor.t($data.status[$props.task.status]),
-    F: common_vendor.s($props.editable ? "display:none" : "display:flex"),
-    G: $data.vis
+    D: common_vendor.t($options.userName),
+    E: common_vendor.n(`bid${$options.branchid}`),
+    F: common_vendor.s($props.editable ? "display:none" : "display:flex;flex-direction: column;"),
+    G: common_vendor.t($data.status[$props.task.status]),
+    H: common_vendor.s($props.editable ? "display:none" : "display:flex"),
+    I: $data.vis
   }, $data.vis ? {
-    H: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
-    I: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
+    J: common_vendor.o((...args) => $options.removeTask && $options.removeTask(...args)),
+    K: common_vendor.o((...args) => $options.exitDel && $options.exitDel(...args))
   } : {}, {
-    J: common_vendor.n(`task${$options.branchid}`),
-    K: common_vendor.o((...args) => $options.detail && $options.detail(...args))
+    L: common_vendor.n(`task${$options.branchid}`),
+    M: common_vendor.o((...args) => $options.detail && $options.detail(...args))
   });
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/components/cardinfo/cardinfo.vue"]]);

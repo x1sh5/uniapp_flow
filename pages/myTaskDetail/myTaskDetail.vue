@@ -36,7 +36,7 @@
 					"branchid": 1,
 					"description": "任务描述",
 					"finishtime": "0001-01-01T00:00:00",
-					"deadline": "",
+					"deadline": "0001-01-01T00:00:00",
 					"publishtime": "0001-01-01T00:00:00",
 					"fixedReward": '',
 					"percentReward": '',
@@ -156,7 +156,6 @@
 								success: (result) => {
 									if (result.statusCode === 200) {
 										let praypay = result.data;
-										console.log(praypay)
 										uni.requestPayment({
 											timeStamp: praypay.timeStamp,
 											nonceStr: praypay.nonceStr,

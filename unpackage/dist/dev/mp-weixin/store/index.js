@@ -3,12 +3,20 @@ const common_vendor = require("../common/vendor.js");
 const common_storageKeys = require("../common/storageKeys.js");
 const store_messages = require("./messages.js");
 const store_reference = require("./reference.js");
+const store_contentUrl = require("./contentUrl.js");
+const store_filecache = require("./filecache.js");
 const common_const = require("../common/const.js");
+new Proxy({}, {
+  get(_, key) {
+    throw new Error(`Module "console" has been externalized for browser compatibility. Cannot access "console.${key}" in client code.  See http://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.`);
+  }
+});
 const signalR = require("../common/signalr.js");
 const store = common_vendor.createStore({
   state: {
     $hasLogin: false,
     $userName: "未登录",
+    userid: void 0,
     introduce: "",
     useravatar: "/static/meactive.png",
     branchs: [],
@@ -100,6 +108,9 @@ const store = common_vendor.createStore({
     setUserName(state2, payload) {
       state2.$userName = payload;
       common_vendor.index.setStorageSync(common_storageKeys.StorageKeys.userName, payload);
+    },
+    setUserId(state2, id2) {
+      state2.userid = parseInt(id2);
     },
     setUserAvatar(state2, payload) {
       state2.useravatar = payload;
@@ -319,12 +330,8 @@ const store = common_vendor.createStore({
     async sendMsg({
       commit,
       state: state2
-    }, {
-      user,
-      message,
-      contentType
-    }) {
-      await state2.workSocket.invoke("SendToUser", user, message, contentType);
+    }, { user, message, contentType, fileName }) {
+      await state2.workSocket.invoke("SendToUser", user, message, contentType, fileName);
       let userId = parseInt(user);
       let chat = state2.messages.get(userId);
       if (typeof chat === "undefined") {
@@ -335,14 +342,7 @@ const store = common_vendor.createStore({
         content: message
       });
     },
-    receiveMsg({
-      commit,
-      state: state2,
-      dispatch
-    }, {
-      user,
-      message
-    }) {
+    receiveMsg({ commit, state: state2, dispatch }, { user, message }) {
       state2.unread += 1;
       common_vendor.index.setTabBarBadge({
         index: 2,
@@ -357,6 +357,24 @@ const store = common_vendor.createStore({
       message.isLeft = true;
       state2.messages.get(userId).push(message);
       dispatch("Msgs/updateAsync", message);
+    },
+    //对话消息
+    async eachMsg({ state: state2 }, { message }) {
+      let cid = parseInt(message.to);
+      if (cid == state2.userid) {
+        cid = parseInt(message.from);
+      }
+      message.cid = cid;
+      let chat = state2.messages.get(cid);
+      if (typeof chat === "undefined") {
+        state2.messages.set(cid, new Array());
+      }
+      if (message.to == state2.userId) {
+        message.isLeft = true;
+      } else {
+        message.isLeft = false;
+      }
+      state2.messages.get(cid).push(message);
     },
     unreadChange({
       state: state2
@@ -407,14 +425,13 @@ const store = common_vendor.createStore({
       state: state2
     }, id2) {
       let qurl = state2.apiBaseUrl + "/api/History";
-      common_vendor.index.uploadFileWithCookie({
+      common_vendor.index.requestWithCookie({
         url: qurl,
-        filePath: "123",
-        // 随便填，不为空即可  
-        name: "123",
-        // 随便填，不为空即可  
-        //header: header, // 可以加access_token等  
-        formData: {
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "POST",
+        data: {
           asgid: id2
         },
         // 接口参数，json格式，底层自动转为FormData的格式数据  
@@ -447,35 +464,37 @@ const store = common_vendor.createStore({
           itemList: ["选择文件"],
           success: (e) => {
             if (e.tapIndex === 0) {
-              common_vendor.index.chooseImage({
+              common_vendor.wx$1.chooseMessageFile({
                 count: 1,
-                crop: {
-                  with: 800,
-                  height: 800
-                },
-                success: (e2) => {
-                  if (e2.tempFiles[0].size > 5 * 1024 * 1024) {
+                type: "image",
+                success: (res) => {
+                  let fileinfo = res.tempFiles[0];
+                  if (fileinfo.size > 2 * 1024 * 1024) {
                     common_vendor.index.showToast({
-                      title: "图片大小超过5M,请重新选择。"
+                      title: "图片大小超过2M,请重新选择。"
                     });
                     return;
                   }
-                  common_vendor.index.uploadFile({
-                    name: "user-avatar",
-                    filePath: e2.tempFilePaths[0],
-                    url: state2.apiBaseUrl + "/api/Image/" + path,
-                    success: (res) => {
-                    },
-                    fail: (err) => {
-                    },
-                    complete: (res) => {
-                      res.filePath = e2.tempFilePaths[0];
-                      resolve(res);
-                    }
-                  });
+                  let fmana = common_vendor.wx$1.getFileSystemManager();
+                  fmana.readFile({ filePath: fileinfo.path, success: (file) => {
+                    fileinfo.data = file.data;
+                    uploadFile(fileinfo, "images/", (resl) => {
+                      if (res.statusCode === 200) {
+                        let data = JSON.parse(res.data);
+                        let imgurl = this.$store.state.apiBaseUrl + data.url;
+                        this.$store.commit("setUserAvatar", imgurl);
+                        common_vendor.index.requestWithCookie({
+                          url: this.$store.state.apiBaseUrl + "/api/AuthUser/setavatar?avatar=" + encodeURIComponent(imgurl),
+                          method: "POST",
+                          success: () => {
+                          }
+                        });
+                      }
+                    });
+                  } });
                 },
                 fail: (err) => {
-                  reject(err);
+                  console.log(err);
                 }
               });
             }
@@ -505,7 +524,9 @@ const store = common_vendor.createStore({
   },
   modules: {
     Msgs: store_messages.Messages,
-    Refer: store_reference.References
+    Refer: store_reference.References,
+    UrlCache: store_contentUrl.ContentUrlCache,
+    FileCache: store_filecache.FileCache
   }
 });
 exports.store = store;

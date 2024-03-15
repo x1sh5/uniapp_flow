@@ -8,10 +8,12 @@ require("./common/weapp-cookie.js");
 require("./common/const.js");
 require("./store/messages.js");
 require("./store/reference.js");
+require("./store/contentUrl.js");
+require("./store/filecache.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/userCenter/userCenter.js";
-  "./pages/addtask/addtask.js";
+  "./pages/addtask/addtaskView.js";
   "./pages/editor/editor.js";
   "./pages/newTask/newTask.js";
   "./pages/message/message.js";
@@ -44,6 +46,8 @@ if (!Math) {
   "./pages/myApply/myApply.js";
   "./pages/order/order.js";
   "./pages/userCenter/about/about.js";
+  "./pages/userCenter/cost/cost.js";
+  "./pages/userCenter/privacy/privacy.js";
   "./pages/userCenter/instructions/instructions.js";
   "./pages/settings/phoneBind/phoneBind.js";
   "./pages/settings/emailBind/emailBind.js";
@@ -51,6 +55,9 @@ if (!Math) {
   "./pages/settings/signature/signature.js";
   "./pages/register/accountInfo/accountInfo.js";
   "./pages/register/v2/v2.js";
+  "./pages/register/livedetect/livedetect.js";
+  "./pages/test/test.js";
+  "./pages/taskContent/taskContent.js";
 }
 const _sfc_main = {
   async beforeCreate() {

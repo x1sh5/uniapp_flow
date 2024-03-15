@@ -31,6 +31,15 @@
 	line-height: 48rpx;
 	color: #fa4126;
 }
+.share{
+	color: #6c4ad1;
+	font-size: 28rpx;
+	line-height: 48rpx;
+	margin-top: 28rpx;
+	display: flex;
+	align-items: baseline;
+	text-decoration: underline;
+}
 .pay-result .btn-wrapper {
 	margin-top: 48rpx;
 	padding: 12rpx 32rpx;

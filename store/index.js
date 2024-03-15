@@ -20,6 +20,7 @@ import {ContentUrlCache} from './contentUrl.js';
 import { FileCache } from './filecache.js'
 
 import { baseUrl } from "../common/const.js";
+import { error } from "console";
 
 // #ifdef MP-WEIXIN
 const signalR = require("../common/signalr.js");
@@ -500,12 +501,13 @@ const store = createStore({
 			state
 		}, id) {
 			let qurl = state.apiBaseUrl + "/api/History";
-			uni.uploadFileWithCookie({
+			uni.requestWithCookie({
 				url: qurl,
-				filePath: '123', // 随便填，不为空即可  
-				name: '123', // 随便填，不为空即可  
-				//header: header, // 可以加access_token等  
-				formData: {
+				header:{
+					"Content-Type":"application/x-www-form-urlencoded"
+				},
+				method:"POST",
+				data: {
 					asgid: id
 				}, // 接口参数，json格式，底层自动转为FormData的格式数据  
 				success: (res) => {
@@ -539,6 +541,7 @@ const store = createStore({
 					success: (e) => {
 
 						if (e.tapIndex === 0) {
+							// #ifdef H5
 							uni.chooseImage({
 								count: 1,
 								crop: {
@@ -576,7 +579,46 @@ const store = createStore({
 									reject(err)
 								}
 							})
+							// #endif
+							
+							// #ifdef MP-WEIXIN
+							wx.chooseMessageFile({
+								count:1,
+								type:"image",
+								success: (res) => {
+									let fileinfo = res.tempFiles[0]; //文件
+									if(fileinfo.size>2*1024*1024){
+										uni.showToast({
+											title: "图片大小超过2M,请重新选择。"
+										})
+										return
+									}
+									let fmana = wx.getFileSystemManager();
+									fmana.readFile({filePath:fileinfo.path,success:(file)=>{
+										fileinfo.data = file.data;
+										uploadFile(fileinfo,"images/",(resl)=>{
+											if(res.statusCode===200){
+												let data = JSON.parse(res.data);
+												let imgurl = this.$store.state.apiBaseUrl+data.url;
+												this.$store.commit("setUserAvatar",imgurl);
+												uni.requestWithCookie({
+													url:this.$store.state.apiBaseUrl+"/api/AuthUser/setavatar?avatar="+encodeURIComponent(imgurl),
+													method:"POST",
+													success: () => {
+														
+													}
+												})
+											}
+										});
+										}});
+									},
+									fail:(err)=>{
+										console.log(err)
+									}
+								});
 						}
+									
+							// #endif
 
 					}
 				})

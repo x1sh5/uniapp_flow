@@ -15,6 +15,26 @@ const _sfc_main = {
     };
   },
   methods: {
+    toabout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/about/about"
+      });
+    },
+    topbout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/privacy/privacy"
+      });
+    },
+    toibout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/instructions/instructions"
+      });
+    },
+    tocbout(e) {
+      common_vendor.index.navigateTo({
+        url: "/pages/userCenter/cost/cost"
+      });
+    },
     CardNoCheck(e) {
       if (/[0-9X]{18}/.test(this.cardNo)) {
         this.cardNoChecked = true;
@@ -34,14 +54,13 @@ const _sfc_main = {
         });
         return;
       }
-      common_vendor.index.uploadFile({
+      common_vendor.index.request({
         url: qurl,
-        filePath: this.pos,
-        // 随便填，不为空即可  
-        name: "posimg",
-        // 随便填，不为空即可  
-        //header: header, // 可以加access_token等  
-        formData: {
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "POST",
+        data: {
           name: this.name,
           cardNo: this.cardNo
         },
@@ -61,6 +80,9 @@ const _sfc_main = {
               content: res.data
             });
           }
+        },
+        fail(err) {
+          console.log(err);
         }
       });
     }
@@ -73,7 +95,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.o((...args) => $options.CardNoCheck && $options.CardNoCheck(...args)),
     d: $data.cardNo,
     e: common_vendor.o(($event) => $data.cardNo = $event.detail.value),
-    f: common_vendor.o((...args) => $options.check && $options.check(...args))
+    f: common_vendor.o((...args) => $options.check && $options.check(...args)),
+    g: common_vendor.o((...args) => $options.topbout && $options.topbout(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "C:/Users/x/Documents/HBuilderProjects/flow/pages/register/v2/v2.vue"]]);

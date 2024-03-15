@@ -39,7 +39,7 @@ export default {
 					"branchid": 1,
 					"description": "",
 					"finishtime": "0001-01-01T00:00:00",
-					"deadline": "",
+					"deadline": "0001-01-01T00:00:00",
 					"fixedReward": '',
 					"percentReward": '',
 					"publishtime": "0001-01-01T00:00:00",
@@ -103,10 +103,14 @@ export default {
 			//{ctx:res, files: lastFiles}
 
 			this.content = payload.ctx;
+			this.task.description = payload
 
 		},
 		check() {
 			return this.$refs.cardinfo.check();
+		},
+		preprocess(){
+			return this.$refs.cardinfo.preprocess()
 		},
 		checkResult(data) {
 			this.$emit("check-Result", data);
